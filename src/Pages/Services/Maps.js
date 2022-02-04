@@ -1,5 +1,5 @@
 import * as React from "react";
-import Header from "../Components/Header";
+import Header from "../../Components/Header";
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
 
 export default function Maps() {

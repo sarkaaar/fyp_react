@@ -15,23 +15,13 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import Header from "../Components/Header";
+import Header from "./admin_components/Header";
 import Footer from "../Components/Footer";
 import CardMedia from "@mui/material/CardMedia";
 
 const theme = createTheme();
 
-export default function SignUp() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
-
+export default function AddProducts() {
   return (
     <div>
       <Header />
@@ -56,7 +46,7 @@ export default function SignUp() {
             <Box
               component="form"
               noValidate
-              onSubmit={handleSubmit}
+              // onSubmit={handleSubmit}
               sx={{ mt: 3 }}
             >
               <Grid container spacing={2}>

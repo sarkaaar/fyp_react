@@ -63,57 +63,35 @@ export default function Header() {
           display: "flex",
           justifyContent: "center",
         }}
-      >
-        <NavLink
-          to={`/viewAppointments`}
-          activeClassName="active"
-          style={{ textDecoration: "none", color: "white", padding: "10px" }}
-        >
-          VIEW APPOINTMENTS
-        </NavLink>
-        <NavLink
-          to={`/services`}
-          activeClassName="active"
-          style={{ textDecoration: "none", color: "white", padding: "10px" }}
-        >
-          SERVICES
-        </NavLink>
-        <NavLink
-          to={`/sign_in`}
-          activeClassName="active"
-          style={{ textDecoration: "none", color: "white", padding: "10px" }}
-        >
-          LOGIN
-        </NavLink>
-        <NavLink
-          to={`/maps`}
-          activeClassName="active"
-          style={{ textDecoration: "none", color: "white", padding: "10px" }}
-        >
-          MAPS
-        </NavLink>
-        <NavLink
-          to={`/live_consultation`}
-          activeClassName="active"
-          style={{ textDecoration: "none", color: "white", padding: "10px" }}
-        >
-          LIVE-CONSULTATION
-        </NavLink>
-      </div>
-      <div
-        style={{
-          // background: "#42a5f5",
-          background: "#1565c0",
-          flexGrow: 1,
-          display: "flex",
-          justifyContent: "space-between",
-          padding: "5px",
-          paddingLeft: "100px",
-          
-        }}
-      >
-        <h2 style={{ color: "white" }}>Pet-Planet</h2>
-        <h3>Hello </h3>
+      ><NavLink
+      to={`/viewDoctors`}
+      activeClassName="active"
+    //   style={NavLinkstyle}
+    >
+      VIEW DOCTORS
+    </NavLink>
+    <NavLink
+      to={`/maps`}
+      activeClassName="active"
+    //   style={NavLinkstyle}
+    >
+      VIEW MAPS
+    </NavLink>
+
+    <NavLink
+      to={`/viewAppointments`}
+      activeClassName="active"
+    //   style={NavLinkstyle}
+    >
+      VIEW APPOINTMENTS
+    </NavLink>
+    <NavLink
+      to={`/makeAppointments`}
+      activeClassName="active"
+    //   style={NavLinkstyle}
+    >
+      MAKE APPOINTMENTS
+    </NavLink>
       </div>
     </div>
   );

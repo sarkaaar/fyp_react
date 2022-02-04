@@ -107,7 +107,6 @@ export default function Chatbot() {
       <div style={{ margin: "50px" }}>
         <button
           onClick={() => {
-            console.log(question);
             output(question);
           }}
         >
