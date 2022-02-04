@@ -1,266 +1,120 @@
+// export default function Header() {
+//   return (
+//     <div sx={{ flexGrow: 1 }}>
+//       <AppBar position="static">
+//         <Toolbar>
+//           <IconButton
+//             size="large"
+//             edge="start"
+//             color="inherit"
+//             aria-label="menu"
+//             sx={{ marginRight: "8px" }}
+//           >
+//             <MenuIcon />
+//           </IconButton>
+//           {/* <Typography component="div" sx={{ ml: 2, flexGrow: 1 }}> */}
+//             <div sx={{width:"80%"}}>
+//             <NavLink
+//               to={`/viewAppointments`}
+//               activeClassName="active"
+//               style={{ textDecoration: "none", color: "white" }}
+//             >
+//               NEWS
+//             </NavLink>
+//             </div>
+//           {/* </Typography> */}
+//           <Button color="inherit">
+//             <NavLink
+//               to={`/viewAppointments`}
+//               activeClassName="active"
+//               style={{ textDecoration: "none", color: "white" }}
+//             >
+//               View Appointments
+//             </NavLink>
+//           </Button>
+
+//           <Button color="inherit">Login</Button>
+//         </Toolbar>
+//       </AppBar>
+//     </div>
+//   );
+// }
+
 import * as React from "react";
-import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
-import Badge from "@mui/material/Badge";
-import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import MoreIcon from "@mui/icons-material/MoreVert";
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
+
 import { NavLink } from "react-router-dom";
-import Link from "@mui/material/Link";
+// import * as React from 'react';
+import { styled, alpha } from "@mui/material/styles";
 
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
-    width: "auto",
-  },
-}));
+import SearchIcon from "@mui/icons-material/Search";
 
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
-  },
-}));
-
-export default function PrimarySearchAppBar() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
-  const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  };
-
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
-
-  const menuId = "primary-search-account-menu";
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  );
-
-  const mobileMenuId = "primary-search-account-menu-mobile";
-  // const renderMobileMenu = (
-  //   <Menu
-  //     anchorEl={mobileMoreAnchorEl}
-  //     anchorOrigin={{
-  //       vertical: "top",
-  //       horizontal: "right",
-  //     }}
-  //     id={mobileMenuId}
-  //     keepMounted
-  //     transformOrigin={{
-  //       vertical: "top",
-  //       horizontal: "right",
-  //     }}
-  //     open={isMobileMenuOpen}
-  //     onClose={handleMobileMenuClose}
-  //   >
-  //     <MenuItem>
-  //       <IconButton
-  //         size="large"
-  //         aria-label="show 17 new notifications"
-  //         color="inherit"
-  //       >
-  //         <Badge badgeContent={17} color="error">
-  //           <ShoppingCartIcon />
-  //         </Badge>
-  //       </IconButton>
-  //       <p>Cart</p>
-  //     </MenuItem>
-  //     <MenuItem onClick={handleProfileMenuOpen}>
-  //       <IconButton
-  //         size="large"
-  //         aria-label="account of current user"
-  //         aria-controls="primary-search-account-menu"
-  //         aria-haspopup="true"
-  //         color="inherit"
-  //       >
-  //         <AccountCircle />
-  //       </IconButton>
-  //       <p>Profile</p>
-  //     </MenuItem>
-  //   </Menu>
-  // );
-
+export default function Header() {
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            {/* <MenuIcon /> */}
-          </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
-          >
-            <Link href="/" variant="body2">
-              <h1 style={{ color: "white" }}>{"   Pet-Planet"}</h1>
-            </Link>
-          </Typography>
-          <Search
-            style={{ width: "900px", marginLeft: "500px", marginRight: "auto" }}
-          >
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>
-
-          <Box />
-          <div style={{ marginLeft: "auto" }}>
-            <Button
-              color="inherit"
-              style={{
-                color: "white",
-                fontSize: "x-large",
-                padding: "0 15px 0px 15px",
-              }}
-            >
-              <NavLink
-                to={`/sign_in`}
-                style={{
-                  textDecoration: "none",
-                  color: "white",
-                  fontSize: "x-large",
-                }}
-                activeClassName="active"
-              >
-                Login
-              </NavLink>
-            </Button>
-          </div>
-
-          <Button
-            color="inherit"
-            style={{
-              color: "white",
-              fontSize: "x-large",
-              padding: "0 15px 0px 15px",
-            }}
-          >
-            <NavLink
-              to={`/products`}
-              activeClassName="active"
-              style={{ textDecoration: "none", color: "white" }}
-            >
-              Products
-            </NavLink>
-          </Button>
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-              style={{ padding: "0 15px 0px 15px" }}
-            >
-              <Badge
-                // badgeContent={17}
-                color="error"
-                style={{ padding: "0 15px 0px 15px" }}
-              >
-                <NavLink
-                  to={`/cart`}
-                  activeClassName="active"
-                  style={{ textDecoration: "none", color: "white" }}
-                >
-                  {/* Cart */}
-                  <ShoppingCartIcon />
-                </NavLink>
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-              style={{ padding: "0 25px 0px 25px" }}
-            >
-              <AccountCircle />
-            </IconButton>
-          </Box>
-        </Toolbar>
-      </AppBar>
-      {renderMenu}
-    </Box>
+    <div>
+      <div
+        style={{
+          background: "#1976d2",
+          flexGrow: 1,
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <NavLink
+          to={`/viewAppointments`}
+          activeClassName="active"
+          style={{ textDecoration: "none", color: "white", padding: "10px" }}
+        >
+          VIEW APPOINTMENTS
+        </NavLink>
+        <NavLink
+          to={`/services`}
+          activeClassName="active"
+          style={{ textDecoration: "none", color: "white", padding: "10px" }}
+        >
+          SERVICES
+        </NavLink>
+        <NavLink
+          to={`/login`}
+          activeClassName="active"
+          style={{ textDecoration: "none", color: "white", padding: "10px" }}
+        >
+          LOGIN
+        </NavLink>
+        <NavLink
+          to={`/maps`}
+          activeClassName="active"
+          style={{ textDecoration: "none", color: "white", padding: "10px" }}
+        >
+          MAPS
+        </NavLink>
+        <NavLink
+          to={`/live_consultation`}
+          activeClassName="active"
+          style={{ textDecoration: "none", color: "white", padding: "10px" }}
+        >
+          LIVE-CONSULTATION
+        </NavLink>
+      </div>
+      <div
+        style={{
+          // background: "#42a5f5",
+          background: "#1565c0",
+          flexGrow: 1,
+          display: "flex",
+          justifyContent: "space-between",
+          padding: "5px",
+          paddingLeft: "100px",
+          
+        }}
+      >
+        <h2 style={{ color: "white" }}>Pet-Planet</h2>
+        <h3>Hello </h3>
+      </div>
+    </div>
   );
 }
