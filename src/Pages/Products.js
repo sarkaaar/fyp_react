@@ -1,65 +1,77 @@
 import * as React from "react";
 import MediaCard from "../Components/MediaCard";
 import Header from "../Components/Header";
-import Box from "@mui/material/Box";
+import Checkbox from "@mui/material/Checkbox";
+import { Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import Footer from "../Components/FooterScroll";
 
 export default function Products() {
   return (
     <div>
       <Header />
-      <Box sx={{ flexGrow: 1, marginTop: 5 }}>
-        <Grid container spacing={2}>
-          <Grid item xs={2}>
-            <h1> Categories</h1>
-            <p style={{ fontSize: "x-large" }}>Dog Food</p>
-            <p style={{ fontSize: "x-large" }}>CatFood</p>
-            <p style={{ fontSize: "x-large" }}>Sparrow Food</p>
-            <p style={{ fontSize: "x-large" }}>ParrotFood</p>
-            <p style={{ fontSize: "x-large" }}>Toys</p>
-            <p style={{ fontSize: "x-large" }}>Accessories</p>
-            <h1> Price</h1>
-            <h2>_______---_______</h2>
-          </Grid>
+      <div style={{ display: "flex" }}>
+        {/* Search Filters */}
 
-          <Grid item xs={10}>
-            <Grid container spacing={3}>
-              <Grid item xs="auto">
-                <MediaCard />
-              </Grid>
-              <Grid item xs="auto">
-                <MediaCard />
-              </Grid>
-              <Grid item xs="auto">
-                <MediaCard />
-              </Grid>
-              <Grid item xs="auto">
-                <MediaCard />
-              </Grid>
-              <Grid item xs="auto">
-                <MediaCard />
-              </Grid>
-              <Grid item xs="auto">
-                <MediaCard />
-              </Grid>
-              <Grid item xs="auto">
-                <MediaCard />
-              </Grid>
-              <Grid item xs="auto">
-                <MediaCard />
-              </Grid>
-              <Grid item xs="auto">
-                <MediaCard />
-              </Grid>
-              <Grid item xs="auto">
-                <MediaCard />
-              </Grid>
+        <div style={{ minWidth: "30%", padding: "25px" }}>
+          <p>
+            <Checkbox value="remember" color="primary" placeholder="Hi" />
+            Remember Me
+          </p>
+          <h1> Categories</h1>
+          <p style={{ fontSize: "x-large" }}>Dog Food</p>
+          <p style={{ fontSize: "x-large" }}>CatFood</p>
+          <p style={{ fontSize: "x-large" }}>Sparrow Food</p>
+          <p style={{ fontSize: "x-large" }}>ParrotFood</p>
+          <p style={{ fontSize: "x-large" }}>Toys</p>
+          <p style={{ fontSize: "x-large" }}>Accessories</p>
+          {/* Price component */}
+          <div>
+            <p style={{ fontWeight: "bold", fontSize: "x-large" }}>Price</p>
+            <div style={{ display: "flex" }}>
+              <input
+                placeholder="Min"
+                style={{ width: "100px", height: "30px" }}
+              />
+              <p
+                style={{
+                  fontSize: "large",
+                  paddingLeft: "10px",
+                  paddingRight: "10px",
+                }}
+              >
+                -
+              </p>
+              <input
+                placeholder="Max"
+                style={{ width: "100px", height: "30px" }}
+              />
+            </div>
+          </div>
+        </div>
+        
+        <hr />
+
+        {/* Products Section */}
+        <div style={{ width: "65%",padding:"20px" }}>
+          <Grid container spacing={1}>
+            <Grid item xs="auto">
+              <MediaCard />
+            </Grid>
+            <Grid item xs="auto">
+              <MediaCard />
+            </Grid>
+            <Grid item xs="auto">
+              <MediaCard />
+            </Grid>
+            <Grid item xs="auto">
+              <MediaCard />
+            </Grid>
+            <Grid item xs="auto">
+              <MediaCard />
             </Grid>
           </Grid>
-        </Grid>
-      </Box>
-      <Footer />
+        </div>
+      </div>
     </div>
   );
 }

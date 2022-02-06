@@ -10,6 +10,7 @@ import DashboardContent from "./Pages/Dashboard/Dashboard";
 import Products from "./Pages/Products";
 import Cart from "./Pages/Cart";
 import Chatbot from "./Pages/Chatbot";
+import ProductReturn from "./Pages/Services/ProductRetrun";
 
 // Clinical Pages
 import MakeAppointments from "./Pages/Services/MakeAppointments";
@@ -45,6 +46,7 @@ function App() {
         <Route exact path="/cart" element={<Cart />} />
         <Route exact path="/maps" element={<Maps />} />
         <Route exact path="/chatbot" element={<Chatbot />} />
+        <Route exact path="/returnProduct" element={<ProductReturn />} />
 
         {/* User Clinical */}
         <Route exact path="/makeAppointments" element={<MakeAppointments />} />
@@ -59,7 +61,7 @@ function App() {
         <Route exact path="/admin/addProducts" element={<AddProducts />} />
         <Route exact path="/admin/inventory" element={<Inventory />} />
         <Route exact path="/admin/orders" element={<Orders />} />
-        <Route exact path="/admin/viewDoctors" element={<ViewDoctors />} />
+        <Route exact path="/admin/viewDoctor" element={<ViewDoctors />} />
         
         {/* Doctors Panel */}
         <Route exact path="/doctor/dashboard" element={<DoctorDashboard />} />

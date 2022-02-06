@@ -1,18 +1,10 @@
 import * as React from "react";
+import Header from "../../Components/Header";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import Header from "./admin_components/Header";
 
-const theme = createTheme();
-
-export default function AddProducts() {
+export default function ProductReturn() {
   return (
     <div>
       <Header />
@@ -26,14 +18,14 @@ export default function AddProducts() {
           width: "400px",
         }}
       >
-        <h1>Add a New Product</h1>
+        <h1>Product Return Form</h1>
         <div>
           <TextField
             margin="normal"
             required
             fullWidth
             id="email"
-            label="Product Name"
+            label="Order #"
             name="email"
             autoComplete="email"
             autoFocus
@@ -43,36 +35,30 @@ export default function AddProducts() {
             required
             fullWidth
             name="password"
-            label="Cost Price"
+            label="Product ID"
             type="text"
             id="password"
+            autoComplete="current-password"
           />
           <TextField
             margin="normal"
             required
             fullWidth
-            name="salePrice"
-            label="Sale Price"
+            name="password"
+            label="Product Name"
             type="text"
-            id="salePrice"
+            id="password"
+            autoComplete="current-password"
           />
           <TextField
             margin="normal"
             required
             fullWidth
-            name="stock"
-            label="Stock"
+            name="password"
+            label="Issue"
             type="text"
-            id="stock"
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="category"
-            label="Category"
-            type="text"
-            id="category"
+            id="password"
+            autoComplete="current-password"
           />
 
           <TextareaAutosize

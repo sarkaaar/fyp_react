@@ -1,46 +1,61 @@
 import * as React from "react";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { IconButton } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShareIcon from "@mui/icons-material/Share";
 
 export default function MediaCard() {
+  const text =
+    "Versions of the Lorem ipsum text have been used in typesetting at least since the 1960s";
   return (
-    <Card sx={{ maxWidth: 400, maxHeight: 450 }}>
+    <div
+      style={{
+        width: "300px",
+        height: "450",
+        border: "1px solid grey",
+        borderRadius: "5px",
+      }}
+    >
       <CardMedia
+        style={{ borderTopLeftRadius: "5px", borderTopRightRadius: "5px" }}
         component="img"
-        height="140"
+        height="250"
         image={"https://bfs-group.eu/wp/wp-content/uploads/Petfood.jpg"}
-        alt="green iguana"
+        alt="image"
       />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          Dog Food
+      <div style={{ padding: "15px" }}>
+        <Typography gutterBottom style={{ fontSize: "large" }}>
+          {text.slice(0, 40) + "..."}
         </Typography>
-        <Typography gutterBottom variant="h5" component="div">
-          12.00 $
+        <Typography
+          style={{ fontWeight: "bold", color: "#00579c" }}
+          variant="h5"
+        >
+          Rs. 1,200
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
-        </Typography>
-      </CardContent>
-      <CardActions style={{display:"flex",justifyContent:"center"}}>
-        <Button size="large">
-          <ShoppingCartIcon/>
-        </Button>
-        <Button size="large">
+      </div>
+      <hr style={{ width: "70%" }} />
+      {/* Buttons */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-around",
+          padding: "10px",
+          paddingTop: 0,
+        }}
+      >
+        <IconButton size="large">
+          <ShoppingCartIcon />
+        </IconButton>
+        <IconButton size="large">
           <ShareIcon />
-        </Button>
-        <Button size="large">
+        </IconButton>
+        <IconButton size="large">
           <FavoriteBorderIcon />
-        </Button>
-      </CardActions>
-    </Card>
+        </IconButton>
+      </div>
+    </div>
   );
 }
