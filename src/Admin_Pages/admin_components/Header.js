@@ -1,15 +1,6 @@
 import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 
 import { NavLink } from "react-router-dom";
-// import * as React from 'react';
-import { styled, alpha } from "@mui/material/styles";
-
-import SearchIcon from "@mui/icons-material/Search";
 
 export default function Header() {
   return (
@@ -35,7 +26,7 @@ export default function Header() {
           activeClassName="active"
           style={{ textDecoration: "none", color: "white", padding: "10px" }}
         >
-          LOGIN / LOGOUT
+          LOGIN 
         </NavLink>
 
         <NavLink
@@ -60,7 +51,7 @@ export default function Header() {
           ORDERS
         </NavLink>
         <NavLink
-          to={`/admin/addDoctors`}
+          to={`/admin/addDoctor`}
           activeClassName="active"
           style={{ textDecoration: "none", color: "white", padding: "10px" }}
         >

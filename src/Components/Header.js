@@ -1,57 +1,11 @@
-// export default function Header() {
-//   return (
-//     <div sx={{ flexGrow: 1 }}>
-//       <AppBar position="static">
-//         <Toolbar>
-//           <IconButton
-//             size="large"
-//             edge="start"
-//             color="inherit"
-//             aria-label="menu"
-//             sx={{ marginRight: "8px" }}
-//           >
-//             <MenuIcon />
-//           </IconButton>
-//           {/* <Typography component="div" sx={{ ml: 2, flexGrow: 1 }}> */}
-//             <div sx={{width:"80%"}}>
-//             <NavLink
-//               to={`/viewAppointments`}
-//               activeClassName="active"
-//               style={{ textDecoration: "none", color: "white" }}
-//             >
-//               NEWS
-//             </NavLink>
-//             </div>
-//           {/* </Typography> */}
-//           <Button color="inherit">
-//             <NavLink
-//               to={`/viewAppointments`}
-//               activeClassName="active"
-//               style={{ textDecoration: "none", color: "white" }}
-//             >
-//               View Appointments
-//             </NavLink>
-//           </Button>
-
-//           <Button color="inherit">Login</Button>
-//         </Toolbar>
-//       </AppBar>
-//     </div>
-//   );
-// }
-
 import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 
+import Button from "@mui/material/Button";
+import { IconButton, TextField } from "@mui/material";
 import { NavLink } from "react-router-dom";
-// import * as React from 'react';
-import { styled, alpha } from "@mui/material/styles";
 
 import SearchIcon from "@mui/icons-material/Search";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 export default function Header() {
   return (
@@ -64,13 +18,13 @@ export default function Header() {
           justifyContent: "center",
         }}
       >
-        <NavLink
+        {/* <NavLink
           to={`/viewAppointments`}
           activeClassName="active"
           style={{ textDecoration: "none", color: "white", padding: "10px" }}
         >
           VIEW APPOINTMENTS
-        </NavLink>
+        </NavLink> */}
         <NavLink
           to={`/services`}
           activeClassName="active"
@@ -78,13 +32,13 @@ export default function Header() {
         >
           SERVICES
         </NavLink>
-        <NavLink
+        {/* <NavLink
           to={`/sign_in`}
           activeClassName="active"
           style={{ textDecoration: "none", color: "white", padding: "10px" }}
         >
           LOGIN
-        </NavLink>
+        </NavLink> */}
         <NavLink
           to={`/maps`}
           activeClassName="active"
@@ -99,21 +53,81 @@ export default function Header() {
         >
           LIVE-CONSULTATION
         </NavLink>
+
+        <NavLink
+          to={`/returnProduct`}
+          activeClassName="active"
+          style={{ textDecoration: "none", color: "white", padding: "10px" }}
+        >
+          PRODUCT RETURN
+        </NavLink>
       </div>
+
+      {/* Second Header */}
       <div
         style={{
-          // background: "#42a5f5",
           background: "#1565c0",
           flexGrow: 1,
           display: "flex",
           justifyContent: "space-between",
           padding: "5px",
-          paddingLeft: "100px",
-          
+          // paddingLeft: "100px",
         }}
       >
-        <h2 style={{ color: "white" }}>Pet-Planet</h2>
-        <h3>Hello </h3>
+        <NavLink
+          to={`/`}
+          activeClassName="active"
+          style={{
+            textDecoration: "none",
+            color: "white",
+            padding: "15px",
+            fontSize: "large",
+            marginLeft: "1%",
+          }}
+        >
+          PET-PLANET
+        </NavLink>
+        <div
+          style={{
+            display: "flex",
+            // background: "white",
+            width: "60%",
+          }}
+        >
+          <TextField
+            id="cardName"
+            label="Search"
+            fullWidth
+            style={{ background: "white", height: "55px" }}
+          />
+          <Button
+            style={{
+              border: "2px solid gray",
+              background: "white",
+              height: "55px",
+            }}
+          >
+            <SearchIcon />
+          </Button>
+        </div>
+        <div style={{ display: "flex", marginRight: "1%" }}>
+          <IconButton style={{ width: "55px", marginRight: "20px" }}>
+            <ShoppingCartIcon sx={{ color: "white" }} />
+          </IconButton>
+          <NavLink
+            to={`/sign_in`}
+            activeClassName="active"
+            style={{
+              textDecoration: "none",
+              color: "white",
+              padding: "15px",
+              fontSize: "large",
+              marginRight: "1%",
+            }}
+          >
+            LOGIN
+          </NavLink>
+        </div>
       </div>
     </div>
   );

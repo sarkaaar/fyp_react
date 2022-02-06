@@ -1,39 +1,3 @@
-// import * as React from "react";
-// import AppBar from "@mui/material/AppBar";
-// import Toolbar from "@mui/material/Toolbar";
-// import Typography from "@mui/material/Typography";
-
-// import { Container } from "@mui/material";
-
-// export default function Footer() {
-//   return (
-//     <div style={{ position: "absolute", bottom: 0, width: "100%" }}>
-//       <AppBar position="static">
-//         <Toolbar>
-//           <Typography variant="h6" color="inherit">
-//             Home
-//           </Typography>
-//         </Toolbar>
-//         <Toolbar>
-//           <Typography variant="h6" color="inherit">
-//             About Us
-//           </Typography>
-//         </Toolbar>
-//         <Toolbar>
-//           <Typography variant="h6" color="inherit">
-//             Contact Us
-//           </Typography>
-//         </Toolbar>
-
-//       </AppBar>
-
-//       <Container maxWidth="sm">
-//         <Typography variant="h6" color="inherit" noWrap></Typography>
-//       </Container>
-//     </div>
-//   );
-// }
-
 import React from "react";
 import {
   Box,
