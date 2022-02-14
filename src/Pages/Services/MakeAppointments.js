@@ -22,18 +22,17 @@ export default function MakeAppointments() {
     "12:00-12:15",
     "12:15-12:30",
     "12:30-12:45",
-    "12:15-12:15",
-    "09:15-09:15",
-    "10:30-10:45",
-    "10:45-11:00",
-    "11:00-11:15",
-    "11:15-11:30",
+    "12:45-01:00",
+    "01:00-01:15",
+    "01:15-01:30",
+    "01:30-01:45",
+    "01:45-02:00",
     
   ];
   return (
     <div>
       <Header />
-      <h1>MAke Appointments page is displayed here</h1>
+      {/* <h1>MAke Appointments page is displayed here</h1> */}
       <div style={{ width: "300px", margin: "auto" }}>
         <h1>You are making an appointment with Dr. </h1>
 
@@ -47,12 +46,12 @@ export default function MakeAppointments() {
           id="date"
         />
         <FormControl fullWidth style={{ margin: "10px 0" }}>
-          <InputLabel id="demo-simple-select-label">Doctor Name</InputLabel>
+          <InputLabel id="demo-simple-select-label">Time Slot</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             // value={doc_Name}
-            label="Doctor Name"
+            label="Time Slot"
             onChange={(e) => {
               // setDoc_Name(e.target.value);
             }}

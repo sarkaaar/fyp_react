@@ -11,7 +11,9 @@ import Products from "./Pages/All_Products";
 import Cart from "./Pages/Cart";
 import Chatbot from "./Pages/Chatbot";
 import ProductReturn from "./Pages/Services/ProductRetrun";
-import Product from "./Pages/Product"
+import Product from "./Pages/Product";
+import Profile from "./Pages/Profile";
+
 // Clinical Pages
 import MakeAppointments from "./Pages/Services/MakeAppointments";
 import ViewAppointments from "./Pages/Services/ViewAppointments";
@@ -35,7 +37,6 @@ function App() {
   return (
     <Router>
       <Routes>
-        
         {/* User Panel */}
         <Route exact path="/" element={<HomePage />} />
         <Route exact path="/sign_in" element={<SignIn />} />
@@ -48,6 +49,7 @@ function App() {
         <Route exact path="/chatbot" element={<Chatbot />} />
         <Route exact path="/returnProduct" element={<ProductReturn />} />
         <Route exact path="/Product" element={<Product />} />
+        <Route exact path="/profile" element={<Profile />} />
 
         {/* User Clinical */}
         <Route exact path="/makeAppointments" element={<MakeAppointments />} />
@@ -63,7 +65,7 @@ function App() {
         <Route exact path="/admin/inventory" element={<Inventory />} />
         <Route exact path="/admin/orders" element={<Orders />} />
         <Route exact path="/admin/viewDoctor" element={<ViewDoctors />} />
-        
+
         {/* Doctors Panel */}
         <Route exact path="/doctor/dashboard" element={<DoctorDashboard />} />
         <Route exact path="/doctor/sign_in" element={<DoctorSignIn />} />
