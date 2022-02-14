@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import Header from "../Components/Header";
+// import Header from "../Components/Header";
 
 export default function Chatbot() {
   const [question, setQuestion] = React.useState("");
@@ -59,7 +59,7 @@ export default function Chatbot() {
   function compare(triggerArray, replyArray, text) {
     for (let x = 0; x < triggerArray.length; x++)
       for (let y = 0; y < replyArray.length; y++)
-        if (triggerArray[x][y] == text) {
+        if (triggerArray[x][y] === text) {
           setAnswer(
             replyArray[x][Math.floor(Math.random() * replyArray[x].length)]
           );
@@ -93,8 +93,8 @@ export default function Chatbot() {
   const robot = ["How do you do, fellow human", "I am not a bot"];
 
   return (
-    <div>
-      <Header />
+    <div style={{width:"300px", background:"yellow" }}>
+      {/* <Header /> */}
       <h1>this is the Chatbot</h1>
       <div>
         <input

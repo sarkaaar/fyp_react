@@ -7,11 +7,11 @@ import SignUp from "./Pages/SignUp";
 import CheckoutContent from "./Pages/Checkout/Checkout";
 import HomePage from "./Pages/HomePage";
 import DashboardContent from "./Pages/Dashboard/Dashboard";
-import Products from "./Pages/Products";
+import Products from "./Pages/All_Products";
 import Cart from "./Pages/Cart";
 import Chatbot from "./Pages/Chatbot";
 import ProductReturn from "./Pages/Services/ProductRetrun";
-
+import Product from "./Pages/Product"
 // Clinical Pages
 import MakeAppointments from "./Pages/Services/MakeAppointments";
 import ViewAppointments from "./Pages/Services/ViewAppointments";
@@ -47,6 +47,7 @@ function App() {
         <Route exact path="/maps" element={<Maps />} />
         <Route exact path="/chatbot" element={<Chatbot />} />
         <Route exact path="/returnProduct" element={<ProductReturn />} />
+        <Route exact path="/Product" element={<Product />} />
 
         {/* User Clinical */}
         <Route exact path="/makeAppointments" element={<MakeAppointments />} />
