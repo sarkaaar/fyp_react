@@ -4,6 +4,8 @@ import ViewOrderBody from "./admin_components/viewOrders/ViewOrderBody";
 import ViewOrdersHead from "./admin_components/viewOrders/ViewOrdersHead";
 import { Button } from "@material-ui/core";
 
+console.log("fgfdgf");
+
 export default function Orders() {
   const data = [
     {
