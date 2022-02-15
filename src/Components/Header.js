@@ -3,11 +3,35 @@ import * as React from "react";
 import Button from "@mui/material/Button";
 import { IconButton, TextField } from "@mui/material";
 import { NavLink } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import Switch from "@mui/material/Switch";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormGroup from "@mui/material/FormGroup";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
+
 export default function Header() {
+  const [auth, setAuth] = React.useState(true);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const navigate = useNavigate();
+
+  const handleChange = (event) => {
+    setAuth(event.target.checked);
+  };
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <div>
       <div
@@ -114,7 +138,8 @@ export default function Header() {
           <IconButton style={{ width: "55px", marginRight: "20px" }}>
             <ShoppingCartIcon sx={{ color: "white" }} />
           </IconButton>
-          <NavLink
+
+          {/* <NavLink
             to={`/sign_in`}
             activeClassName="active"
             style={{
@@ -126,7 +151,35 @@ export default function Header() {
             }}
           >
             LOGIN
-          </NavLink>
+          </NavLink> */}
+
+          <IconButton
+            size="large"
+            aria-label="account of current user"
+            aria-controls="menu-appbar"
+            aria-haspopup="true"
+            onClick={handleMenu}
+            color="inherit"
+          >
+            <AccountCircle sx={{ color: "white" }}/>
+          </IconButton>
+
+          <Menu
+            id="menu-appbar"
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem
+              onClick={() => {
+                navigate(`/profile`);
+              }}
+            >
+              Profile
+            </MenuItem>
+            <MenuItem onClick={handleClose}>My account</MenuItem>
+            <MenuItem onClick={handleClose}>Logout</MenuItem>
+          </Menu>
         </div>
       </div>
     </div>

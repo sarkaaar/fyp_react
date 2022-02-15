@@ -1,6 +1,8 @@
 import * as React from "react";
-
+import Button from "@mui/material/Button";
+import MessageIcon from "@mui/icons-material/Message";
 // import Header from "../Components/Header";
+import SendIcon from "@mui/icons-material/Send";
 
 export default function Chatbot() {
   const [question, setQuestion] = React.useState("");
@@ -93,7 +95,7 @@ export default function Chatbot() {
   const robot = ["How do you do, fellow human", "I am not a bot"];
 
   return (
-    <div style={{width:"300px", background:"yellow" }}>
+    <div style={{ width: "300px", background: "yellow" }}>
       {/* <Header /> */}
       <h1>this is the Chatbot</h1>
       <div>
@@ -120,6 +122,99 @@ export default function Chatbot() {
           <h1>answer:{answer}</h1>
         </div>
       }
+
+      {/* Chatbot template */}
+      <div
+        class="chat-bar-collapsible"
+        style={{
+          position: "fixed",
+          bottom: 0,
+          right: "50px",
+          boxShadow: "0 8px 16px 0 rgba(0, 0, 0, 0.2)",
+        }}
+      >
+        <button
+          id="chat-button"
+          type="button"
+          class="collapsible"
+          style={{
+            background: "rgb(82, 151, 255)",
+            color: "white",
+            cursor: "pointer",
+            padding: "18px",
+            width: "350px",
+            alignText: "left",
+            outline: "none",
+            fontSize: "18px",
+            borderRadius: " 10px 10px 0px 0px",
+            border: "3px solid white",
+            borderBottom: "none",
+          }}
+        >
+          Chat with us!
+          <MessageIcon />
+        </button>
+
+        <div
+          class="content"
+          style={{
+            // maxHeight: 0,
+            overflow: "hidden",
+            transition: "max-height 0.2s ease-out",
+            background: "#f1f1f1",
+          }}
+        >
+          <div
+            class="full-chat-block"
+            style={{
+              width: "350px",
+              background: "white",
+              textAlign: "center",
+              overflow: "auto",
+              scrollbarWidth: "none",
+              height: "max-content",
+              transition: "max-height 0.2s ease-out",
+            }}
+          >
+            {/* <!-- Message Container --> */}
+            <div class="outer-container">
+              <div class="chat-container">
+                {/* <!-- Messages --> */}
+                <div id="chatbox">
+                  <h5 id="chat-timestamp"></h5>
+                  <p id="botStarterMessage" class="botText">
+                    <span>Loading...</span>
+                  </p>
+                </div>
+
+                {/* <!-- User input box --> */}
+                <div class="chat-bar-input-block">
+                  <div id="userInput">
+                    <input
+                      id="textInput"
+                      class="input-box"
+                      type="text"
+                      name="msg"
+                      placeholder="Tap 'Enter' to send a message"
+                    />
+                    <p></p>
+                  </div>
+
+                  <div class="chat-bar-icons">
+                    <MessageIcon />
+
+                    <SendIcon />
+                  </div>
+                </div>
+
+                <div id="chat-bar-bottom">
+                  <p></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

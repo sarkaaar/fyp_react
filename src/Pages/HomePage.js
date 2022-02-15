@@ -70,25 +70,7 @@ export default function HomePage() {
           </Grid>
         </Grid>
       </div>
-      {/* <Footer /> */}
-      <div>
-        <Box
-          sx={{
-            padding: "100px",
-          }}
-        >
-          <Typography component="legend">Controlled</Typography>
-          <Rating
-            name="simple-controlled"
-            value={value}
-            onChange={(event, newValue) => {
-              setValue(newValue);
-            }}
-          />
-
-          <h1>Rating = {value}</h1>
-        </Box>
-      </div>
+     
     </div>
   );
 }

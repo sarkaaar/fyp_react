@@ -13,7 +13,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Header from "../Components/Header";
-import Footer from "../Components/Footer";
+// import Footer from "../Components/Footer";
 
 
 
@@ -144,7 +144,7 @@ export default function SignUp() {
           {/* <Copyright sx={{ mt: 5 }} /> */}
         </Container>
       </ThemeProvider>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

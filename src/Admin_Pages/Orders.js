@@ -17,7 +17,10 @@ export default function Orders() {
       shippingAddress: "Karachi",
       phone: "123",
     },
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6ea2696f224156593c3b4b0a3366f32931f75163
     {
       username: "name",
       products: [
@@ -38,10 +41,19 @@ export default function Orders() {
       <ViewOrdersHead />
       {data.map((item) => (
         <div>
+<<<<<<< HEAD
           {/* <Button onClick={()=>{console.log(item)}}>Click</Button> */}
           <ViewOrderBody obj={item} />
         </div>
       ))}
+=======
+          <ViewOrderBody obj={item} />
+          {/* <hr /> */}
+        </div>
+      ))}
+      {/* <h1>this is the Orders page`</h1> */}
+      {/* // <Button onClick={()=>{console.log(item)}}>Click me</Button> */}
+>>>>>>> 6ea2696f224156593c3b4b0a3366f32931f75163
     </div>
   );
 }
