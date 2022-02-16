@@ -8,9 +8,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import Switch from "@mui/material/Switch";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormGroup from "@mui/material/FormGroup";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 
@@ -33,7 +30,17 @@ export default function Header() {
   };
 
   return (
-    <div>
+    <div
+      // style={{
+      //   position: "absolute",
+      //   // zIndex: 1,
+      //   top: 0,
+      //   // left: 0,
+      //   // right: 0,
+      //   width: "100%",
+      //   // margin: "0 auto",
+      // }}
+    >
       <div
         style={{
           background: "#1976d2",
@@ -161,7 +168,7 @@ export default function Header() {
             onClick={handleMenu}
             color="inherit"
           >
-            <AccountCircle sx={{ color: "white" }}/>
+            <AccountCircle sx={{ color: "white" }} />
           </IconButton>
 
           <Menu

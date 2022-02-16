@@ -2,6 +2,9 @@ import React from "react";
 import Header from "../Components/Header";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import { Button } from "@mui/material";
+import UpdateInfo from "../Components/Profile/UpdateInfo";
+import UpdatePassword from "../Components/Profile/UpdatePassword";
+
 export default function Profile() {
   return (
     <div>
@@ -39,8 +42,12 @@ export default function Profile() {
           something...
         </p>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <Button variant="contained">Update</Button>
-          <Button variant="outlined">Change Password</Button>
+          <Button variant="contained" onClick={() => {}}>
+            Update
+          </Button>
+          <Button variant="outlined" onClick={() => {}}>
+            Change Password
+          </Button>
         </div>
       </div>
     </div>

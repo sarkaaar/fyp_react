@@ -177,21 +177,88 @@ export default function Chatbot() {
             }}
           >
             {/* <!-- Message Container --> */}
-            <div class="outer-container">
-              <div class="chat-container">
+            <div
+              class="outer-container"
+              style={{
+                minHeight: "500px",
+                bottom: "0%",
+                position: "relative",
+              }}
+            >
+              <div
+                class="chat-container"
+                style={{
+                  maxHeight: "500px",
+                  width: "100%",
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  scrollBehavior: "smooth",
+                  hyphens: "auto",
+                }}
+              >
                 {/* <!-- Messages --> */}
                 <div id="chatbox">
                   <h5 id="chat-timestamp"></h5>
-                  <p id="botStarterMessage" class="botText">
-                    <span>Loading...</span>
+                  <p
+                    id="botStarterMessage"
+                    class="botText"
+                    style={{
+                      color: "#000",
+                      fontFamily: "Helvetica",
+                      fontWeight: "normal",
+                      fontSize: "16px",
+                      textAlign: "left",
+                    }}
+                  >
+                    <span
+                      style={{
+                        lineHeight: "1.5em",
+                        display: "inline-block",
+                        background: "#e0e0e0",
+                        padding: "10px",
+                        borderRadius: " 8px",
+                        borderBottom: "2px",
+                        maxWidth: "80%",
+                        marginLeft: "10px",
+                        animation: "floatup .5s forwards",
+                      }}
+                    >
+                      Loading...
+                    </span>
                   </p>
                 </div>
 
                 {/* <!-- User input box --> */}
-                <div class="chat-bar-input-block">
-                  <div id="userInput">
+                <div
+                  class="chat-bar-input-block"
+                  style={{
+                    display: "flex",
+                    float: "left",
+                    boxSizing: "border-box",
+                    justifyContent: "space-between",
+                    width: "100%",
+                    alignItems: "center",
+                    background: "rgb(235, 235, 235)",
+                    borderRadius: " 10px 10px 0px 0px",
+                    padding: "10px 0px 10px 10px",
+                  }}
+                >
+                  <div id="userInput" style={{ width: "75%" }}>
                     <input
                       id="textInput"
+                      style={{
+                        float: "left",
+                        border: "none",
+                        boxSizing: "border-box",
+                        width: "100%",
+                        borderRadius: "10px",
+                        padding: "10px",
+                        fontSize: "16px",
+                        color: "#000",
+                        background: "white",
+                        outline: "none",
+                      }}
                       class="input-box"
                       type="text"
                       name="msg"
@@ -200,7 +267,17 @@ export default function Chatbot() {
                     <p></p>
                   </div>
 
-                  <div class="chat-bar-icons">
+                  <div
+                    class="chat-bar-icons"
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-evenly",
+                      boxSizing: "border-box",
+                      width: "25%",
+                      float: " right",
+                      fontSize: " 20px",
+                    }}
+                  >
                     <MessageIcon />
 
                     <SendIcon />
