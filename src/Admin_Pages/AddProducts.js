@@ -1,60 +1,52 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import Header from "./admin_components/Header";
-
-const theme = createTheme();
+import { useState } from "react";
 
 export default function AddProducts() {
+  const [productName, setProductName] = useState("");
+  const [productDescription, setProductDescription] = useState("");
+  const [productCostPrice, setProductCostPrice] = useState("");
+  const [productSalePrice, setProductSalePrice] = useState("");
+  const [productImage, setProductImage] = useState("");
+  const [productCategory, setProductCategory] = useState("");
+  const [productQuantity, setProductQuantity] = useState("");
+  const [colors, setColors] = useState("");
+  const [subCategory, setSubCategory] = useState("");
+
   return (
     <div>
       <Header />
-      <div
-        style={{
-          margin: "auto",
-          marginTop: "48px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          width: "400px",
-        }}
-      >
-        <h1>Add a New Product</h1>
+      <div className="w-96 m-auto mt-8">
+        <h1 className="text-center text-3xl">Add a New Product</h1>
         <div>
           <TextField
             margin="normal"
             required
             fullWidth
-            id="email"
+            id="product_name"
             label="Product Name"
-            name="email"
-            autoComplete="email"
-            autoFocus
+            name="product_name"
           />
           <TextField
             margin="normal"
             required
             fullWidth
-            name="password"
+            name="cost_price"
             label="Cost Price"
             type="text"
-            id="password"
+            id="cost_price"
           />
           <TextField
             margin="normal"
             required
             fullWidth
-            name="salePrice"
+            name="sale_Price"
             label="Sale Price"
             type="text"
-            id="salePrice"
+            id="sale_Price"
           />
           <TextField
             margin="normal"
@@ -69,25 +61,40 @@ export default function AddProducts() {
             margin="normal"
             required
             fullWidth
+            name="colors"
+            label="Colors"
+            type="text"
+            id="colors"
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
             name="category"
             label="Category"
             type="text"
             id="category"
           />
-
+          <TextField
+            margin="normal"
+            fullWidth
+            name="sub_category"
+            label="Sub-Category (if any)"
+            type="text"
+            id="sub_category"
+          />
           <TextareaAutosize
             minRows={10}
             placeholder="  Description*"
-            style={{ marginTop: "15px", width: "400px" }}
+            className="mt-8 w-full"
           />
-          <p>Click on the "Choose File" button to upload a file:</p>
-          <input type="file" name="file" id="file" />
-
+          <p>Click on the "Choose File" button to upload a images:</p>
+          <input type="file" name="file" id="file" className="mb-6" />
           <Button
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            className="mt-6 mb-12"
           >
             Add Product
           </Button>

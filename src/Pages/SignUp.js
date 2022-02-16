@@ -13,16 +13,11 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Header from "../Components/Header";
-// import Footer from "../Components/Footer";
-
-
 
 const theme = createTheme();
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
-
-  };
+  const handleSubmit = (event) => {};
 
   return (
     <div>
@@ -141,10 +136,8 @@ export default function SignUp() {
               </Grid>
             </Box>
           </Box>
-          {/* <Copyright sx={{ mt: 5 }} /> */}
         </Container>
       </ThemeProvider>
-      {/* <Footer /> */}
     </div>
   );
 }

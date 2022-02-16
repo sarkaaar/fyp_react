@@ -26,7 +26,7 @@ export default function Header() {
           activeClassName="active"
           style={{ textDecoration: "none", color: "white", padding: "10px" }}
         >
-          LOGIN 
+          LOGIN
         </NavLink>
 
         <NavLink
@@ -63,6 +63,20 @@ export default function Header() {
           style={{ textDecoration: "none", color: "white", padding: "10px" }}
         >
           VIEW DOCTORS
+        </NavLink>
+        <NavLink
+          to={`/admin/addCategory`}
+          activeClassName="active"
+          style={{ textDecoration: "none", color: "white", padding: "10px" }}
+        >
+          ADD CATEGORY
+        </NavLink>
+        <NavLink
+          to={`/admin/viewCategory`}
+          activeClassName="active"
+          style={{ textDecoration: "none", color: "white", padding: "10px" }}
+        >
+          VIEW CATEGORY
         </NavLink>
       </div>
     </div>
