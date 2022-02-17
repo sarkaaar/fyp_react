@@ -4,6 +4,8 @@ import ViewOrderBody from "./admin_components/viewOrders/ViewOrderBody";
 import ViewOrdersHead from "./admin_components/viewOrders/ViewOrdersHead";
 import { Button } from "@material-ui/core";
 
+console.log("fgfdgf");
+
 export default function Orders() {
   const data = [
     {
@@ -17,16 +19,17 @@ export default function Orders() {
       shippingAddress: "Karachi",
       phone: "123",
     },
+
     {
       username: "name",
       products: [
-        { product: "product4" },
-        { product: "product5" },
-        { product: "product6" },
+        { product: "product1" },
+        { product: "product2" },
+        { product: "product3" },
       ],
-      price: [{ price: "10" }, { price: "20" }, { price: "30" }],
-      shippingAddress: "Lahore",
-      phone: "0900",
+      price: [{ price: "12" }, { price: "23" }, { price: "34" }],
+      shippingAddress: "Karachi",
+      phone: "123",
     },
   ];
 
@@ -37,12 +40,10 @@ export default function Orders() {
       <ViewOrdersHead />
       {data.map((item) => (
         <div>
+          {/* <Button onClick={()=>{console.log(item)}}>Click</Button> */}
           <ViewOrderBody obj={item} />
-          {/* <hr /> */}
         </div>
       ))}
-      {/* <h1>this is the Orders page`</h1> */}
-      {/* // <Button onClick={()=>{console.log(item)}}>Click me</Button> */}
     </div>
   );
 }

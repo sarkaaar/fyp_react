@@ -11,24 +11,18 @@ export default function ViewOrderBody(obj) {
         borderRadius: "10px",
         margin: "20px",
         padding: "10px",
-        display:'flex',
-        justifyContent:"space-around"
-
+        display: "flex",
+        justifyContent: "space-around",
       }}
     >
+      <p>{obj.obj.username}</p>
+
       <p>
-        {obj.obj.username}
+        {obj.obj.products.map((item) => (
+          <p>{item.product}</p>
+        ))}
       </p>
       <p>
-      {obj.obj.products.map((item) => (
-        <div>
-          <p>
-         
-            {item.product}
-          </p>
-        </div>
-      ))}</p>
-      <p >
         {obj.obj.price.map((item) => (
           <div>
             <p>{item.price}</p>
@@ -36,22 +30,8 @@ export default function ViewOrderBody(obj) {
         ))}
       </p>
 
-      <p >
-        {obj.obj.shippingAddress}
-      </p>
-      <p >{obj.obj.phone}</p>
+      <p>{obj.obj.shippingAddress}</p>
+      <p>{obj.obj.phone}</p>
     </div>
   );
 }
-
-// {
-//     username: "name",
-//     products: [
-//       { product1: "product1" },
-//       { product2: "product2" },
-//       { product3: "product3" },
-//     ],
-//     price: [{ price: "12" }, { price2: "23" }, { price3: "34" }],
-//     shippingAddress: "Lahore",
-//     phone: "123",
-//   },
