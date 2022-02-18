@@ -41,13 +41,8 @@ export default function Header() {
       //   // margin: "0 auto",
       // }}
     >
-      <div
-        style={{
-          background: "#1976d2",
-          flexGrow: 1,
-          display: "flex",
-          justifyContent: "center",
-        }}
+      <div className="flex justify-center grow bg-blue-600"
+        
       >
         {/* <NavLink
           to={`/viewAppointments`}
