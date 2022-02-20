@@ -29,8 +29,8 @@ import AddProducts from "./Admin_Pages/AddProducts";
 import Inventory from "./Admin_Pages/Inventory";
 import Orders from "./Admin_Pages/Orders";
 import ViewDoctors from "./Admin_Pages/ViewDoctors";
-import AddCategory from "./Admin_Pages/Categories/AddCategory";
-import ViewCategory from "./Admin_Pages/Categories/ViewCategory";
+import Categories from "./Admin_Pages/Categories";
+// import ViewCategory from "./Admin_Pages/Categories/ViewCategory";
 
 // Doctors Pages
 import DoctorDashboard from "./Doctor_Pages/Dashboard";
@@ -52,8 +52,8 @@ function App() {
         <Route exact path="/returnProduct" element={<ProductReturn />} />
         <Route exact path="/Product" element={<Product />} />
         <Route exact path="/profile" element={<Profile />} />
-        <Route exact path="/admin/addCategory" element={<AddCategory />} />
-        <Route exact path="/admin/viewCategory" element={<ViewCategory />} />
+        <Route exact path="/admin/categories" element={<Categories />} />
+        {/* <Route exact path="/admin/viewCategory" element={<ViewCategory />} /> */}
 
         {/* User Clinical */}
         <Route exact path="/makeAppointments" element={<MakeAppointments />} />

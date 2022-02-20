@@ -1,84 +1,57 @@
-import * as React from "react";
-
-import { NavLink } from "react-router-dom";
-
 export default function Header() {
   return (
     <div>
-      <div
-        style={{
-          background: "#1976d2",
-          flexGrow: 1,
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <NavLink
-          to={`/admin/dashboard`}
-          activeClassName="active"
-          style={{ textDecoration: "none", color: "white", padding: "10px" }}
+      <div className="flex p-2 px-8 justify-around">
+        <a
+          href={"/admin/dashboard"}
+          className="font-medium text-gray-500 hover:text-gray-900"
         >
           DASHBOARD
-        </NavLink>
-
-        <NavLink
-          to={`/admin/sign_in`}
-          activeClassName="active"
-          style={{ textDecoration: "none", color: "white", padding: "10px" }}
+        </a>
+        <a
+          href={"/admin/sign_in"}
+          className="font-medium text-gray-500 hover:text-gray-900"
         >
           LOGIN
-        </NavLink>
-
-        <NavLink
-          to={`/admin/inventory`}
-          activeClassName="active"
-          style={{ textDecoration: "none", color: "white", padding: "10px" }}
+        </a>
+        <a
+          href={"/admin/inventory"}
+          className="font-medium text-gray-500 hover:text-gray-900"
         >
           INVENTORY
-        </NavLink>
-        <NavLink
-          to={`/admin/addProducts`}
-          activeClassName="active"
-          style={{ textDecoration: "none", color: "white", padding: "10px" }}
+        </a>
+        <a
+          href={"/admin/addProducts"}
+          className="font-medium text-gray-500 hover:text-gray-900"
         >
           ADD PRODUCTS
-        </NavLink>
-        <NavLink
-          to={`/admin/orders`}
-          activeClassName="active"
-          style={{ textDecoration: "none", color: "white", padding: "10px" }}
+        </a>
+        <a
+          href={"/admin/orders"}
+          className="font-medium text-gray-500 hover:text-gray-900"
         >
           ORDERS
-        </NavLink>
-        <NavLink
-          to={`/admin/addDoctor`}
-          activeClassName="active"
-          style={{ textDecoration: "none", color: "white", padding: "10px" }}
+        </a>
+        <a
+          href={"/admin/addDoctor"}
+          className="font-medium text-gray-500 hover:text-gray-900"
         >
-          ADD DOCTOR
-        </NavLink>
-        <NavLink
-          to={`/admin/viewDoctor`}
-          activeClassName="active"
-          style={{ textDecoration: "none", color: "white", padding: "10px" }}
+          ADD DOCTORS
+        </a>
+        <a
+          href={"/admin/viewDoctor"}
+          className="font-medium text-gray-500 hover:text-gray-900"
         >
           VIEW DOCTORS
-        </NavLink>
-        <NavLink
-          to={`/admin/addCategory`}
-          activeClassName="active"
-          style={{ textDecoration: "none", color: "white", padding: "10px" }}
+        </a>
+        <a
+          href={"/admin/categories"}
+          className="font-medium text-gray-500 hover:text-gray-900"
         >
-          ADD CATEGORY
-        </NavLink>
-        <NavLink
-          to={`/admin/viewCategory`}
-          activeClassName="active"
-          style={{ textDecoration: "none", color: "white", padding: "10px" }}
-        >
-          VIEW CATEGORY
-        </NavLink>
+          CATEGORIES
+        </a>
       </div>
+      <hr />
     </div>
   );
 }
