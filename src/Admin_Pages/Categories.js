@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Header from "./admin_components/Header";
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import { collection, addDoc, getDocs, deleteDoc } from "firebase/firestore";
 import { db } from "../firebase-config";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
@@ -16,23 +16,23 @@ export default function AddCategory() {
 
   //  Get Categories Names
   const [cat, setCat] = useState([]);
-  const categoriesCollection = collection(db, "categories");
+  const catCollection = collection(db, "categories");
 
   // Get Sub-Categories Names
   const [sub_cat, setSub_Cat] = useState([]);
-  const sub_categoriesCollection = collection(db, "sub-categories");
+  const sub_catCollection = collection(db, "sub-categories");
 
   useEffect(() => {
     // Search Categories
     const getCategories = async () => {
-      const data = await getDocs(categoriesCollection);
+      const data = await getDocs(catCollection);
       setCat(data.docs.map((doc) => doc.data().name));
     };
 
     // Search Sub-Categories
     const getSub_Categories = async () => {
-      const data = await getDocs(sub_categoriesCollection);
-      setSub_Cat(data.docs.map((doc) => doc.data().name));
+      const data = await getDocs(sub_catCollection);
+      setSub_Cat(data.docs.map((doc) => doc.data()));
     };
     // Function Calls
     getCategories();
@@ -41,18 +41,31 @@ export default function AddCategory() {
 
   // Add Products
   const addParentCategory = async () => {
-    const newProduct = {};
-    await addDoc(categoriesCollection, newProduct);
+    await addDoc(catCollection, { name: category });
+    console.log("Category Added");
   };
 
   const addChildCategory = async () => {
-    const newProduct = {};
-    await addDoc(sub_categoriesCollection, newProduct);
+    await addDoc(sub_catCollection, { sub_: subCategory, cat_: category });
   };
+
+  // Delete Categories
+  // const deleteCategory = async (id) => {
+  //   const subCat_doc = collection(db, "sub-categories", id);
+  //   await deleteDoc(subCat_doc);
+  //   console.log("Category Deleted");
+  // };
 
   return (
     <div>
       <Header />
+      <button
+        onClick={() => {
+          console.log(sub_cat);
+        }}
+      >
+        Click me
+      </button>
       <div className="flex mt-4">
         <div style={{ border: "2px solid black", width: "33%" }}>
           <div className=" w-96 mt-24 p-5">
@@ -67,7 +80,9 @@ export default function AddCategory() {
                 label="Category Name"
                 name="name"
                 value={category}
-                onChange={(e)=>{setCategory(e.target.value)}}
+                onChange={(e) => {
+                  setCategory(e.target.value);
+                }}
               />
 
               <Button
@@ -92,15 +107,10 @@ export default function AddCategory() {
                 label="Sub-Category"
                 name="name"
                 value={subCategory}
-                onChange={(e)=>{setSubCategory(e.target.value)}}
+                onChange={(e) => {
+                  setSubCategory(e.target.value);
+                }}
               />
-              {/* <TextField
-                margin="normal"
-                fullWidth
-                name="parent"
-                label="Parent Category"
-                type="text"
-              /> */}
 
               <FormControl fullWidth style={{ margin: "10px 0" }}>
                 <InputLabel id="demo-simple-select-label">Category</InputLabel>
@@ -131,11 +141,33 @@ export default function AddCategory() {
         </div>
         <hr />
         <div style={{ border: "2px solid black", width: "33%" }}>
-          <h1>Parent Categories</h1>
+          <h1 className="text-4xl p-4">Parent Categories</h1>
+          <hr />
+          {cat.map((item) => {
+            return (
+              <div className="p-2">
+                <h1>{item}</h1>
+                <hr />
+              </div>
+            );
+          })}
         </div>
         <hr />
         <div style={{ border: "2px solid black", width: "33%" }}>
-          <h1>Child Categories</h1>
+          <h1 className="text-4xl p-4">Child Categories</h1>
+          <hr />
+          {sub_cat.map((item) => {
+            return (
+              <div>
+                <div className="flex justify-between p-2">
+                  <h1>{item.sub_}</h1>
+                  <h1>{item.cat_}</h1>
+                  {/* <button onClick={deleteCategory}>X</button> */}
+                </div>
+                <hr />
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
