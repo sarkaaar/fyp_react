@@ -2,17 +2,16 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 // User Pages
-import SignIn from "./Pages/SignIn";
-import SignUp from "./Pages/SignUp";
-import CheckoutContent from "./Pages/Checkout/Checkout";
-import HomePage from "./Pages/HomePage";
-// import DashboardContent from "./Pages/Dashboard/Dashboard";
-import Products from "./Pages/All_Products";
-import Cart from "./Pages/Cart";
-import Chatbot from "./Pages/Chatbot";
+import SignIn from "./Pages/User_Pages/SignIn";
+import SignUp from "./Pages/User_Pages/SignUp";
+import CheckoutContent from "./Pages/User_Pages/Checkout/Checkout";
+import HomePage from "./Pages/User_Pages/HomePage";
+import Products from "./Pages/User_Pages/All_Products";
+import Cart from "./Pages/User_Pages/Cart";
+import Chatbot from "./Pages/User_Pages/Chatbot";
 import ProductReturn from "./Pages/Services/ProductRetrun";
-import Product from "./Pages/Product";
-import Profile from "./Pages/Profile";
+import Product from "./Pages/User_Pages/Product";
+import Profile from "./Pages/User_Pages/Profile";
 
 // Clinical Pages
 import MakeAppointments from "./Pages/Services/MakeAppointments";
@@ -22,19 +21,19 @@ import Maps from "./Pages/Services/Maps";
 import Services from "./Pages/Services/Services";
 
 // Admin Pages
-import AdminSignIn from "./Admin_Pages/Admin_SignIn";
-import Dashboard from "./Admin_Pages/Dashboard";
-import AddDoctor from "./Admin_Pages/AddDoctor";
-import AddProducts from "./Admin_Pages/AddProducts";
-import Inventory from "./Admin_Pages/Inventory";
-import Orders from "./Admin_Pages/Orders";
-import ViewDoctors from "./Admin_Pages/ViewDoctors";
-import Categories from "./Admin_Pages/Categories";
+import AdminSignIn from "./Pages/Admin_Pages/Admin_SignIn";
+import Dashboard from "./Pages/Admin_Pages/Dashboard";
+import AddDoctor from "./Pages/Admin_Pages/AddDoctor";
+import AddProducts from "./Pages/Admin_Pages/AddProducts";
+import Inventory from "./Pages/Admin_Pages/Inventory";
+import Orders from "./Pages/Admin_Pages/Orders";
+import ViewDoctors from "./Pages/Admin_Pages/ViewDoctors";
+import Categories from "./Pages/Admin_Pages/Categories";
 // import ViewCategory from "./Admin_Pages/Categories/ViewCategory";
 
 // Doctors Pages
-import DoctorDashboard from "./Doctor_Pages/Dashboard";
-import DoctorSignIn from "./Doctor_Pages/Doctor_SignIn";
+import DoctorDashboard from "./Pages/Doctor_Pages/Dashboard";
+import DoctorSignIn from "./Pages/Doctor_Pages/Doctor_SignIn";
 function App() {
   return (
     <Router>

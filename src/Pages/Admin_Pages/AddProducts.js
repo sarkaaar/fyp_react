@@ -6,7 +6,7 @@ import Header from "./admin_components/Header";
 import { useState, useEffect } from "react";
 import { IconButton } from "@mui/material";
 import { collection, addDoc, getDocs } from "firebase/firestore";
-import { db } from "../firebase-config";
+import { db } from "../../firebase-config";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";

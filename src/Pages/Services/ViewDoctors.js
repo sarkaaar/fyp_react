@@ -1,5 +1,5 @@
 import * as React from "react";
-import Header from "../../Components/Header";
+import Header from "../User_Pages/Components/Header";
 
 
 export default function MakeAppointments() {

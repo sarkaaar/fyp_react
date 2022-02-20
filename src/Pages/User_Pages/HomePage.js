@@ -1,5 +1,5 @@
-import banner from "../assets/images/banner.jpg";
-import Header from "../Components/Header";
+import banner from "../../assets/images/banner.jpg";
+import Header from "./Components/Header";
 
 export default function Example() {
   return (

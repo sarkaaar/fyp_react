@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Header from "./admin_components/Header";
 import { collection, addDoc, getDocs, deleteDoc } from "firebase/firestore";
-import { db } from "../firebase-config";
+import { db } from "../../firebase-config";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";

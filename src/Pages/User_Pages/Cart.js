@@ -1,6 +1,6 @@
 import * as React from "react";
-import Header from "../Components/Header";
-import CartsCard from "../Components/CartsCard";
+import Header from "./Components/Header";
+import CartsCard from "./Components/CartsCard";
 import Link from "@mui/material/Link";
 
 export default function Review() {

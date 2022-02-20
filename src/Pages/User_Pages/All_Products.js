@@ -1,6 +1,6 @@
 import * as React from "react";
-import MediaCard from "../Components/MediaCard";
-import Header from "../Components/Header";
+import MediaCard from "./Components/MediaCard";
+import Header from "./Components/Header";
 import Checkbox from "@mui/material/Checkbox";
 import { Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";

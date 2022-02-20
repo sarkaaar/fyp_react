@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Header from "../Components/Header";
+import Header from "./Components/Header";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import { Button } from "@mui/material";
 import { TextField } from "@mui/material";
