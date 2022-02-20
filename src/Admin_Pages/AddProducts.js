@@ -3,7 +3,8 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import Header from "./admin_components/Header";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { IconButton } from "@mui/material";
 
 export default function AddProducts() {
   const [name, setName] = useState("");
@@ -12,21 +13,25 @@ export default function AddProducts() {
   const [salePrice, setSalePrice] = useState("");
   const [image, setImage] = useState("");
   const [category, setCategory] = useState("");
-  const [quantity, setQuantity] = useState("");
-  const [colors, setColors] = useState([]);
   const [subCategory, setSubCategory] = useState("");
+
+  const [variants, setVariants] = useState([["", 0]]);
+
+  const updateVariant = (v, i) => {
+    const tempVariants = [...variants];
+    tempVariants[i] = v;
+    setVariants(tempVariants);
+  };
+
+  const removeVariant = (i) => {
+    variants.splice(i, 1);
+    setVariants([...variants]);
+  };
 
   return (
     <div>
       <Header />
       <div className="w-96 m-auto mt-6">
-        <Button
-          onClick={() => {
-            console.log(colors);
-          }}
-        >
-          Click me
-        </Button>
         <h1 className="text-center text-3xl">Add a New Product</h1>
         <div className="">
           <TextField
@@ -39,11 +44,6 @@ export default function AddProducts() {
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          {/* {costPrice === salePrice ? (
-            <p>Cost Price and Sale Price cannot be the same</p>
-          ) : (
-            <p></p>
-          )} */}
 
           <TextField
             margin="normal"
@@ -67,28 +67,48 @@ export default function AddProducts() {
             value={salePrice}
             onChange={(e) => setSalePrice(e.target.value)}
           />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="stock"
-            label="Stock"
-            type="text"
-            id="stock"
-            value={quantity}
-            onChange={(e) => setQuantity(e.target.value)}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="colors"
-            label="Colors"
-            type="text"
-            id="colors"
-            value={colors}
-            onChange={(e) => setColors(e.target.value)}
-          />
+
+          <>
+            {variants.map(([variant, quantity], i) => (
+              <div key={i} className="flex items-center gap-4">
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="variant"
+                  type="text"
+                  id="variant"
+                  label="Varients"
+                  onChange={(e) => updateVariant([e.target.value, quantity], i)}
+                  value={variant}
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="quantity"
+                  type="text"
+                  id="quantity"
+                  label="Qunatity"
+                  onChange={(e) => updateVariant([variant, +e.target.value], i)}
+                  value={quantity}
+                />
+                <IconButton type="button" onClick={() => removeVariant(i)}>
+                  x
+                </IconButton>
+              </div>
+            ))}
+            <Button
+              sx={{ marginTop: "10px", marginBottom: "10px" }}
+              type="button"
+              fullWidth
+              variant="contained"
+              onClick={() => setVariants([...variants, ["", 0]])}
+            >
+              Add variant
+            </Button>
+          </>
+
           <TextField
             margin="normal"
             required

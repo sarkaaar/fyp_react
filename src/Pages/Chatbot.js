@@ -5,8 +5,8 @@ import MessageIcon from "@mui/icons-material/Message";
 import SendIcon from "@mui/icons-material/Send";
 
 export default function Chatbot() {
-  const [question, setQuestion] = React.useState("");
-  const [answer, setAnswer] = React.useState("");
+  const [question, setQuestion] = React.useState([]);
+  const [answer, setAnswer] = React.useState([]);
 
   const trigger = [
     //0

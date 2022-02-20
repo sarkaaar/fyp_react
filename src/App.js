@@ -6,7 +6,7 @@ import SignIn from "./Pages/SignIn";
 import SignUp from "./Pages/SignUp";
 import CheckoutContent from "./Pages/Checkout/Checkout";
 import HomePage from "./Pages/HomePage";
-import DashboardContent from "./Pages/Dashboard/Dashboard";
+// import DashboardContent from "./Pages/Dashboard/Dashboard";
 import Products from "./Pages/All_Products";
 import Cart from "./Pages/Cart";
 import Chatbot from "./Pages/Chatbot";
@@ -44,7 +44,7 @@ function App() {
         <Route exact path="/sign_in" element={<SignIn />} />
         <Route exact path="/sign_up" element={<SignUp />} />
         <Route exact path="/checkout" element={<CheckoutContent />} />
-        <Route exact path="/dashboard" element={<DashboardContent />} />
+        {/* <Route exact path="/dashboard" element={<DashboardContent />} /> */}
         <Route exact path="/products" element={<Products />} />
         <Route exact path="/cart" element={<Cart />} />
         <Route exact path="/maps" element={<Maps />} />
