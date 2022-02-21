@@ -24,13 +24,12 @@ import Services from "./Pages/Services/Services";
 import AdminSignIn from "./Pages/Admin_Pages/Admin_SignIn";
 import Dashboard from "./Pages/Admin_Pages/Dashboard";
 import AddDoctor from "./Pages/Admin_Pages/AddDoctor";
-import AddProducts from "./Pages/Admin_Pages/AddProducts";
+import AddProducts from "./Pages/Admin_Pages/ProductsAdd";
 import Inventory from "./Pages/Admin_Pages/Inventory";
 import Orders from "./Pages/Admin_Pages/Orders";
 import ViewDoctors from "./Pages/Admin_Pages/ViewDoctors";
 import Categories from "./Pages/Admin_Pages/Categories";
-// import ViewCategory from "./Admin_Pages/Categories/ViewCategory";
-
+import ProductsList from "./Pages/Admin_Pages/ProductsList";
 // Doctors Pages
 import DoctorDashboard from "./Pages/Doctor_Pages/Dashboard";
 import DoctorSignIn from "./Pages/Doctor_Pages/Doctor_SignIn";
@@ -68,6 +67,7 @@ function App() {
         <Route exact path="/admin/inventory" element={<Inventory />} />
         <Route exact path="/admin/orders" element={<Orders />} />
         <Route exact path="/admin/viewDoctor" element={<ViewDoctors />} />
+        <Route exact path="/admin/viewAllProducts" element={<ProductsList />} />
 
         {/* Doctors Panel */}
         <Route exact path="/doctor/dashboard" element={<DoctorDashboard />} />

@@ -126,5 +126,3 @@ export default function AddDoctor() {
     </div>
   );
 }
-
-// const data = {name,email,dob,cnic,phone,c_name,c_address,c_phone,fees,commision}

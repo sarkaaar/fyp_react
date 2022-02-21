@@ -50,6 +50,12 @@ export default function Header() {
         >
           CATEGORIES
         </a>
+        <a
+          href={"/admin/viewAllProducts"}
+          className="font-medium text-gray-500 hover:text-gray-900"
+        >
+          ALL PRODUCTS
+        </a>
       </div>
       <hr />
     </div>
