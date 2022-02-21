@@ -87,9 +87,6 @@ export default function AddProducts() {
     // navigate('/addPatient');
     // await window.location.reload(false);
   };
-  const uploadFiles = (file) => {
-    // await addDoc(productsCollection, {});
-  };
 
   return (
     <div>
@@ -198,7 +195,6 @@ export default function AddProducts() {
           />
           <p>Click on the "Choose File" button to upload a images:</p>
           <input type="file" name="file" id="file" className="mb-6" />
-          <button onClick={uploadFiles}>Upload Files</button>
           <Button
             type="submit"
             fullWidth
