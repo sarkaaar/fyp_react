@@ -1,14 +1,12 @@
 import * as React from "react";
 
-import Button from "@mui/material/Button";
 import { IconButton, TextField } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 export default function Header() {
   return (
-    <div className="z-10" >
+    <div className="z-10">
       <div className="flex justify-between">
         <div className="flex p-2 px-8 gap-8">
           <a
@@ -66,12 +64,13 @@ export default function Header() {
             fullWidth
             style={{ height: "55px" }}
           />
-          <span className="flex items-center w-16"
+          <span
+            className="flex items-center w-16"
             style={{
               border: "2px solid gray",
             }}
           >
-            <SearchIcon className="mx-auto"/>
+            <SearchIcon className="mx-auto" />
           </span>
         </div>
         <IconButton style={{ width: "55px", marginRight: "20px" }}>

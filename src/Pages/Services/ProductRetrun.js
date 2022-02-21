@@ -3,8 +3,27 @@ import Header from "../User_Pages/Components/Header";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import { useState } from "react";
+
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../../firebase-config";
+
+const product_Return_Collection = collection(db, "productReturn");
+
+// Add Products
+const productReturn = async () => {
+  const newProduct = {};
+  await addDoc(product_Return_Collection, newProduct);
+};
 
 export default function ProductReturn() {
+  const [orderNo, setOrderNo] = useState("");
+  const [productID, setProductID] = useState("");
+  const [produName, setProductNme] = useState("");
+  const [issue, setIssue] = useState("");
+  const [description, setDescription] = useState("");
+  const [images, setImages] = useState("");
+
   return (
     <div>
       <Header />
@@ -24,9 +43,7 @@ export default function ProductReturn() {
             margin="normal"
             required
             fullWidth
-            id="email"
             label="Order #"
-            name="email"
             autoComplete="email"
             autoFocus
           />
@@ -34,31 +51,22 @@ export default function ProductReturn() {
             margin="normal"
             required
             fullWidth
-            name="password"
             label="Product ID"
             type="text"
-            id="password"
-            autoComplete="current-password"
           />
           <TextField
             margin="normal"
             required
             fullWidth
-            name="password"
             label="Product Name"
             type="text"
-            id="password"
-            autoComplete="current-password"
           />
           <TextField
             margin="normal"
             required
             fullWidth
-            name="password"
             label="Issue"
             type="text"
-            id="password"
-            autoComplete="current-password"
           />
 
           <TextareaAutosize
@@ -74,8 +82,9 @@ export default function ProductReturn() {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            onClick={productReturn}
           >
-            Add Product
+            Submit Form
           </Button>
         </div>
       </div>

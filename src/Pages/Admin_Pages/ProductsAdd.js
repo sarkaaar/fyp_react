@@ -5,7 +5,14 @@ import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import Header from "./admin_components/Header";
 import { useState, useEffect } from "react";
 import { IconButton } from "@mui/material";
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  updateDoc,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 import { db } from "../../firebase-config";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
@@ -65,30 +72,30 @@ export default function AddProducts() {
 
   // Add Products
   const addProduct = async () => {
-    const variants_new = {};
-    variants.map((item) => {
-      // {...variants_new}
-      variants_new.push({ var_name: item[0], qty: item[1] });
-    });
+    // const variants_new = {};
+    // variants.map((item) => {
+    //   // {...variants_new}
+    //   variants_new.push({ var_name: item[0], qty: item[1] });
+    // });
 
-    console.log(variants_new);
+    // console.log(variants_new);
 
     const newProduct = {
       name: name,
       costPrice: costPrice,
       salePrice: salePrice,
-      variants: variants_new,
+      // variants: variants_new,
       category: category,
       subCategory: subCategory,
       description: description,
       // image: image,
     };
-    console.log({ variants });
-
-    // console.log("newProduct", );
     await addDoc(productsCollection, newProduct);
     // navigate('/addPatient');
     // await window.location.reload(false);
+  };
+  const uploadFiles = (file) => {
+    // await addDoc(productsCollection, {});
   };
 
   return (
@@ -101,9 +108,7 @@ export default function AddProducts() {
             margin="normal"
             required
             fullWidth
-            id="product_name"
             label="Product Name"
-            name="product_name"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
@@ -112,10 +117,8 @@ export default function AddProducts() {
             margin="normal"
             required
             fullWidth
-            name="cost_price"
             label="Cost Price"
             type="text"
-            id="cost_price"
             value={costPrice}
             onChange={(e) => setCostPrice(e.target.value)}
           />
@@ -123,10 +126,8 @@ export default function AddProducts() {
             margin="normal"
             required
             fullWidth
-            name="sale_Price"
             label="Sale Price"
             type="text"
-            id="sale_Price"
             value={salePrice}
             onChange={(e) => setSalePrice(e.target.value)}
           />
@@ -137,9 +138,7 @@ export default function AddProducts() {
                 margin="normal"
                 required
                 fullWidth
-                name="variant"
                 type="text"
-                id="variant"
                 label="Varients"
                 onChange={(e) => updateVariant([e.target.value, quantity], i)}
                 value={variant}
@@ -148,9 +147,7 @@ export default function AddProducts() {
                 margin="normal"
                 required
                 fullWidth
-                name="quantity"
                 type="text"
-                id="quantity"
                 label="Qunatity"
                 onChange={(e) => updateVariant([variant, +e.target.value], i)}
                 value={quantity}
@@ -170,18 +167,6 @@ export default function AddProducts() {
             Add variant
           </Button>
 
-          {/* <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="category"
-            label="Category"
-            type="text"
-            id="category"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          /> */}
-
           <FormControl fullWidth style={{ margin: "10px 0" }}>
             <InputLabel id="demo-simple-select-label">Category</InputLabel>
             <Select
@@ -196,16 +181,7 @@ export default function AddProducts() {
               })}
             </Select>
           </FormControl>
-          {/* <TextField
-            margin="normal"
-            fullWidth
-            name="sub_category"
-            label="Sub-Category (if any)"
-            type="text"
-            id="sub_category"
-            value={subCategory}
-            onChange={(e) => setSubCategory(e.target.value)}
-          /> */}
+
           <FormControl fullWidth style={{ margin: "10px 0" }}>
             <InputLabel id="demo-simple-select-label">Sub-Category</InputLabel>
             <Select
@@ -229,6 +205,7 @@ export default function AddProducts() {
           />
           <p>Click on the "Choose File" button to upload a images:</p>
           <input type="file" name="file" id="file" className="mb-6" />
+          <button onClick={uploadFiles}>Upload Files</button>
           <Button
             type="submit"
             fullWidth
