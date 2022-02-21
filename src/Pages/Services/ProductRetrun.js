@@ -8,22 +8,28 @@ import { useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../firebase-config";
 
-const product_Return_Collection = collection(db, "productReturn");
-
-// Add Products
-const productReturn = async () => {
-  const newProduct = {};
-  await addDoc(product_Return_Collection, newProduct);
-};
-
 export default function ProductReturn() {
   const [orderNo, setOrderNo] = useState("");
   const [productID, setProductID] = useState("");
-  const [produName, setProductNme] = useState("");
+  const [productName, setProductNme] = useState("");
   const [issue, setIssue] = useState("");
   const [description, setDescription] = useState("");
   const [images, setImages] = useState("");
 
+  const product_Return_Collection = collection(db, "productReturn");
+
+  // Add Products
+  const productReturn = async () => {
+    const newProduct = {
+      orderNo: orderNo,
+      productID: productID,
+      productName: productName,
+      issue: issue,
+      description: description,
+      images: images,
+    };
+    await addDoc(product_Return_Collection, newProduct);
+  };
   return (
     <div>
       <Header />
@@ -44,8 +50,9 @@ export default function ProductReturn() {
             required
             fullWidth
             label="Order #"
-            autoComplete="email"
             autoFocus
+            value={orderNo}
+            onChange={(e) => setOrderNo(e.target.value)}
           />
           <TextField
             margin="normal"
@@ -53,6 +60,8 @@ export default function ProductReturn() {
             fullWidth
             label="Product ID"
             type="text"
+            value={productID}
+            onChange={(e) => setProductID(e.target.value)}
           />
           <TextField
             margin="normal"
@@ -60,6 +69,8 @@ export default function ProductReturn() {
             fullWidth
             label="Product Name"
             type="text"
+            value={productName}
+            onChange={(e) => setProductNme(e.target.value)}
           />
           <TextField
             margin="normal"
@@ -67,15 +78,25 @@ export default function ProductReturn() {
             fullWidth
             label="Issue"
             type="text"
+            value={issue}
+            onChange={(e) => setIssue(e.target.value)}
           />
 
           <TextareaAutosize
             minRows={10}
             placeholder="  Description*"
             style={{ marginTop: "15px", width: "400px" }}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           />
           <p>Click on the "Choose File" button to upload a file:</p>
-          <input type="file" name="file" id="file" />
+          <input
+            type="file"
+            name="file"
+            id="file"
+            // value={images}
+            // onChange={(e) => setImages(e.target.value)}
+          />
 
           <Button
             type="submit"
