@@ -1,16 +1,17 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
+import { Button, TextField } from "@mui/material";
+// import TextField from "@mui/material/TextField";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import Header from "./admin_components/Header";
 import { useState, useEffect } from "react";
 import { IconButton } from "@mui/material";
 import { collection, addDoc, getDocs } from "firebase/firestore";
-import { db } from "../../firebase-config";
+import { db, storage } from "../../firebase-config";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
+import { uploadBytesResumable, ref, getDownloadURL } from "firebase/storage";
 
 export default function AddProducts() {
   const [name, setName] = useState("");
@@ -20,7 +21,9 @@ export default function AddProducts() {
   const [category, setCategory] = useState("");
   const [subCategory, setSubCategory] = useState("");
   const [description, setDescription] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState();
+
+  const [progress, setProgress] = useState();
 
   // Variants Add and Remove
   const updateVariant = (v, i) => {
@@ -88,12 +91,36 @@ export default function AddProducts() {
     // await window.location.reload(false);
   };
 
+  const upload = () => {
+    if (!image[0]) return;
+
+    const storageRef = ref(storage, `products/${image[0].name}`);
+    const uploadTask = uploadBytesResumable(storageRef, image[0]);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const prog = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+        setProgress(prog);
+      },
+      (error) => console.log(error),
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          console.log(url);
+        });
+      }
+    );
+  };
+
   return (
     <div>
       <Header />
       <div className="w-96 m-auto mt-6">
         <h1 className="text-center text-3xl">Add a New Product</h1>
         <div className="">
+          <button onClick={()=>{console.log(image)}}>Click print</button>
+          <button onClick={()=>{console.log(image[0].name)}}>Type print</button>
           <TextField
             margin="normal"
             required
@@ -194,13 +221,34 @@ export default function AddProducts() {
             onChange={(e) => setDescription(e.target.value)}
           />
           <p>Click on the "Choose File" button to upload a images:</p>
-          <input type="file" name="file" id="file" className="mb-6" />
+          <input
+            type="file"
+            // name="file"
+            // id="file"
+            className="mb-6"
+            onChange={(e) => {
+              setImage(e.target.files);
+            }}
+            // multiple
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            className="mt-6 mb-12"
+            onClick={upload}
+          >
+            Images Upload
+          </Button>
+          <h3>Uploaded {progress}</h3>
+          <hr className="mt-6" />
           <Button
             type="submit"
             fullWidth
             variant="contained"
             className="mt-6 mb-12"
             onClick={addProduct}
+            // className="mt-6 mb-12"
           >
             Add Product
           </Button>

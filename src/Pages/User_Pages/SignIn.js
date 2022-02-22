@@ -1,5 +1,5 @@
 import Header from "./Components/Header";
-import GoogleIcon from '@mui/icons-material/Google';
+import GoogleIcon from "@mui/icons-material/Google";
 export default function Example() {
   return (
     <>
@@ -75,10 +75,21 @@ export default function Example() {
                 Sign in
               </button>
             </div>
+            <div className="flex">
+              <p>New to Pet-Planet </p>
+              <a
+                href="/sign_up"
+                className="font-medium text-indigo-600 hover:text-indigo-500"
+              >
+                Sign Up
+              </a>
+            </div>
+            <hr />
+
             <div className="">
               <h2 className="w-6 m-auto">Or</h2>
               <button className="mt-4 py-2 px-4 w-full text-white bg-red-600 hover:bg-red-700 focus:ring-red-500 rounded-md">
-                Sign in with <GoogleIcon/>
+                Sign in with <GoogleIcon />
               </button>
             </div>
           </form>

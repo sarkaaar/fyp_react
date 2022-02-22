@@ -3,6 +3,8 @@ export default function () {
   return (
     <div>
       <Header />
+        <h1>Products List</h1>
+            
     </div>
   );
 }
