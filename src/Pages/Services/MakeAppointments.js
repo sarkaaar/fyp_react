@@ -8,27 +8,28 @@ import { MenuItem } from "@mui/material";
 
 export default function MakeAppointments() {
   const timeSlots = [
-    "09:00-09:15",
-    "09:15-09:30",
-    "09:30-10:00",
-    "10:00-10:15",
-    "10:15-10:30",
-    "10:30-10:45",
-    "10:45-11:00",
-    "11:00-11:15",
-    "11:15-11:30",
-    "11:30-11:45",
-    "11:45-12:00",
-    "12:00-12:15",
-    "12:15-12:30",
-    "12:30-12:45",
-    "12:45-01:00",
-    "01:00-01:15",
-    "01:15-01:30",
-    "01:30-01:45",
-    "01:45-02:00",
-    
+    "09:00 AM  -  09:15 AM",
+    "09:15 AM  -  09:30 AM",
+    "09:30 AM  -  10:00 AM",
+    "10:00 AM  -  10:15 AM",
+    "10:15 AM  -  10:30 AM",
+    "10:30 AM  -  10:45 AM",
+    "10:45 AM  -  11:00 AM",
+    "11:00 AM  -  11:15 AM",
+    "11:15 AM  -  11:30 AM",
+    "11:30 AM  -  11:45 AM",
+    "11:45 AM  -  12:00 AM",
+    "12:00 PM  -  12:15 PM",
+    "12:15 PM  -  12:30 PM",
+    "12:30 PM  -  12:45 PM",
+    "12:45 PM  -  01:00 PM",
+    "01:00 PM  -  01:15 PM",
+    "01:15 PM  -  01:30 PM",
+    "01:30 PM  -  01:45 PM",
+    "01:45 PM  -  02:00 PM",
   ];
+
+
   return (
     <div>
       <Header />
@@ -43,6 +44,16 @@ export default function MakeAppointments() {
           name="date"
           label="Date"
           type="date"
+          id="date"
+
+        />
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          name="date"
+          label="Date"
+          type="time"
           id="date"
         />
         <FormControl fullWidth style={{ margin: "10px 0" }}>
@@ -61,6 +72,7 @@ export default function MakeAppointments() {
             })}
           </Select>
         </FormControl>
+       
       </div>
     </div>
   );

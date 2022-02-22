@@ -7,10 +7,7 @@ import { useState, useEffect } from "react";
 import { IconButton } from "@mui/material";
 import { collection, addDoc, getDocs } from "firebase/firestore";
 import { db, storage } from "../../firebase-config";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { uploadBytesResumable, ref, getDownloadURL } from "firebase/storage";
 
 export default function AddProducts() {
@@ -24,6 +21,7 @@ export default function AddProducts() {
   const [image, setImage] = useState();
 
   const [progress, setProgress] = useState();
+  const [urls, setUrls] = useState();
 
   // Variants Add and Remove
   const updateVariant = (v, i) => {
@@ -59,7 +57,7 @@ export default function AddProducts() {
     // Search Sub-Categories
     const getSub_Categories = async () => {
       const data = await getDocs(sub_categoriesCollection);
-      setSub_Cat(data.docs.map((doc) => doc.data().name));
+      setSub_Cat(data.docs.map((doc) => doc.data().sub_));
     };
     // Function Calls
     getCategories();
@@ -68,14 +66,6 @@ export default function AddProducts() {
 
   // Add Products
   const addProduct = async () => {
-    // const variants_new = {};
-    // variants.map((item) => {
-    //   // {...variants_new}
-    //   variants_new.push({ var_name: item[0], qty: item[1] });
-    // });
-
-    // console.log(variants_new);
-
     const newProduct = {
       name: name,
       costPrice: costPrice,
@@ -94,33 +84,52 @@ export default function AddProducts() {
   const upload = () => {
     if (!image[0]) return;
 
-    const storageRef = ref(storage, `products/${image[0].name}`);
-    const uploadTask = uploadBytesResumable(storageRef, image[0]);
+    for (let i = 0; i < image.length; i++) {
+      const storageRef = ref(storage, `products/${image[i].name}`);
+      const uploadTask = uploadBytesResumable(storageRef, image[i]);
 
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const prog = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const prog = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 
-        setProgress(prog);
-      },
-      (error) => console.log(error),
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-          console.log(url);
-        });
-      }
-    );
+          setProgress(prog);
+        },
+        (error) => console.log(error),
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+            console.log(url);
+          });
+        }
+      );
+    }
+
+    // const storageRef = ref(storage, `products/${image.name}`);
+    //const uploadTask = uploadBytesResumable(storageRef, image);
+
+    // uploadTask.on(
+    //   "state_changed",
+    //   (snapshot) => {
+    //     const prog = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+    //     setProgress(prog);
+    //   },
+    //   (error) => console.log(error),
+    //   () => {
+    //     getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+    //       console.log(url);
+    //     });
+    //   }
+    // );
   };
 
   return (
     <div>
       <Header />
+
       <div className="w-96 m-auto mt-6">
         <h1 className="text-center text-3xl">Add a New Product</h1>
         <div className="">
-          <button onClick={()=>{console.log(image)}}>Click print</button>
-          <button onClick={()=>{console.log(image[0].name)}}>Type print</button>
           <TextField
             margin="normal"
             required
@@ -223,13 +232,11 @@ export default function AddProducts() {
           <p>Click on the "Choose File" button to upload a images:</p>
           <input
             type="file"
-            // name="file"
-            // id="file"
             className="mb-6"
             onChange={(e) => {
               setImage(e.target.files);
             }}
-            // multiple
+            multiple
           />
           <Button
             type="submit"

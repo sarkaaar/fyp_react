@@ -1,43 +1,65 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
+import { Button, TextField } from "@mui/material";
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import Header from "./admin_components/Header";
+import { useState } from "react";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../../firebase-config";
 
 export default function AddDoctor() {
+  const doctorsCollection = collection(db, "doctors");
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [dob, setDOB] = useState("");
+  const [cnic, setCNIC] = useState("");
+  const [phone, setPhone] = useState("");
+  const [clinicAddress, setClinicAddress] = useState("");
+  const [clinicName, setClinicName] = useState("");
+  const [clinicPhone, setClinicPhone] = useState("");
+  const [fees, setFees] = useState("");
+  const [commision, setCommision] = useState("");
+  const [description, setDescription] = useState("");
+
+  const addDoctor = async () => {
+    const newDoctor = {
+      name: name,
+      email: email,
+      dob: dob,
+      cnic: cnic,
+      phone: phone,
+      clinicAddress: clinicAddress,
+      clinicName: clinicName,
+      clinicPhone: clinicPhone,
+      fees: fees,
+      commision: commision,
+      description: description,
+    };
+    await addDoc(doctorsCollection, newDoctor);
+    console.log("Doctor Added");
+  };
   return (
     <div>
       <Header />
-      <div
-        style={{
-          margin: "auto",
-          marginTop: "48px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          width: "400px",
-        }}
-      >
-        <h1>Add a New Doctor</h1>
+      <div className="m-auto mt-12 align-center w-96">
+        <h1 className="text-4xl m-auto px-10">Add a New Doctor</h1>
         <div>
           <TextField
             margin="normal"
             required
             fullWidth
-            id="email"
             label="Doctor Name"
-            name="email"
-            autoComplete="email"
-            autoFocus
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
           <TextField
             margin="normal"
             required
             fullWidth
-            id="email"
             label="Email"
-            name="email"
-            autoComplete="email"
             autoFocus
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
             margin="normal"
@@ -46,78 +68,88 @@ export default function AddDoctor() {
             name="password"
             label="DOB"
             type="date"
-            id="password"
+            value={dob}
+            onChange={(e) => setDOB(e.target.value)}
           />
           <TextField
             margin="normal"
             required
             fullWidth
-            name="password"
             label="CNIC"
             type="text"
-            id="password"
-            autoComplete="current-password"
+            value={cnic}
+            onChange={(e) => setCNIC(e.target.value)}
           />
           <TextField
             margin="normal"
             required
             fullWidth
-            name="password"
             label="Phone No."
             type="text"
-            id="password"
             autoComplete="current-password"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
           />
           <TextField
             margin="normal"
             required
             fullWidth
-            name="password"
             label="Clinic Name"
             type="text"
-            id="password"
+            value={clinicName}
+            onChange={(e) => setClinicName(e.target.value)}
           />
           <TextField
             margin="normal"
             required
             fullWidth
-            name="password"
             label="Clinic Address"
             type="text"
-            id="password"
+            value={clinicAddress}
+            onChange={(e) => setClinicAddress(e.target.value)}
           />
           <TextField
             margin="normal"
             required
             fullWidth
-            name="password"
             label="Clinic Phone"
             type="text"
-            id="password"
+            value={clinicPhone}
+            onChange={(e) => setClinicPhone(e.target.value)}
           />
           <TextField
             margin="normal"
             required
             fullWidth
-            name="password"
             label="Fees"
             type="text"
-            id="password"
+            value={fees}
+            onChange={(e) => setFees(e.target.value)}
           />
           <TextField
             margin="normal"
             required
             fullWidth
-            name="commision"
             label="Commision"
             type="number"
-            id="commision"
+            value={commision}
+            onChange={(e) => setCommision(e.target.value)}
+          />
+          <TextareaAutosize
+            margin="normal"
+            required
+            minRows={10}
+            placeholder="  Description*"
+            className="mt-8 w-full"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           />
           <Button
             type="submit"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            onClick={addDoctor}
           >
             Add Doctor
           </Button>
