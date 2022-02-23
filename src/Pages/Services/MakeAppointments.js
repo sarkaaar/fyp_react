@@ -29,7 +29,6 @@ export default function MakeAppointments() {
     "01:45 PM  -  02:00 PM",
   ];
 
-
   return (
     <div>
       <Header />
@@ -45,7 +44,6 @@ export default function MakeAppointments() {
           label="Date"
           type="date"
           id="date"
-
         />
         <TextField
           margin="normal"
@@ -72,7 +70,6 @@ export default function MakeAppointments() {
             })}
           </Select>
         </FormControl>
-       
       </div>
     </div>
   );
