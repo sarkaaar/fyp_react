@@ -42,7 +42,6 @@ function App() {
         <Route exact path="/sign_in" element={<SignIn />} />
         <Route exact path="/sign_up" element={<SignUp />} />
         <Route exact path="/checkout" element={<CheckoutContent />} />
-        {/* <Route exact path="/dashboard" element={<DashboardContent />} /> */}
         <Route exact path="/products" element={<Products />} />
         <Route exact path="/cart" element={<Cart />} />
         <Route exact path="/maps" element={<Maps />} />
@@ -51,7 +50,6 @@ function App() {
         <Route exact path="/Product" element={<Product />} />
         <Route exact path="/profile" element={<Profile />} />
         <Route exact path="/admin/categories" element={<Categories />} />
-        {/* <Route exact path="/admin/viewCategory" element={<ViewCategory />} /> */}
 
         {/* User Clinical */}
         <Route exact path="/makeAppointments" element={<MakeAppointments />} />

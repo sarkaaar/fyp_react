@@ -6,7 +6,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 export default function Footer() {
   return (
     <div className="z-10 border-gray-800">
-      <div className="flex bg-gray-900 justify-between p-12">
+      <div className="flex bg-gray-900 justify-around p-12">
         <div>
           <h1 className="text-lg text-white p-2 font-bold">My Account</h1>
           <h2 className="text-lg text-white p-2">Orders</h2>
