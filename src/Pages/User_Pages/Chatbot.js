@@ -4,7 +4,7 @@ import MessageIcon from "@mui/icons-material/Message";
 // import Header from "../Components/Header";
 import SendIcon from "@mui/icons-material/Send";
 
-export default function Chatbot() {
+export default function bot() {
   const [question, setQuestion] = React.useState([]);
   const [answer, setAnswer] = React.useState([]);
 
@@ -97,7 +97,7 @@ export default function Chatbot() {
   return (
     <div style={{ width: "300px", background: "yellow" }}>
       {/* <Header /> */}
-      <h1>this is the Chatbot</h1>
+      <h1>this is the bot</h1>
       <div>
         <input
           value={question}
@@ -123,9 +123,9 @@ export default function Chatbot() {
         </div>
       }
 
-      {/* Chatbot template */}
+      {/* bot template */}
       <div
-        class="chat-bar-collapsible"
+        class="-bar-collapsible"
         style={{
           position: "fixed",
           bottom: 0,
@@ -134,7 +134,7 @@ export default function Chatbot() {
         }}
       >
         <button
-          id="chat-button"
+          id="-button"
           type="button"
           class="collapsible"
           style={{
@@ -151,7 +151,7 @@ export default function Chatbot() {
             borderBottom: "none",
           }}
         >
-          Chat with us!
+           with us!
           <MessageIcon />
         </button>
 
@@ -165,7 +165,7 @@ export default function Chatbot() {
           }}
         >
           <div
-            class="full-chat-block"
+            class="full--block"
             style={{
               width: "350px",
               background: "white",
@@ -186,7 +186,7 @@ export default function Chatbot() {
               }}
             >
               <div
-                class="chat-container"
+                class="-container"
                 style={{
                   maxHeight: "500px",
                   width: "100%",
@@ -198,8 +198,8 @@ export default function Chatbot() {
                 }}
               >
                 {/* <!-- Messages --> */}
-                <div id="chatbox">
-                  <h5 id="chat-timestamp"></h5>
+                <div id="box">
+                  <h5 id="-timestamp"></h5>
                   <p
                     id="botStarterMessage"
                     class="botText"
@@ -231,7 +231,7 @@ export default function Chatbot() {
 
                 {/* <!-- User input box --> */}
                 <div
-                  class="chat-bar-input-block"
+                  class="-bar-input-block"
                   style={{
                     display: "flex",
                     float: "left",
@@ -268,7 +268,7 @@ export default function Chatbot() {
                   </div>
 
                   <div
-                    class="chat-bar-icons"
+                    class="-bar-icons"
                     style={{
                       display: "flex",
                       justifyContent: "space-evenly",
@@ -284,7 +284,7 @@ export default function Chatbot() {
                   </div>
                 </div>
 
-                <div id="chat-bar-bottom">
+                <div id="-bar-bottom">
                   <p></p>
                 </div>
               </div>
