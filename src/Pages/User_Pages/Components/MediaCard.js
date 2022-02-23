@@ -10,14 +10,7 @@ export default function MediaCard() {
   const text =
     "Versions of the Lorem ipsum text have been used in typesetting at least since the 1960s";
   return (
-    <div
-      style={{
-        width: "300px",
-        height: "450",
-        border: "1px solid grey",
-        borderRadius: "5px",
-      }}
-    >
+    <div className="hover:drop-shadow-2xl bg-white w-72 h-96">
       <CardMedia
         style={{ borderTopLeftRadius: "5px", borderTopRightRadius: "5px" }}
         component="img"
@@ -29,23 +22,17 @@ export default function MediaCard() {
         <Typography gutterBottom style={{ fontSize: "large" }}>
           {text.slice(0, 40) + "..."}
         </Typography>
-        <Typography
+        <Typography 
           style={{ fontWeight: "bold", color: "#00579c" }}
           variant="h5"
         >
           Rs. 1,200
         </Typography>
       </div>
-      <hr style={{ width: "70%" }} />
+      <hr className="w-10/12 m-auto" />
+
       {/* Buttons */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-around",
-          padding: "10px",
-          paddingTop: 0,
-        }}
-      >
+      <div className="flex justify-around p-2 ">
         <IconButton size="large">
           <ShoppingCartIcon />
         </IconButton>
