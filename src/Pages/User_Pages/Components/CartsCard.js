@@ -18,7 +18,7 @@ export default function MediaControlCard() {
       <CardMedia
         component="img"
         sx={{ width: 151 }}
-        image="https://bfs-group.eu/wp/wp-content/uploads/Petfood.jpg"
+        image="https://blogs.cdc.gov/publichealthmatters/wp-content/uploads/sites/6/2020/05/golden_retiver_cat_cropped-1024x458.jpg"
         alt="Live from space album cover"
       />
       <Box sx={{ display: "flex", flexDirection: "row", width: '80%',justifyItems: "space-between" }}

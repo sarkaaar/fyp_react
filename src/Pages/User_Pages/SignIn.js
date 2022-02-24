@@ -25,7 +25,6 @@ export default function Example() {
                   autoComplete="email"
                   required
                   className=" rounded-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  // placeholder="Email address"
                 />
               </div>
               <div className="mt-4">
@@ -59,7 +58,7 @@ export default function Example() {
 
               <div className="text-sm">
                 <a
-                  href="#"
+                  href="/sign_in"
                   className="font-medium text-indigo-600 hover:text-indigo-500"
                 >
                   Forgot your password?

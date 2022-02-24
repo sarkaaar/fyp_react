@@ -12,6 +12,7 @@ import Chatbot from "./Pages/User_Pages/Chatbot";
 import ProductReturn from "./Pages/Services/ProductRetrun";
 import Product from "./Pages/User_Pages/Product";
 import Profile from "./Pages/User_Pages/Profile";
+import Categories from "./Pages/User_Pages/Categories";
 
 // Clinical Pages
 import MakeAppointments from "./Pages/Services/MakeAppointments";
@@ -28,11 +29,13 @@ import AddProducts from "./Pages/Admin_Pages/ProductsAdd";
 import Inventory from "./Pages/Admin_Pages/Inventory";
 import Orders from "./Pages/Admin_Pages/Orders";
 import ViewDoctors from "./Pages/Admin_Pages/ViewDoctors";
-import Categories from "./Pages/Admin_Pages/Categories";
+import AdminCategories from "./Pages/Admin_Pages/Categories";
 import ProductsList from "./Pages/Admin_Pages/ProductsList";
+
 // Doctors Pages
 import DoctorDashboard from "./Pages/Doctor_Pages/Dashboard";
 import DoctorSignIn from "./Pages/Doctor_Pages/Doctor_SignIn";
+
 function App() {
   return (
     <Router>
@@ -49,7 +52,8 @@ function App() {
         <Route exact path="/returnProduct" element={<ProductReturn />} />
         <Route exact path="/Product" element={<Product />} />
         <Route exact path="/profile" element={<Profile />} />
-        <Route exact path="/admin/categories" element={<Categories />} />
+        <Route exact path="/categories" element={<Categories />} />
+        <Route exact path="/admin/categories" element={<AdminCategories />} />
 
         {/* User Clinical */}
         <Route exact path="/makeAppointments" element={<MakeAppointments />} />

@@ -12,10 +12,10 @@ export default function MediaCard() {
   return (
     <div className="hover:drop-shadow-2xl bg-white w-72 h-96">
       <CardMedia
-        style={{ borderTopLeftRadius: "5px", borderTopRightRadius: "5px" }}
+        style={{ borderTopLeftRadius: "5px", borderTopRightRadius: "5px"  }}
         component="img"
         height="250"
-        image={"https://bfs-group.eu/wp/wp-content/uploads/Petfood.jpg"}
+        image={"https://idsb.tmgrup.com.tr/ly/uploads/images/2021/11/17/160371.jpg"}
         alt="image"
       />
       <div style={{ padding: "15px" }}>
