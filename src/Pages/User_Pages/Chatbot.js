@@ -1,12 +1,13 @@
-import * as React from "react";
+// import * as React from "react";
+import { useState } from "react";
 import Button from "@mui/material/Button";
 import MessageIcon from "@mui/icons-material/Message";
 // import Header from "../Components/Header";
 import SendIcon from "@mui/icons-material/Send";
-
-export default function Chatbot() {
-  const [question, setQuestion] = React.useState([]);
-  const [answer, setAnswer] = React.useState([]);
+import Header from "./Components/Header";
+export default function Bot() {
+  const [question, setQuestion] = useState();
+  const [answer, setAnswer] = useState([]);
 
   const trigger = [
     //0
@@ -96,8 +97,8 @@ export default function Chatbot() {
 
   return (
     <div style={{ width: "300px", background: "yellow" }}>
-      {/* <Header /> */}
-      <h1>this is the Chatbot</h1>
+      <Header />
+      <h1>this is the bot</h1>
       <div>
         <input
           value={question}
@@ -123,8 +124,175 @@ export default function Chatbot() {
         </div>
       }
 
-      {/* Chatbot Template */}
+      {/* bot template */}
+      <div
+        class="-bar-collapsible"
+        style={{
+          position: "fixed",
+          bottom: 0,
+          right: "50px",
+          boxShadow: "0 8px 16px 0 rgba(0, 0, 0, 0.2)",
+        }}
+      >
+        <button
+          id="-button"
+          type="button"
+          class="collapsible"
+          style={{
+            background: "rgb(82, 151, 255)",
+            color: "white",
+            cursor: "pointer",
+            padding: "18px",
+            width: "350px",
+            alignText: "left",
+            outline: "none",
+            fontSize: "18px",
+            borderRadius: " 10px 10px 0px 0px",
+            border: "3px solid white",
+            borderBottom: "none",
+          }}
+        >
+          with us!
+          <MessageIcon />
+        </button>
 
+        <div
+          class="content"
+          style={{
+            // maxHeight: 0,
+            overflow: "hidden",
+            transition: "max-height 0.2s ease-out",
+            background: "#f1f1f1",
+          }}
+        >
+          <div
+            class="full--block"
+            style={{
+              width: "350px",
+              background: "white",
+              textAlign: "center",
+              overflow: "auto",
+              scrollbarWidth: "none",
+              height: "max-content",
+              transition: "max-height 0.2s ease-out",
+            }}
+          >
+            {/* <!-- Message Container --> */}
+            <div
+              class="outer-container"
+              style={{
+                minHeight: "500px",
+                bottom: "0%",
+                position: "relative",
+              }}
+            >
+              <div
+                class="-container"
+                style={{
+                  maxHeight: "500px",
+                  width: "100%",
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  scrollBehavior: "smooth",
+                  hyphens: "auto",
+                }}
+              >
+                {/* <!-- Messages --> */}
+                <div id="box">
+                  <h5 id="-timestamp"></h5>
+                  <p
+                    id="botStarterMessage"
+                    class="botText"
+                    style={{
+                      color: "#000",
+                      fontFamily: "Helvetica",
+                      fontWeight: "normal",
+                      fontSize: "16px",
+                      textAlign: "left",
+                    }}
+                  >
+                    <span
+                      style={{
+                        lineHeight: "1.5em",
+                        display: "inline-block",
+                        background: "#e0e0e0",
+                        padding: "10px",
+                        borderRadius: " 8px",
+                        borderBottom: "2px",
+                        maxWidth: "80%",
+                        marginLeft: "10px",
+                        animation: "floatup .5s forwards",
+                      }}
+                    >
+                      Loading...
+                    </span>
+                  </p>
+                </div>
+
+                {/* <!-- User input box --> */}
+                <div
+                  class="-bar-input-block"
+                  style={{
+                    display: "flex",
+                    float: "left",
+                    boxSizing: "border-box",
+                    justifyContent: "space-between",
+                    width: "100%",
+                    alignItems: "center",
+                    background: "rgb(235, 235, 235)",
+                    borderRadius: " 10px 10px 0px 0px",
+                    padding: "10px 0px 10px 10px",
+                  }}
+                >
+                  <div id="userInput" style={{ width: "75%" }}>
+                    <input
+                      id="textInput"
+                      style={{
+                        float: "left",
+                        border: "none",
+                        boxSizing: "border-box",
+                        width: "100%",
+                        borderRadius: "10px",
+                        padding: "10px",
+                        fontSize: "16px",
+                        color: "#000",
+                        background: "white",
+                        outline: "none",
+                      }}
+                      class="input-box"
+                      type="text"
+                      name="msg"
+                      placeholder="Tap 'Enter' to send a message"
+                    />
+                    <p></p>
+                  </div>
+
+                  <div
+                    class="-bar-icons"
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-evenly",
+                      boxSizing: "border-box",
+                      width: "25%",
+                      float: " right",
+                      fontSize: " 20px",
+                    }}
+                  >
+                    <MessageIcon />
+
+                    <SendIcon />
+                  </div>
+                </div>
+
+                <div id="-bar-bottom">
+                  <p></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

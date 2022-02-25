@@ -31,8 +31,8 @@ import Orders from "./Pages/Admin_Pages/Orders";
 import ViewDoctors from "./Pages/Admin_Pages/ViewDoctors";
 import AdminCategories from "./Pages/Admin_Pages/Categories";
 import ProductsList from "./Pages/Admin_Pages/ProductsList";
+import AdminProfile from "./Pages/Admin_Pages/AdminProfile";
 
-// Doctors Pages
 import DoctorDashboard from "./Pages/Doctor_Pages/Dashboard";
 import DoctorSignIn from "./Pages/Doctor_Pages/Doctor_SignIn";
 
@@ -64,6 +64,12 @@ function App() {
         {/* Admin Panel */}
         <Route exact path="/admin/sign_in" element={<AdminSignIn />} />
         <Route exact path="/admin/dashboard" element={<Dashboard />} />
+        {/* <Route
+          exact
+          path="/admin/dashboard/adminprofile"
+          element={<AdminProfile />}
+        /> */}
+
         <Route exact path="/admin/addDoctor" element={<AddDoctor />} />
         <Route exact path="/admin/addProducts" element={<AddProducts />} />
         <Route exact path="/admin/inventory" element={<Inventory />} />
