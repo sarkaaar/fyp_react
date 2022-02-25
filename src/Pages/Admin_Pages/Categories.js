@@ -3,7 +3,13 @@ import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Header from "./admin_components/Header";
-import { collection, addDoc, getDocs, deleteDoc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 import { db } from "../../firebase-config";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
@@ -32,7 +38,8 @@ export default function AddCategory() {
     // Search Sub-Categories
     const getSub_Categories = async () => {
       const data = await getDocs(sub_catCollection);
-      setSub_Cat(data.docs.map((doc) => doc.data()));
+      setSub_Cat(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      console.log(sub_cat);
     };
     // Function Calls
     getCategories();
@@ -50,11 +57,11 @@ export default function AddCategory() {
   };
 
   // Delete Categories
-  // const deleteCategory = async (id) => {
-  //   const subCat_doc = collection(db, "sub-categories", id);
-  //   await deleteDoc(subCat_doc);
-  //   console.log("Category Deleted");
-  // };
+  const deleteCategory = async (id) => {
+    const subCat_doc = doc(db, "sub-categories", id);
+    await deleteDoc(subCat_doc);
+    console.log("Category Deleted");
+  };
 
   return (
     <div>
@@ -66,6 +73,13 @@ export default function AddCategory() {
       >
         Click me
       </button>
+      <Button
+        onClick={async () => {
+          console.log(await getDocs(sub_catCollection));
+        }}
+      >
+        Click Me
+      </Button>
       <div className="flex mt-4">
         <div style={{ border: "2px solid black", width: "33%" }}>
           <div className=" w-96 mt-24 p-5">
@@ -161,8 +175,23 @@ export default function AddCategory() {
               <div>
                 <div className="flex justify-between p-2">
                   <h1>{item.sub_}</h1>
-                  <h1>{item.cat_}</h1>
-                  {/* <button onClick={deleteCategory}>X</button> */}
+                  {/* <h1>{item.cat_}</h1> */}
+                  <Button
+                    variant="outlined"
+                    onClick={() => {
+                      deleteCategory(item.id);
+                    }}
+                  >
+                    X
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    onClick={() => {
+                      console.log(item.id);
+                    }}
+                  >
+                    print
+                  </Button>
                 </div>
                 <hr />
               </div>

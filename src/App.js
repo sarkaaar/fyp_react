@@ -64,11 +64,11 @@ function App() {
         {/* Admin Panel */}
         <Route exact path="/admin/sign_in" element={<AdminSignIn />} />
         <Route exact path="/admin/dashboard" element={<Dashboard />} />
-        {/* <Route
+        <Route
           exact
           path="/admin/dashboard/adminprofile"
           element={<AdminProfile />}
-        /> */}
+        />
 
         <Route exact path="/admin/addDoctor" element={<AddDoctor />} />
         <Route exact path="/admin/addProducts" element={<AddProducts />} />
