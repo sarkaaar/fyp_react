@@ -20,7 +20,7 @@ export default function AddProducts() {
   const [image, setImage] = useState();
 
   const [progress, setProgress] = useState();
-  const [urls, setUrls] = useState();
+  const [urls, setUrls] = useState([]);
 
   // Variants Add and Remove
   const updateVariant = (v, i) => {
@@ -69,15 +69,13 @@ export default function AddProducts() {
       name: name,
       costPrice: costPrice,
       salePrice: salePrice,
-      // variants: variants_new,
+      variants: variants,
       category: category,
       subCategory: subCategory,
       description: description,
-      // image: image,
+      image: image,
     };
     await addDoc(productsCollection, newProduct);
-    // navigate('/addPatient');
-    // await window.location.reload(false);
   };
 
   const upload = () => {
@@ -98,6 +96,7 @@ export default function AddProducts() {
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((url) => {
             console.log(url);
+            // setUrls(urls.push(url));
           });
         }
       );
@@ -125,7 +124,13 @@ export default function AddProducts() {
   return (
     <div>
       <Header />
-
+      <button
+        onClick={() => {
+          console.log(urls);
+        }}
+      >
+        CLick Me
+      </button>
       <div className="w-96 m-auto mt-6">
         <h1 className="text-center text-3xl">Add a New Product</h1>
         <div className="">

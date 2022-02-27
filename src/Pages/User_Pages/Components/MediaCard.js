@@ -6,33 +6,32 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShareIcon from "@mui/icons-material/Share";
 
-export default function MediaCard() {
+export default function MediaCard(obj) {
   const text =
     "Versions of the Lorem ipsum text have been used in typesetting at least since the 1960s";
   return (
     <div className="hover:drop-shadow-2xl bg-white w-72 h-96">
-      <CardMedia
-        style={{ borderTopLeftRadius: "5px", borderTopRightRadius: "5px"  }}
-        component="img"
-        height="250"
-        image={"https://idsb.tmgrup.com.tr/ly/uploads/images/2021/11/17/160371.jpg"}
-        alt="image"
+      <img
+        src={
+          obj.obj.image ? obj.obj.image : "https://source.unsplash.com/random"
+        }
+        alt="img"
+        className="w-full h-52"
       />
+
       <div style={{ padding: "15px" }}>
-        <Typography gutterBottom style={{ fontSize: "large" }}>
-          {text.slice(0, 40) + "..."}
-        </Typography>
-        <Typography 
-          style={{ fontWeight: "bold", color: "#00579c" }}
-          variant="h5"
+        <h1 className="text-2xl">{obj.obj.name.slice(0, 40) + "..."}</h1>
+        <h2
+          className="text-3xl text-indigo-600 font-bold"
+          // variant="h5"
         >
-          Rs. 1,200
-        </Typography>
+          {/* {obj.obj.salePrice ? obj.obj.salePrice : "N/A"} */}
+        </h2>
       </div>
       <hr className="w-10/12 m-auto" />
 
       {/* Buttons */}
-      <div className="flex justify-around p-2 ">
+      <div className="flex justify-around p-2">
         <IconButton size="large">
           <ShoppingCartIcon />
         </IconButton>

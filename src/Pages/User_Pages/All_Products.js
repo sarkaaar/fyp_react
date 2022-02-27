@@ -2,13 +2,31 @@ import * as React from "react";
 import MediaCard from "./Components/MediaCard";
 import Header from "./Components/Header";
 import Checkbox from "@mui/material/Checkbox";
-import { Typography } from "@mui/material";
-import Grid from "@mui/material/Grid";
+import { useState, useEffect } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebase-config";
+import Button from "@mui/material/Button";
 
 export default function Products() {
+  //  Get Categories Names
+  const [products, setProducts] = useState([]);
+  const productsCollection = collection(db, "products");
+
+  useEffect(() => {
+    // Search Categories
+    const getCategories = async () => {
+      const data = await getDocs(productsCollection);
+      setProducts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+
+    // Function Calls
+    getCategories();
+  }, []);
+
   return (
     <div>
       <Header />
+
       <div style={{ display: "flex" }}>
         {/* Search Filters */}
 
@@ -48,28 +66,18 @@ export default function Products() {
             </div>
           </div>
         </div>
-        
+
         <hr />
 
         {/* Products Section */}
-        <div style={{ width: "65%",padding:"20px" }}>
-          <Grid container spacing={1}>
-            <Grid item xs="auto">
-              <MediaCard />
-            </Grid>
-            <Grid item xs="auto">
-              <MediaCard />
-            </Grid>
-            <Grid item xs="auto">
-              <MediaCard />
-            </Grid>
-            <Grid item xs="auto">
-              <MediaCard />
-            </Grid>
-            <Grid item xs="auto">
-              <MediaCard />
-            </Grid>
-          </Grid>
+        <div className="grid grid-cols-3 gap-4 p-4">
+          {products.map((item) => {
+            return (
+              <div className="p-2">
+                <MediaCard obj={item} />
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
