@@ -12,7 +12,8 @@ import Chatbot from "./Pages/User_Pages/Chatbot";
 import ProductReturn from "./Pages/Services/ProductRetrun";
 import Product from "./Pages/User_Pages/Product";
 import Profile from "./Pages/User_Pages/Profile";
-import Categories from "./Pages/User_Pages/Categories";
+import Orders from "./Pages/User_Pages/Components/Orders";
+import Favourites from "./Pages/User_Pages/Components/viewFavourites/Favourites";
 
 // Clinical Pages
 import MakeAppointments from "./Pages/Services/MakeAppointments";
@@ -27,15 +28,14 @@ import Dashboard from "./Pages/Admin_Pages/Dashboard";
 import AddDoctor from "./Pages/Admin_Pages/AddDoctor";
 import AddProducts from "./Pages/Admin_Pages/ProductsAdd";
 import Inventory from "./Pages/Admin_Pages/Inventory";
-import Orders from "./Pages/Admin_Pages/Orders";
+import AdminOrders from "./Pages/Admin_Pages/AdminOrders";
 import ViewDoctors from "./Pages/Admin_Pages/ViewDoctors";
-import AdminCategories from "./Pages/Admin_Pages/Categories";
+import Categories from "./Pages/Admin_Pages/Categories";
 import ProductsList from "./Pages/Admin_Pages/ProductsList";
 import AdminProfile from "./Pages/Admin_Pages/AdminProfile";
-
+// Doctors Pages
 import DoctorDashboard from "./Pages/Doctor_Pages/Dashboard";
 import DoctorSignIn from "./Pages/Doctor_Pages/Doctor_SignIn";
-
 function App() {
   return (
     <Router>
@@ -52,8 +52,12 @@ function App() {
         <Route exact path="/returnProduct" element={<ProductReturn />} />
         <Route exact path="/Product" element={<Product />} />
         <Route exact path="/profile" element={<Profile />} />
-        <Route exact path="/categories" element={<Categories />} />
-        <Route exact path="/admin/categories" element={<AdminCategories />} />
+        <Route exact path="/orders" element={<Orders />} />
+        <Route exact path ="/favourites" element={<Favourites/>}/>
+
+        
+        <Route exact path="/admin/categories" element={<Categories />} />
+
 
         {/* User Clinical */}
         <Route exact path="/makeAppointments" element={<MakeAppointments />} />
@@ -64,18 +68,15 @@ function App() {
         {/* Admin Panel */}
         <Route exact path="/admin/sign_in" element={<AdminSignIn />} />
         <Route exact path="/admin/dashboard" element={<Dashboard />} />
-        <Route
-          exact
-          path="/admin/dashboard/adminprofile"
-          element={<AdminProfile />}
-        />
-
+        <Route exact path="/admin/dashboard/adminprofile" element={<AdminProfile />} />
+        
         <Route exact path="/admin/addDoctor" element={<AddDoctor />} />
         <Route exact path="/admin/addProducts" element={<AddProducts />} />
         <Route exact path="/admin/inventory" element={<Inventory />} />
-        <Route exact path="/admin/orders" element={<Orders />} />
+        <Route exact path="/admin/adminorders" element={<AdminOrders />} />
         <Route exact path="/admin/viewDoctor" element={<ViewDoctors />} />
         <Route exact path="/admin/viewAllProducts" element={<ProductsList />} />
+
 
         {/* Doctors Panel */}
         <Route exact path="/doctor/dashboard" element={<DoctorDashboard />} />
