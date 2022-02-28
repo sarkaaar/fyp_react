@@ -3,6 +3,8 @@ import Header from "./admin_components/Header";
 import ViewOrderBody from "./admin_components/viewOrders/ViewOrderBody";
 import ViewOrdersHead from "./admin_components/viewOrders/ViewOrdersHead";
 import Sidebar from "./admin_components/Sidebar";
+
+
 export default function Orders() {
   const data = [
     {
