@@ -2,7 +2,7 @@ import * as React from "react";
 import Header from "./admin_components/Header";
 import ViewDoctorHead from "./admin_components/viewDoctors/viewDoctorHead";
 import ViewDoctorBody from "./admin_components/viewDoctors/viewDoctorBody";
-
+import Sidebar from "./admin_components/Sidebar";
 export default function ViewDoctor() {
   const data = [
     {
@@ -44,13 +44,18 @@ export default function ViewDoctor() {
   ];
 
   return (
-    <div>
+    <>
       <Header />
-      <h1>this is the View Doctors page</h1>
-      <ViewDoctorHead />
-      {data.map((item) => (
-        <ViewDoctorBody obj={item} />
-      ))}
-    </div>
+      <div className="flex">
+        <Sidebar />
+
+        <div className="ml-72 w-10/12">
+          <ViewDoctorHead />
+          {data.map((item) => (
+            <ViewDoctorBody obj={item} />
+          ))}
+        </div>
+      </div>
+    </>
   );
 }

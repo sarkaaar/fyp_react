@@ -32,6 +32,7 @@ import ViewDoctors from "./Pages/Admin_Pages/ViewDoctors";
 import AdminCategories from "./Pages/Admin_Pages/Categories";
 import ProductsList from "./Pages/Admin_Pages/ProductsList";
 import AdminProfile from "./Pages/Admin_Pages/AdminProfile";
+import Reports from "./Pages/Admin_Pages/Reports";
 
 import DoctorDashboard from "./Pages/Doctor_Pages/Dashboard";
 import DoctorSignIn from "./Pages/Doctor_Pages/Doctor_SignIn";
@@ -76,6 +77,7 @@ function App() {
         <Route exact path="/admin/orders" element={<Orders />} />
         <Route exact path="/admin/viewDoctor" element={<ViewDoctors />} />
         <Route exact path="/admin/viewAllProducts" element={<ProductsList />} />
+        <Route exact path="/admin/reports" element={<Reports />} />
 
         {/* Doctors Panel */}
         <Route exact path="/doctor/dashboard" element={<DoctorDashboard />} />

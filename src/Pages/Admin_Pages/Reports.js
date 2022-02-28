@@ -1,17 +1,15 @@
 import Header from "./admin_components/Header";
 import Sidebar from "./admin_components/Sidebar";
-
-export default function ProductsList () {
+export default function Reports() {
   return (
-    <div>
+    <>
       <Header />
-        <div className="flex">
+      <div className="flex">
         <Sidebar />
         <div className="ml-72">
-          <h1>Products List</h1>
+          <h1>Reports page</h1>
         </div>
-        </div>
-            
-    </div>
+      </div>
+    </>
   );
 }

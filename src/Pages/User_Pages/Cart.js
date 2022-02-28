@@ -7,7 +7,8 @@ export default function Review() {
   return (
     <div>
       <Header />
-      <div style={{ padding: "50px",justifyContent:"space-around" }}>
+      <h1 className="p-4 text-6xl font-bold">Cart -{">"}</h1>
+      <div  className="p-20 justify-around" >
         <CartsCard />
         <CartsCard />
         <CartsCard />

@@ -8,12 +8,9 @@ export default function Dashboard() {
     <>
       <Header />
       <div className="flex">
-        <div>
-          <MiniDrawer />
-        </div>
-        {/* <div className="w-px h-11/12 bg-black"></div> */}
-        <div className="m-10">
-          
+        <MiniDrawer />
+
+        <div className="ml-72">
           <Button variant="contained">View Profile</Button>
           <Button variant="contained">View Orders</Button>
           <Button variant="contained">View Queries</Button>

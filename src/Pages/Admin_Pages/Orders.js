@@ -2,8 +2,7 @@ import * as React from "react";
 import Header from "./admin_components/Header";
 import ViewOrderBody from "./admin_components/viewOrders/ViewOrderBody";
 import ViewOrdersHead from "./admin_components/viewOrders/ViewOrdersHead";
-import { Button } from "@material-ui/core";
-
+import Sidebar from "./admin_components/Sidebar";
 export default function Orders() {
   const data = [
     {
@@ -32,16 +31,19 @@ export default function Orders() {
   ];
 
   return (
-    <div>
+    <>
       <Header />
-
-      <ViewOrdersHead />
-      {data.map((item) => (
-        <div>
-          {/* <Button onClick={()=>{console.log(item)}}>Click</Button> */}
-          <ViewOrderBody obj={item} />
+      <div className="flex">
+        <Sidebar />
+        <div className="ml-72">
+          <ViewOrdersHead />
+          {data.map((item) => (
+            <div>
+              <ViewOrderBody obj={item} />
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
+      </div>
+    </>
   );
 }

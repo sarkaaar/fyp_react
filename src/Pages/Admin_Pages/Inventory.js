@@ -2,6 +2,7 @@ import * as React from "react";
 import Header from "./admin_components/Header";
 import ViewInventoryHead from "./admin_components/viewInventory/viewInventoryHead";
 import ViewInventoryBody from "./admin_components/viewInventory/viewInventoryBody";
+import Sidebar from "./admin_components/Sidebar";
 export default function Inventory() {
   const data = [
     {
@@ -31,14 +32,20 @@ export default function Inventory() {
   ];
 
   return (
-    <div>
+    <>
       <Header />
-      <h1 style={{ marginLeft: "20px" }}>Inventory -{">"}</h1>
+      <div className="flex">
+        <Sidebar />
+        <div className="ml-72">
+        <h1 style={{ marginLeft: "20px" }}>Inventory -{">"}</h1>
       <ViewInventoryHead />
 
       {data.map((item) => (
         <ViewInventoryBody obj={item} />
       ))}
-    </div>
+        </div>
+      </div>
+    </>
+    
   );
 }

@@ -90,11 +90,11 @@ export default function Product() {
               </div>
             </div>
             <div className="m-auto flex w-96">
-              <Button startIcon={<ShareIcon />}>Share</Button>
+              <Button variant="outlined" startIcon={<ShareIcon />}>Share</Button>
               <hr />
-              <Button startIcon={<ShoppingCartIcon />}>Add to Cart</Button>
+              <Button variant="outlined" startIcon={<ShoppingCartIcon />}>Add to Cart</Button>
               <hr />
-              <Button startIcon={<FavoriteBorderIcon />}>
+              <Button variant="outlined" startIcon={<FavoriteBorderIcon />}>
                 Add to Favorites
               </Button>
             </div>
