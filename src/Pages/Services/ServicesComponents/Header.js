@@ -62,6 +62,7 @@ export default function Header() {
           flexGrow: 1,
           display: "flex",
           justifyContent: "center",
+          marginBottom: "20px",
         }}
       ><NavLink
       to={`/viewDoctors`}
