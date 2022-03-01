@@ -23,7 +23,8 @@ export default function AddProducts() {
   const [urls, setUrls] = useState([]);
 
   // Variants Add and Remove
-  const updateVariant = (v, i) => {
+  const 
+  updateVariant = (v, i) => {
     const tempVariants = [...variants];
     tempVariants[i] = v;
     setVariants(tempVariants);
