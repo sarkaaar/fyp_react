@@ -45,18 +45,26 @@ export default function Footer() {
         </div>
         <div>
           <h1 className="text-lg text-white p-2 font-bold">Social</h1>
+          <a href="/#">  
           <h2 className="text-lg text-white p-2">
             <FacebookIcon /> FaceBook
           </h2>
+          </a>
+          <a href="/#">
           <h2 className="text-lg text-white p-2">
             <InstagramIcon /> Instagram
           </h2>
+          </a>
+          <a href="/#">
           <h2 className="text-lg text-white p-2">
             <TwitterIcon /> Twitter
           </h2>
+          </a>
+          <a href="/#">
           <h2 className="text-lg text-white p-2">
             <YouTubeIcon /> Youtube
           </h2>
+          </a>
         </div>
       </div>
 
