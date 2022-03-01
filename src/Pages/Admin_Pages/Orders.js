@@ -4,7 +4,7 @@ import ViewOrderBody from "./admin_components/viewOrders/ViewOrderBody";
 import ViewOrdersHead from "./admin_components/viewOrders/ViewOrdersHead";
 import { Button } from "@material-ui/core";
 
-console.log("fgfdgf");
+// console.log("fgfdgf");
 
 export default function Orders() {
   const data = [
@@ -40,7 +40,6 @@ export default function Orders() {
       <ViewOrdersHead />
       {data.map((item) => (
         <div>
-          {/* <Button onClick={()=>{console.log(item)}}>Click</Button> */}
           <ViewOrderBody obj={item} />
         </div>
       ))}

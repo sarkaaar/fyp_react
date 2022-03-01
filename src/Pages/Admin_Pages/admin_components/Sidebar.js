@@ -45,12 +45,12 @@ export default function Sidebar() {
         <h1 className=" p-4  text-xl text-white">VIEW PRODUCTS</h1>
       </a>
       <hr className="w-8/12 m-auto border-gray-500" />
-      <a href="/admin/viewAppointments">
-        <h1 className=" p-4  text-xl text-white">VIEW APPOINTMENTS</h1>
-      </a>
-      <hr className="w-8/12 m-auto border-gray-500" />
       <a href="/admin/reports">
         <h1 className=" p-4  text-xl text-white">REPORTS</h1>
+      </a>
+      <hr className="w-8/12 m-auto border-gray-500" />
+      <a href="/admin/sign_in">
+        <h1 className=" p-4  text-xl text-white">LOGOUT</h1>
       </a>
       <hr className="w-8/12 m-auto border-gray-500" />
     </div>
