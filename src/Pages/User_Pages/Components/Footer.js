@@ -21,9 +21,15 @@ export default function Footer() {
         </div>
         <div>
           <h1 className="text-lg text-white p-2 font-bold">Careers</h1>
-          <h2 className="text-lg text-white p-2">Apply </h2>
-          <h2 className="text-lg text-white p-2">Become a Doctor</h2>
-          <h2 className="text-lg text-white p-2">PFAQ</h2>
+          <a href="/#">
+            <h2 className="text-lg text-white p-2">Apply </h2>
+          </a>
+          <a href="/#"> 
+            <h2 className="text-lg text-white p-2">Become a Doctor</h2>
+          </a>
+          <a href="/#">
+            <h2 className="text-lg text-white p-2">PFAQ</h2>
+          </a>
         </div>
         <div>
           <h1 className="text-lg text-white p-2 font-bold">Services</h1>
