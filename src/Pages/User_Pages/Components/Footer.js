@@ -55,7 +55,7 @@ export default function Footer() {
       </div>
 
       <div className=" flex justify-center bg-gray-800">
-        <h1 className="text-white text-xl p-2">Developed By github@SARKAAAR</h1>
+        <h2 className="text-white text-xl p-2">All Copyrights Reserved by CS-47 FYP Goup</h2>
       </div>
       <hr />
     </div>
