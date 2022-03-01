@@ -13,9 +13,11 @@ export default function Footer() {
             <h2 className="text-lg text-white p-2">Orders</h2>
           </a>
           <a href="/favourites">
-          <h2 className="text-lg text-white p-2">Favourites</h2>
+            <h2 className="text-lg text-white p-2">Favourites</h2>
           </a>
-          <h2 className="text-lg text-white p-2">Product Return</h2>
+          <a href="/returnProduct">
+            <h2 className="text-lg text-white p-2">Product Return</h2>
+          </a>
         </div>
         <div>
           <h1 className="text-lg text-white p-2 font-bold">Careers</h1>
@@ -25,9 +27,15 @@ export default function Footer() {
         </div>
         <div>
           <h1 className="text-lg text-white p-2 font-bold">Services</h1>
-          <h2 className="text-lg text-white p-2">Maps</h2>
-          <h2 className="text-lg text-white p-2">Appointments</h2>
-          <h2 className="text-lg text-white p-2">Online Check-Up</h2>
+          <a href="/maps">
+            <h2 className="text-lg text-white p-2">Maps</h2>
+          </a>
+          <a href="/viewAppointments">
+            <h2 className="text-lg text-white p-2">Appointments</h2>
+          </a>
+          <a href="/makeAppointments">
+            <h2 className="text-lg text-white p-2">Online Check-Up</h2>
+          </a>
         </div>
         <div>
           <h1 className="text-lg text-white p-2 font-bold">Social</h1>
