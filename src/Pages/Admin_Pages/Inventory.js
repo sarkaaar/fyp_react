@@ -34,18 +34,17 @@ export default function Inventory() {
   return (
     <>
       <Header />
-      <div className="flex">
+      <div className="">
         <Sidebar />
         <div className="ml-72">
-        <h1 style={{ marginLeft: "20px" }}>Inventory -{">"}</h1>
-      <ViewInventoryHead />
+          <h1 style={{ marginLeft: "20px" }}>Inventory -{">"}</h1>
+          <ViewInventoryHead />
 
-      {data.map((item) => (
-        <ViewInventoryBody obj={item} />
-      ))}
+          {data.map((item) => (
+            <ViewInventoryBody obj={item} />
+          ))}
         </div>
       </div>
     </>
-    
   );
 }
