@@ -2,7 +2,7 @@ import * as React from "react";
 import Header from "../User_Pages/Components/Header";
 
 
-export default function MakeAppointments() {
+export default function ViewDoctor() {
   return (
     <div>
       <Header />

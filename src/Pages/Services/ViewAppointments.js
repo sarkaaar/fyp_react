@@ -1,7 +1,7 @@
 import * as React from "react";
 import Header from "../User_Pages/Components/Header";
 
-export default function MakeAppointments() {
+export default function ViewAppointments() {
   const data = {
     hospital: "Sheikh Zaid Hospital",
     name: "Dr. Ali",
