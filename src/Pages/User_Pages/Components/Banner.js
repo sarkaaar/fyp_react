@@ -26,7 +26,7 @@ export default function Banner() {
               </span>
             </h1>
             <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-              This is a platform where you get the most for you eloved pets. We
+              This is a platform where you get the most for you beloved pets. We
               come with Clinical Care and Products for your pets.
             </p>
             <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
