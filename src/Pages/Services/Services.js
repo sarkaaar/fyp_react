@@ -1,24 +1,13 @@
 import * as React from "react";
-import { NavLink } from "react-router-dom";
 import Header from "../User_Pages/Components/Header";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import { CardActionArea } from "@mui/material";
-import Grid from "@mui/material/Grid";
 import orders from "../../assets/images/orders.png";
-import banner from "../../assets/images/banner.jpg";
-
+import Footer from "../User_Pages/Components/Footer";
+import doctor from "../../assets/images/doctor.png";
 export default function Services() {
-  const NavLinkstyle = {
-    fontSize: "x-large",
-    padding: "10px",
-    textDecoration: "none",
-    background: "gray",
-    color: "white",
-    borderRadius: "10px",
-    margin: "10px",
-  };
   return (
     <div>
       <Header />
@@ -70,8 +59,18 @@ export default function Services() {
       </p>
       <div className="w-1/2  h-px bg-black m-auto"></div>
 
+      <div className="m-5 ml-36">
+        <a href="#" className="flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+          <img className="object-cover w-full h-96 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={doctor} alt="View Doctors" />
+          <div className="flex flex-col justify-between p-4 leading-normal">
+            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">View Doctors</h5>
+            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">View All World Qualified Veterinary Doctors Associated with us.</p>
+          </div>
+        </a>
+      </div>
+
       <div className="flex gap-4 mt-12">
-        <NavLink to={`/viewDoctors`} activeClassName="active">
+        <a href="viewDoctors" target="_blank">
           <Card sx={{ maxWidth: 300, maxHeight: 500, margin: 5 }}>
             <CardActionArea>
               <CardMedia
@@ -95,10 +94,10 @@ export default function Services() {
               </CardContent>
             </CardActionArea>
           </Card>
-        </NavLink>
+        </a>
 
         <div>
-          <NavLink to={`/maps`} activeClassName="active">
+          <a href="maps" target="_blank">
             <Card sx={{ maxWidth: 200, maxHeight: "auto" }}>
               <CardActionArea>
                 <CardMedia
@@ -121,10 +120,10 @@ export default function Services() {
                 </CardContent>
               </CardActionArea>
             </Card>
-          </NavLink>
+          </a>
         </div>
 
-        <NavLink to={`/viewAppointments`} activeClassName="active">
+        <a href="viewAppointments" target="_blank">
           <Card sx={{ maxWidth: 200, maxHeight: "auto", margin: 5 }}>
             <CardActionArea>
               <CardMedia
@@ -147,8 +146,9 @@ export default function Services() {
               </CardContent>
             </CardActionArea>
           </Card>
-        </NavLink>
-        <NavLink to={`/makeAppointments`} activeClassName="active">
+        </a>
+
+        <a href="makeAppointments" target="_blank">
           <Card sx={{ maxWidth: 200, maxHeight: "auto", margin: 5 }}>
             <CardActionArea>
               <CardMedia
@@ -171,8 +171,10 @@ export default function Services() {
               </CardContent>
             </CardActionArea>
           </Card>
-        </NavLink>
+        </a>
       </div>
+
+      <Footer />
     </div>
   );
 }
