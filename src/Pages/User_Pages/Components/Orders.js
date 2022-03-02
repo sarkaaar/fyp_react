@@ -70,6 +70,7 @@ export default function Orders() {
         
       </div>
       <div>
+          
           <h1>Order Summery</h1>
          <p>Quantity:</p>
          <p>Price</p>
