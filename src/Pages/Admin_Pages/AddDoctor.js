@@ -6,7 +6,9 @@ import { useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../firebase-config";
 import Sidebar from "./admin_components/Sidebar";
+
 export default function AddDoctor() {
+
   const doctorsCollection = collection(db, "doctors");
 
   const [name, setName] = useState("");

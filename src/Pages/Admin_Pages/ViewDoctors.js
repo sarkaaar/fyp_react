@@ -46,10 +46,11 @@ export default function ViewDoctor() {
   return (
     <>
       <Header />
-      <div className="flex">
+      <div className="">
         <Sidebar />
 
-        <div className="ml-72 w-10/12">
+        <div className="ml-72">
+          <h1 className="text-3xl font-bold m-12">List Of Doctors</h1>
           <ViewDoctorHead />
           {data.map((item) => (
             <ViewDoctorBody obj={item} />
