@@ -14,6 +14,7 @@ import Product from "./Pages/User_Pages/Product";
 import Profile from "./Pages/User_Pages/Profile";
 import Orders from "./Pages/User_Pages/Components/Orders";
 import Favourites from "./Pages/User_Pages/Components/viewFavourites/Favourites";
+// import AdminProfile from "./Pages/Admin_Pages/AdminProfile";
 
 // Clinical Pages
 import MakeAppointments from "./Pages/Services/MakeAppointments";
@@ -33,8 +34,9 @@ import ViewDoctors from "./Pages/Admin_Pages/ViewDoctors";
 import Categories from "./Pages/Admin_Pages/Categories";
 import ProductsList from "./Pages/Admin_Pages/ProductsList";
 import AdminProfile from "./Pages/Admin_Pages/AdminProfile";
-
+import ReturnedProducts from "./Pages/Admin_Pages/ReturnedProducts";
 import Reports from "./Pages/Admin_Pages/Reports";
+import Complaints from "./Pages/Admin_Pages/Complaints";
 
 // Doctors Pages
 import DoctorDashboard from "./Pages/Doctor_Pages/Dashboard";
@@ -71,15 +73,16 @@ function App() {
         {/* Admin Panel */}
         <Route exact path="/admin/sign_in" element={<AdminSignIn />} />
         <Route exact path="/admin/dashboard" element={<Dashboard />} />
-        <Route exact path="/admin/dashboard/adminprofile" element={<AdminProfile />} />
-        
+        <Route exact path="/admin/profile" element={<AdminProfile />} />
         <Route exact path="/admin/addDoctor" element={<AddDoctor />} />
         <Route exact path="/admin/addProducts" element={<AddProducts />} />
         <Route exact path="/admin/inventory" element={<Inventory />} />
-        <Route exact path="/admin/adminorders" element={<AdminOrders />} />
+        <Route exact path="/admin/orders" element={<AdminOrders />} />
         <Route exact path="/admin/viewDoctor" element={<ViewDoctors />} />
         <Route exact path="/admin/viewAllProducts" element={<ProductsList />} />
         <Route exact path="/admin/reports" element={<Reports />} />
+        <Route exact path="/admin/productReturn" element={<ReturnedProducts />} />
+        <Route exact path="/admin/complaints" element={<Complaints />} />
 
 
         {/* Doctors Panel */}
