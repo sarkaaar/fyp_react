@@ -5,8 +5,11 @@ import { FormControl } from "@mui/material";
 import { InputLabel } from "@mui/material";
 import { Select } from "@mui/material";
 import { MenuItem } from "@mui/material";
+// import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 
 export default function MakeAppointments() {
+
+  const [date,setDate] = React.useState();
   const timeSlots = [
     "09:00 AM  -  09:15 AM",
     "09:15 AM  -  09:30 AM",
@@ -36,13 +39,20 @@ export default function MakeAppointments() {
       <div style={{ width: "300px", margin: "auto" }}>
         <h1>You are making an appointment with Dr. </h1>
 
+        {/* <DesktopDatePicker
+          label="Date desktop"
+          inputFormat="MM/dd/yyyy"
+          value={date}
+          onChange={(e)=>{setDate(e.target.value)}}
+          renderInput={(params) => <TextField {...params} />}
+        /> */}
         <TextField
           margin="normal"
           required
           fullWidth
           name="date"
           label="Date"
-          type="date"
+          type="text"
           id="date"
         />
         <TextField

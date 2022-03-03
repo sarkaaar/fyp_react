@@ -10,7 +10,7 @@ import doctor from "../../assets/images/doctor.png";
 import maps from "../../assets/images/maps.jpg";
 
 export default function Services() {
-  return (
+ return (
     <div>
       <Header />
 

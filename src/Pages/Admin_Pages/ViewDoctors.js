@@ -1,48 +1,28 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import Header from "./admin_components/Header";
 import ViewDoctorHead from "./admin_components/viewDoctors/viewDoctorHead";
 import ViewDoctorBody from "./admin_components/viewDoctors/viewDoctorBody";
 import Sidebar from "./admin_components/Sidebar";
-export default function ViewDoctor() {
-  const data = [
-    {
-      name: "ali",
-      email: "123@mail",
-      dob: "12-12-12",
-      cnic: "12345",
-      phone: "123456",
-      c_name: "lala",
-      c_address: "model town",
-      c_phone: "1234567",
-      fees: "1500",
-      commision: "10",
-    },
-    {
-      name: "ali",
-      email: "123@mail",
-      dob: "12-12-12",
-      cnic: "12345",
-      phone: "123456",
-      c_name: "lala",
-      c_address: "model town",
-      c_phone: "1234567",
-      fees: "1500",
-      commision: "10",
-    },
-    {
-      name: "ali",
-      email: "123@mail",
-      dob: "12-12-12",
-      cnic: "12345",
-      phone: "123456",
-      c_name: "lala",
-      c_address: "model town",
-      c_phone: "1234567",
-      fees: "1500",
-      commision: "10",
-    },
-  ];
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebase-config";
 
+export default function ViewDoctor() {
+  //  Get Categories Names
+  const [doctors, setDoctors] = useState([]);
+  const productsCollection = collection(db, "doctors");
+
+  useEffect(() => {
+    // Search Categories
+    const getDoctors = async () => {
+      const data = await getDocs(productsCollection);
+      setDoctors(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      console.log("Doctoers Recieved");
+    };
+
+    // Function Calls
+    getDoctors();
+  }, []);
   return (
     <>
       <Header />
@@ -51,10 +31,12 @@ export default function ViewDoctor() {
 
         <div className="ml-72">
           <h1 className="text-3xl font-bold m-12">List Of Doctors</h1>
-          <ViewDoctorHead />
-          {data.map((item) => (
-            <ViewDoctorBody obj={item} />
-          ))}
+          <table class="table-auto">
+            <ViewDoctorHead />
+            {doctors.map((item, key) => (
+              <ViewDoctorBody key={key} obj={item} />
+            ))}
+          </table>
         </div>
       </div>
     </>

@@ -16,6 +16,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Sidebar from "./admin_components/Sidebar";
+import { IconButton } from "@mui/material";
 export default function AddCategory() {
   const [category, setCategory] = useState("");
   const [subCategory, setSubCategory] = useState("");
@@ -66,7 +67,7 @@ export default function AddCategory() {
   return (
     <div>
       <Header />
-      <div className="flex">
+      <div className="">
         <Sidebar />
         <div className="flex mt-4 ml-72">
           <div style={{ border: "2px solid black", width: "33%" }}>
@@ -164,28 +165,15 @@ export default function AddCategory() {
             <hr />
             {sub_cat.map((item) => {
               return (
-                <div>
-                  <div className="flex justify-between p-2">
-                    <h1>{item.sub_}</h1>
-                    {/* <h1>{item.cat_}</h1> */}
-                    <Button
-                      variant="outlined"
-                      onClick={() => {
-                        deleteCategory(item.id);
-                      }}
-                    >
-                      X
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      onClick={() => {
-                        console.log(item.id);
-                      }}
-                    >
-                      print
-                    </Button>
-                  </div>
-                  <hr />
+                <div className="flex justify-between p-2 ">
+                  <h1>{item.sub_}</h1>
+                  <Button
+                    onClick={() => {
+                      deleteCategory(item.id);
+                    }}
+                  >
+                    DELETE
+                  </Button>
                 </div>
               );
             })}
