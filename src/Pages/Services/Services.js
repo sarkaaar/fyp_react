@@ -32,8 +32,8 @@ export default function Services() {
             <main className="mx-28">
               {/* <div className="sm:text-center lg:text-left"> */}
               <h1 className="pt-16 text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-                <span className="block xl:inline">Welcome to the</span>
-                <span className="block text-indigo-600 xl:inline">
+                <span className="block xl:inline">Welcome to</span>
+                <span className="block text-green-600 xl:inline">
                   Pet-Planet Clinical Services
                 </span>
               </h1>
@@ -55,20 +55,30 @@ export default function Services() {
         <hr />
       </div>
 
-      <div className="w-1/2  h-px bg-black m-auto"></div>
+      <div className="w-1/2  h-px bg-black m-auto mt-3"></div>
       <p className="text-4xl p-4 font-bold flex justify-center">
         Services We Provide
       </p>
-      <div className="w-1/2  h-px bg-black m-auto"></div>
+      <div className="w-1/2  h-px bg-black m-auto mb-3"></div>
+
+      <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+        <a href="viewDoctors">
+          <div className="flex">
+            <img className="object-contain h-48 w-50 md:h-full md:w-48" src={doctor} alt="View Doctors" />
+            <div className="p-8 hover:bg-gray-200">
+              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white ">View Doctors</h5>
+              <p className="mt-2 text-slate-500">View All World Qualified Veterinary Doctors Associated With Us.</p>
+            </div>
+          </div>
+        </a>
+      </div>
 
       <div className="m-5 ml-36">
-        <a href="viewDoctors" className="flex flex-col items-center bg-white rounded-lg border h-48 shadow-md md:flex-row hover:bg-gray-100 md:max-w-xl dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-          <div className="flex flex-row">
-            <img className="object-cover w-full h-96 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={doctor} alt="View Doctors" />
-            <div className="flex flex-col justify-between p-4 leading-normal">
-              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white ">View Doctors</h5>
-              <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">View All World Qualified Veterinary Doctors Associated With Us.</p>
-            </div>
+        <a href="viewDoctors" className="flex flex-col items-center hover:bg-gray-100 bg-white rounded-lg border h-48 shadow-md md:flex-row md:max-w-xl dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+          <img className="object-contain h-48 w-48 bg-white object-cover rounded-t-lg md:w-48 md:rounded-none md:rounded-l-lg" src={doctor} alt="View Doctors" />
+          <div className="flex flex-col justify-between p-4 leading-normal">
+            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white ">View Doctors</h5>
+            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">View All World Qualified Veterinary Doctors Associated With Us.</p>
           </div>
         </a>
       </div>
