@@ -107,13 +107,7 @@ export default function Product() {
           <h2 className="text-4xl">Product Description</h2>
 
           <p className="text-xl my-6">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Pellentesque euismod, urna eu tempor consectetur, nisl nunc congue
-            nisi, eget consectetur nisl nunc eget nisl. Pellentesque euismod,
-            urna eu tempor consectetur, nisl nunc congue nisi, eget consectetur
-            nisl nunc eget nisl. Pellentesque euismod, urna eu tempor
-            consectetur, nisl nunc congue nisi, eget consectetur nisl nunc eget
-            nisl. Pellentesque euismod, urna eu tempor consectetur, nisl nunc
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.Pellentesque euismod, urna eu tempor consectetur, nisl nunc conguenisi, eget consectetur nisl nunc eget nisl. Pellentesque euismod,urna eu tempor consectetur, nisl nunc congue nisi, eget consecteturnisl nunc eget nisl. Pellentesque euismod, urna eu temporconsectetur, nisl nunc congue nisi, eget consectetur nisl nunc egetnisl. Pellentesque euismod, urna eu tempor consectetur, nisl nunc
           </p>
         </div>
       </div>

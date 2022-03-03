@@ -10,15 +10,7 @@ import orders from "../../assets/images/orders.png";
 import banner from "../../assets/images/banner.jpg";
 
 export default function Services() {
-  const NavLinkstyle = {
-    fontSize: "x-large",
-    padding: "10px",
-    textDecoration: "none",
-    background: "gray",
-    color: "white",
-    borderRadius: "10px",
-    margin: "10px",
-  };
+  
   return (
     <div>
       <Header />

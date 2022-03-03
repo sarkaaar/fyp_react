@@ -3,60 +3,60 @@ import * as React from "react";
 import { IconButton, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-
+import {Link} from "react-router-dom";
 export default function Header() {
   return (
     <div className="z-10">
       <div className="flex justify-between">
         <div className="flex p-2 px-8 gap-8">
-          <a
-            href={"/"}
+          <Link
+            to={"/"}
             className="font-medium text-gray-500 hover:text-gray-900"
           >
             Home
-          </a>
-          <a
-            href={"/services"}
+          </Link>
+          <Link
+            to={"/services"}
             className="font-medium text-gray-500 hover:text-gray-900"
           >
             Services
-          </a>
-          <a
-            href={"/maps"}
+          </Link>
+          <Link
+            to={"/maps"}
             className="font-medium text-gray-500 hover:text-gray-900"
           >
             Maps
-          </a>
-          <a
-            href={"/returnProduct"}
+          </Link>
+          <Link
+            to={"/returnProduct"}
             className="font-medium text-gray-500 hover:text-gray-900"
           >
             Product Return
-          </a>
-          <a
-            href={"/"}
+          </Link>
+          <Link
+            to={"/"}
             className="font-medium text-gray-500 hover:text-gray-900"
           >
             Appointments
-          </a>
+          </Link>
         </div>
         <div className="p-2 px-8">
-          <a
-            href={"/"}
+          <Link
+            to={"/"}
             className="font-medium text-gray-500 hover:text-gray-900"
           >
             Account
-          </a>
+          </Link>
         </div>
       </div>
       <hr />
       <div className=" flex justify-between">
-        <a
-          href={"/"}
+        <Link
+          to={"/"}
           className="p-4 px-8 font-medium text-gray-500 hover:text-gray-900"
         >
           Categories
-        </a>
+        </Link>
         <div className="flex w-6/12">
           <TextField
             id="cardName"

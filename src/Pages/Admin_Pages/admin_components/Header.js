@@ -1,64 +1,65 @@
 import React from 'react';
+import {Link} from "react-router-dom"
 export default function Header() {
   return (
     <div>
       <div className="flex p-2 px-8 justify-around">
-        <a
-          href={"/admin/dashboard"}
+        <Link
+          to={"/admin/dashboard"}
           className="font-medium text-gray-500 hover:text-gray-900"
         >
           DASHBOARD
-        </a>
-        <a
-          href={"/admin/sign_in"}
+        </Link>
+        <Link
+          to={"/admin/sign_in"}
           className="font-medium text-gray-500 hover:text-gray-900"
         >
           LOGIN
-        </a>
-        <a
-          href={"/admin/inventory"}
+        </Link>
+        <Link
+          to={"/admin/inventory"}
           className="font-medium text-gray-500 hover:text-gray-900"
         >
           INVENTORY
-        </a>
-        <a
-          href={"/admin/addProducts"}
+        </Link>
+        <Link
+          to={"/admin/addProducts"}
           className="font-medium text-gray-500 hover:text-gray-900"
         >
           ADD PRODUCTS
-        </a>
-        <a
-          href={"/admin/orders"}
+        </Link>
+        <Link
+          to={"/admin/orders"}
           className="font-medium text-gray-500 hover:text-gray-900"
         >
           ORDERS
-        </a>
-        <a
-          href={"/admin/addDoctor"}
+        </Link>
+        <Link
+          to={"/admin/addDoctor"}
           className="font-medium text-gray-500 hover:text-gray-900"
         >
           ADD DOCTORS
-        </a>
-        <a
-          href={"/admin/viewDoctor"}
+        </Link>
+        <Link
+          to={"/admin/viewDoctor"}
           className="font-medium text-gray-500 hover:text-gray-900"
         >
           VIEW DOCTORS
-        </a>
-        <a
-          href={"/admin/categories"}
+        </Link>
+        <Link
+          to={"/admin/categories"}
           className="font-medium text-gray-500 hover:text-gray-900"
         >
           CATEGORIES
-        </a>
+        </Link>
 
 
-        <a
-          href={"/admin/viewAllProducts"}
+        <Link
+          to={"/admin/viewAllProducts"}
           className="font-medium text-gray-500 hover:text-gray-900"
         >
           ALL PRODUCTS
-        </a>
+        </Link>
 
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />

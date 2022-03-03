@@ -1,4 +1,8 @@
 import * as React from "react";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Button from "@mui/material/Button";
+import AddCategory from "../../Categories";
 
 export default function ViewInventoryBody(item) {
   return (
@@ -15,7 +19,22 @@ export default function ViewInventoryBody(item) {
       <hr />
       <p className="w-1/6">{item.obj.stock}</p>
       <hr />
-      <p className="w-1/6">CRUD</p>
+      <div className="w-1/6">
+        <Button>
+          <EditIcon />
+        </Button>
+        <Button>
+          <DeleteIcon />
+        </Button>
+      </div>
     </div>
   );
 }
+// name 
+// cp
+// sp
+// varients
+// sub category
+// discription
+// image
+// category
