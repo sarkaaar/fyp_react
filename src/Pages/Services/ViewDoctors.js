@@ -8,7 +8,7 @@ export default function ViewDoctors() {
     <div>
       <Header />
       {/* <div className="  mx-20  my-20 flex flex-row rounded justify-between "> */}
-      <div className="max-w-3xl hover:bg-blue-200 border-2 border-black m-auto flex p-6 bg-white rounded-lg shadow-xl  ">
+      <div className="max-w-3xl hover:bg-blue-200 border-2 border-black mx-auto flex p-6 bg-white rounded-lg shadow-xl  ">
        
           <img src={ammar} className="m-5 w-33 h-40  " />
         
@@ -35,7 +35,18 @@ export default function ViewDoctors() {
         
         </div>
       </div>
-     
+
+
+      <div className=" border-2 border-black mx-auto flex p-6 bg-white rounded-lg shadow-xl  ">
+        
+        <p className="divide-y-2"> Visit Doctor</p>
+        <p>UVAS Hospital Outfall road</p>
+        <p>Fee</p>
+        <p>Address</p>
+        
+
+        
+        </div>
     </div>
   );
 }
