@@ -22,23 +22,20 @@ export default function Inventory() {
   const productsCollection = collection(db, "products");
 
   const [s_Product, setS_Product] = useState();
+  // Modal
   const [open, setOpen] = React.useState(false);
-  // function handleOpen(item) {
-  //   setOpen(true);
-  //   setS_Product(item);
-  // }
-  // setS_Product};
+  const [delOpen, setDelOpen] = React.useState(false);
+
   const handleClose = () => setOpen(false);
 
-  const [delopen, setDelOpen] = React.useState(false);
-  const handleDelOpen = () => setDelOpen(true);
   const handleDelClose = () => setDelOpen(false);
 
   useEffect(() => {
     const getProducts = async () => {
       const data = await getDocs(productsCollection);
-      setProducts(data.docs.map((doc) => doc.data()));
-      console.log(products);
+      setProducts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+
+      // queryResults.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
     };
 
     getProducts();
@@ -47,13 +44,13 @@ export default function Inventory() {
   const deleteProduct = async (id) => {
     const prod = doc(db, "products", id);
     await deleteDoc(prod);
-    console.log("Category Deleted");
+    console.log("Product Deleted");
   };
 
   const updateProduct = async (id) => {
     const prod = doc(db, "products", id);
     await updateDoc(prod, { capital: true });
-    console.log("Category Deleted");
+    console.log("Product Updated");
   };
 
   return (
@@ -76,10 +73,10 @@ export default function Inventory() {
               </tr>
             </thead>
 
-            {products.map((item) => (
+            {products.map((item, key) => (
               // <ViewInventoryBody obj={item} />
               <>
-                <tbody>
+                <tbody key={key}>
                   <tr>
                     <td className=" text-lg p-2 px-8">{item.name}</td>
                     <td className=" text-lg p-2 px-8">{item.costPrice}</td>
@@ -90,34 +87,20 @@ export default function Inventory() {
                       <>
                         <Button
                           onClick={() => {
-                            setOpen(true);
                             setS_Product(item);
+                            setOpen(true);
                           }}
                         >
                           <EditIcon />
                         </Button>
-                        <Button onClick={handleDelOpen}>
+                        <Button
+                          onClick={() => {
+                            setS_Product(item);
+                            setDelOpen(true);
+                          }}
+                        >
                           <DeleteIcon />
                         </Button>
-                        {/* Edit Modal */}
-                        <Modal open={open} onClose={handleClose}>
-                          <div
-                            className="absolute inset-1/2	w-96 h-fit border-box bg-white drop-shadow-2xl	p-4"
-                            style={{ transform: "translate(-50%, -50%)" }}
-                          >
-                            <h1 className="mt-2 text-xl">Update Product</h1>
-
-                            <Button
-                              onClick={() => {
-                                console.log(s_Product);
-                              }}
-                              variant="contained"
-                              fullWidth
-                            >
-                              Save
-                            </Button>
-                          </div>
-                        </Modal>
                       </>
                     </td>
                   </tr>
@@ -127,10 +110,10 @@ export default function Inventory() {
           </table>
         </div>
       </div>
-
+      {/* ------------------------------------------------------------------ */}
       {/* Delete Modal */}
       <Modal
-        open={delopen}
+        open={delOpen}
         onClose={handleDelClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -146,10 +129,40 @@ export default function Inventory() {
             Are you Sure You want to delete the Product. This Process cannot be
             reversed.
           </h2>
+          <h1 id="modal-modal-title" className="mt-2 text-lg font-bold">
+            Details
+          </h1>
+          <h2
+            id="modal-modal-description"
+            className="mt-2 text-red-600 font-bold"
+          >
+            {s_Product?.name}
+          </h2>
+          <div className=" flex gap-4">
+            <Button
+              color="error"
+              onClick={() => {
+                deleteProduct(s_Product.id);
+              }}
+              fullWidth
+              variant="contained"
+            >
+              Yes
+            </Button>
+            <Button
+              onClick={handleDelClose}
+              color="primary"
+              fullWidth
+              variant="contained"
+            >
+              No
+            </Button>
+          </div>
         </div>
       </Modal>
+      {/* ------------------------------------------------------------------ */}
       {/* Edit Modal */}
-      {/* <Modal open={open} onClose={handleClose}>
+      <Modal open={open} onClose={handleClose}>
         <div
           className="absolute inset-1/2	w-96 h-fit border-box bg-white drop-shadow-2xl	p-4"
           style={{ transform: "translate(-50%, -50%)" }}
@@ -167,11 +180,17 @@ export default function Inventory() {
           />
           <TextField margin="normal" fullWidth label="Cost Price" />
           <TextField margin="normal" fullWidth label="Sale Price" />
-          <Button variant="contained" fullWidth>
+          <Button
+            variant="contained"
+            fullWidth
+            onClick={() => {
+              console.log(s_Product);
+            }}
+          >
             Save
           </Button>
         </div>
-      </Modal> */}
+      </Modal>
     </>
   );
 }
