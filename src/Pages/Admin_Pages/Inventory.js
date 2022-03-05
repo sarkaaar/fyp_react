@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
+// import ModalEdit from "./admin_components/viewInventory/ModalEdit";
 import {
   collection,
   getDocs,
@@ -20,8 +21,13 @@ export default function Inventory() {
   const [products, setProducts] = useState([]);
   const productsCollection = collection(db, "products");
 
+  const [s_Product, setS_Product] = useState();
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+  // function handleOpen(item) {
+  //   setOpen(true);
+  //   setS_Product(item);
+  // }
+  // setS_Product};
   const handleClose = () => setOpen(false);
 
   const [delopen, setDelOpen] = React.useState(false);
@@ -52,19 +58,12 @@ export default function Inventory() {
 
   return (
     <>
-      <Button
-        onClick={() => {
-          console.log(products);
-        }}
-      >
-        Click
-      </Button>
       <Header />
       <div className="">
         <Sidebar />
         <div className="ml-72">
           <h1 className="text-4xl font-bold m-8">Inventory -{">"}</h1>
-          <table class=" w-11/12 m-auto divide-y divide-gray-200 table-fixed dark:divide-gray-700">
+          <table className=" w-11/12 m-auto divide-y divide-gray-200 table-fixed dark:divide-gray-700">
             {/* <ViewInventoryHead /> */}
             <thead className="p-4 bg-gray-100 dark:bg-gray-700">
               <tr>
@@ -89,12 +88,36 @@ export default function Inventory() {
                     <td className=" text-lg p-2 px-8">{item.stock}</td>
                     <td className=" text-lg p-2  flex justify-end">
                       <>
-                        <Button onClick={handleOpen}>
+                        <Button
+                          onClick={() => {
+                            setOpen(true);
+                            setS_Product(item);
+                          }}
+                        >
                           <EditIcon />
                         </Button>
-                        <Button>
-                          <DeleteIcon onClick={handleDelOpen} />
+                        <Button onClick={handleDelOpen}>
+                          <DeleteIcon />
                         </Button>
+                        {/* Edit Modal */}
+                        <Modal open={open} onClose={handleClose}>
+                          <div
+                            className="absolute inset-1/2	w-96 h-fit border-box bg-white drop-shadow-2xl	p-4"
+                            style={{ transform: "translate(-50%, -50%)" }}
+                          >
+                            <h1 className="mt-2 text-xl">Update Product</h1>
+
+                            <Button
+                              onClick={() => {
+                                console.log(s_Product);
+                              }}
+                              variant="contained"
+                              fullWidth
+                            >
+                              Save
+                            </Button>
+                          </div>
+                        </Modal>
                       </>
                     </td>
                   </tr>
@@ -126,7 +149,7 @@ export default function Inventory() {
         </div>
       </Modal>
       {/* Edit Modal */}
-      <Modal open={open} onClose={handleClose}>
+      {/* <Modal open={open} onClose={handleClose}>
         <div
           className="absolute inset-1/2	w-96 h-fit border-box bg-white drop-shadow-2xl	p-4"
           style={{ transform: "translate(-50%, -50%)" }}
@@ -145,10 +168,10 @@ export default function Inventory() {
           <TextField margin="normal" fullWidth label="Cost Price" />
           <TextField margin="normal" fullWidth label="Sale Price" />
           <Button variant="contained" fullWidth>
-            ] Save
+            Save
           </Button>
         </div>
-      </Modal>
+      </Modal> */}
     </>
   );
 }

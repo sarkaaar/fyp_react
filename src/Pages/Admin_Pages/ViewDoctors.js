@@ -31,7 +31,7 @@ export default function ViewDoctor() {
 
         <div className="ml-72">
           <h1 className="text-3xl font-bold m-12">List Of Doctors</h1>
-          <table class="table-auto">
+          <table className="table-auto">
             <ViewDoctorHead />
             {doctors.map((item, key) => (
               <ViewDoctorBody key={key} obj={item} />

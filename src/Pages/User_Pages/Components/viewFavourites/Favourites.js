@@ -21,7 +21,7 @@ export default function Favourites() {
     <div>
         <Header/>
       <svg
-        class="w-6 h-6"
+        className="w-6 h-6"
         fill="currentColor"
         viewBox="0 0 20 20"
         xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +34,7 @@ export default function Favourites() {
       </svg>
       <h1> Whishlist</h1>
       <svg
-        class="w-6 h-6"
+        className="w-6 h-6"
         fill="currentColor"
         viewBox="0 0 20 20"
         xmlns="http://www.w3.org/2000/svg"
