@@ -69,38 +69,40 @@ export default function AddCategory() {
       <Header />
       <div className="">
         <Sidebar />
-        <div className="flex mt-4 ml-72">
-          <div style={{ border: "2px solid black", width: "33%" }}>
-            <div className=" w-96 mt-24 p-5">
-              <h1 className="flex justify-center text-3xl">
-                Add Parent Category
-              </h1>
-              <div>
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  label="Category Name"
-                  name="name"
-                  value={category}
-                  onChange={(e) => {
-                    setCategory(e.target.value);
-                  }}
-                />
+        <div className="m-auto mt-4 ml-72">
+          <div className="m-auto">
+            <div className=" w-96 m-auto mt-24 p-5">
+              <form>
+                <h1 className="flex justify-center text-3xl">
+                  Add Parent Category
+                </h1>
+                <div>
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    label="Category Name"
+                    name="name"
+                    value={category}
+                    onChange={(e) => {
+                      setCategory(e.target.value);
+                    }}
+                  />
 
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                  onClick={addParentCategory}
-                >
-                  Add Category
-                </Button>
-              </div>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                    onClick={addParentCategory}
+                  >
+                    Add Category
+                  </Button>
+                </div>
+              </form>
             </div>
             <hr />
-            <div className=" w-96 mt-24 p-5">
+            <div className=" w-96 mt-12 m-auto p-5">
               <h1 className="flex justify-center text-3xl">
                 Add Child Category
               </h1>
@@ -147,36 +149,38 @@ export default function AddCategory() {
             <hr />
           </div>
           <hr />
-          <div style={{ border: "2px solid black", width: "33%" }}>
-            <h1 className="text-4xl p-4">Parent Categories</h1>
+          <div className="flex m-auto w-fit">
+            <div style={{ border: "2px solid black w-96" }}>
+              <h1 className="text-4xl p-4">Parent Categories</h1>
+              <hr />
+              {cat.map((item) => {
+                return (
+                  <div className="p-2">
+                    <h1>{item}</h1>
+                    <hr />
+                  </div>
+                );
+              })}
+            </div>
             <hr />
-            {cat.map((item) => {
-              return (
-                <div className="p-2">
-                  <h1>{item}</h1>
-                  <hr />
-                </div>
-              );
-            })}
-          </div>
-          <hr />
-          <div style={{ border: "2px solid black", width: "33%" }}>
-            <h1 className="text-4xl p-4">Child Categories</h1>
-            <hr />
-            {sub_cat.map((item) => {
-              return (
-                <div className="flex justify-between p-2 ">
-                  <h1>{item.sub_}</h1>
-                  <Button
-                    onClick={() => {
-                      deleteCategory(item.id);
-                    }}
-                  >
-                    DELETE
-                  </Button>
-                </div>
-              );
-            })}
+            <div style={{ border: "2px solid black w-96" }}>
+              <h1 className="text-4xl p-4">Child Categories</h1>
+              <hr />
+              {sub_cat.map((item) => {
+                return (
+                  <div className="flex justify-between p-2 ">
+                    <h1>{item.sub_}</h1>
+                    <Button
+                      onClick={() => {
+                        deleteCategory(item.id);
+                      }}
+                    >
+                      DELETE
+                    </Button>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
