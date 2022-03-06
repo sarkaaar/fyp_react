@@ -4,7 +4,7 @@ export default function ViewDoctorBody(item) {
   return (
     <tbody>
       <tr>
-        <td className=""> {item.obj.name}</td>
+        <td className="">{item.obj.name}</td>
         <td className="">{item.obj.email}</td>
         <td className="">{item.obj.dob}</td>
         <td className="">{item.obj.cnic}</td>
