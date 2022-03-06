@@ -9,6 +9,7 @@ import { db, storage } from "../../firebase-config";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { uploadBytesResumable, ref, getDownloadURL } from "firebase/storage";
 import Sidebar from "./admin_components/Sidebar";
+
 export default function AddProducts() {
   const [name, setName] = useState("");
   const [costPrice, setCostPrice] = useState("");
