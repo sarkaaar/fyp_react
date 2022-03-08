@@ -1,16 +1,12 @@
 import * as React from "react";
 import Header from "../User_Pages/Components/Header";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import { CardActionArea } from "@mui/material";
-import orders from "../../assets/images/orders.png";
 import Footer from "../User_Pages/Components/Footer";
 import doctor from "../../assets/images/doctor.png";
 import maps from "../../assets/images/maps.jpg";
+import mAppointments from "../../assets/images/makeappointments.png";
 
 export default function Services() {
- return (
+  return (
     <div>
       <Header />
 
@@ -29,7 +25,7 @@ export default function Services() {
               <polygon points="50,0 100,0 50,100 ,100" />
             </svg>
 
-            <main className="mx-28">
+            <main className="mx-10 md:mx-28">
               {/* <div className="sm:text-center lg:text-left"> */}
               <h1 className="pt-16 text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
                 <span className="block xl:inline">Welcome to</span>
@@ -55,25 +51,50 @@ export default function Services() {
         <hr />
       </div>
 
-      <div className="w-1/2  h-px bg-black m-auto mt-3"></div>
-      <p className="text-4xl p-4 font-bold flex justify-center">
+      <div className="w-3/4 md:w-1/2  h-px bg-black m-auto mt-3"></div>
+      <p className="mx-7 text-3xl p-4 font-bold flex justify-center">
         Services We Provide
       </p>
-      <div className="w-1/2  h-px bg-black m-auto mb-3"></div>
+      <div className="w-3/4 md:w-1/2  h-px bg-black m-auto mb-3"></div>
 
-      <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+      <div className="max-w-md mx-auto m-5 bg-white rounded-xl shadow-lg overflow-hidden md:max-w-2xl">
         <a href="viewDoctors">
-          <div className="flex">
-            <img className="object-contain h-48 w-50 md:h-full md:w-48" src={doctor} alt="View Doctors" />
-            <div className="p-8 hover:bg-gray-200">
-              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white ">View Doctors</h5>
-              <p className="mt-2 text-slate-500">View All World Qualified Veterinary Doctors Associated With Us.</p>
+          <div className="md:grid md:grid-cols-4">
+            <img className="object-contain mx-auto h-40 w-50 md:w-48 lg:h-50 lg:w-55 md:col-span-1" src={doctor} alt="View Doctors" />
+            <div className="p-8 hover:bg-gray-200 md:col-span-3">
+              <h5 className="mb-2 text-center text-2xl font-bold tracking-tight text-gray-900 md:text-right">View Doctors</h5>
+              <p className="mt-2 text-center text-slate-500 md:text-right">View All World Qualified Veterinary Doctors Associated With Us.</p>
             </div>
           </div>
         </a>
       </div>
 
-      <div className="m-5 ml-36">
+      <div className="max-w-md mx-auto m-5 bg-white rounded-xl shadow-lg overflow-hidden md:max-w-2xl">
+        <a href="maps">
+          <div className="md:grid md:grid-cols-4">
+            <div className="p-8 hover:bg-gray-200 w-400 md:col-span-3">
+              <h5 className="mb-2 text-center text-2xl font-bold tracking-tight text-gray-900 md:text-left">View Maps</h5>
+              <p className="mt-2 text-center text-slate-500 md:text-left">View All Clinics in the Vicinity.</p>
+            </div>
+            <img className="object-contain mx-auto h-40 w-50 md:w-48 md:col-span-1" src={maps} alt="Vew Maps" />
+          </div>
+        </a>
+      </div>
+
+      <div className="max-w-md mx-auto m-5 bg-white rounded-xl shadow-lg overflow-hidden md:max-w-2xl">
+        <a href="makeAppointments">
+          <div className="md:grid md:grid-cols-4">
+            <img className="object-contain mx-auto h-40 w-50 md:w-48 lg:h-50 lg:w-55 md:col-span-1" src={mAppointments} alt="View Doctors" />
+            <div className="p-8 hover:bg-gray-200 md:col-span-3">
+              <h5 className="mb-2 text-center text-2xl font-bold tracking-tight text-gray-900 md:text-right">Book Appointments</h5>
+              <p className="mt-2 text-center text-slate-500 md:text-right">Make Appointmensts Online With Our Associated Doctors.</p>
+            </div>
+          </div>
+        </a>
+      </div>
+
+
+      {/* <div className="m-5 ml-36">
         <a href="viewDoctors" className="flex flex-col items-center hover:bg-gray-100 bg-white rounded-lg border h-48 shadow-md md:flex-row md:max-w-xl dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
           <img className="object-contain h-48 w-48 bg-white object-cover rounded-t-lg md:w-48 md:rounded-none md:rounded-l-lg" src={doctor} alt="View Doctors" />
           <div className="flex flex-col justify-between p-4 leading-normal">
@@ -103,114 +124,7 @@ export default function Services() {
             <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">Make Appointmensts Online With Our Associated Doctors.</p>
           </div>
         </a>
-      </div>
-
-
-
-      <div className="flex gap-4 mt-12">
-        <a href="viewDoctors" target="_blank">
-          <Card sx={{ maxWidth: 300, maxHeight: 500, margin: 5 }}>
-            <CardActionArea>
-              <CardMedia
-                component="img"
-                image={orders}
-                style={{ width: "250px", padding: "10px" }}
-                //image="https://firebearstudio.com/blog/wp-content/uploads/2016/11/Mageworx-Magento-2-Extended-Sales-Orders-Grid-Extension.jpg"
-                alt="order"
-              />
-              <hr />
-              <CardContent>
-                <div
-                  style={{
-                    alignItem: "center",
-                    justifyContent: "center",
-                    fontWeight: "bold",
-                  }}
-                >
-                  View Doctors
-                </div>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </a>
-
-        <div>
-          <a href="maps" target="_blank">
-            <Card sx={{ maxWidth: 200, maxHeight: "auto" }}>
-              <CardActionArea>
-                <CardMedia
-                  component="img"
-                  width="auto"
-                  height="140px"
-                  image="https://firebearstudio.com/blog/wp-content/uploads/2016/11/Mageworx-Magento-2-Extended-Sales-Orders-Grid-Extension.jpg"
-                  alt="order"
-                />
-                <CardContent>
-                  <div
-                    style={{
-                      alignItem: "center",
-                      justifyContent: "center",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    View Maps
-                  </div>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          </a>
-        </div>
-
-        <a href="viewAppointments" target="_blank">
-          <Card sx={{ maxWidth: 200, maxHeight: "auto", margin: 5 }}>
-            <CardActionArea>
-              <CardMedia
-                component="img"
-                width="auto"
-                height="140px"
-                image="https://firebearstudio.com/blog/wp-content/uploads/2016/11/Mageworx-Magento-2-Extended-Sales-Orders-Grid-Extension.jpg"
-                alt="order"
-              />
-              <CardContent>
-                <div
-                  style={{
-                    alignItem: "center",
-                    justifyContent: "center",
-                    fontWeight: "bold",
-                  }}
-                >
-                  View Appointments
-                </div>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </a>
-
-        <a href="makeAppointments" target="_blank">
-          <Card sx={{ maxWidth: 200, maxHeight: "auto", margin: 5 }}>
-            <CardActionArea>
-              <CardMedia
-                component="img"
-                width="auto"
-                height="140px"
-                image="https://firebearstudio.com/blog/wp-content/uploads/2016/11/Mageworx-Magento-2-Extended-Sales-Orders-Grid-Extension.jpg"
-                alt="order"
-              />
-              <CardContent>
-                <div
-                  style={{
-                    alignItem: "center",
-                    justifyContent: "center",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Make Appointments
-                </div>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </a>
-      </div>
+      </div> */}
 
       <Footer />
     </div>

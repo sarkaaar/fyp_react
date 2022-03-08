@@ -17,7 +17,7 @@ export default function Banner() {
             <polygon points="50,0 100,0 50,100 ,100" />
           </svg>
 
-          <main className="mx-28">
+          <main className="mx-10 md:mx-28">
             {/* <div className="sm:text-center lg:text-left"> */}
             <h1 className="pt-16 text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
               <span className="block xl:inline">Welcome to the</span>
@@ -29,8 +29,8 @@ export default function Banner() {
               This is a platform where you get the most for you beloved pets. We
               come with Clinical Care and Products for your pets.
             </p>
-            <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
-              <div className="rounded-md shadow">
+            <div className="grid grid-cols-2 gap-2 mt-5 sm:mt-8 justify-center lg:justify-start">
+              <div className="rounded-md shadow-md">
                 <a
                   href="/services"
                   className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
@@ -38,7 +38,7 @@ export default function Banner() {
                   Services
                 </a>
               </div>
-              <div className="mt-3 sm:mt-0 sm:ml-3">
+              <div className="sm:ml-3 rounded-md shadow-md">
                 <a
                   href="/categories"
                   className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 md:py-4 md:text-lg md:px-10"
