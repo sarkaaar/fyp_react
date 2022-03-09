@@ -14,15 +14,13 @@ export default function ViewDoctor() {
   const [doctors, setDoctors] = useState([]);
   const doctorsCollection = collection(db, "doctors");
 
-  useEffect(() => {
-    // Search Categories
-    const getDoctors = async () => {
-      const data = await getDocs(doctorsCollection);
-      setDoctors(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-      console.log("Doctoers Recieved");
-    };
+  const getDoctors = async () => {
+    const data = await getDocs(doctorsCollection);
+    setDoctors(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    console.log("Doctoers Recieved");
+  };
 
-    // Function Calls
+  useEffect(() => {
     getDoctors();
   }, []);
 
@@ -30,11 +28,13 @@ export default function ViewDoctor() {
     const prod = doc(db, "doctors", id);
     await updateDoc(prod, { status: false });
     console.log("Doctor Disabled ");
+    getDoctors();
   };
   const enableDoctor = async (id) => {
     const prod = doc(db, "doctors", id);
     await updateDoc(prod, { status: true });
     console.log("Doctor Enabled ", id);
+    getDoctors();
   };
 
   const updateDoctor = async (id) => {
@@ -42,6 +42,7 @@ export default function ViewDoctor() {
     await updateDoc(prod, sDoctor);
     console.log("Doctor Updated ", id);
     console.log(prod);
+    getDoctors();
   };
 
   const [open, setOpen] = useState(false);
@@ -76,8 +77,8 @@ export default function ViewDoctor() {
 
             {doctors.map((item, key) => (
               // <ViewInventoryBody obj={item} />
-              <>
-                <tbody key={key}>
+              <React.Fragment key={key}>
+                <tbody>
                   <tr>
                     <td className="text-lg p-2 mx-4">{item.name}</td>
                     <td className="text-lg p-2 mx-4">{item.email}</td>
@@ -121,7 +122,7 @@ export default function ViewDoctor() {
                     </td>
                   </tr>
                 </tbody>
-              </>
+              </React.Fragment>
             ))}
           </table>
         </div>

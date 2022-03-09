@@ -55,7 +55,7 @@ function App() {
         <Route exact path="/maps" element={<Maps />} />
         <Route exact path="/chatbot" element={<Chatbot />} />
         <Route exact path="/returnProduct" element={<ProductReturn />} />
-        <Route exact path="/Product" element={<Product />} />
+        <Route exact path="/product/:id" element={<Product />} />
         <Route exact path="/profile" element={<Profile />} />
         <Route exact path="/orders" element={<Orders />} />
         <Route exact path ="/favourites" element={<Favourites/>}/>
