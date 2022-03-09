@@ -1,9 +1,12 @@
-import React from 'react';
-import {Link} from "react-router-dom"
+import React from "react";
+import { Link } from "react-router-dom";
 export default function Header() {
   return (
     <div>
-      <div className="flex p-2 px-8 justify-around">
+      <h1 className="font-medium m-1 flex justify-center text-xl text-gray-500 hover:text-gray-900">
+        ADMIN PANEL
+      </h1>
+      {/* <div className="flex p-2 px-8 justify-around">
         <Link
           to={"/admin/dashboard"}
           className="font-medium text-gray-500 hover:text-gray-900"
@@ -67,7 +70,7 @@ export default function Header() {
 
 
          </div>
-      <hr />
+      <hr /> */}
     </div>
   );
 }

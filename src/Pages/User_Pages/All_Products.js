@@ -35,9 +35,6 @@ export default function Products() {
             <Checkbox value="remember" color="primary" placeholder="Hi" />
             Remember Me
           </p>
-          <div class=" flex justify-center items-center">
-            <div class="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
-          </div>
 
           <h1> Categories</h1>
           <p style={{ fontSize: "x-large" }}>Dog Food</p>
