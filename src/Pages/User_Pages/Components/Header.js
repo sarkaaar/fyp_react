@@ -3,7 +3,7 @@ import * as React from "react";
 import { IconButton, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 export default function Header() {
   return (
     <div className="z-10">
@@ -34,7 +34,7 @@ export default function Header() {
             Product Return
           </Link>
           <Link
-            to={"/"}
+            to={"/viewAppointments"}
             className="font-medium text-gray-500 hover:text-gray-900"
           >
             Appointments
@@ -42,7 +42,7 @@ export default function Header() {
         </div>
         <div className="p-2 px-8">
           <Link
-            to={"/"}
+            to={"/sign_in"}
             className="font-medium text-gray-500 hover:text-gray-900"
           >
             Account
@@ -73,9 +73,11 @@ export default function Header() {
             <SearchIcon className="mx-auto" />
           </span>
         </div>
-        <IconButton style={{ width: "55px", marginRight: "20px" }}>
-          <ShoppingCartIcon sx={{ color: "blue" }} />
-        </IconButton>
+        <Link to={"/cart"}>
+          <IconButton style={{ width: "55px", marginRight: "20px" }}>
+            <ShoppingCartIcon sx={{ color: "blue" }} />
+          </IconButton>
+        </Link>
       </div>
       <hr />
     </div>

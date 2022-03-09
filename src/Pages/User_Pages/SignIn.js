@@ -1,6 +1,50 @@
 import Header from "./Components/Header";
 import GoogleIcon from "@mui/icons-material/Google";
+import {
+  onAuthStateChanged,
+  signOut,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { Button, TextField } from "@mui/material";
+import { Link } from "react-router-dom";
+import { auth } from "../../firebase-config";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 export default function Example() {
+  const navigate = useNavigate();
+
+  const [email, setemail] = useState("");
+  const [password, setPassword] = useState("");
+  const [user, setUser] = useState({});
+
+  onAuthStateChanged(auth, (currentUser) => {
+    setUser(currentUser);
+    // localStorage.setItem("token", user.accessToken);
+  });
+
+  // Login Function
+  const login = async () => {
+    try {
+      const LoggedInUser = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      console.log("User Signed in Sucessfully");
+
+      // console.log(LoggedInUser);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+    // console.log("Current user signed in");
+  };
+
+  // Logout Function
+  const logout = async () => {
+    await signOut(auth);
+  };
+
   return (
     <>
       <Header />
@@ -11,33 +55,36 @@ export default function Example() {
               Sign in to your account
             </h2>
           </div>
-          <form className="mt-8 space-y-6" action="#" method="POST">
+          <form
+            className="mt-8 space-y-6"
+            onSubmit={(e) => {
+              e.preventDefault();
+            }}
+          >
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="rounded-md shadow-sm -space-y-px">
-              <div>
-                <label htmlFor="email-address" className="">
-                  Email address
-                </label>
-                <input
-                  id="email-address"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  className=" rounded-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                />
-              </div>
-              <div className="mt-4">
-                <label htmlFor="password">Password</label>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  className=" rounded-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                />
-              </div>
+              <TextField
+                style={{ paddingBottom: "15px" }}
+                label="Email"
+                fullWidth
+                required
+                value={email}
+                onChange={(e) => {
+                  setemail(e.target.value);
+                }}
+                type="email"
+              />
+
+              <TextField
+                label="Password"
+                fullWidth
+                required
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+                type="password"
+              />
             </div>
 
             <div className="flex items-center justify-between">
@@ -68,31 +115,39 @@ export default function Example() {
 
             <div>
               <button
-                type="submit"
+                // type="submit"
                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                onClick={() => {
+                  login();
+                }}
               >
                 Sign in
               </button>
             </div>
             <div className="flex">
               <p>New to Pet-Planet </p>
-              <a
-                href="/sign_up"
+              <Link
+                to="/sign_up"
                 className="font-medium text-indigo-600 hover:text-indigo-500"
               >
                 Sign Up
-              </a>
+              </Link>
             </div>
             <hr />
-
-            <div className="">
-              <h2 className="w-6 m-auto">Or</h2>
-              <button className="mt-4 py-2 px-4 w-full text-white bg-red-600 hover:bg-red-700 focus:ring-red-500 rounded-md">
-                Sign in with <GoogleIcon />
-              </button>
-            </div>
           </form>
+          <div className="">
+            <h2 className="w-6 m-auto">Or</h2>
+            <button className="mt-4 py-2 px-4 w-full text-white bg-red-600 hover:bg-red-700 focus:ring-red-500 rounded-md">
+              Sign in with <GoogleIcon />
+            </button>
+          </div>
         </div>
+      </div>
+      <div>
+        <h1>Current User Signed In</h1>
+        <h1>{user?.email}</h1>
+
+        <Button onClick={logout}>Logout</Button>
       </div>
     </>
   );

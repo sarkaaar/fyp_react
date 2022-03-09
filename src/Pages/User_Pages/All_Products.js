@@ -52,6 +52,11 @@ export default function Products({ hideLoader }) {
               Remember Me
             </p>
 
+        <div style={{ minWidth: "30%", padding: "25px" }}>
+          <p>
+            <Checkbox value="remember" color="primary" placeholder="Hi" />
+            Remember Me
+          </p>
 
             <h1> Categories</h1>
             <p style={{ fontSize: "x-large" }}>Dog Food</p>
@@ -99,6 +104,7 @@ export default function Products({ hideLoader }) {
             })}
           </div>
         </div>
+      </div>
       </div>
     );
   }

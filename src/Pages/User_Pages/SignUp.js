@@ -1,10 +1,39 @@
 import * as React from "react";
 import Header from "./Components/Header";
 import GoogleIcon from "@mui/icons-material/Google";
-
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { useState } from "react";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { Button, TextField } from "@mui/material";
+import { auth } from "../../firebase-config";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUp() {
-  const handleSubmit = (event) => {};
+  const navigate = useNavigate();
+
+  const [user, setUser] = useState({});
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
+  const [name, setName] = useState();
+
+  const signUp = async () => {
+    try {
+      const user = await createUserWithEmailAndPassword(auth, email, password);
+      navigate("/");
+    } catch (error) {
+      console.log(error.message);
+      console.log("error creating user");
+    }
+  };
+
+  const logout = async () => {
+    await signOut(auth);
+  };
+
+  onAuthStateChanged(auth, (currentUser) => {
+    setUser(currentUser);
+  });
 
   return (
     <>
@@ -16,42 +45,66 @@ export default function SignUp() {
               Create an Account
             </h2>
           </div>
-          <form className="mt-8 space-y-6" action="#" method="POST">
+          <form
+            className="mt-8 space-y-6"
+            onSubmit={(e) => {
+              e.preventDefault();
+            }}
+          >
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="rounded-md shadow-sm -space-y-px">
-              <div>
-                <label htmlFor="email-address" className="">
-                  Email address
-                </label>
-                <input
-                  id="email-address"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  className=" rounded-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                />
-              </div>
-              <div className="mt-4">
-                <label htmlFor="password">Password</label>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  className=" rounded-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                />
-              </div>
-              <div className="mt-4">
-                <label htmlFor="password">Confirm Password</label>
-                <input
-                  id="confirm_password"
-                  name="confirm_password"
-                  type="password"
-                  required
-                  className=" rounded-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                />
+              <TextField
+                style={{ paddingBottom: "15px" }}
+                fullWidth
+                // required
+                label="Name"
+                type={"text"}
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
+              />
+              <TextField
+                style={{ paddingBottom: "15px" }}
+                fullWidth
+                // required
+                label="Email Address"
+                type={"email"}
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+              />
+              <TextField
+                style={{ paddingBottom: "15px" }}
+                fullWidth
+                // required
+                type={"password"}
+                label="Password"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+              />
+              <TextField
+                style={{ paddingBottom: "15px" }}
+                fullWidth
+                // required
+                label="Confirm Password"
+                type={"password"}
+                value={confirmPassword}
+                onChange={(e) => {
+                  setConfirmPassword(e.target.value);
+                }}
+              />
+              <div className="m-2">
+                {confirmPassword === password ? (
+                  <h1> </h1>
+                ) : (
+                  <h1 className="text-red-700 font-semibold">
+                    Password doesn't Match
+                  </h1>
+                )}
               </div>
             </div>
             <div className="flex items-center justify-between">
@@ -72,10 +125,11 @@ export default function SignUp() {
             </div>
             <div>
               <button
-                type="submit"
+                // type="submit"
+                onClick={signUp}
                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
-                Sign in
+                Sign Up
               </button>
             </div>
             <div className="flex">
@@ -96,6 +150,12 @@ export default function SignUp() {
             </div>
           </form>
         </div>
+      </div>
+      <div>
+        <h1>Current User Signed In</h1>
+        <h1>{user?.email}</h1>
+
+        <Button onClick={logout}>Logout</Button>
       </div>
     </>
   );
