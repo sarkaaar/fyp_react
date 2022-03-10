@@ -1,6 +1,5 @@
 // import * as React from "react";
 import Header from "../User_Pages/Components/Header";
-
 import React, { Component } from "react";
 import { Map, GoogleApiWrapper } from "google-maps-react";
 
@@ -13,6 +12,7 @@ const mapStyles = {
 export class MapContainer extends Component {
 
   render() {
+
     return (
       <div>
         <Header />
@@ -30,6 +30,13 @@ export class MapContainer extends Component {
   }
 }
 
+const LoadingContainer = (props) => (
+    <div className="grid place-items-center h-screen">
+      <div className="w-20 h-20 border-t-4 border-b-4 border-green-900 rounded-full animate-spin"></div>
+    </div>
+)
+
 export default GoogleApiWrapper({
   apiKey: "AIzaSyB3UIxXjy4PIW6ikhu5zTorpmgE_rN2hDk",
-})(MapContainer);
+  LoadingContainer: LoadingContainer
+})(MapContainer)

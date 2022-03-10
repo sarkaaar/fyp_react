@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { auth } from "../../firebase-config";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 export default function Example() {
   const navigate = useNavigate();
 
