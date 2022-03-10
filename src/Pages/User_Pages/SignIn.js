@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { auth } from "../../firebase-config";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 export default function SignIn() {
   const navigate = useNavigate();
 
@@ -30,14 +31,14 @@ export default function SignIn() {
         email,
         password
       );
-      console.log("User Signed in Sucessfully");
+      console.log(LoggedInUser);
+      console.log("User Logged in sucessfully");
 
       // console.log(LoggedInUser);
       navigate("/");
     } catch (error) {
       console.log(error);
     }
-    // console.log("Current user signed in");
   };
 
   // Logout Function
