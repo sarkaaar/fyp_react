@@ -15,7 +15,6 @@ export default function Products({ hideLoader }) {
   useEffect(() => {
     // Search Categories
     const getCategories = async () => {
-      await new Promise((r) => setTimeout(r, 2000));
       const data = await getDocs(productsCollection);
       setProducts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       setLoading((loading) => !loading);
@@ -45,7 +44,7 @@ export default function Products({ hideLoader }) {
               Remember Me
             </p>
 
-            <h1> Categories</h1>
+            <h1>Categories</h1>
             <p style={{ fontSize: "x-large" }}>Dog Food</p>
             <p style={{ fontSize: "x-large" }}>CatFood</p>
             <p style={{ fontSize: "x-large" }}>Sparrow Food</p>

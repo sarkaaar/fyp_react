@@ -20,10 +20,10 @@ export default function MediaCard(obj) {
         <div style={{ padding: "15px" }}>
           <h1 className="text-2xl">{obj.obj.name.slice(0, 40) + "..."}</h1>
           <h2
-            className="text-3xl text-indigo-600 font-bold"
+            className="text-2xl text-indigo-600 font-bold"
             // variant="h5"
           >
-            {obj.obj.salePrice ? obj.obj.salePrice : "N/A"}
+           Rs. {obj.obj.salePrice ? obj.obj.salePrice : "N/A"}
           </h2>
         </div>
         <hr className="w-10/12 m-auto" />
