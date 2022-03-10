@@ -1,33 +1,74 @@
 import * as React from "react";
 import Header from "./Components/Header";
 import CartsCard from "./Components/CartsCard";
-import Link from "@mui/material/Link";
+import Footer from "./Components/Footer";
+import { useState, useEffect } from "react";
+import { db } from "../../firebase-config";
+import {
+  collection,
+  // addDoc,
+  // doc,
+  getDocs,
+  query,
+  // updateDoc,
+  where,
+} from "firebase/firestore";
+import { Button } from "@mui/material";
+import { auth } from "../../firebase-config";
+import { onAuthStateChanged } from "firebase/auth";
 
-export default function Review() {
+export default function Cart() {
+  // const [qty, setQty] = useState();
+  const [user, setUser] = useState();
+  const [products, setProducts] = useState([]);
+
+  const cartCollection = collection(db, "cart");
+
+  const getCartItems = async () => {
+    // const q = query(cartCollection, where("user", "==", "test@test.com"));
+    const q = await query(cartCollection, where("user", "==", user?.email));
+    const queryResults = await getDocs(q);
+    setProducts(
+      queryResults.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+    );
+    // console.log(products);
+  };
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      // getCartItems();
+    });
+
+    getCartItems();
+  }, [user]);
+
   return (
     <div>
       <Header />
       <h1 className="p-4 text-6xl font-bold">Cart -{">"}</h1>
-      <div  className="p-20 justify-around" >
-        <CartsCard />
-        <CartsCard />
-        <CartsCard />
-        <CartsCard />
-        <CartsCard />
+      <div className="p-20 justify-around">
+        {products.map((item, key) => {
+          return <CartsCard key={key} obj={item} />;
+        })}
+
         <div
           style={{
             width: "300px",
             marginLeft: "auto",
-            marginRight: 'auto',
+            marginRight: "auto",
             justifyItems: "right",
           }}
         >
           <h1>Total = 102 $</h1>
-          <Link href="/checkout" variant="body2">
-            <h1 style={{ color: "white",background:'#121212',maxWidth:'150px',padding:'25px' }}>Checkout</h1>
-          </Link>
+          <Button variant="outlined">Checkout</Button>
         </div>
       </div>
+      <div>
+        <h1>Current User Signed In</h1>
+        <h1>{user?.email}</h1>
+      </div>
+      <Footer />
     </div>
   );
 }

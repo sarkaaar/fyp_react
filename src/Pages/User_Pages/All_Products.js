@@ -26,8 +26,8 @@ export default function Products({ hideLoader }) {
 
   if (loading) {
     return (
-      <div class="grid place-items-center h-screen">
-        <div class="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+      <div className="grid place-items-center h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
       </div>
     )
   }

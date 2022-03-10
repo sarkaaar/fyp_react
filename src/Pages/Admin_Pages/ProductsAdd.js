@@ -66,21 +66,25 @@ export default function AddProducts() {
 
   // Add Products
   const addProduct = async () => {
+    const x = variants.reduce((acc, val, i) => ({ ...acc, [i]: val }), {});
+
     const newProduct = {
       name: name,
       costPrice: costPrice,
       salePrice: salePrice,
-      variants: variants,
+      variants: x,
       category: category,
       subCategory: subCategory,
       description: description,
-      image: image,
+      image: urls || "No Image Found",
     };
+    console.log(newProduct);
     await addDoc(productsCollection, newProduct);
   };
 
   const upload = () => {
     if (!image[0]) return;
+    const arr = [];
 
     for (let i = 0; i < image.length; i++) {
       const storageRef = ref(storage, `products/${image[i].name}`);
@@ -97,7 +101,8 @@ export default function AddProducts() {
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((url) => {
             console.log(url);
-            // setUrls(urls.push(url));
+            arr.push(url);
+            setUrls(arr);
           });
         }
       );
@@ -158,6 +163,13 @@ export default function AddProducts() {
               value={salePrice}
               onChange={(e) => setSalePrice(e.target.value)}
             />
+            <Button
+              onClick={() => {
+                console.log(urls);
+              }}
+            >
+              Click URLS
+            </Button>
 
             {variants.map(([variant, quantity], i) => (
               <div key={i} className="flex items-center gap-4">

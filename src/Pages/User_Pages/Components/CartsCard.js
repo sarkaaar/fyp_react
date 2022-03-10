@@ -1,54 +1,76 @@
 import * as React from "react";
-import { useTheme } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import { db } from "../../../firebase-config";
+import { updateDoc, doc } from "firebase/firestore";
 
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-export default function MediaControlCard() {
-  const theme = useTheme();
+export default function CartsCard(obj) {
+  const increment = async (id) => {
+    const prod = doc(db, "cart", obj?.obj?.id);
+    const newProduct = {
+      product: {
+        quantity: obj?.obj?.product?.quantity + 1,
+        name: obj?.obj?.product?.name,
+        salePrice: obj?.obj?.product?.salePrice,
+      },
+    };
+    await updateDoc(prod, newProduct);
+    console.log("updated");
+  };
+
+  const decrement = async (id) => {
+    const prod = doc(db, "cart", obj?.obj?.id);
+    const newProduct = {
+      product: {
+        quantity: obj?.obj?.product?.quantity - 1,
+        name: obj?.obj?.product?.name,
+        salePrice: obj?.obj?.product?.salePrice,
+      },
+    };
+    await updateDoc(prod, newProduct);
+    console.log("updated");
+  };
+
+  // React.useEffect(() => {
+  // }, [obj?.obj?.product?.quantity]);
 
   return (
-    <Card
-      sx={{ display: "flex", width: "80%" ,marginLeft:'auto', marginRight:'auto',marginBottom:'15px'}}
-      style={{justifyContent:"space-between"}}
+    <div
+      className="flex align-middle justify-between w-11/12"
+      style={{ border: "1px solid black" }}
     >
-      <CardMedia
-        component="img"
-        sx={{ width: 151 }}
-        image="https://blogs.cdc.gov/publichealthmatters/wp-content/uploads/sites/6/2020/05/golden_retiver_cat_cropped-1024x458.jpg"
-        alt="Live from space album cover"
-      />
-      <Box sx={{ display: "flex", flexDirection: "row", width: '80%',justifyItems: "space-between" }}
-      >
-        <CardContent sx={{ flex: "1 0 auto" }}>
-          <Typography component="div" variant="h5">
-            Dog Food
-          </Typography>
-        </CardContent>
-        <CardContent sx={{ flex: "1 0 auto" }}>
-          <Typography component="div" variant="h5">
-            12.00 $
-          </Typography>
-        </CardContent> 
-        <CardContent sx={{ flex: "1 0 auto" }}>
-          <Typography component="div" variant="h5">
-            - 2 +
-          </Typography>
-        </CardContent>
-        <CardContent sx={{ flex: "1 0 auto" }}>
-          <Typography component="div" variant="h5">
-            24.00 $
-          </Typography>
-        </CardContent>
-        <CardContent sx={{ flex: "1 0 auto" }}>
-          <Typography component="div" variant="h5">
-            <DeleteOutlineIcon />
-          </Typography>
-        </CardContent>
-      </Box>
-    </Card>
+      <h1 className="text-2xl m-2">{obj?.obj?.product?.name}</h1>
+      {/* Quantity Picker */}
+      <div className="flex m-4 border-box">
+        <Button
+          className=" w-16 h-12"
+          style={{ border: "2px solid gray" }}
+          onClick={() => {
+            decrement(obj?.obj?.id);
+          }}
+        >
+          <RemoveIcon />
+        </Button>
+        <div
+          className="w-20 h-12"
+          style={{ border: "2px solid gray", padding: 5 }}
+        >
+          <span className="p-2 px-6 text-2xl">
+            {obj?.obj?.product?.quantity}
+          </span>
+        </div>
+        <Button
+          className="w-16 h-12 m-2"
+          style={{ border: "2px solid gray" }}
+          onClick={() => {
+            increment(obj?.obj?.id);
+          }}
+        >
+          <AddIcon />
+        </Button>
+      </div>
+      <h1>{obj?.obj?.product?.salePrice}</h1>
+    </div>
   );
 }

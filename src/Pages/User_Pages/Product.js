@@ -6,28 +6,27 @@ import { db } from "../../firebase-config";
 import { useParams } from "react-router-dom";
 import { collection, addDoc, getDoc, doc } from "firebase/firestore";
 import { Button } from "@mui/material";
-
+import { auth } from "../../firebase-config";
+import { onAuthStateChanged } from "firebase/auth";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 
-const reviews = { href: "#", average: 4, totalCount: 117 };
-
-// function classNames(...classes) {
-//   return classes.filter(Boolean).join(" ");
-// }
-
-export default function Example() {
+export default function Product() {
   const { id } = useParams();
 
-  const productRef = collection(db, "products");
   const cartRef = collection(db, "cart");
   const [prod, setProduct] = useState();
   const [qty, setQty] = useState(3);
+  const [user, setUser] = useState({});
 
   const addToCart = async () => {
     const newProduct = {
-      user: "someone@gmail.com",
-      product: { name: prod.name, salePrice: prod.salePrice, quantity: qty },
+      user: user?.email,
+      product: {
+        name: prod?.name,
+        salePrice: prod ? prod.salePrice : "N/A",
+        quantity: qty,
+      },
     };
     await addDoc(cartRef, newProduct);
     console.log("Product Added Sucessfully");
@@ -45,6 +44,10 @@ export default function Example() {
 
     getProduct();
   }, [false]);
+
+  onAuthStateChanged(auth, (currentUser) => {
+    setUser(currentUser);
+  });
 
   return (
     <>
@@ -74,9 +77,8 @@ export default function Example() {
             <div className="mt-6 max-w-2xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-3 lg:gap-x-8">
               <div className="hidden aspect-w-3 aspect-h-4 rounded-lg overflow-hidden lg:block">
                 <img
-                  // src={product.images[0].src}
                   src="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg"
-                  alt="image"
+                  alt="imag"
                   className="w-full h-full object-center object-cover"
                 />
               </div>
@@ -128,26 +130,9 @@ export default function Example() {
                 <h3 className="sr-only">Reviews</h3>
                 <div className="flex items-center">
                   <div className="flex items-center">
-                    {/* {[0, 1, 2, 3, 4].map((rating) => (
-                      // <StarIcon
-                      //   key={rating}
-                      //   className={classNames(
-                      //     reviews.average > rating
-                      //       ? "text-gray-900"
-                      //       : "text-gray-200",
-                      //     "h-5 w-5 flex-shrink-0"
-                      //   )}
-                      //   aria-hidden="true"
-                      // />
-                    ))} */}
+                    
                   </div>
-                  <p className="sr-only">{reviews.average} out of 5 stars</p>
-                  <a
-                    href={reviews.href}
-                    className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500"
-                  >
-                    {reviews.totalCount} reviews
-                  </a>
+                  
                 </div>
               </div>
 
@@ -156,41 +141,14 @@ export default function Example() {
                 onClick={() => {
                   addToCart();
                 }}
-                // type="submit"
                 className="mt-10 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
-                Add to bag
+                Add to Cart
               </button>
-              {/* </form> */}
             </div>
 
             <div className="py-10 lg:pt-6 lg:pb-16 lg:col-start-1 lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
-              {/* Description and details */}
-              <div>
-                <h3 className="sr-only">Description</h3>
-
-                <div className="space-y-6">
-                  <p className="text-base text-gray-900">
-                    {/* {product.description} */}
-                  </p>
-                </div>
-              </div>
-
-              <div className="mt-10">
-                <h3 className="text-sm font-medium text-gray-900">
-                  Highlights
-                </h3>
-
-                <div className="mt-4">
-                  <ul role="list" className="pl-4 list-disc text-sm space-y-2">
-                    {/* {product.highlights.map((highlight) => (
-                      <li key={highlight} className="text-gray-400">
-                        <span className="text-gray-600">{highlight}</span>
-                      </li>
-                    ))} */}
-                  </ul>
-                </div>
-              </div>
+              
 
               <div className="mt-10">
                 <h2 className="text-sm font-medium text-gray-900">Details</h2>
@@ -203,7 +161,18 @@ export default function Example() {
           </div>
         </div>
       </div>
+      <div>
+        <h1>Current User Signed In</h1>
+        <h1>{user?.email}</h1>
 
+        <Button
+          onClick={() => {
+            console.log(user?.email);
+          }}
+        >
+          Print
+        </Button>
+      </div>
       <Footer />
     </>
   );
