@@ -65,7 +65,7 @@ function App() {
 
 
         {/* User Clinical */}
-        <Route exact path="/makeAppointments" element={<MakeAppointments />} />
+        <Route exact path="/makeAppointments/:id" element={<MakeAppointments />} />
         <Route exact path="/viewAppointments" element={<ViewAppointments />} />
         <Route exact path="/viewDoctors" element={<ViewDoctorsUser />} />
         <Route exact path="/services" element={<Services />} />

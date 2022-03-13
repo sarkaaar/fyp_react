@@ -1,7 +1,31 @@
 import * as React from "react";
 import Header from "../User_Pages/Components/Header";
+import { Link } from "react-router-dom";
+// import * as React from "react";
+// import Header from "./Components/Header";
+// import CartsCard from "./Components/CartsCard";
+import Footer from "../User_Pages/Components/Footer";
+import { useState, useEffect } from "react";
+import { db } from "../../firebase-config";
+import {
+  collection,
+  // addDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
+import { Button } from "@mui/material";
+import { auth } from "../../firebase-config";
+import { onAuthStateChanged } from "firebase/auth";
 
 export default function ViewAppointments() {
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+  });
   const data = {
     hospital: "Sheikh Zaid Hospital",
     name: "Dr. Ali",
@@ -13,8 +37,16 @@ export default function ViewAppointments() {
     zip: "10001",
   };
   return (
-    <div>
+    <>
       <Header />
+      <div className="flex justify-center">
+        <Link
+          className="m-4 p-4 bg-indigo-500 text-3xl rounded-md"
+          to="/makeAppointments"
+        >
+          Make a New Appointment
+        </Link>
+      </div>
       <h1>You have the Following Appointments </h1>
       <hr style={{ width: "50%", border: "2px solid black" }} />
       <h1 style={{ display: "flex", justifyContent: "space-around" }}>
@@ -36,8 +68,12 @@ export default function ViewAppointments() {
       <div style={{}}>
         <h1>Mode of Appoitment:Online</h1>
       </div>
-
+      <div>
+        <h1>Current User Signed In</h1>
+        <h1>{user?.email}</h1>
+      </div>
       <hr style={{ width: "30%", border: "3px solid black" }} />
-    </div>
+      <Footer />
+    </>
   );
 }

@@ -5,11 +5,52 @@ import { FormControl } from "@mui/material";
 import { InputLabel } from "@mui/material";
 import { Select } from "@mui/material";
 import { MenuItem } from "@mui/material";
-// import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
+import { useState, useEffect } from "react";
+import { db } from "../../firebase-config";
+import { useParams } from "react-router-dom";
+import { collection, addDoc, getDoc, doc } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
+
+import { Button } from "@mui/material";
+import { auth } from "../../firebase-config";
 
 export default function MakeAppointments() {
+  const appointmentsRef = collection(db, "appointments");
+  const { id } = useParams();
+  const [doctor, setDoctor] = useState();
+  const [user, setUser] = useState({});
 
-  const [date,setDate] = React.useState();
+  const [date, setDate] = useState();
+  const [time, setTime] = useState();
+
+  const makeAppointment = async () => {
+    let apppointment = {
+      user: user?.email,
+      doctor: doctor,
+      date: date,
+      time: time,
+    };
+    await addDoc(appointmentsRef, apppointment);
+    console.log("Appointment Made Sucessfully");
+  };
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+
+    const getDoctor = async () => {
+      let x = await getDoc(doc(db, `doctors/${id}`));
+      console.log({
+        id: x.id,
+        ...x.data(),
+      });
+      setDoctor({ id: x.id, ...x.data() });
+    };
+
+    getDoctor();
+  }, [false]);
+
   const timeSlots = [
     "09:00 AM  -  09:15 AM",
     "09:15 AM  -  09:30 AM",
@@ -35,33 +76,28 @@ export default function MakeAppointments() {
   return (
     <div>
       <Header />
+      <Button
+        onClick={() => {
+          console.log(doctor);
+        }}
+      >
+        Click
+      </Button>
       {/* <h1>MAke Appointments page is displayed here</h1> */}
       <div style={{ width: "300px", margin: "auto" }}>
-        <h1>You are making an appointment with Dr. </h1>
+        <h1>You are making an appointment with Dr.{doctor?.name} </h1>
 
-        {/* <DesktopDatePicker
-          label="Date desktop"
-          inputFormat="MM/dd/yyyy"
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          name="date"
+          label="Date"
+          type="date"
           value={date}
-          onChange={(e)=>{setDate(e.target.value)}}
-          renderInput={(params) => <TextField {...params} />}
-        /> */}
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          name="date"
-          label="Date"
-          type="text"
-          id="date"
-        />
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          name="date"
-          label="Date"
-          type="time"
+          onChange={(e) => {
+            setDate(e.target.value);
+          }}
           id="date"
         />
         <FormControl fullWidth style={{ margin: "10px 0" }}>
@@ -69,10 +105,10 @@ export default function MakeAppointments() {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            // value={doc_Name}
             label="Time Slot"
+            value={time}
             onChange={(e) => {
-              // setDoc_Name(e.target.value);
+              setTime(e.target.value);
             }}
           >
             {timeSlots.map((item) => {
@@ -80,6 +116,13 @@ export default function MakeAppointments() {
             })}
           </Select>
         </FormControl>
+        <Button fullWidth variant="outlined" onClick={makeAppointment}>
+          Submit
+        </Button>
+      </div>
+      <div>
+        <h1>Current User Signed In</h1>
+        <h1>{user?.email}</h1>
       </div>
     </div>
   );
