@@ -75,12 +75,24 @@ export default function Product() {
           {/* Image gallery */}
           <div className="flex">
             <div className="mt-6 max-w-2xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-3 lg:gap-x-8">
-              <div className="hidden aspect-w-3 aspect-h-4 rounded-lg overflow-hidden lg:block">
+              <div className=" aspect-w-3 aspect-h-4 rounded-lg overflow-hidden ">
                 <img
-                  src="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg"
+                  src={prod?.image[0]}
                   alt="imag"
-                  className="w-full h-full object-center object-cover"
+                  className="w-full p-4 h-full object-center object-cover"
                 />
+              </div>
+              <div className="flex gap-2">
+                {prod?.image.map((img, index) => {
+                  return (
+                    <img
+                      src={img}
+                      alt="imag"
+                      className="w-16 h-16 object-center object-cover"
+                      key={index}
+                    />
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -129,14 +141,23 @@ export default function Product() {
               <div className="mt-6">
                 <h3 className="sr-only">Reviews</h3>
                 <div className="flex items-center">
-                  <div className="flex items-center">
-                    
-                  </div>
-                  
+                  <div className="flex items-center"></div>
                 </div>
               </div>
 
-              {/* <form className="mt-10"> */}
+              <h1>{prod?.description}</h1>
+
+              <h1>{prod?.category}</h1>
+              <h1>{prod?.subCategory}</h1>
+{/* {prod?.variants.map((variant, index) => {
+  return (
+    <div key={index}>
+      <h1>{variant.name}</h1>
+      <h1>{variant.price}</h1>
+    </div>
+  )})} */}
+
+<Button onClick={()=>{console.log(prod?.variants)}}>Click Me</Button>
               <button
                 onClick={() => {
                   addToCart();
@@ -148,8 +169,6 @@ export default function Product() {
             </div>
 
             <div className="py-10 lg:pt-6 lg:pb-16 lg:col-start-1 lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
-              
-
               <div className="mt-10">
                 <h2 className="text-sm font-medium text-gray-900">Details</h2>
 

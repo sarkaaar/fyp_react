@@ -7,10 +7,8 @@ import { db } from "../../firebase-config";
 import {
   collection,
   // addDoc,
-  // doc,
   getDocs,
   query,
-  // updateDoc,
   where,
 } from "firebase/firestore";
 import { Button } from "@mui/material";
@@ -20,6 +18,7 @@ import { onAuthStateChanged } from "firebase/auth";
 export default function Cart() {
   // const [qty, setQty] = useState();
   const [user, setUser] = useState();
+  const [total,setTotal] = useState();
   const [products, setProducts] = useState([]);
 
   const cartCollection = collection(db, "cart");
@@ -31,13 +30,12 @@ export default function Cart() {
     setProducts(
       queryResults.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
     );
-    // console.log(products);
+    console.log(products);
   };
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      // getCartItems();
     });
 
     getCartItems();
@@ -62,6 +60,22 @@ export default function Cart() {
         >
           <h1>Total = 102 $</h1>
           <Button variant="outlined">Checkout</Button>
+          <Button
+            onClick={() => {
+              console.log(typeof products[1].product.salePrice);
+            }}
+            variant="outlined"
+          >
+            Check
+          </Button>
+          <Button
+            onClick={() => {
+              console.log(typeof parseInt(products[1].product.salePrice));
+            }}
+            variant="outlined"
+          >
+            Check
+          </Button>
         </div>
       </div>
       <div>
