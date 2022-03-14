@@ -62,14 +62,14 @@ export default function Product() {
         }}
       >
         Click
-      </Button>
+      </Button>*/}
       <Button
-        onClRemoveIconick={async () => {
-          console.log(prod);
+        onClick={() => {
+          console.log(prod.variants[0]);
         }}
       >
         ON PRINT
-      </Button> */}
+      </Button>
       <div className="bg-white">
         <div className="pt-6">
           {/* Image gallery */}
@@ -149,15 +149,22 @@ export default function Product() {
 
               <h1>{prod?.category}</h1>
               <h1>{prod?.subCategory}</h1>
-{/* {prod?.variants.map((variant, index) => {
-  return (
-    <div key={index}>
-      <h1>{variant.name}</h1>
-      <h1>{variant.price}</h1>
-    </div>
-  )})} */}
+              {/* {prod?.variants.map((variant, index) => {
+                return (
+                  <div key={index}>
+                    <h1>{variant.name}</h1>
+                    <h1>{variant.price}</h1>
+                  </div>
+                );
+              })} */}
 
-<Button onClick={()=>{console.log(prod?.variants)}}>Click Me</Button>
+              <Button
+                onClick={() => {
+                  console.log(prod?.variants);
+                }}
+              >
+                Click Me
+              </Button>
               <button
                 onClick={() => {
                   addToCart();

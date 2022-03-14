@@ -42,7 +42,7 @@ export default function ViewAppointments() {
       <div className="flex justify-center">
         <Link
           className="m-4 p-4 bg-indigo-500 text-3xl rounded-md"
-          to="/makeAppointments"
+          to="/viewDoctors"
         >
           Make a New Appointment
         </Link>

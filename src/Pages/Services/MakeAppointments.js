@@ -1,17 +1,12 @@
 import * as React from "react";
 import Header from "../User_Pages/Components/Header";
-import { TextField } from "@mui/material";
-import { FormControl } from "@mui/material";
-import { InputLabel } from "@mui/material";
-import { Select } from "@mui/material";
-import { MenuItem } from "@mui/material";
+import { TextField, Button } from "@mui/material";
+import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { useState, useEffect } from "react";
 import { db } from "../../firebase-config";
 import { useParams } from "react-router-dom";
 import { collection, addDoc, getDoc, doc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
-
-import { Button } from "@mui/material";
 import { auth } from "../../firebase-config";
 
 export default function MakeAppointments() {
@@ -76,17 +71,12 @@ export default function MakeAppointments() {
   return (
     <div>
       <Header />
-      <Button
-        onClick={() => {
-          console.log(doctor);
-        }}
-      >
-        Click
-      </Button>
-      {/* <h1>MAke Appointments page is displayed here</h1> */}
-      <div style={{ width: "300px", margin: "auto" }}>
-        <h1>You are making an appointment with Dr.{doctor?.name} </h1>
+      <h1 className="flex justify-center text-3xl font-bold m-6">
+        You are making an appointment with &nbsp;
+        <span className="text-violet-800"> Dr.{doctor?.name} </span>
+      </h1>
 
+      <div style={{ width: "300px", margin: "auto" }}>
         <TextField
           margin="normal"
           required
