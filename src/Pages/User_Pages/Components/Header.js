@@ -52,7 +52,7 @@ export default function Header() {
       <hr />
       <div className=" flex justify-between">
         <Link
-          to={"/"}
+          to={"/products"}
           className="p-4 px-8 font-medium text-gray-500 hover:text-gray-900"
         >
           Categories

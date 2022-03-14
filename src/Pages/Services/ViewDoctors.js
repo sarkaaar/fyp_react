@@ -2,7 +2,7 @@ import { accordionSummaryClasses } from "@mui/material";
 import * as React from "react";
 import Header from "../User_Pages/Components/Header";
 import ammar from "../User_Pages/Components/images/ammar.jpg";
-
+import PersonIcon from "@mui/icons-material/Person";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 // Pages/User_Pages/Components/images
 // import * as React from "react";
@@ -54,20 +54,27 @@ export default function ViewDoctors() {
       <div>
         {doctors.map((item, key) => {
           return (
-            <>
-              <div className="max-w-3xl hover:bg-blue-200 border-2 border-black mx-auto flex p-6 bg-white rounded-lg shadow-xl  ">
-                <AccountCircleIcon fontSize="large"/>
+            <div className="m-8">
+              <div className="max-w-3xl hover:drop-shadow-2xl bg-white border-2 border-black mx-auto flex p-6 bg-white rounded-lg shadow-xl ">
+                <PersonIcon
+                  style={{
+                    width: "130px",
+                    height: "130px",
+                    margin: "50px",
+                    marginTop: "70px",
+                  }}
+                />
 
-                <div className=" text-xl text-gray-900 mx-auto p-6 space-between">
-                  <div className=" text-3xl decoration-auto">
-                    <h1>Name:{item.name}</h1>
-                    <h1>Clinic Name : {item.clinicName}</h1>
-                    <h1>Clinic Contact# :{item.clinicPhone}</h1>
-                    <h1>Clinical Address:{item.ClinicAddress}</h1>
+                <div className="  text-gray-900 mx-auto p-6 space-between">
+                  <div className="  decoration-auto">
+                    <h1 className="font-bold text-3xl">Dr. {item.name}</h1>
+                    <h1 className=" text-xl text-slate-800"> {item.clinicName}</h1>
+                    <h1 className=" text-xl text-slate-800">{item.clinicPhone}</h1>
+                    <h1 className=" text-xl text-slate-800">{item.clinicAddress}</h1>
                   </div>
                   <div className=" decoration-0">
-                    <h1>
-                      Fee:
+                    <h1 className="font-bold">
+                      Fee: Rs.
                       {item.fees}
                     </h1>
                     <h2>{item.description}</h2>
@@ -75,6 +82,8 @@ export default function ViewDoctors() {
                   </div>
                   {/* <button className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded"> */}
                   <Button
+                    variant="outlined"
+                    style={{ fontSize: "x-large" }}
                     onClick={() => {
                       navigate(`/makeAppointments/${item.id}`);
                     }}
@@ -84,7 +93,7 @@ export default function ViewDoctors() {
                   {/* </bu/tton> */}
                 </div>
               </div>
-            </>
+            </div>
           );
         })}
       </div>
