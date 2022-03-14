@@ -4,6 +4,7 @@ import CartsCard from "./Components/CartsCard";
 import Footer from "./Components/Footer";
 import { useState, useEffect } from "react";
 import { db } from "../../firebase-config";
+import { useNavigate } from "react-router-dom";
 import {
   collection,
   // addDoc,
@@ -16,21 +17,24 @@ import { auth } from "../../firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
 
 export default function Cart() {
+  const navigate = useNavigate()
   // const [qty, setQty] = useState();
   const [user, setUser] = useState();
-  const [total,setTotal] = useState();
+  const [total, setTotal] = useState(0);
   const [products, setProducts] = useState([]);
 
   const cartCollection = collection(db, "cart");
-
+  const getTotal = () => {};
   const getCartItems = async () => {
-    // const q = query(cartCollection, where("user", "==", "test@test.com"));
     const q = await query(cartCollection, where("user", "==", user?.email));
     const queryResults = await getDocs(q);
     setProducts(
       queryResults.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
     );
     console.log(products);
+    products.map((item, key) => {
+      setTotal(parseInt(item?.product?.salePrice));
+    });
   };
 
   useEffect(() => {
@@ -39,6 +43,8 @@ export default function Cart() {
     });
 
     getCartItems();
+
+    getTotal();
   }, [user]);
 
   return (
@@ -47,6 +53,7 @@ export default function Cart() {
       <h1 className="p-4 text-6xl font-bold">Cart -{">"}</h1>
       <div className="p-20 justify-around">
         {products.map((item, key) => {
+          // setTotal(item?.product?.salePrice);
           return <CartsCard key={key} obj={item} />;
         })}
 
@@ -59,15 +66,7 @@ export default function Cart() {
           }}
         >
           <h1>Total = 102 $</h1>
-          <Button variant="outlined">Checkout</Button>
-          <Button
-            onClick={() => {
-              console.log(typeof products[1].product.salePrice);
-            }}
-            variant="outlined"
-          >
-            Check
-          </Button>
+          <Button onClick={()=>{navigate(`/checkout`)}} variant="outlined">Checkout</Button>
           <Button
             onClick={() => {
               console.log(typeof parseInt(products[1].product.salePrice));
@@ -75,6 +74,14 @@ export default function Cart() {
             variant="outlined"
           >
             Check
+          </Button>
+          <Button
+            onClick={() => {
+              console.log(total);
+            }}
+            variant="outlined"
+          >
+            total
           </Button>
         </div>
       </div>

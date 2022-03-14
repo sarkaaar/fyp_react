@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // User Pages
 import SignIn from "./Pages/User_Pages/SignIn";
 import SignUp from "./Pages/User_Pages/SignUp";
-import CheckoutContent from "./Pages/User_Pages/Checkout/Checkout";
+import CheckoutContent from "./Pages/User_Pages/Checkout";
 import HomePage from "./Pages/User_Pages/HomePage";
 import Products from "./Pages/User_Pages/All_Products";
 import Cart from "./Pages/User_Pages/Cart";
