@@ -1,13 +1,12 @@
 import * as React from "react";
 import Header from "./Components/Header";
-import CartsCard from "./Components/CartsCard";
+// import CartsCard from "./Components/CartsCard";
 import Footer from "./Components/Footer";
 import { useState, useEffect } from "react";
 import { db } from "../../firebase-config";
 import { useNavigate } from "react-router-dom";
 import {
   collection,
-  // addDoc,
   getDocs,
   query,
   where,

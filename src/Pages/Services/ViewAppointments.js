@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import Footer from "../User_Pages/Components/Footer";
 import { useState, useEffect } from "react";
 import { db } from "../../firebase-config";
+import { useNavigate } from "react-router-dom";
 import {
   collection,
   // addDoc,
@@ -19,7 +20,39 @@ import { auth } from "../../firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
 
 export default function ViewAppointments() {
+  const navigate = useNavigate();
+  // const [qty, setQty] = useState();
+  // const [user, setUser] = useState();
+  const [total, setTotal] = useState(0);
+  const [products, setProducts] = useState([]);
+
+  const cartCollection = collection(db, "cart");
   const [user, setUser] = useState();
+
+  const getTotal = () => {};
+  const getCartItems = async () => {
+    const q = await query(cartCollection, where("user", "==", user?.email));
+    const queryResults = await getDocs(q);
+    setProducts(
+      queryResults.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+    );
+    console.log(products);
+    products.map((item, key) => {
+      setTotal(parseInt(item?.product?.salePrice));
+    });
+  };
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+
+    getCartItems();
+
+    getTotal();
+  }, [user]);
+
+
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
