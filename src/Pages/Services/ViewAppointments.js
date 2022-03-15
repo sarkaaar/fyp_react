@@ -1,45 +1,29 @@
 import * as React from "react";
 import Header from "../User_Pages/Components/Header";
 import { Link } from "react-router-dom";
-// import * as React from "react";
-// import Header from "./Components/Header";
-// import CartsCard from "./Components/CartsCard";
 import Footer from "../User_Pages/Components/Footer";
 import { useState, useEffect } from "react";
 import { db } from "../../firebase-config";
 import { useNavigate } from "react-router-dom";
-import {
-  collection,
-  // addDoc,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { Button } from "@mui/material";
 import { auth } from "../../firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
 
 export default function ViewAppointments() {
   const navigate = useNavigate();
-  // const [qty, setQty] = useState();
-  // const [user, setUser] = useState();
-  const [total, setTotal] = useState(0);
-  const [products, setProducts] = useState([]);
+  const [appointments, setAppointments] = useState([]);
 
-  const cartCollection = collection(db, "cart");
+  const appointmentsRef = collection(db, "appointments");
   const [user, setUser] = useState();
 
-  const getTotal = () => {};
-  const getCartItems = async () => {
-    const q = await query(cartCollection, where("user", "==", user?.email));
+  const getAppointments = async () => {
+    const q = await query(appointmentsRef, where("user", "==", user?.email));
     const queryResults = await getDocs(q);
-    setProducts(
+    setAppointments(
       queryResults.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
     );
-    console.log(products);
-    products.map((item, key) => {
-      setTotal(parseInt(item?.product?.salePrice));
-    });
+    console.log(appointments);
   };
 
   useEffect(() => {
@@ -47,65 +31,52 @@ export default function ViewAppointments() {
       setUser(currentUser);
     });
 
-    getCartItems();
-
-    getTotal();
+    getAppointments();
   }, [user]);
 
-
-
-  useEffect(() => {
-    onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
-  });
-  const data = {
-    hospital: "Sheikh Zaid Hospital",
-    name: "Dr. Ali",
-    date: "Monday, 12 June, 2022",
-    time: "10:00",
-    address: "123 Main St",
-    city: "New York",
-    state: "NY",
-    zip: "10001",
-  };
   return (
     <>
       <Header />
-      <div className="flex justify-center">
+      <div className="flex justify-end">
         <Link
-          className="m-4 p-4 bg-indigo-500 text-3xl rounded-md"
+          className="m-4 p-4 w-16 font-black border-2 border-indigo-600 bg-indigo-200 text-3xl rounded-lg"
           to="/viewDoctors"
         >
-          Make a New Appointment
+          +
         </Link>
       </div>
-      <h1>You have the Following Appointments </h1>
-      <hr style={{ width: "50%", border: "2px solid black" }} />
-      <h1 style={{ display: "flex", justifyContent: "space-around" }}>
-        {data.hospital}
-      </h1>
 
-      <div style={{ display: "flex", justifyContent: "space-around" }}>
-        <div style={{ width: "40%", margin: "30px" }}>
-          <h1>Name : {data.name}</h1>
-          <h1>Address : {data.address}</h1>
-          <h1>City : {data.city}</h1>
-          <h1>State : {data.state}</h1>
-        </div>
-        <div style={{ width: "40%", margin: "30px" }}>
-          <h1>Date : {data.date}</h1>
-          <h1>Time : {data.time}</h1>
-        </div>
-      </div>
-      <div style={{}}>
-        <h1>Mode of Appoitment:Online</h1>
-      </div>
+      <h1 className="text-3xl font-bold flex justify-center">
+        You have the Following Appointments
+      </h1>
+      {appointments.map((item, key) => {
+        return (
+          <>
+            <h1>{item?.date}</h1>
+            <div style={{ display: "flex", justifyContent: "space-around" }}>
+              <div style={{ width: "40%", margin: "30px" }}>
+                <h1>Name : {item?.doctor?.name}</h1>
+                <h1>Address : {item?.doctor?.clinicAddress}</h1>
+                <h1>clinicPhone : {item?.doctor?.clinicPhone}</h1>
+                <h1>ClinicName : {item?.doctor?.clinicName}</h1>
+              </div>
+              <div style={{ width: "40%", margin: "30px" }}>
+                <h1>Date : {item?.date}</h1>
+                <h1>Time : {item?.time}</h1>
+              </div>
+            </div>
+            <Button color="error" variant="outlined" style={{ margin: "50px" }}>
+              Cancel Appointment
+            </Button>
+            <hr />
+          </>
+        );
+      })}
+
       <div>
         <h1>Current User Signed In</h1>
         <h1>{user?.email}</h1>
       </div>
-      <hr style={{ width: "30%", border: "3px solid black" }} />
       <Footer />
     </>
   );

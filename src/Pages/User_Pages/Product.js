@@ -77,7 +77,11 @@ export default function Product() {
             <div className="mt-6 max-w-2xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-3 lg:gap-x-8">
               <div className=" aspect-w-3 aspect-h-4 rounded-lg overflow-hidden ">
                 <img
-                  src={prod?.image ? [0] : "https://source.unsplash.com/random"}
+                  src={
+                    prod?.image
+                      ? prod?.image[0]
+                      : "https://source.unsplash.com/random"
+                  }
                   alt="imag"
                   className="w-full p-4 h-full object-center object-cover"
                 />
