@@ -53,7 +53,7 @@ export default function Cart() {
   const [products, setProducts] = useState([]);
 
   const cartCollection = collection(db, "cart");
-  const getTotal = () => {};
+  const getTotal = () => { };
   const getCartItems = async () => {
     const q = await query(cartCollection, where("user", "==", user?.email));
     const queryResults = await getDocs(q);
@@ -80,6 +80,10 @@ export default function Cart() {
     <div>
       <Header />
       <h1 className="p-4 text-6xl font-bold">Cart -{">"}</h1>
+      {products.length === 0 &&
+        <div className="grid place-items-center h-screen">
+          <div className="w-20 h-20 border-t-4 border-b-4 border-blue-900 rounded-full animate-spin"></div>
+        </div>}
       <div className="p-20 justify-around">
         {products.map((item, key) => {
           // setTotal(item?.product?.salePrice);

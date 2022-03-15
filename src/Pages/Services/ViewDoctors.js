@@ -32,9 +32,9 @@ export default function ViewDoctors() {
         Click
       </Button>
       {/* <div className="  mx-20  my-20 flex flex-row rounded justify-between "> */}
-      {doctors.length == 0 &&
+      {doctors.length === 0 &&
         <div className="grid place-items-center h-screen">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+          <div className="w-20 h-20 border-t-4 border-b-4 border-green-900 rounded-full animate-spin"></div>
         </div>}
       <div>
         {doctors.map((item, key) => {

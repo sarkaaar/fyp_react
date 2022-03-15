@@ -69,9 +69,9 @@ export default function Products({ hideLoader }) {
         <hr />
 
         {/* Products Section */}
-        {products.length == 0 &&
-          <div className="flex justify-center">
-            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+        {products.length === 0 &&
+          <div className="grid place-items-center h-screen">
+            <div className="w-20 h-20 border-t-4 border-b-4 border-green-900 rounded-full animate-spin"></div>
           </div>}
         <div className="grid grid-cols-3 gap-4 p-4">
           {products.map((item) => {
