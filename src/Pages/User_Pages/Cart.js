@@ -11,13 +11,43 @@ import {
   getDocs,
   query,
   where,
+  doc,
+  updateDoc,
 } from "firebase/firestore";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 import { Button } from "@mui/material";
 import { auth } from "../../firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
 
 export default function Cart() {
-  const navigate = useNavigate()
+  const increment = async (id) => {
+    const prod = doc(db, "cart", id);
+    const newProduct = {
+      product: {
+        quantity: prod?.quantity + 1,
+        name: prod?.name,
+        salePrice: prod?.salePrice,
+      },
+    };
+    await updateDoc(prod, newProduct);
+    console.log("updated");
+  };
+
+  const decrement = async (id) => {
+    const prod = doc(db, "cart", id);
+    const newProduct = {
+      product: {
+        // quantity: obj?.obj?.product?.quantity - 1,
+        // name: obj?.obj?.product?.name,
+        // salePrice: obj?.obj?.product?.salePrice,
+      },
+    };
+    await updateDoc(prod, newProduct);
+    console.log("updated");
+  };
+
+  const navigate = useNavigate();
   // const [qty, setQty] = useState();
   const [user, setUser] = useState();
   const [total, setTotal] = useState(0);
@@ -54,7 +84,47 @@ export default function Cart() {
       <div className="p-20 justify-around">
         {products.map((item, key) => {
           // setTotal(item?.product?.salePrice);
-          return <CartsCard key={key} obj={item} />;
+          // return <CartsCard key={key} obj={item} />;
+          return (
+            <>
+              <div
+                className="flex align-middle justify-between w-11/12"
+                style={{ border: "1px solid black" }}
+              >
+                <h1 className="text-2xl m-2">{item?.product?.name}</h1>
+                {/* Quantity Picker */}
+                <div className="flex m-4 border-box">
+                  <Button
+                    className=" w-16 h-12"
+                    style={{ border: "2px solid gray" }}
+                    onClick={() => {
+                      decrement(item?.id);
+                    }}
+                  >
+                    <RemoveIcon />
+                  </Button>
+                  <div
+                    className="w-20 h-12"
+                    style={{ border: "2px solid gray", padding: 5 }}
+                  >
+                    <span className="p-2 px-6 text-2xl">
+                      {item?.product?.quantity}
+                    </span>
+                  </div>
+                  <Button
+                    className="w-16 h-12 m-2"
+                    style={{ border: "2px solid gray" }}
+                    onClick={() => {
+                      increment(item?.id);
+                    }}
+                  >
+                    <AddIcon />
+                  </Button>
+                </div>
+                <h1>{item?.product?.salePrice}</h1>
+              </div>
+            </>
+          );
         })}
 
         <div
@@ -66,10 +136,17 @@ export default function Cart() {
           }}
         >
           <h1>Total = 102 $</h1>
-          <Button onClick={()=>{navigate(`/checkout`)}} variant="outlined">Checkout</Button>
           <Button
             onClick={() => {
-              console.log(typeof parseInt(products[1].product.salePrice));
+              navigate(`/checkout`);
+            }}
+            variant="outlined"
+          >
+            Checkout
+          </Button>
+          <Button
+            onClick={() => {
+              console.log(products);
             }}
             variant="outlined"
           >

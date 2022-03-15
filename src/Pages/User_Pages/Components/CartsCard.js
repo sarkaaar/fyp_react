@@ -32,9 +32,6 @@ export default function CartsCard(obj) {
     console.log("updated");
   };
 
-  // React.useEffect(() => {
-  // }, [obj?.obj?.product?.quantity]);
-
   return (
     <div
       className="flex align-middle justify-between w-11/12"
