@@ -76,7 +76,6 @@ export default function AddDoctor() {
                 margin="normal"
                 required
                 fullWidth
-                name="password"
                 label="DOB"
                 type="date"
                 value={dob}
