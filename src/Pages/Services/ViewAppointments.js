@@ -49,6 +49,10 @@ export default function ViewAppointments() {
       <h1 className="text-3xl font-bold flex justify-center">
         You have the Following Appointments
       </h1>
+      {appointments.length === 0 &&
+        <div className="grid place-items-center h-screen">
+          <div className="w-20 h-20 border-t-4 border-b-4 border-green-900 rounded-full animate-spin"></div>
+        </div>}
       {appointments.map((item, key) => {
         return (
           <>
