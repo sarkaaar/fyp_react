@@ -86,6 +86,10 @@ export default function Cart() {
     getTotal();
   };
 
+  const checkout = async () => {
+    navigate(`/checkout`);
+  };
+
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -164,12 +168,7 @@ export default function Cart() {
           }}
         >
           <h1>Total = Rs. {total}</h1>
-          <Button
-            onClick={() => {
-              navigate(`/checkout`);
-            }}
-            variant="outlined"
-          >
+          <Button onClick={checkout} variant="outlined">
             Checkout
           </Button>
         </div>
