@@ -33,7 +33,7 @@ export default function Cart() {
     };
     await updateDoc(prod, newProduct);
     console.log("updated");
-    getCartItems()
+    getCartItems();
   };
 
   const decrement = async (id, quantity, item) => {
@@ -47,15 +47,15 @@ export default function Cart() {
     };
     await updateDoc(prod, newProduct);
     console.log("updated");
-    getCartItems()
+    getCartItems();
   };
 
   const deleteProduct = async (id) => {
     const prod = doc(db, "cart", id);
-    
+
     await deleteDoc(prod);
     console.log("deleted");
-    getCartItems()
+    getCartItems();
   };
 
   const navigate = useNavigate();
@@ -64,7 +64,18 @@ export default function Cart() {
   const [products, setProducts] = useState([]);
 
   const cartCollection = collection(db, "cart");
-  const getTotal = () => {};
+
+  useEffect(() => {
+    getTotal();
+  }, [products]);
+
+  const getTotal = () => {
+    var num = 0;
+    products.map((item) => {
+      num += item.product.salePrice;
+    });
+    setTotal(num);
+  };
   const getCartItems = async () => {
     const q = await query(cartCollection, where("user", "==", user?.email));
     const queryResults = await getDocs(q);
@@ -72,18 +83,14 @@ export default function Cart() {
       queryResults.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
     );
     console.log(products);
-    products.map((item, key) => {
-      setTotal(parseInt(item?.product?.salePrice));
-    });
+    getTotal();
   };
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
-
     getCartItems();
-
     getTotal();
   }, [user]);
 
@@ -101,51 +108,50 @@ export default function Cart() {
           // setTotal(item?.product?.salePrice);
           // return <CartsCard key={key} obj={item} />;
           return (
-            <>
-              <div
-                className="flex align-middle justify-between w-11/12"
-                style={{ border: "1px solid black" }}
-              >
-                <h1 className="text-2xl m-2">{item?.product?.name}</h1>
-                {/* Quantity Picker */}
-                <div className="flex m-4 border-box">
-                  <Button
-                    className=" w-16 h-12"
-                    style={{ border: "2px solid gray" }}
-                    onClick={() => {
-                      decrement(item?.id);
-                    }}
-                  >
-                    <RemoveIcon />
-                  </Button>
-                  <div
-                    className="w-20 h-12"
-                    style={{ border: "2px solid gray", padding: 5 }}
-                  >
-                    <span className="p-2 px-6 text-2xl">
-                      {item?.product?.quantity}
-                    </span>
-                  </div>
-                  <Button
-                    className="w-16 h-12 m-2"
-                    style={{ border: "2px solid gray" }}
-                    onClick={() => {
-                      increment(item?.id, item?.product?.quantity, item);
-                    }}
-                  >
-                    <AddIcon />
-                  </Button>
-                </div>
-                <h1>{item?.product?.salePrice}</h1>
+            <div
+              key={key}
+              className="flex align-middle justify-between w-11/12"
+              style={{ border: "1px solid black" }}
+            >
+              <h1 className="text-2xl m-2">{item?.product?.name}</h1>
+              {/* Quantity Picker */}
+              <div className="flex m-4 border-box">
                 <Button
+                  className=" w-16 h-12"
+                  style={{ border: "2px solid gray" }}
                   onClick={() => {
-                    deleteProduct(item?.id);
+                    decrement(item?.id);
                   }}
                 >
-                  <CloseIcon />
+                  <RemoveIcon />
+                </Button>
+                <div
+                  className="w-20 h-12"
+                  style={{ border: "2px solid gray", padding: 5 }}
+                >
+                  <span className="p-2 px-6 text-2xl">
+                    {item?.product?.quantity}
+                  </span>
+                </div>
+                <Button
+                  className="w-16 h-12 m-2"
+                  style={{ border: "2px solid gray" }}
+                  onClick={() => {
+                    increment(item?.id, item?.product?.quantity, item);
+                  }}
+                >
+                  <AddIcon />
                 </Button>
               </div>
-            </>
+              <h1>{item?.product?.salePrice}</h1>
+              <Button
+                onClick={() => {
+                  deleteProduct(item?.id);
+                }}
+              >
+                <CloseIcon />
+              </Button>
+            </div>
           );
         })}
 
@@ -157,7 +163,7 @@ export default function Cart() {
             justifyItems: "right",
           }}
         >
-          <h1>Total = 102 $</h1>
+          <h1>Total = Rs. {total}</h1>
           <Button
             onClick={() => {
               navigate(`/checkout`);
@@ -165,22 +171,6 @@ export default function Cart() {
             variant="outlined"
           >
             Checkout
-          </Button>
-          <Button
-            onClick={() => {
-              console.log(products);
-            }}
-            variant="outlined"
-          >
-            Check
-          </Button>
-          <Button
-            onClick={() => {
-              console.log(total);
-            }}
-            variant="outlined"
-          >
-            total
           </Button>
         </div>
       </div>
