@@ -28,7 +28,7 @@ export default function Products({ hideLoader }) {
       <div style={{ display: "flex" }}>
         {/* Search Filters */}
 
-        <div style={{ minWidth: "30%", padding: "25px" }}>
+        <div className="w-1/5" style={{ minWidth: "30%", padding: "25px" }}>
           <p>
             <Checkbox value="remember" color="primary" placeholder="Hi" />
             Remember Me
@@ -68,19 +68,22 @@ export default function Products({ hideLoader }) {
 
         <hr />
 
-        {/* Products Section */}
-        {products.length === 0 &&
-          <div className="grid place-items-center h-screen">
-            <div className="w-20 h-20 border-t-4 border-b-4 border-green-900 rounded-full animate-spin"></div>
-          </div>}
-        <div className="grid grid-cols-3 gap-4 p-4">
-          {products.map((item) => {
-            return (
-              <div className="p-2">
-                <MediaCard obj={item} />
-              </div>
-            );
-          })}
+        <div className="w-4/5">
+          {products.length === 0 ?
+            <div className="flex justify-center items-center h-full">
+              <div className="w-20 h-20 border-t-4 border-b-4 border-blue-900 rounded-full animate-spin"></div>
+            </div> :
+            <div className="grid grid-cols-3 gap-4 p-4">
+              {products.map((item) => {
+                return (
+                  <div className="p-2">
+                    <MediaCard obj={item} />
+                  </div>
+                );
+              })}
+            </div>
+          }
+
         </div>
       </div>
     </div>
