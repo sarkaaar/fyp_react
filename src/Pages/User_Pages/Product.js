@@ -24,7 +24,7 @@ export default function Product() {
       user: user?.email,
       product: {
         name: prod?.name,
-        salePrice: prod ? prod.salePrice : "N/A",
+        salePrice: Number(prod ? prod.salePrice : "N/A"),
         quantity: qty,
       },
     };

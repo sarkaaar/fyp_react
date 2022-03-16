@@ -8,52 +8,63 @@ import { useNavigate } from "react-router-dom";
 import {
   collection,
   getDocs,
+  deleteDoc,
   query,
   where,
   doc,
   updateDoc,
 } from "firebase/firestore";
 import AddIcon from "@mui/icons-material/Add";
+import CloseIcon from "@mui/icons-material/Close";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { Button } from "@mui/material";
 import { auth } from "../../firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
 
 export default function Cart() {
-  const increment = async (id) => {
+  const increment = async (id, quantity, item) => {
     const prod = doc(db, "cart", id);
     const newProduct = {
       product: {
-        quantity: prod?.quantity + 1,
-        name: prod?.name,
-        salePrice: prod?.salePrice,
+        quantity: quantity + 1,
+        name: item?.product?.name,
+        salePrice: item?.product?.salePrice,
       },
     };
     await updateDoc(prod, newProduct);
     console.log("updated");
+    getCartItems()
   };
 
-  const decrement = async (id) => {
+  const decrement = async (id, quantity, item) => {
     const prod = doc(db, "cart", id);
     const newProduct = {
       product: {
-        // quantity: obj?.obj?.product?.quantity - 1,
-        // name: obj?.obj?.product?.name,
-        // salePrice: obj?.obj?.product?.salePrice,
+        quantity: quantity - 1,
+        name: item?.product?.name,
+        salePrice: item?.product?.salePrice,
       },
     };
     await updateDoc(prod, newProduct);
     console.log("updated");
+    getCartItems()
+  };
+
+  const deleteProduct = async (id) => {
+    const prod = doc(db, "cart", id);
+    
+    await deleteDoc(prod);
+    console.log("deleted");
+    getCartItems()
   };
 
   const navigate = useNavigate();
-  // const [qty, setQty] = useState();
   const [user, setUser] = useState();
   const [total, setTotal] = useState(0);
   const [products, setProducts] = useState([]);
 
   const cartCollection = collection(db, "cart");
-  const getTotal = () => { };
+  const getTotal = () => {};
   const getCartItems = async () => {
     const q = await query(cartCollection, where("user", "==", user?.email));
     const queryResults = await getDocs(q);
@@ -80,10 +91,11 @@ export default function Cart() {
     <div>
       <Header />
       <h1 className="p-4 text-6xl font-bold">Cart -{">"}</h1>
-      {products.length === 0 &&
+      {products.length === 0 && (
         <div className="grid place-items-center h-screen">
           <div className="w-20 h-20 border-t-4 border-b-4 border-blue-900 rounded-full animate-spin"></div>
-        </div>}
+        </div>
+      )}
       <div className="p-20 justify-around">
         {products.map((item, key) => {
           // setTotal(item?.product?.salePrice);
@@ -118,13 +130,20 @@ export default function Cart() {
                     className="w-16 h-12 m-2"
                     style={{ border: "2px solid gray" }}
                     onClick={() => {
-                      increment(item?.id);
+                      increment(item?.id, item?.product?.quantity, item);
                     }}
                   >
                     <AddIcon />
                   </Button>
                 </div>
                 <h1>{item?.product?.salePrice}</h1>
+                <Button
+                  onClick={() => {
+                    deleteProduct(item?.id);
+                  }}
+                >
+                  <CloseIcon />
+                </Button>
               </div>
             </>
           );

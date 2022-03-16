@@ -49,31 +49,42 @@ export default function ViewAppointments() {
       <h1 className="text-3xl font-bold flex justify-center">
         You have the Following Appointments
       </h1>
-      {appointments.length === 0 &&
+      {appointments.length === 0 && (
         <div className="grid place-items-center h-screen">
           <div className="w-20 h-20 border-t-4 border-b-4 border-green-900 rounded-full animate-spin"></div>
-        </div>}
+        </div>
+      )}
       {appointments.map((item, key) => {
         return (
-          <>
-            <h1>{item?.date}</h1>
-            <div style={{ display: "flex", justifyContent: "space-around" }}>
-              <div style={{ width: "40%", margin: "30px" }}>
-                <h1>Name : {item?.doctor?.name}</h1>
-                <h1>Address : {item?.doctor?.clinicAddress}</h1>
-                <h1>clinicPhone : {item?.doctor?.clinicPhone}</h1>
-                <h1>ClinicName : {item?.doctor?.clinicName}</h1>
+          <div className="w-10/12 border-2 border-slate-800 m-auto mb-4 bg-white hover:drop-shadow-2xl p-4 rounded-lg">
+            <h1 className="text-3xl font-bold"> Dr. {item?.doctor?.name}</h1>
+            <div className="flex">
+              <div className="w-1/2">
+                <h1 className="text-xl font-bold text-gray-600 ">
+                  Clinic Name : {item?.doctor?.clinicName}
+                </h1>
+                <h1 className="text-xl font-bold text-gray-600 ">
+                  Address : {item?.doctor?.clinicAddress}
+                </h1>
+                <h1 className="text-xl font-bold text-gray-600 ">
+                  Phone # {item?.doctor?.clinicPhone}
+                </h1>
               </div>
-              <div style={{ width: "40%", margin: "30px" }}>
-                <h1>Date : {item?.date}</h1>
-                <h1>Time : {item?.time}</h1>
+              <div className="w-1/2">
+                <h1 className="text-xl font-bold text-red-600 flex justify-end">
+                  Date : {item?.date}
+                </h1>
+                <h1 className="text-xl font-bold text-red-600 flex justify-end">
+                  Time : {item?.time}
+                </h1>
               </div>
             </div>
-            <Button color="error" variant="outlined" style={{ margin: "50px" }}>
-              Cancel Appointment
-            </Button>
-            <hr />
-          </>
+            <div className="w-fit m-auto pt-4">
+              <Button color="error" variant="outlined">
+                Cancel Appointment
+              </Button>
+            </div>
+          </div>
         );
       })}
 

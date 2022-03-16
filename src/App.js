@@ -58,14 +58,15 @@ function App() {
         <Route exact path="/product/:id" element={<Product />} />
         <Route exact path="/profile" element={<Profile />} />
         <Route exact path="/orders" element={<Orders />} />
-        <Route exact path ="/favourites" element={<Favourites/>}/>
-
-        
+        <Route exact path="/favourites" element={<Favourites />} />
         <Route exact path="/admin/categories" element={<Categories />} />
 
-
         {/* User Clinical */}
-        <Route exact path="/makeAppointments/:id" element={<MakeAppointments />} />
+        <Route
+          exact
+          path="/makeAppointments/:id"
+          element={<MakeAppointments />}
+        />
         <Route exact path="/viewAppointments" element={<ViewAppointments />} />
         <Route exact path="/viewDoctors" element={<ViewDoctorsUser />} />
         <Route exact path="/services" element={<Services />} />
@@ -81,9 +82,12 @@ function App() {
         <Route exact path="/admin/viewDoctor" element={<ViewDoctors />} />
         <Route exact path="/admin/viewAllProducts" element={<ProductsList />} />
         <Route exact path="/admin/reports" element={<Reports />} />
-        <Route exact path="/admin/productReturn" element={<ReturnedProducts />} />
+        <Route
+          exact
+          path="/admin/productReturn"
+          element={<ReturnedProducts />}
+        />
         <Route exact path="/admin/complaints" element={<Complaints />} />
-
 
         {/* Doctors Panel */}
         <Route exact path="/doctor/dashboard" element={<DoctorDashboard />} />
