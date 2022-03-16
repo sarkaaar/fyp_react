@@ -5,6 +5,7 @@ import Checkbox from "@mui/material/Checkbox";
 import { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase-config";
+import Footer from "./Components/Footer";
 
 export default function Products({ hideLoader }) {
   //  Get Categories Names
@@ -86,6 +87,7 @@ export default function Products({ hideLoader }) {
 
         </div>
       </div>
+      <Footer />
     </div>
   );
 
