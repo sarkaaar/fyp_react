@@ -1,6 +1,5 @@
 import * as React from "react";
 import Header from "./Components/Header";
-// import CartsCard from "./Components/CartsCard";
 import Footer from "./Components/Footer";
 import { useState, useEffect } from "react";
 import { db } from "../../firebase-config";
@@ -109,8 +108,6 @@ export default function Cart() {
       )}
       <div className="p-20 justify-around">
         {products.map((item, key) => {
-          // setTotal(item?.product?.salePrice);
-          // return <CartsCard key={key} obj={item} />;
           return (
             <div
               key={key}

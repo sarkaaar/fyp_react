@@ -8,13 +8,7 @@ import { auth } from "../../firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
 import Footer from "./Components/Footer";
 import { useNavigate } from "react-router-dom";
-import {
-  getDocs,
-  deleteDoc,
-  query,
-  where,
-  doc,
-} from "firebase/firestore";
+import { getDocs, deleteDoc, query, where, doc } from "firebase/firestore";
 
 export default function Checkout() {
   const navigate = useNavigate();
