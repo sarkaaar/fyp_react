@@ -1,6 +1,8 @@
 import "./App.css";
+
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
+import PageNotFound from "./Pages/PageNotFound";
 // User Pages
 import SignIn from "./Pages/User_Pages/SignIn";
 import SignUp from "./Pages/User_Pages/SignUp";
@@ -92,6 +94,7 @@ function App() {
         {/* Doctors Panel */}
         <Route exact path="/doctor/dashboard" element={<DoctorDashboard />} />
         <Route exact path="/doctor/sign_in" element={<DoctorSignIn />} />
+        <Route exact path="/*" element={<PageNotFound />} />
       </Routes>
     </Router>
   );
