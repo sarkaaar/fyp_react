@@ -71,18 +71,12 @@ export default function Orders() {
                 <tbody key={key}>
                   <tr>
                     <td className=" text-lg p-2 px-8">{item?.id}</td>
-                    <td className=" text-lg p-2 px-8">{item?.authUserEmail}</td>
-                    <td className=" text-lg p-2 px-8">{item?.email}</td>
-                    <td className=" text-lg p-2 px-8">{item?.fName}</td>
-                    <td className=" text-lg p-2 px-8">{item?.lName}</td>
-                    <td className=" text-lg p-2 px-8">{item?.address}</td>
-                    <td className=" text-lg p-2 px-8">{item?.city}</td>
-                    <td className=" text-lg p-2 px-8">{item?.postal}</td>
-                    <td className=" text-lg p-2 px-8">{item?.phone}</td>
-                    <td className=" text-lg p-2 px-8">{item?.card}</td>
-                    <td className=" text-lg p-2 px-8">{item?.NOC}</td>
-                    <td className=" text-lg p-2 px-8">{item?.expiry}</td>
-                    <td className=" text-lg p-2 px-8">{item?.cvv}</td>
+                    <td className=" text-lg p-2 px-8">{item?.salePrice}</td>
+                    <td className=" text-lg p-2 px-8">{item?.costPrice}</td>
+                    <td className=" text-lg p-2 px-8">{item?.description}</td>
+                    <td className=" text-lg p-2 px-8">{item?.stock}</td>
+                    <td className=" text-lg p-2 px-8">{item?.actions}</td>
+                
                     {/* <td className=" text-lg p-2 px-8">{item?.products?.map((item.key)=>{return(<></>)})}</td> */}
                     <td className=" text-lg p-2  flex justify-end">
                       <>
