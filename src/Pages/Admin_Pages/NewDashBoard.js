@@ -1,17 +1,9 @@
 import * as React from "react";
-import Header from "../Admin_Pages/admin_components/Header";
-import { Button } from "@material-ui/core";
-import MiniDrawer from "./admin_components/Sidebar";
 
-export default function Dashboard() {
+export default function NewDashBoard() {
   return (
-    <>
-      <Header />
-      <div className="flex">
-        <MiniDrawer />
-
-        <div className="bg-gray-100 ml-48 font-sans leading-normal tracking-normal">
-        <div className="  container grid-flow-col w-full mx-auto pt-20 pl-60 ">
+    <div className="bg-gray-100  font-sans leading-normal tracking-normal">
+      <div className="  container grid-flow-col w-full mx-auto pt-20 pl-60 ">
         <div className=" grid grid-flow-col">
           <div className="w-full md:mt-1  mb-3 text-gray-800 leading-normal">
             <div class="bg-white border rounded shadow">
@@ -154,12 +146,5 @@ export default function Dashboard() {
         </div>
       </div>
     </div>
-        {/* <div className="ml-72">
-          <Button variant="contained">View Profile</Button>
-          <Button variant="contained">View Orders</Button>
-          <Button variant="contained">View Queries</Button>
-        </div> */}
-      </div>
-    </>
   );
 }
