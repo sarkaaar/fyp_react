@@ -7,6 +7,8 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { Button, TextField } from "@mui/material";
 import { auth } from "../../firebase-config";
 import { useNavigate } from "react-router-dom";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../../firebase-config";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -17,9 +19,20 @@ export default function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState();
   const [name, setName] = useState();
 
+  const usersCollection = collection(db, "users");
+
   const signUp = async () => {
+    let _user = { email: email, password: password, role: "user", name: name };
+
     try {
-      const user = await createUserWithEmailAndPassword(auth, email, password);
+      await createUserWithEmailAndPassword(auth, email, password).then(
+        async () => {
+          console.log("user added to authentication");
+          await addDoc(usersCollection, _user).then(() => {
+            console.log("user added to firebase  firestore");
+          });
+        }
+      );
       navigate("/");
     } catch (error) {
       console.log(error.message);

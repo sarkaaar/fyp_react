@@ -1,5 +1,5 @@
 import "./App.css";
-
+// import AdminRoute from "./AuthRoutes/AdminRoute";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import PageNotFound from "./Pages/PageNotFound";
@@ -44,10 +44,14 @@ import Complaints from "./Pages/Admin_Pages/Complaints";
 // Doctors Pages
 import DoctorDashboard from "./Pages/Doctor_Pages/Dashboard";
 import DoctorSignIn from "./Pages/Doctor_Pages/Doctor_SignIn";
+
+import NoPermission from "./Pages/Admin_Pages/NoPermission";
 function App() {
   return (
     <Router>
       <Routes>
+        <Route exact path="/no-permission" element={<NoPermission />} />
+
         {/* User Panel */}
         <Route exact path="/" element={<HomePage />} />
         <Route exact path="/sign_in" element={<SignIn />} />

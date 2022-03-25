@@ -6,17 +6,17 @@ export default function NewDashBoard() {
       <div className="  container grid-flow-col w-full mx-auto pt-20 pl-60 ">
         <div className=" grid grid-flow-col">
           <div className="w-full md:mt-1  mb-3 text-gray-800 leading-normal">
-            <div class="bg-white border rounded shadow">
-              <div class="border-b p-3">
-                <h5 class="font-bold uppercase text-gray-600">Order</h5>
+            <div className="bg-white border rounded shadow">
+              <div className="border-b p-3">
+                <h5 className="font-bold uppercase text-gray-600">Order</h5>
               </div>
-              <div class="p-5">
-                <table class="w-full p-5 text-gray-700">
+              <div className="p-5">
+                <table className="w-full p-5 text-gray-700">
                   <thead>
                     <tr>
-                      <th class="text-left text-blue-900">Pending Orders</th>
-                      <th class="text-left text-blue-900">completed</th>
-                      <th class="text-left text-blue-900">Returns </th>
+                      <th className="text-left text-blue-900">Pending Orders</th>
+                      <th className="text-left text-blue-900">completed</th>
+                      <th className="text-left text-blue-900">Returns </th>
                     </tr>
                   </thead>
 
@@ -29,27 +29,27 @@ export default function NewDashBoard() {
                   </tbody>
                 </table>
 
-                <p class="py-2">
+                <p className="py-2">
                   <a href="#">See More issues...</a>
                 </p>
               </div>
             </div>
           </div>
           <div className="w-10/12 md:mt-1  mx-12 mb-3 text-gray-800 leading-normal">
-            <div class="bg-white border rounded shadow">
-              <div class="border-b p-3">
-                <h5 class="font-bold uppercase text-gray-600">Sales</h5>
+            <div className="bg-white border rounded shadow">
+              <div className="border-b p-3">
+                <h5 className="font-bold uppercase text-gray-600">Sales</h5>
               </div>
-              <div class="p-5">
-                <table class="w-full p-5 text-gray-700">
+              <div className="p-5">
+                <table className="w-full p-5 text-gray-700">
                   <thead>
                     <tr>
-                      <th class="text-left text-blue-900">COD Sales</th>
-                      <th class="text-left text-blue-900">
+                      <th className="text-left text-blue-900">COD Sales</th>
+                      <th className="text-left text-blue-900">
                         {" "}
                         Credit Card Sales
                       </th>
-                      <th class="text-left text-blue-900"> Total Sales</th>
+                      <th className="text-left text-blue-900"> Total Sales</th>
                     </tr>
                   </thead>
 
@@ -62,7 +62,7 @@ export default function NewDashBoard() {
                   </tbody>
                 </table>
 
-                <p class="py-2">
+                <p className="py-2">
                   <a href="#">See More issues...</a>
                 </p>
               </div>
@@ -72,17 +72,17 @@ export default function NewDashBoard() {
 
         <div className=" grid grid-flow-col">
           <div className="w-full md:mt-1  mb-3 text-gray-800 leading-normal">
-            <div class="bg-white border rounded shadow">
-              <div class="border-b p-3">
-                <h5 class="font-bold uppercase text-gray-600">TODOS</h5>
+            <div className="bg-white border rounded shadow">
+              <div className="border-b p-3">
+                <h5 className="font-bold uppercase text-gray-600">TODOS</h5>
               </div>
-              <div class="p-5">
-                <table class="w-full p-5 text-gray-700">
+              <div className="p-5">
+                <table className="w-full p-5 text-gray-700">
                   <thead>
                     <tr>
-                      <th class="text-left text-blue-900">Name</th>
-                      <th class="text-left text-blue-900">Date</th>
-                      <th class="text-left text-blue-900">Time</th>
+                      <th className="text-left text-blue-900">Name</th>
+                      <th className="text-left text-blue-900">Date</th>
+                      <th className="text-left text-blue-900">Time</th>
                     </tr>
                   </thead>
 
@@ -101,24 +101,24 @@ export default function NewDashBoard() {
                   </tbody>
                 </table>
 
-                <p class="py-2">
+                <p className="py-2">
                   <a href="#">See More issues...</a>
                 </p>
               </div>
             </div>
           </div>
           <div className="w-10/12 md:mt-1  mx-12 mb-3 text-gray-800 leading-normal">
-            <div class="bg-white border rounded shadow">
-              <div class="border-b p-3">
-                <h5 class="font-bold uppercase text-gray-600">Publicity</h5>
+            <div className="bg-white border rounded shadow">
+              <div className="border-b p-3">
+                <h5 className="font-bold uppercase text-gray-600">Publicity</h5>
               </div>
-              <div class="p-5">
-                <table class="w-full p-5 text-gray-700">
+              <div className="p-5">
+                <table className="w-full p-5 text-gray-700">
                   <thead>
                     <tr>
-                      <th class="text-left text-blue-900">Name</th>
-                      <th class="text-left text-blue-900">Investment</th>
-                      <th class="text-left text-blue-900">%</th>
+                      <th className="text-left text-blue-900">Name</th>
+                      <th className="text-left text-blue-900">Investment</th>
+                      <th className="text-left text-blue-900">%</th>
                     </tr>
                   </thead>
 
@@ -137,7 +137,7 @@ export default function NewDashBoard() {
                   </tbody>
                 </table>
 
-                <p class="py-2">
+                <p className="py-2">
                   <a href="#">See More issues...</a>
                 </p>
               </div>

@@ -20,7 +20,6 @@ export default function SignIn() {
 
   onAuthStateChanged(auth, (currentUser) => {
     setUser(currentUser);
-    // localStorage.setItem("token", user.accessToken);
   });
 
   // Login Function
@@ -34,7 +33,6 @@ export default function SignIn() {
       console.log(LoggedInUser);
       console.log("User Logged in sucessfully");
 
-      // console.log(LoggedInUser);
       navigate("/");
     } catch (error) {
       console.log(error);
