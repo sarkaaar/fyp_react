@@ -48,8 +48,9 @@ export default function Orders() {
                 <th className="text-xl p-2 px-8">Name</th>
                 <th className="text-xl p-2 px-8">Address</th>
                 <th className="text-xl p-2 px-8">phone</th>
+                <th className="text-xl p-2 px-8">Products</th>
                 <th className="text-xl p-2 px-8">card</th>
-                <th className="text-xl p-2 px-8">NOC</th>
+                {/* <th className="text-xl p-2 px-8">NOC</th> */}
                 <th className="text-xl p-2 ">Actions</th>
               </tr>
             </thead>
@@ -66,14 +67,25 @@ export default function Orders() {
                       </td>
                       <td className=" text-lg p-2 px-8">
                         <div className="">
-                          <h1>{item?.address}</h1>
+                          <h1 className="w-48">{item?.address}</h1>
                           <h1>{item?.city}</h1>
                           <h1>{item?.postal}</h1>
                         </div>
                       </td>
                       <td className=" text-lg p-2 px-8">{item?.phone}</td>
-                      <td className=" text-lg p-2 px-8">{item?.card}</td>
-                      <td className=" text-lg p-2 px-8">{item?.NOC}</td>
+
+                      <td className=" text-lg p-2 px-8">
+                        {item?.cart.map((prod, key) => {
+                          return (
+                            <h1 className="w-48">{prod?.product?.name}</h1>
+                          );
+                        })}
+                      </td>
+                      <td className=" text-lg p-2 px-8">
+                        <h1>{item?.NOC}</h1>
+                        <h1 className="text-gray-500">{item?.card}</h1>
+                      </td>
+                      {/* <td className=" text-lg p-2 px-8">{item?.NOC}</td> */}
                       <td className=" text-lg p-2">
                         {item?.status ? (
                           <Button
