@@ -153,22 +153,20 @@ export default function Product() {
 
               <h1>{prod?.category}</h1>
               <h1>{prod?.subCategory}</h1>
-              {/* {prod?.variants.map((variant, index) => {
-                return (
-                  <div key={index}>
-                    <h1>{variant.name}</h1>
-                    <h1>{variant.price}</h1>
-                  </div>
-                );
-              })} */}
-
-              <Button
-                onClick={() => {
-                  console.log(prod?.variants);
-                }}
-              >
-                Click Me
-              </Button>
+              <div className="flex">
+                {prod &&
+                  Object.keys(prod.variants).map((key) => {
+                    let variant = prod?.variants[key];
+                    return (
+                      <div key={key}>
+                        <h1 className="bg-gray-200 w-fit m-2 p-2 rounded-md">
+                          {variant[0]}
+                        </h1>
+                        {/* <h1>{variant[1]}</h1> */}
+                      </div>
+                    );
+                  })}
+              </div>
               <button
                 onClick={() => {
                   addToCart();
