@@ -171,13 +171,14 @@ export default function AddCategory() {
               })}
             </div>
             <hr />
-            <div style={{ border: "2px solid black w-96" }}>
+            <div style={{ border: "2px solid black w-fit" }}>
               <h1 className="text-4xl p-4">Child Categories</h1>
               <hr />
               {sub_cat.map((item) => {
                 return (
                   <div className="flex justify-between p-2 ">
-                    <h1>{item.sub_}</h1>
+                    <h1 className="w-96">{item.sub_}</h1>
+                    <h1  className="w-96">{item.cat_}</h1>
                     <Button
                       onClick={() => {
                         deleteCategory(item.id);
