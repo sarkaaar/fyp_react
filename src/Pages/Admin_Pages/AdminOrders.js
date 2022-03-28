@@ -77,7 +77,15 @@ export default function Orders() {
                       <td className=" text-lg p-2 px-8">
                         {item?.cart.map((prod, key) => {
                           return (
-                            <h1 className="w-48">{prod?.product?.name}</h1>
+                            <tr>
+                              <td className="px-4">{prod?.product?.name}</td>
+                              <td className="px-4">
+                                {prod?.product?.quantity}
+                              </td>
+                              <td className="px-4">
+                                {prod?.product?.salePrice}
+                              </td>
+                            </tr>
                           );
                         })}
                       </td>

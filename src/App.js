@@ -14,7 +14,7 @@ import Chatbot from "./Pages/User_Pages/Chatbot";
 import ProductReturn from "./Pages/Services/ProductRetrun";
 import Product from "./Pages/User_Pages/Product";
 import Profile from "./Pages/User_Pages/Profile";
-import Orders from "./Pages/User_Pages/Components/Orders";
+import Orders from "./Pages/User_Pages/Orders";
 import Favourites from "./Pages/User_Pages/Components/viewFavourites/Favourites";
 // import AdminProfile from "./Pages/Admin_Pages/AdminProfile";
 
