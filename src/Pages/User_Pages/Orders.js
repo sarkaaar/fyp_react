@@ -87,7 +87,7 @@ export default function Cart() {
                     </td>
                     <td className=" text-lg p-2">
                       {item?.status ? (
-                        <h1 className="text-red-600 font-bold w-fit">
+                        <h1 className="text-green-600 font-bold w-fit">
                           COMPLETED
                         </h1>
                       ) : (

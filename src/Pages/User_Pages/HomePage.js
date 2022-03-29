@@ -2,15 +2,9 @@ import Header from "./Components/Header";
 import MediaCard from "./Components/MediaCard";
 import Banner from "./Components/Banner";
 import Footer from "./Components/Footer";
+import { Button } from "@mui/material";
 
 export default function HomePage() {
-  // const prod = {
-  //   image: "https://source.unsplash.com/random",
-  //   name: "Dog Food",
-  //   salePrice: "$100",
-  //   id: "1",
-  // };
-
   const products = [
     {
       id: 1,
@@ -68,10 +62,12 @@ export default function HomePage() {
           <h2 className="text-2xl font-bold tracking-tight text-gray-900">
             Customers also purchased
           </h2>
-
           <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
             {products.map((product) => (
-              <div key={product.id} className="group relative md:border md:hover:border-b-black hover:drop-shadow-xl">
+              <div
+                key={product.id}
+                className="group relative md:border md:hover:border-b-black hover:drop-shadow-xl"
+              >
                 <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
                   <img
                     src={product.imageSrc}
@@ -100,33 +96,7 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-      {/* <>
-        <h1 className="text-4xl font-bold text-red-600">Demo</h1>
-        <h2 className="text-4xl font-bold text-red-600">Demo</h2>
-        <h3 className="text-4xl font-bold text-red-600">Demo</h3>
-        <h4 className="text-4xl font-bold text-red-600">Demo</h4>
-        <h5 className="text-4xl font-bold text-red-600">Demo</h5>
-        <h6 className="text-4xl font-bold text-red-600">Demo</h6>
-        <span className="text-4xl font-bold text-red-600">Demo</span>
-      </> */}
       <Footer />
     </div>
   );
 }
-
-/*
-  This example requires Tailwind CSS v2.0+ 
-  
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/aspect-ratio'),
-    ],
-  }
-  ```
-*/

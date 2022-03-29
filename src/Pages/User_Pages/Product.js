@@ -10,14 +10,17 @@ import { auth } from "../../firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import { Rating } from "@mui/material";
 
 export default function Product() {
   const { id } = useParams();
 
   const cartRef = collection(db, "cart");
   const [prod, setProduct] = useState();
-  const [qty, setQty] = useState(3);
+  const [qty, setQty] = useState(1);
   const [user, setUser] = useState({});
+  const [rating, setRating] = useState(1);
+  const [comments, setComments] = useState("");
 
   const addToCart = async () => {
     const newProduct = {
@@ -31,6 +34,8 @@ export default function Product() {
     await addDoc(cartRef, newProduct);
     console.log("Product Added Sucessfully");
   };
+
+  const handleResponse=async()=>{}
 
   useEffect(() => {
     const getProduct = async () => {
@@ -182,8 +187,27 @@ export default function Product() {
                 <h2 className="text-sm font-medium text-gray-900">Details</h2>
 
                 <div className="mt-4 space-y-6">
-                  {/* <p className="text-sm text-gray-600">{product.details}</p> */}
+                  <p className="text-sm text-gray-600">{prod?.description}</p>
                 </div>
+                <Rating value={3} />
+                <div className="border-2 border-gray-700">
+                  <textarea
+                    className=" w-full h-24 "
+                    placeholder="Comments"
+                  ></textarea>
+                </div>
+                <div className="flex justify-center">
+                <Button
+                variant="contained"
+                style={{margin:"10px"}}
+                onClick={(handleResponse) => {
+                  
+                }}
+                // className="mt-10 w-full bg-gray-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                Submit Response
+              </Button></div>
+            
               </div>
             </div>
           </div>
@@ -192,14 +216,6 @@ export default function Product() {
       <div>
         <h1>Current User Signed In</h1>
         <h1>{user?.email}</h1>
-
-        <Button
-          onClick={() => {
-            console.log(user?.email);
-          }}
-        >
-          Print
-        </Button>
       </div>
       <Footer />
     </>
