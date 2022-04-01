@@ -2,11 +2,19 @@ import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { db } from "../../firebase-config";
+import { db, auth } from "../../firebase-config";
 import { useParams } from "react-router-dom";
-import { collection, addDoc, getDoc, doc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  getDoc,
+  doc,
+  deleteDoc,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import { Button } from "@mui/material";
-import { auth } from "../../firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -16,26 +24,16 @@ export default function Product() {
   const { id } = useParams();
 
   const cartRef = collection(db, "cart");
+  const reviewsRef = collection(db, "reviews");
+  const favouritesRef = collection(db, "favourites");
+
   const [prod, setProduct] = useState();
   const [qty, setQty] = useState(1);
   const [user, setUser] = useState({});
   const [rating, setRating] = useState(1);
   const [comments, setComments] = useState("");
-
-  const addToCart = async () => {
-    const newProduct = {
-      user: user?.email,
-      product: {
-        name: prod?.name,
-        salePrice: Number(prod ? prod.salePrice : "N/A"),
-        quantity: qty,
-      },
-    };
-    await addDoc(cartRef, newProduct);
-    console.log("Product Added Sucessfully");
-  };
-
-  const handleResponse=async()=>{}
+  const [getcomments, setgetComments] = useState([]);
+  const [favourite, setFavourite] = useState("");
 
   useEffect(() => {
     const getProduct = async () => {
@@ -46,13 +44,96 @@ export default function Product() {
       });
       setProduct({ id: x.id, ...x.data() });
     };
-
+    getComment();
     getProduct();
-  }, [false]);
+    getFav();
+  }, [user]);
+
+  const addComment = async () => {
+    const newComment = {
+      comment: comments,
+      rating: rating,
+      prod_id: prod?.id,
+      user: user?.email,
+    };
+    await addDoc(reviewsRef, newComment);
+    console.log("Comment Added Sucessfully");
+    getComment();
+  };
+
+  const getComment = async () => {
+    const q = query(reviewsRef, where("prod_id", "==", id));
+
+    await getDocs(q)
+      .then((res) => {
+        setgetComments(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const addToFavourites = async () => {
+    const newObj = {
+      product: prod,
+      user: user.email,
+      status: "true",
+      product_id: prod.id,
+    };
+    await addDoc(favouritesRef, newObj)
+      .then(() => {
+        console.log("Add To Favourites Sucessfully");
+        getFav();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const removeFavourites = async (id) => {
+    const refDoc = doc(db, "favourites", id);
+
+    await deleteDoc(refDoc)
+      .then((res) => {
+        console.log("Favourites Removed Sucessfully");
+        getFav();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const addToCart = async () => {
+    const newProduct = {
+      user: user?.email,
+      quantity: qty,
+      product: prod,
+    };
+    await addDoc(cartRef, newProduct);
+    console.log("Product Added Sucessfully");
+  };
 
   onAuthStateChanged(auth, (currentUser) => {
     setUser(currentUser);
   });
+
+  const getFav = async () => {
+    const q = query(
+      favouritesRef,
+      where("user", "==", user?.email),
+      where("product_id", "==", id)
+    );
+
+    await getDocs(q)
+      .then((res) => {
+        setFavourite(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   return (
     <>
@@ -68,156 +149,196 @@ export default function Product() {
       >
         Click
       </Button>*/}
-      <Button
-        onClick={() => {
-          console.log(prod.variants[0]);
-        }}
-      >
-        ON PRINT
-      </Button>
-      <div className="bg-white">
-        <div className="pt-6">
-          {/* Image gallery */}
-          <div className="flex">
-            <div className="mt-6 max-w-2xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-3 lg:gap-x-8">
-              <div className=" aspect-w-3 aspect-h-4 rounded-lg overflow-hidden ">
-                <img
-                  src={
-                    prod?.image
-                      ? prod?.image[0]
-                      : "https://source.unsplash.com/random"
-                  }
-                  alt="imag"
-                  className="w-full p-4 h-full object-center object-cover"
+      <section className="text-gray-700 body-font overflow-hidden bg-white">
+        <div className="container px-5 py-24 mx-auto">
+          <h1 className="ml-24 mb-4 text-xl font-semibold">
+            {prod?.category} {"->"} {prod?.subCategory}
+          </h1>
+          <div className="lg:w-4/5 mx-auto flex flex-wrap">
+            <img
+              alt="ecommerce"
+              className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"
+              src={
+                prod?.image
+                  ? prod?.image[0]
+                  : "https://source.unsplash.com/random"
+              }
+            />
+            <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+              <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
+                {prod?.name}
+              </h1>
+              <div className="flex mb-4">
+                <Rating
+                  value={rating}
+                  onChange={(e, newVal) => {
+                    setRating(newVal);
+                  }}
                 />
               </div>
-              <div className="flex gap-2">
-                {prod?.image?.map((img, index) => {
+              <p className="leading-relaxed">{prod?.description}</p>
+              <div className="flex justify-between mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
+                <div className="flex ml-6 items-center">
+                  <span className="mr-3">Variant</span>
+                  <div className="relative">
+                    <select className="rounded border appearance-none border-gray-400 py-2 focus:outline-none focus:border-red-500 text-base pl-3 pr-10">
+                      {prod &&
+                        Object.keys(prod.variants).map((key) => {
+                          let variant = prod?.variants[key];
+                          return <option key={key}>{variant[0]}</option>;
+                        })}
+                    </select>
+                  </div>
+                </div>
+                {/* Quantity Picker */}
+                <div className="flex m-4 border-box">
+                  <Button
+                    className=" w-16 h-12"
+                    style={{ border: "2px solid gray" }}
+                    onClick={() => {
+                      setQty(qty - 1);
+                    }}
+                  >
+                    <RemoveIcon />
+                  </Button>
+                  <div
+                    className="w-20 h-12"
+                    style={{ border: "2px solid gray", padding: 5 }}
+                  >
+                    <span className="p-2 px-6 text-2xl">{qty}</span>
+                  </div>
+                  <Button
+                    className="w-16 h-12 m-2"
+                    style={{ border: "2px solid gray" }}
+                    onClick={() => {
+                      setQty(qty + 1);
+                    }}
+                  >
+                    <AddIcon />
+                  </Button>
+                </div>
+              </div>
+              <div className="flex justify-between">
+                <span className="title-font font-medium text-2xl text-gray-900">
+                  UNIT= ${prod?.salePrice}
+                </span>
+                <span className=" font-medium text-xl text-gray-900">
+                  x{qty}
+                </span>
+
+                <span className="title-font font-medium text-2xl text-gray-900">
+                  $ {qty * prod?.salePrice}
+                </span>
+              </div>
+              <div className="flex mt-4">
+                <button
+                  onClick={() => {
+                    addToCart();
+                  }}
+                  className=" w-11/12 h-12 bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                  Add to Cart
+                </button>
+                {favourite[0]?.status ? (
+                  <button
+                    onClick={() => {
+                      removeFavourites(favourite[0]?.id);
+                    }}
+                    className=" w-1/12 h-12 rounded-md bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4"
+                  >
+                    <svg
+                      fill="red"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      className="w-5 h-5"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
+                    </svg>
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => {
+                      addToFavourites();
+                    }}
+                    className=" w-1/12 h-12 rounded-md bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4"
+                  >
+                    <svg
+                      fill="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      className="w-5 h-5"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
+                    </svg>
+                  </button>
+                )}
+              </div>
+            </div>
+            <div className="p-4 shadow-md w-full">
+              <div className="flex justify-between p-2">
+                <h3 className="text-gray-600">Write a Review</h3>
+                <Rating
+                  value={rating}
+                  onChange={(e, newVal) => {
+                    setRating(newVal);
+                  }}
+                />
+              </div>
+              <textarea
+                className="w-full p-2 mb-2 form-control block border border-solid border-gray-300"
+                rows="3"
+                value={comments}
+                onChange={(e) => {
+                  setComments(e.target.value);
+                }}
+              />
+              <div className="flex justify-end">
+                <Button
+                  onClick={() => {
+                    addComment();
+                  }}
+                  variant="outlined"
+                >
+                  Add a Comment
+                </Button>
+              </div>
+              <div>
+                {getcomments?.map((item, key) => {
                   return (
-                    <img
-                      src={img}
-                      alt="imag"
-                      className="w-16 h-16 object-center object-cover"
-                      key={index}
-                    />
+                    <>
+                      <div className="flex justify-between mt-2">
+                        <h1>{item?.user}</h1>
+                        <Rating readOnly value={item?.rating} />
+                      </div>
+                      <h1>{item?.comment}</h1>
+                      <hr className="mt-2 mb-2" />
+                      {/* <Rating readOnly value={item.rating} /> */}
+                    </>
                   );
                 })}
               </div>
             </div>
           </div>
-          {/* Quantity Picker */}
-          <div className="flex m-4 border-box">
-            <Button
-              className=" w-16 h-12"
-              style={{ border: "2px solid gray" }}
-              onClick={() => {
-                setQty(qty - 1);
-              }}
-            >
-              <RemoveIcon />
-            </Button>
-            <div
-              className="w-20 h-12"
-              style={{ border: "2px solid gray", padding: 5 }}
-            >
-              <span className="p-2 px-6 text-2xl">{qty}</span>
-            </div>
-            <Button
-              className="w-16 h-12 m-2"
-              style={{ border: "2px solid gray" }}
-              onClick={() => {
-                setQty(qty + 1);
-              }}
-            >
-              <AddIcon />
-            </Button>
-          </div>
-
-          {/* Product info */}
-          <div className="max-w-2xl mx-auto pt-10 pb-16 px-4 sm:px-6 lg:max-w-7xl lg:pt-16 lg:pb-24 lg:px-8 lg:grid lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8">
-            <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
-              <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">
-                {prod?.name}
-              </h1>
-            </div>
-
-            {/* Options */}
-            <div className="mt-4 lg:mt-0 lg:row-span-3">
-              <h2 className="sr-only">Product information</h2>
-              <p className="text-3xl text-gray-900">Rs. {prod?.salePrice}</p>
-
-              {/* Reviews */}
-              <div className="mt-6">
-                <h3 className="sr-only">Reviews</h3>
-                <div className="flex items-center">
-                  <div className="flex items-center"></div>
-                </div>
-              </div>
-
-              <h1>{prod?.description}</h1>
-
-              <h1>{prod?.category}</h1>
-              <h1>{prod?.subCategory}</h1>
-              <div className="flex">
-                {prod &&
-                  Object.keys(prod.variants).map((key) => {
-                    let variant = prod?.variants[key];
-                    return (
-                      <div key={key}>
-                        <h1 className="bg-gray-200 w-fit m-2 p-2 rounded-md">
-                          {variant[0]}
-                        </h1>
-                        {/* <h1>{variant[1]}</h1> */}
-                      </div>
-                    );
-                  })}
-              </div>
-              <button
-                onClick={() => {
-                  addToCart();
-                }}
-                className="mt-10 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                Add to Cart
-              </button>
-            </div>
-
-            <div className="py-10 lg:pt-6 lg:pb-16 lg:col-start-1 lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
-              <div className="mt-10">
-                <h2 className="text-sm font-medium text-gray-900">Details</h2>
-
-                <div className="mt-4 space-y-6">
-                  <p className="text-sm text-gray-600">{prod?.description}</p>
-                </div>
-                <Rating value={3} />
-                <div className="border-2 border-gray-700">
-                  <textarea
-                    className=" w-full h-24 "
-                    placeholder="Comments"
-                  ></textarea>
-                </div>
-                <div className="flex justify-center">
-                <Button
-                variant="contained"
-                style={{margin:"10px"}}
-                onClick={(handleResponse) => {
-                  
-                }}
-                // className="mt-10 w-full bg-gray-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                Submit Response
-              </Button></div>
-            
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
-      <div>
-        <h1>Current User Signed In</h1>
-        <h1>{user?.email}</h1>
-      </div>
+      </section>
       <Footer />
     </>
   );
 }
+
+// {prod &&
+//   Object.keys(prod.variants).map((key) => {
+//     let variant = prod?.variants[key];
+//     return (
+//       <div key={key}>
+//         <h1 className="bg-gray-200 w-fit m-2 p-2 rounded-md">
+//           {variant[0]}
+//         </h1>
+//         {/* <h1>{variant[1]}</h1> */}
+//       </div>
+//     );
+//   })}
