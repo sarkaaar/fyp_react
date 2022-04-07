@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import Header from "./Components/Header";
+import Header from "../Components/Header";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import { Button } from "@mui/material";
 import { TextField } from "@mui/material";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-
+import Sidebar from "./Sidebar";
 const style = {
   position: "absolute",
   top: "50%",
@@ -31,6 +31,7 @@ export default function Profile() {
   return (
     <div>
       <Header />
+      <Sidebar />
 
       <div
         style={{

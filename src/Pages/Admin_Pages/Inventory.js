@@ -20,9 +20,7 @@ import { IconButton } from "@mui/material";
 export default function Inventory() {
   const [products, setProducts] = useState([]);
   const productsCollection = collection(db, "products");
-
   const [variants, setVariants] = useState([["", 0]]);
-
   const [s_Product, setS_Product] = useState();
   // Modal
   const [open, setOpen] = React.useState(false);

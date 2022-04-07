@@ -1,12 +1,12 @@
 import * as React from "react";
-import Header from "./Components/Header";
-import Footer from "./Components/Footer";
+import Header from "../Components/Header";
+import Footer from "../Components/Footer";
 import { useState, useEffect } from "react";
-import { db, auth } from "../../firebase-config";
+import { db, auth } from "../../../firebase-config";
 import { useNavigate } from "react-router-dom";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
-
+import Sidebar from "./Sidebar";
 export default function Cart() {
   const [user, setUser] = useState();
   const [products, setProducts] = useState([]);
@@ -34,6 +34,7 @@ export default function Cart() {
   return (
     <div>
       <Header />
+      <Sidebar/>
 
       <h1 className="text-4xl font-bold m-8">Orders -{">"}</h1>
       <div className="flex justify-center">
