@@ -11,6 +11,7 @@ import { auth } from "../../firebase-config";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+
 export default function SignIn() {
   const navigate = useNavigate();
 
@@ -85,7 +86,6 @@ export default function SignIn() {
                 type="password"
               />
             </div>
-
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <input
@@ -111,7 +111,6 @@ export default function SignIn() {
                 </a>
               </div>
             </div>
-
             <div>
               <button
                 // type="submit"
@@ -143,7 +142,7 @@ export default function SignIn() {
         </div>
       </div>
       <div>
-        <h1>Current User Signed In</h1>
+        <h1>Current User Signed-In Information if present (Email)</h1>
         <h1>{user?.email}</h1>
 
         <Button onClick={logout}>Logout</Button>

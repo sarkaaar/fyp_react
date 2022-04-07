@@ -1,14 +1,13 @@
 import * as React from "react";
 import Header from "./Components/Header";
-import GoogleIcon from "@mui/icons-material/Google";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import GoogleIcon from "@mui/icons-material/Google";  
 import { useState } from "react";
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut,createUserWithEmailAndPassword } from "firebase/auth";
 import { Button, TextField } from "@mui/material";
-import { auth } from "../../firebase-config";
+import { auth ,db} from "../../firebase-config";
 import { useNavigate } from "react-router-dom";
 import { collection, addDoc } from "firebase/firestore";
-import { db } from "../../firebase-config";
+
 
 export default function SignUp() {
   const navigate = useNavigate();

@@ -1,4 +1,6 @@
 import * as React from "react";
+// import {RangeSlider, Row, Col, InputNumber, InputGroup } from "rsuite";
+
 import MediaCard from "./Components/MediaCard";
 import Header from "./Components/Header";
 import Checkbox from "@mui/material/Checkbox";
@@ -9,6 +11,8 @@ import Footer from "./Components/Footer";
 
 export default function Products({ hideLoader }) {
   //  Get Categories Names
+  const [value, setValue] = React.useState([10, 50]);
+
   const [products, setProducts] = useState([]);
   const productsCollection = collection(db, "products");
 
@@ -136,34 +140,74 @@ export default function Products({ hideLoader }) {
                 </a>
               </div>
             </div>
-          </div>
+            {/* Price component */}
+            <div>
+              <p className="font-bold text-2xl pt-72">Price</p>
+              <div className="flex py-0.5">
+                <input
+                  placeholder="Min"
+                  style={{ width: "60px", height: "30px" }}
+                />
+                <p className="text-lg text-center pl-4 pr-4 ">-</p>
+                <input
+                  placeholder="Max"
+                  style={{ width: "60px", height: "30px" }}
+                />
+              </div>
+              <div class="relative pt-1">
+                <label for="customRange2" class="form-label">
+                  Example range
+                </label>
+                <div className="flex">
+                  <p>300</p>
 
-          {/* Price component */}
-          <div>
-            <p className="font-bold text-2xl pt-72">Price</p>
-            <div className="flex py-0.5">
-              <input
-                placeholder="Min"
-                style={{ width: "60px", height: "30px" }}
-              />
-              <p className="text-lg text-center pl-4 pr-4 ">-</p>
-              <input
-                placeholder="Max"
-                style={{ width: "60px", height: "30px" }}
-              />
-            </div>
-            <div class="relative pt-1">
-              <label for="customRange2" className="form-label">
-                Example range
-              </label>
-              <input
-                type="range"
-                class="  form-range appearance-none w-6/12 h-6 p-0  focus:outline-none focus:ring-0 focus:shadow-inner
-    "
-                min="0"
-                max="5"
-                id="customRange2"
-              />
+                  <input type="range" />
+                 
+                  {/* <Row>
+                    <Col md={10}>
+                      <RangeSlider
+                        progress
+                        style={{ marginTop: 16 }}
+                        value={value}
+                        onChange={(value) => {
+                          setValue(value);
+                        }}
+                      />
+                    </Col>
+                    <Col md={8}>
+                      <InputGroup>
+                        <InputNumber
+                          min={0}
+                          max={100}
+                          value={value[0]}
+                          onChange={(nextValue) => {
+                            const [start, end] = value;
+                            if (nextValue > end) {
+                              return;
+                            }
+                            setValue([nextValue, end]);
+                          }}
+                        />
+                        <InputGroup.Addon>to</InputGroup.Addon>
+                        <InputNumber
+                          min={0}
+                          max={100}
+                          value={value[1]}
+                          onChange={(nextValue) => {
+                            const [start, end] = value;
+                            if (start > nextValue) {
+                              return;
+                            }
+                            setValue([start, nextValue]);
+                          }}
+                        />
+                      </InputGroup>
+                    </Col>
+                  </Row> */}
+
+                  <p>20000</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
