@@ -150,7 +150,7 @@ export default function Product() {
         Click
       </Button>*/}
       <section className="text-gray-700 body-font overflow-hidden bg-white">
-        <div className="container px-5 py-24 mx-auto">
+        <div className="container p-4 mx-auto">
           <h1 className="ml-24 mb-4 text-xl font-semibold">
             {prod?.category} {"->"} {prod?.subCategory}
           </h1>
@@ -326,6 +326,13 @@ export default function Product() {
         </div>
       </section>
       <Footer />
+      <Button
+        onClick={() => {
+          console.log(prod.image);
+        }}
+      >
+        Click{" "}
+      </Button>
     </>
   );
 }

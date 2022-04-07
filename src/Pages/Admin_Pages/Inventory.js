@@ -93,7 +93,16 @@ export default function Inventory() {
                     <td className=" text-lg p-2 px-8">{item.costPrice}</td>
                     <td className=" text-lg p-2 px-8">{item.salePrice}</td>
                     <td className=" text-lg p-2 px-8">{item.description}</td>
-                    <td className=" text-lg p-2 px-8">{item.stock}</td>
+                    <td className=" text-lg p-2 px-8">
+                      {item &&
+                        Object.keys(item.variants).map((key) => {
+                          let variant = item?.variants[key];
+                          return <tr className="flex justify-between">
+                          <td key={key} className=" text-lg p-2 px-8">{variant[0]} </td>
+                          <td key={key} className=" text-lg p-2 px-8">{variant[1]} </td>
+                  </tr>      
+                        })}
+                    </td>
                     <td className=" text-lg p-2  flex justify-end">
                       <>
                         <Button
