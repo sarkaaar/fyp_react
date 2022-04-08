@@ -103,7 +103,7 @@ export default function AddProducts() {
             console.log(url);
             arr.push(url);
             setUrls(arr);
-          }); 
+          });
         }
       );
     }
