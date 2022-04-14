@@ -109,80 +109,88 @@ export default function Cart() {
         </div>
       )} */}
 
-
-      {loader ?
+      {user ? (
+        <>
+          {loader ? (
         <div className="grid place-items-center h-screen">
           <div className="w-20 h-20 border-t-4 border-b-4 border-blue-900 rounded-full animate-spin"></div>
-        </div> :
-        products.length === 0 ?
-          <div> No item in cart! </div> :     
-          <div className="p-20 justify-around">
-            {products.map((item, key) => {
-              return (
-                <div
-                  key={key}
-                  className="flex align-middle justify-between w-11/12"
-                  style={{ border: "1px solid black" }}
-                >
-                  <h1 className="text-2xl m-2">{item?.product?.name}</h1>
-                  {/* Quantity Picker */}
-                  <div className="flex m-4 border-box">
-                    <Button
-                      className=" w-16 h-12"
-                      style={{ border: "2px solid gray" }}
-                      onClick={() => {
-                        decrement(item?.id);
-                      }}
-                    >
-                      <RemoveIcon />
-                    </Button>
-                    <div
-                      className="w-20 h-12"
-                      style={{ border: "2px solid gray", padding: 5 }}
-                    >
-                      <span className="p-2 px-6 text-2xl">
-                        {item?.product?.quantity}
-                      </span>
-                    </div>
-                    <Button
-                      className="w-16 h-12 m-2"
-                      style={{ border: "2px solid gray" }}
-                      onClick={() => {
-                        increment(item?.id, item?.product?.quantity, item);
-                      }}
-                    >
-                      <AddIcon />
-                    </Button>
-                  </div>
-                  <h1>{item?.product?.salePrice}</h1>
+        </div>
+      ) : products.length === 0 ? (
+        <div> No item in cart! </div>
+      ) : (
+        <div className="p-20 justify-around">
+          {products.map((item, key) => {
+            return (
+              <div
+                key={key}
+                className="flex align-middle justify-between w-11/12"
+                style={{ border: "1px solid black" }}
+              >
+                <h1 className="text-2xl m-2">{item?.product?.name}</h1>
+                {/* Quantity Picker */}
+                <div className="flex m-4 border-box">
                   <Button
+                    className=" w-16 h-12"
+                    style={{ border: "2px solid gray" }}
                     onClick={() => {
-                      deleteProduct(item?.id);
+                      decrement(item?.id);
                     }}
                   >
-                    <CloseIcon />
+                    <RemoveIcon />
+                  </Button>
+                  <div
+                    className="w-20 h-12"
+                    style={{ border: "2px solid gray", padding: 5 }}
+                  >
+                    <span className="p-2 px-6 text-2xl">
+                      {item?.product?.quantity}
+                    </span>
+                  </div>
+                  <Button
+                    className="w-16 h-12 m-2"
+                    style={{ border: "2px solid gray" }}
+                    onClick={() => {
+                      increment(item?.id, item?.product?.quantity, item);
+                    }}
+                  >
+                    <AddIcon />
                   </Button>
                 </div>
-              );
-            })}
+                <h1>{item?.product?.salePrice}</h1>
+                <Button
+                  onClick={() => {
+                    deleteProduct(item?.id);
+                  }}
+                >
+                  <CloseIcon />
+                </Button>
+              </div>
+            );
+          })}
 
-            <div
-              style={{
-                width: "300px",
-                marginLeft: "auto",
-                marginRight: "auto",
-                justifyItems: "right",
-              }}
-            >
-              <h1>Total = Rs. {total}</h1>
-              <Button onClick={checkout} variant="outlined">
-                Checkout
-              </Button>
-            </div>
+          <div
+            style={{
+              width: "300px",
+              marginLeft: "auto",
+              marginRight: "auto",
+              justifyItems: "right",
+            }}
+          >
+            <h1>Total = Rs. {total}</h1>
+            <Button onClick={checkout} variant="outlined">
+              Checkout
+            </Button>
           </div>
+        </div>
+      )}
 
-      }
-
+        </>
+      ) : (
+        <>
+          <h1>user is not signed in</h1>
+        </>
+      )}
+      
       <div>
         <h1>Current User Signed In</h1>
         <h1>{user?.email}</h1>
@@ -191,8 +199,6 @@ export default function Cart() {
       <div className="w-1/2 ">
         <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
           <div className="flex-1 overflow-y-auto py-6 px-4 sm:px-6">
-
-
             <div className="mt-8">
               <div className="flow-root">
                 <ul role="list" className="-my-6 divide-y divide-gray-200">
@@ -219,9 +225,7 @@ export default function Cart() {
                           </p>
                         </div>
                         <div className="flex flex-1 items-end justify-between text-sm">
-                          <p className="text-gray-500">
-                            Qty {item?.quantity}
-                          </p>
+                          <p className="text-gray-500">Qty {item?.quantity}</p>
 
                           <div className="flex">
                             <button
@@ -262,7 +266,7 @@ export default function Cart() {
                 <button
                   type="button"
                   className="font-medium text-indigo-600 hover:text-indigo-500"
-                // onClick={() => setOpen(false)}
+                  // onClick={() => setOpen(false)}
                 >
                   Continue Shopping<span aria-hidden="true"> &rarr;</span>
                 </button>

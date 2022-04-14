@@ -271,3 +271,22 @@ export default function Checkout() {
     </>
   );
 }
+
+{/* <ProductItem
+    key={product.id}
+    product={product}
+    onAddToCartClicked={() => addToCart(product.id)}
+    onIncreaseQuantityClicked={() => addToCart(product.id)} 
+    onDecreaseQuantityClicked={() => decreaseQuantity(product.id)} />
+
+
+    case INCREASE_QUANTITY:
+  return {
+    ...state,
+    inventory: state.inventory - 1
+  }
+  case DECREASE_QUANTITY:
+    return {
+      ...state,
+      inventory: state.inventory + 1
+    } */}
