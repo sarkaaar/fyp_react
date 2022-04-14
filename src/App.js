@@ -1,7 +1,7 @@
 import "./App.css";
 // import AdminRoute from "./AuthRoutes/AdminRoute";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-
+// import Slider from "react-rangeslider";
 import PageNotFound from "./Pages/PageNotFound";
 // User Pages
 import SignIn from "./Pages/User_Pages/SignIn";
@@ -15,10 +15,8 @@ import ProductReturn from "./Pages/Services/ProductRetrun";
 import Product from "./Pages/User_Pages/Product";
 import Profile from "./Pages/User_Pages/Profile/Profile";
 import Orders from "./Pages/User_Pages/Profile/Orders";
-// import Favourites from "./Pages/User_Pages/Components/viewFavourites/Favourites";
+import Favourites from "./Pages/User_Pages/Components/viewFavourites/Favourites";
 // import AdminProfile from "./Pages/Admin_Pages/AdminProfile";
-import ProductReturns from "./Pages/User_Pages/Profile/ProductReturns";
-import Favourites from "./Pages/User_Pages/Profile/Favourites";
 
 // Clinical Pages
 import MakeAppointments from "./Pages/Services/MakeAppointments";
@@ -65,16 +63,10 @@ function App() {
         <Route exact path="/chatbot" element={<Chatbot />} />
         <Route exact path="/returnProduct" element={<ProductReturn />} />
         <Route exact path="/product/:id" element={<Product />} />
-        {/* <Route exact path="/favourites" element={<Favourites />} /> */}
-        <Route exact path="/admin/categories" element={<Categories />} />
-
-        {/* User Profle Panel */}
         <Route exact path="/profile" element={<Profile />} />
-        <Route exact path="/profile/orders" element={<Orders />} />
-        <Route exact path="/profile/productReturn" element={<ProductReturns />} />
-        <Route exact path="/profile/favourites" element={<Favourites />} />
-        
-        
+        <Route exact path="/orders" element={<Orders />} />
+        <Route exact path="/favourites" element={<Favourites />} />
+        <Route exact path="/admin/categories" element={<Categories />} />
 
         {/* User Clinical */}
         <Route

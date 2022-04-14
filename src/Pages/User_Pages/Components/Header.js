@@ -1,11 +1,22 @@
-import * as React from "react";
-
+import { useState } from "react";
 import { IconButton, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Link } from "react-router-dom";
-import Ammar from "./images/ammar.jpg"
+import { auth } from "../../../firebase-config";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+//import Ammar from "./images/ammar.jpg"
+
 export default function Header() {
+  const logout = async () => {
+    await signOut(auth);
+  };
+
+  const [user, setUser] = useState({});
+
+  onAuthStateChanged(auth, (currentUser) => {
+    setUser(currentUser);
+  });
   // return (
 
   //   <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800">
@@ -80,12 +91,22 @@ export default function Header() {
           </Link>
         </div>
         <div className="p-2 px-8">
-          <Link
-            to={"/sign_in"}
-            className="font-medium text-gray-500 hover:text-gray-900"
-          >
-            Account
-          </Link>
+          {user ? (
+            <Link
+              onClick={logout}
+              to={"/sign_in"}
+              className="font-medium text-gray-500 hover:text-gray-900 px-8"
+            >
+              Logout
+            </Link>
+          ) : (
+            <Link
+              to={"/sign_in"}
+              className="font-medium text-gray-500 hover:text-gray-900"
+            >
+              Login
+            </Link>
+          )}{" "}
         </div>
       </div>
       <hr />

@@ -3,7 +3,13 @@ import Footer from "./Components/Footer";
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { db, auth } from "../../firebase-config";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+
 import {
   collection,
   addDoc,
@@ -14,35 +20,25 @@ import {
   where,
   getDocs,
 } from "firebase/firestore";
-import { Button } from "@mui/material";
+
 import { onAuthStateChanged } from "firebase/auth";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { Rating } from "@mui/material";
 
-// import * as React from 'react';
-import Box from '@mui/material/Box';
-// import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
 export default function Product() {
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
   const { id } = useParams();
-
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
   const cartRef = collection(db, "cart");
   const reviewsRef = collection(db, "reviews");
@@ -55,6 +51,9 @@ export default function Product() {
   const [comments, setComments] = useState("");
   const [getcomments, setgetComments] = useState([]);
   const [favourite, setFavourite] = useState("");
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   useEffect(() => {
     const getProduct = async () => {
@@ -71,18 +70,18 @@ export default function Product() {
   }, [user]);
 
   const addComment = async () => {
-    
-    
     const newComment = {
       comment: comments,
       rating: rating,
       prod_id: prod?.id,
       user: user?.email,
     };
-    await addDoc(reviewsRef, newComment);
+  
+    user ? await addDoc(reviewsRef, newComment) : setOpen(true); 
     console.log("Comment Added Sucessfully");
     getComment();
-  };
+   
+  }; 
 
   const getComment = async () => {
     const q = query(reviewsRef, where("prod_id", "==", id));
@@ -94,26 +93,29 @@ export default function Product() {
       })
       .catch((e) => {
         console.log(e);
-      });
-  };
+      }) 
+  }; 
+  
 
   const addToFavourites = async () => {
-    
-
     const newObj = {
       product: prod,
-      user: user.email,
+      user: user?.email,
       status: "true",
       product_id: prod.id,
     };
-    await addDoc(favouritesRef, newObj)
-      .then(() => {
-        console.log("Add To Favourites Sucessfully");
-        getFav();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    {
+      user
+        ? await addDoc(favouritesRef, newObj)
+            .then(() => {
+              console.log("Add To Favourites Sucessfully");
+              getFav();
+            })
+            .catch((err) => {
+              console.log(err);
+            })
+        : setOpen(true);
+    }
   };
 
   const removeFavourites = async (id) => {
@@ -135,7 +137,9 @@ export default function Product() {
       quantity: qty,
       product: prod,
     };
-    await addDoc(cartRef, newProduct);
+    
+    user ?
+    await addDoc(cartRef, newProduct) :setOpen(true);
     console.log("Product Added Sucessfully");
   };
 
@@ -194,13 +198,13 @@ export default function Product() {
                 {prod?.name}
               </h1>
               <div className="flex mb-4">
-                <Rating
+                 <Rating
                   value={rating}
-                  onChange={(e, newVal) => {
+                   onChange={(e, newVal) => {
                     setRating(newVal);
                   }}
                 />
-              </div>
+                </div>
               <p className="leading-relaxed">{prod?.description}</p>
               <div className="flex justify-between mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
                 <div className="flex ml-6 items-center">
@@ -330,6 +334,7 @@ export default function Product() {
                 >
                   Add a Comment
                 </Button>
+               
               </div>
               <div>
                 {getcomments?.map((item, key) => {
@@ -349,16 +354,11 @@ export default function Product() {
             </div>
           </div>
         </div>
+       
       </section>
+
       <Footer />
-      <Button onClick={handleOpen}>Open modal</Button>
-      <Button
-        onClick={() => {
-          console.log(prod.image);
-        }}
-      >
-        Click{" "}
-      </Button>
+
       <Modal
         open={open}
         onClose={handleClose}
@@ -367,11 +367,12 @@ export default function Product() {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            user not available
+            Warning 
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            Please login to Continue
           </Typography>
+          <Link to ="/sign_in">Sign in</Link>
         </Box>
       </Modal>
     </>
