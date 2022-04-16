@@ -52,8 +52,9 @@ export default function Product() {
   const [getcomments, setgetComments] = useState([]);
   const [favourite, setFavourite] = useState("");
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const [addStaus, setAddStatus] = useState(false);
 
   useEffect(() => {
     const getProduct = async () => {
@@ -76,12 +77,11 @@ export default function Product() {
       prod_id: prod?.id,
       user: user?.email,
     };
-  
-    user ? await addDoc(reviewsRef, newComment) : setOpen(true); 
+
+    user ? await addDoc(reviewsRef, newComment) : setOpen(true);
     console.log("Comment Added Sucessfully");
     getComment();
-   
-  }; 
+  };
 
   const getComment = async () => {
     const q = query(reviewsRef, where("prod_id", "==", id));
@@ -93,9 +93,8 @@ export default function Product() {
       })
       .catch((e) => {
         console.log(e);
-      }) 
-  }; 
-  
+      });
+  };
 
   const addToFavourites = async () => {
     const newObj = {
@@ -104,18 +103,19 @@ export default function Product() {
       status: "true",
       product_id: prod.id,
     };
-    {
-      user
-        ? await addDoc(favouritesRef, newObj)
-            .then(() => {
-              console.log("Add To Favourites Sucessfully");
-              getFav();
-            })
-            .catch((err) => {
-              console.log(err);
-            })
-        : setOpen(true);
-    }
+
+    user
+      ? await addDoc(favouritesRef, newObj)
+          .then(() => {
+            console.log("Add To Favourites Sucessfully");
+            getFav();
+            setAddStatus(false);
+          })
+          .catch((err) => {
+            console.log(err);
+            setAddStatus(false);
+          })
+      : setOpen(true);
   };
 
   const removeFavourites = async (id) => {
@@ -132,14 +132,18 @@ export default function Product() {
   };
 
   const addToCart = async () => {
+    setAddStatus(true);
     const newProduct = {
       user: user?.email,
       quantity: qty,
       product: prod,
     };
-    
-    user ?
-    await addDoc(cartRef, newProduct) :setOpen(true);
+
+    user
+      ? await addDoc(cartRef, newProduct).then(() => {
+          setAddStatus(false);
+        })
+      : setOpen(true);
     console.log("Product Added Sucessfully");
   };
 
@@ -198,13 +202,13 @@ export default function Product() {
                 {prod?.name}
               </h1>
               <div className="flex mb-4">
-                 <Rating
+                <Rating
                   value={rating}
-                   onChange={(e, newVal) => {
+                  onChange={(e, newVal) => {
                     setRating(newVal);
                   }}
                 />
-                </div>
+              </div>
               <p className="leading-relaxed">{prod?.description}</p>
               <div className="flex justify-between mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
                 <div className="flex ml-6 items-center">
@@ -260,14 +264,27 @@ export default function Product() {
                 </span>
               </div>
               <div className="flex mt-4">
-                <button
-                  onClick={() => {
-                    addToCart();
-                  }}
-                  className=" w-11/12 h-12 bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                  Add to Cart
-                </button>
+                {addStaus ? (
+                  <div class="flex justify-center bg-indigo-500 items-center">
+                    <div
+                      class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full"
+                      role="status"
+                    >
+                      {/* <span class="visually-hidden">Loading...</span> */}
+                      <h1> Adding To Cart</h1>
+                    </div>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => {
+                      addToCart();
+                    }}
+                    className=" w-11/12 h-12 bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    Add to Cart
+                  </button>
+                )}
+
                 {favourite[0]?.status ? (
                   <button
                     onClick={() => {
@@ -334,7 +351,6 @@ export default function Product() {
                 >
                   Add a Comment
                 </Button>
-               
               </div>
               <div>
                 {getcomments?.map((item, key) => {
@@ -354,7 +370,6 @@ export default function Product() {
             </div>
           </div>
         </div>
-       
       </section>
 
       <Footer />
@@ -367,12 +382,12 @@ export default function Product() {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Warning 
+            Warning
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Please login to Continue
           </Typography>
-          <Link to ="/sign_in">Sign in</Link>
+          <Link to="/sign_in">Sign in</Link>
         </Box>
       </Modal>
     </>

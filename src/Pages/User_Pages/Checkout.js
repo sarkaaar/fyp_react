@@ -10,7 +10,28 @@ import Footer from "./Components/Footer";
 import { useNavigate } from "react-router-dom";
 import { getDocs, deleteDoc, query, where, doc } from "firebase/firestore";
 
+// import * as React from 'react';
+import Box from "@mui/material/Box";
+// import Button from '@mui/material/Button';
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+
 export default function Checkout() {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
   const navigate = useNavigate();
   const [user, setUser] = useState();
   const [total, setTotal] = useState(0);
@@ -25,7 +46,7 @@ export default function Checkout() {
   const getTotal = () => {
     var num = 0;
     products.map((item) => {
-      num += item.product.salePrice;
+      num += parseInt(item?.product?.salePrice) * parseInt(item?.quantity);
     });
     setTotal(num);
   };
@@ -253,9 +274,13 @@ export default function Checkout() {
               {products.map((item, key) => {
                 return (
                   <div key={key} className=" flex justify-between w-96">
-                    <h1 className="text-xl m-2">{item?.product?.name}</h1>
-                    <h1 className="text-xl m-2">{item?.product?.quantity}</h1>
+                    <h1 className="text-xl m-2">{item?.product?.name.split(0,20)}</h1>
+                    <h1 className="text-xl m-2">{item?.quantity}</h1>
                     <h1 className="text-xl m-2">{item?.product?.salePrice}</h1>
+                    <h1 className="text-xl m-2">
+                      {parseInt(item?.product?.salePrice) *
+                        parseInt(item?.quantity)}
+                    </h1>
                   </div>
                 );
               })}
@@ -267,26 +292,23 @@ export default function Checkout() {
           </div>
         </div>
       </div>
+      <Button onClick={handleOpen}>Open modal</Button>
       <Footer />
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Text in a modal
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+          </Typography>
+        </Box>
+      </Modal>
     </>
   );
 }
-
-{/* <ProductItem
-    key={product.id}
-    product={product}
-    onAddToCartClicked={() => addToCart(product.id)}
-    onIncreaseQuantityClicked={() => addToCart(product.id)} 
-    onDecreaseQuantityClicked={() => decreaseQuantity(product.id)} />
-
-
-    case INCREASE_QUANTITY:
-  return {
-    ...state,
-    inventory: state.inventory - 1
-  }
-  case DECREASE_QUANTITY:
-    return {
-      ...state,
-      inventory: state.inventory + 1
-    } */}
