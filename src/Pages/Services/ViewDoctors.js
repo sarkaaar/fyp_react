@@ -8,7 +8,9 @@ import { useNavigate } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import { Button } from "@mui/material";
 
+
 export default function ViewDoctors() {
+ 
   const [doctors, setDoctor] = useState([]);
   const doctorsCollection = collection(db, "doctors");
   const navigate = useNavigate();
@@ -32,10 +34,11 @@ export default function ViewDoctors() {
         Click
       </Button>
       {/* <div className="  mx-20  my-20 flex flex-row rounded justify-between "> */}
-      {doctors.length === 0 &&
+      {doctors.length === 0 && (
         <div className="grid place-items-center h-screen">
           <div className="w-20 h-20 border-t-4 border-b-4 border-green-900 rounded-full animate-spin"></div>
-        </div>}
+        </div>
+      )}
       <div>
         {doctors.map((item, key) => {
           return (
@@ -67,12 +70,11 @@ export default function ViewDoctors() {
                   <div className=" decoration-0">
                     <h1 className="font-bold">
                       Fee: Rs.
-                      {item.fees}
+                      <span className="text-slate-600"> {item.fees}</span>{" "}
                     </h1>
                     <h2>{item.description}</h2>
                     <h3>Rating: 5 </h3>
                   </div>
-                  {/* <button className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded"> */}
                   <Button
                     variant="outlined"
                     style={{ fontSize: "x-large" }}
@@ -82,21 +84,14 @@ export default function ViewDoctors() {
                   >
                     Book an Appointment
                   </Button>
-                  {/* </bu/tton> */}
                 </div>
               </div>
             </div>
           );
         })}
       </div>
-
-      <div className=" border-2 border-black mx-auto flex p-6 bg-white rounded-lg shadow-xl  ">
-        <p className="divide-y-2"> Visit Doctor</p>
-        <p>UVAS Hospital Outfall road</p>
-        <p>Fee</p>
-        <p>Address</p>
-      </div>
       <Footer />
+    
     </div>
   );
 }

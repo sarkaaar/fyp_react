@@ -82,7 +82,7 @@ export default function Services() {
       </div>
 
       <div className="max-w-md mx-auto m-5 bg-white rounded-xl shadow-lg overflow-hidden md:max-w-2xl">
-        <a href="makeAppointments">
+        <a href="viewAppointments">
           <div className="md:grid md:grid-cols-4">
             <img className="object-contain mx-auto h-40 w-50 md:w-48 lg:h-50 lg:w-55 md:col-span-1" src={mAppointments} alt="View Doctors" />
             <div className="p-8 hover:bg-gray-200 md:col-span-3">

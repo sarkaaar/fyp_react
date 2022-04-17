@@ -1,7 +1,5 @@
 import "./App.css";
-// import AdminRoute from "./AuthRoutes/AdminRoute";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-// import Slider from "react-rangeslider";
 import PageNotFound from "./Pages/PageNotFound";
 // User Pages
 import SignIn from "./Pages/User_Pages/SignIn";
@@ -16,7 +14,6 @@ import Product from "./Pages/User_Pages/Product";
 import Profile from "./Pages/User_Pages/Profile/Profile";
 import Orders from "./Pages/User_Pages/Profile/Orders";
 import Favourites from "./Pages/User_Pages/Components/viewFavourites/Favourites";
-// import AdminProfile from "./Pages/Admin_Pages/AdminProfile";
 
 // Clinical Pages
 import MakeAppointments from "./Pages/Services/MakeAppointments";
@@ -44,6 +41,7 @@ import Complaints from "./Pages/Admin_Pages/Complaints";
 // Doctors Pages
 import DoctorDashboard from "./Pages/Doctor_Pages/Dashboard";
 import DoctorSignIn from "./Pages/Doctor_Pages/Doctor_SignIn";
+import DocViewAppointments from "./Pages/Doctor_Pages/DocViewAppointments";
 
 import NoPermission from "./Pages/Admin_Pages/NoPermission";
 function App() {
@@ -100,6 +98,11 @@ function App() {
         {/* Doctors Panel */}
         <Route exact path="/doctor/dashboard" element={<DoctorDashboard />} />
         <Route exact path="/doctor/sign_in" element={<DoctorSignIn />} />
+        <Route
+          exact
+          path="/doctor/viewAppointments"
+          element={<DocViewAppointments />}
+        />
         <Route exact path="/*" element={<PageNotFound />} />
       </Routes>
     </Router>

@@ -4,48 +4,31 @@ import { TextField, Button } from "@mui/material";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { useState, useEffect } from "react";
 import { db } from "../../firebase-config";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { collection, addDoc, getDoc, doc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase-config";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
 export default function MakeAppointments() {
   const appointmentsRef = collection(db, "appointments");
   const { id } = useParams();
-  const [doctor, setDoctor] = useState();
-  const [user, setUser] = useState({});
 
-  const [date, setDate] = useState();
-  const [time, setTime] = useState();
-
-  const makeAppointment = async () => {
-    let apppointment = {
-      user: user?.email,
-      doctor: doctor,
-      date: date,
-      time: time,
-    };
-    await addDoc(appointmentsRef, apppointment);
-    console.log("Appointment Made Sucessfully");
-  };
-
-  useEffect(() => {
-    onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
-
-    const getDoctor = async () => {
-      let x = await getDoc(doc(db, `doctors/${id}`));
-      console.log({
-        id: x.id,
-        ...x.data(),
-      });
-      setDoctor({ id: x.id, ...x.data() });
-    };
-
-    getDoctor();
-  }, [false]);
-
+  const navigate = useNavigate();
   const timeSlots = [
     "09:00 AM  -  09:15 AM",
     "09:15 AM  -  09:30 AM",
@@ -67,6 +50,45 @@ export default function MakeAppointments() {
     "01:30 PM  -  01:45 PM",
     "01:45 PM  -  02:00 PM",
   ];
+
+  const [doctor, setDoctor] = useState();
+  const [user, setUser] = useState({});
+
+  const [date, setDate] = useState();
+  const [time, setTime] = useState();
+
+  const makeAppointment = async () => {
+    let apppointment = {
+      user: user?.email,
+      doctor: doctor,
+      date: date,
+      time: time,
+    };
+    await addDoc(appointmentsRef, apppointment).then(() => {
+      setOpen(true);
+    });
+    console.log("Appointment Made Sucessfully");
+  };
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+
+    const getDoctor = async () => {
+      await getDoc(doc(db, `doctors/${id}`)).then((res) => {
+        setDoctor({ id: res.id, ...res.data() });
+      });
+    };
+
+    getDoctor();
+  }, [false]);
+
+  const [open, setOpen] = useState(false);
+  const handleClose = () => {
+    setOpen(false);
+    navigate("/viewAppointments");
+  };
 
   return (
     <div>
@@ -114,6 +136,19 @@ export default function MakeAppointments() {
         <h1>Current User Signed In</h1>
         <h1>{user?.email}</h1>
       </div>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Appointment is created Sucessfully
+          </Typography>
+          <Button onClick={handleClose}> Close</Button>
+        </Box>
+      </Modal>
     </div>
   );
 }

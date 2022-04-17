@@ -14,7 +14,7 @@ export default function Header() {
       >
         <NavLink
           to={`/doctor/dashboard`}
-          activeClassName="active"
+          // activeClassName="active"
           style={{ textDecoration: "none", color: "white", padding: "10px" }}
         >
           DASHBOARD
@@ -22,7 +22,7 @@ export default function Header() {
 
         <NavLink
           to={`/doctor/sign_in`}
-          activeClassName="active"
+          // activeClassName="active"
           style={{ textDecoration: "none", color: "white", padding: "10px" }}
         >
           LOGIN / LOGOUT
@@ -30,7 +30,7 @@ export default function Header() {
 
         <NavLink
           to={`/doctor/viewAppointments`}
-          activeClassName="active"
+          // activeClassName="active"
           style={{ textDecoration: "none", color: "white", padding: "10px" }}
         >
           VIEW APPOINTMENTS

@@ -5,10 +5,18 @@ import Footer from "../User_Pages/Components/Footer";
 import { useState, useEffect } from "react";
 import { db } from "../../firebase-config";
 import { useNavigate } from "react-router-dom";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  doc,
+  updateDoc,
+  query,
+  where,
+} from "firebase/firestore";
 import { Button } from "@mui/material";
 import { auth } from "../../firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
+
 
 export default function ViewAppointments() {
   const navigate = useNavigate();
@@ -16,10 +24,16 @@ export default function ViewAppointments() {
 
   const appointmentsRef = collection(db, "appointments");
   const [user, setUser] = useState();
-
+  const cancelAppoitment = async (id) => {
+    const prod = doc(db, "appointments", id);
+    await updateDoc(prod, { status: false });
+    console.log("Appointment Canceled ", id);
+    getAppointments();
+  };
   const getAppointments = async () => {
     const q = await query(appointmentsRef, where("user", "==", user?.email));
     const queryResults = await getDocs(q);
+
     setAppointments(
       queryResults.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
     );
@@ -80,7 +94,13 @@ export default function ViewAppointments() {
               </div>
             </div>
             <div className="w-fit m-auto pt-4">
-              <Button color="error" variant="outlined">
+              <Button
+                color="error"
+                variant="outlined"
+                onClick={() => {
+                  cancelAppoitment(item?.id);
+                }}
+              >
                 Cancel Appointment
               </Button>
             </div>
