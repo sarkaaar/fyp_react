@@ -30,18 +30,8 @@ export default function Products({ hideLoader }) {
     <div>
       <Header />
 
-      <div style={{ display: "flex" }}>
-        {/* Search Filters */}
-
-        <div
-          className="w-1/5   text-black "
-          style={{ minWidth: "30%", padding: "25px" }}
-        >
-          <p>
-            <Checkbox value="remember" color="primary" placeholder="Hi" />
-            Remember Me
-          </p>
-
+      <div className="flex">
+        <div className="w-96 p-16   text-black ">
           <div class="relative inline-block text-left">
             <div>
               <button
@@ -85,7 +75,7 @@ export default function Products({ hideLoader }) {
                   id="menu-item-0"
                 >
                   {" "}
-                  <p className="hover:text-2xl">Dog Food</p>
+                  <p className="hover:font-bold">Dog Food</p>
                 </a>
                 <a
                   href="#"
@@ -95,7 +85,7 @@ export default function Products({ hideLoader }) {
                   id="menu-item-1"
                 >
                   {" "}
-                  <p className="hover:text-2xl">CatFood</p>
+                  <p className="hover:font-bold">CatFood</p>
                 </a>
               </div>
               <div class="py-1" role="none">
@@ -106,7 +96,7 @@ export default function Products({ hideLoader }) {
                   tabindex="-1"
                   id="menu-item-2"
                 >
-                  <p className="hover:text-2xl">Sparrow Food</p>
+                  <p className="hover:font-bold">Sparrow Food</p>
                 </a>
                 <a
                   href="#"
@@ -115,7 +105,7 @@ export default function Products({ hideLoader }) {
                   tabindex="-1"
                   id="menu-item-3"
                 >
-                  <p className="hover:text-2xl">ParrotFood</p>
+                  <p className="hover:font-bold">ParrotFood</p>
                 </a>
               </div>
               <div class="py-1" role="none">
@@ -126,7 +116,7 @@ export default function Products({ hideLoader }) {
                   tabindex="-1"
                   id="menu-item-4"
                 >
-                  <p className="hover:text-2xl">Toys</p>
+                  <p className="hover:font-bold">Toys</p>
                 </a>
                 <a
                   href="#"
@@ -136,7 +126,7 @@ export default function Products({ hideLoader }) {
                   id="menu-item-5"
                 >
                   {" "}
-                  <p className="hover:text-2xl">Accessories</p>
+                  <p className="hover:font-bold">Accessories</p>
                 </a>
               </div>
             </div>
@@ -162,7 +152,7 @@ export default function Products({ hideLoader }) {
                   <p>300</p>
 
                   <input type="range" />
-                 
+
                   {/* <Row>
                     <Col md={10}>
                       <RangeSlider
@@ -214,13 +204,13 @@ export default function Products({ hideLoader }) {
 
         <hr />
 
-        <div className="w-4/5">
+        <div className="xl:flex">
           {products.length === 0 ? (
             <div className="flex justify-center items-center h-full">
               <div className="w-20 h-20 border-t-4 border-b-4 border-blue-900 rounded-full animate-spin"></div>
             </div>
           ) : (
-            <div className="grid grid-cols-3 gap-4 p-4">
+            <div className="grid gap-5 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
               {products.map((item) => {
                 return (
                   <div className="p-2">
@@ -230,8 +220,10 @@ export default function Products({ hideLoader }) {
               })}
             </div>
           )}
+          <div className="w-96 h-full"></div>
         </div>
       </div>
+
       <Footer />
     </div>
   );
