@@ -3,7 +3,7 @@ import banner from "./images/banner.jpg";
 export default function Banner() {
   return (
     <div className="relative bg-white overflow-hidden">
-      {/* <Header /> */}
+     
 
       <div className="max-w-7xl mx-auto">
         <div className="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
@@ -21,7 +21,7 @@ export default function Banner() {
             {/* <div className="sm:text-center lg:text-left"> */}
             <h1 className="pt-16 text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
               <span className="block xl:inline">Welcome to the</span>
-              <span className="block text-indigo-600 xl:inline">
+              <span className="block text-indigo-600 xl:inline">&nbsp;
                 Pet-Planet
               </span>
             </h1>

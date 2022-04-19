@@ -10,27 +10,41 @@ export default function PRoductReturns() {
   const returnRef = collection(db, "productReturn");
 
   const [user, setUser] = useState();
-  const [orders, setOrders] = useState([]);
-  const getCartItems = async () => {
+  const [returns, setreturns] = useState([]);
+  const getReturnedItems = async () => {
     const q = await query(returnRef, where("user", "==", user?.email));
     const queryResults = await getDocs(q);
-    setOrders(
-      queryResults.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-    );
-    console.log(orders);
+    setreturns(queryResults.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    console.log(returns);
   };
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
-    getCartItems();
+    getReturnedItems();
   }, [user]);
   return (
     <>
       <Header />
       <Sidebar />
-      <h1>Product Returns Profile Page</h1>
+      <div className="ml-96">
+        
+        {returns.map((item, key) => {
+          return (
+            <div className="p-4">
+              <h1>description = {item?.description}</h1>
+              <h1>orderNo = {item?.orderNo}</h1>
+              <h1>productID = {item?.productID}</h1>
+              <h1>productName = {item?.productName}</h1>
+              <h1>issue = {item?.issue}</h1>
+              <h1>date = {Date(item?.date)}</h1>
+              <h1>user = {item?.user}</h1>
+              <hr />
+            </div>
+          );
+        })}
+      </div>
     </>
   );
 }

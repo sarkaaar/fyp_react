@@ -13,7 +13,9 @@ import ProductReturn from "./Pages/Services/ProductRetrun";
 import Product from "./Pages/User_Pages/Product";
 import Profile from "./Pages/User_Pages/Profile/Profile";
 import Orders from "./Pages/User_Pages/Profile/Orders";
-import Favourites from "./Pages/User_Pages/Components/viewFavourites/Favourites";
+import ProductReturns from "./Pages/User_Pages/Profile/ProductReturns";
+import Favourites from "./Pages/User_Pages/Profile/Favourites";
+// import Favourites from "./Pages/User_Pages/Components/viewFavourites/Favourites";
 
 // Clinical Pages
 import MakeAppointments from "./Pages/Services/MakeAppointments";
@@ -42,6 +44,7 @@ import Complaints from "./Pages/Admin_Pages/Complaints";
 import DoctorDashboard from "./Pages/Doctor_Pages/Dashboard";
 import DoctorSignIn from "./Pages/Doctor_Pages/Doctor_SignIn";
 import DocViewAppointments from "./Pages/Doctor_Pages/DocViewAppointments";
+import Live from "./Pages/Doctor_Pages/Live";
 
 import NoPermission from "./Pages/Admin_Pages/NoPermission";
 function App() {
@@ -62,9 +65,11 @@ function App() {
         <Route exact path="/returnProduct" element={<ProductReturn />} />
         <Route exact path="/product/:id" element={<Product />} />
         <Route exact path="/profile" element={<Profile />} />
-        <Route exact path="/orders" element={<Orders />} />
-        <Route exact path="/favourites" element={<Favourites />} />
+        <Route exact path="/profile/orders" element={<Orders />} />
+        <Route exact path="/profile/favourites" element={<Favourites />} />
         <Route exact path="/admin/categories" element={<Categories />} />
+        <Route exact path="/profile/ProductReturns" element={<ProductReturns />} />
+        <Route exact path="/profile/favourites" element={<Favourites />} />
 
         {/* User Clinical */}
         <Route
@@ -98,6 +103,7 @@ function App() {
         {/* Doctors Panel */}
         <Route exact path="/doctor/dashboard" element={<DoctorDashboard />} />
         <Route exact path="/doctor/sign_in" element={<DoctorSignIn />} />
+        <Route exact path="/live" element={<Live />} />
         <Route
           exact
           path="/doctor/viewAppointments"

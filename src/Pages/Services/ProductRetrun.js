@@ -4,9 +4,11 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import { useState } from "react";
-
+import Sidebar from "../User_Pages/Profile/Sidebar";
 import { collection, addDoc } from "firebase/firestore";
-import { db } from "../../firebase-config";
+import { db, auth } from "../../firebase-config";
+import { useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
 
 export default function ProductReturn() {
   const [orderNo, setOrderNo] = useState("");
@@ -16,8 +18,14 @@ export default function ProductReturn() {
   const [description, setDescription] = useState("");
   const [images, setImages] = useState("");
 
-  const product_Return_Collection = collection(db, "productReturn");
+  const [user, setUser] = useState();
 
+  const product_Return_Collection = collection(db, "productReturn");
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+  }, [user]);
   // Add Products
   const productReturn = async () => {
     const newProduct = {
@@ -27,23 +35,19 @@ export default function ProductReturn() {
       issue: issue,
       description: description,
       images: images,
+      user: user?.email,
+      date: new Date(),
     };
-    await addDoc(product_Return_Collection, newProduct);
+    await addDoc(product_Return_Collection, newProduct).then(()=>{console.log("product returned sucessfull")})
   };
   return (
     <div>
       <Header />
-      <div
-        style={{
-          margin: "auto",
-          marginTop: "48px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          width: "400px",
-        }}
-      >
-        <h1>Product Return Form</h1>
+      <Sidebar />
+      <div className="m-auto mt-12 flex flex-col justify-center w-96">
+        <h1 className=" text-2xl font-bold flex justify-center">
+          Product Return Form
+        </h1>
         <div>
           <TextField
             margin="normal"
