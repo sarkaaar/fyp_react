@@ -39,11 +39,11 @@ export default function Product() {
     p: 4,
   };
   const { id } = useParams();
-
   const cartRef = collection(db, "cart");
   const reviewsRef = collection(db, "reviews");
   const favouritesRef = collection(db, "favourites");
 
+  const [loader, setLoader] = useState(false);
   const [prod, setProduct] = useState();
   const [qty, setQty] = useState(1);
   const [user, setUser] = useState({});
@@ -103,14 +103,16 @@ export default function Product() {
       status: "true",
       product_id: prod.id,
     };
-
+    setLoader(true);
     user
       ? await addDoc(favouritesRef, newObj)
           .then(() => {
             console.log("Add To Favourites Sucessfully");
             getFav();
             setAddStatus(false);
+            setLoader(false);
           })
+
           .catch((err) => {
             console.log(err);
             setAddStatus(false);
@@ -120,11 +122,12 @@ export default function Product() {
 
   const removeFavourites = async (id) => {
     const refDoc = doc(db, "favourites", id);
-
+    setLoader(true);
     await deleteDoc(refDoc)
       .then((res) => {
         console.log("Favourites Removed Sucessfully");
         getFav();
+        setLoader(false);
       })
       .catch((err) => {
         console.log(err);
@@ -265,15 +268,22 @@ export default function Product() {
               </div>
               <div className="flex mt-4">
                 {addStaus ? (
-                  <div class="flex justify-center bg-indigo-500 items-center">
-                    <div
-                      class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full"
-                      role="status"
-                    >
-                      {/* <span class="visually-hidden">Loading...</span> */}
-                      <h1> Adding To Cart</h1>
-                    </div>
-                  </div>
+                  // <div class="flex justify-center bg-indigo-500 items-center">
+                  //   <div
+                  //     class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full "
+                  //     role="status"
+                  //   >
+                  //     {/* <span class="visually-hidden">Loading...</span> */}
+                  //     <h1> Adding To Cart</h1>
+                  //   </div>
+                  // </div>
+                  <button type="button" class="text-gray-50 bg-indigo-500 ..." disabled>
+                    <svg
+                      class="animate-spin h-5 w-96 mr-3"
+                      viewBox="0 0 24 24"
+                    ></svg>
+                    Adding ........
+                  </button>
                 ) : (
                   <button
                     onClick={() => {
@@ -284,43 +294,50 @@ export default function Product() {
                     Add to Cart
                   </button>
                 )}
-
-                {favourite[0]?.status ? (
-                  <button
-                    onClick={() => {
-                      removeFavourites(favourite[0]?.id);
-                    }}
-                    className=" w-1/12 h-12 rounded-md bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4"
-                  >
-                    <svg
-                      fill="red"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      className="w-5 h-5"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
-                    </svg>
-                  </button>
+                {loader ? (
+                  <div className="p-4 bg-gray-200 ">
+                    <div className="w-4 h-4 border-t-4 border-b-4 border-blue-900 rounded-full animate-spin"></div>
+                  </div>
                 ) : (
-                  <button
-                    onClick={() => {
-                      addToFavourites();
-                    }}
-                    className=" w-1/12 h-12 rounded-md bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4"
-                  >
-                    <svg
-                      fill="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      className="w-5 h-5"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
-                    </svg>
-                  </button>
+                  <>
+                    {favourite[0]?.status ? (
+                      <button
+                        onClick={() => {
+                          removeFavourites(favourite[0]?.id);
+                        }}
+                        className=" w-1/12 h-12 rounded-md bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4"
+                      >
+                        <svg
+                          fill="red"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          className="w-5 h-5"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
+                        </svg>
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => {
+                          addToFavourites();
+                        }}
+                        className=" w-1/12 h-12 rounded-md bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4"
+                      >
+                        <svg
+                          fill="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          className="w-5 h-5"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
+                        </svg>
+                      </button>
+                    )}
+                  </>
                 )}
               </div>
             </div>
