@@ -26,7 +26,7 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { Rating } from "@mui/material";
 
-export default function Product() {
+export default function SpecificCategory() {
   const style = {
     position: "absolute",
     top: "50%",

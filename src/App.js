@@ -47,6 +47,7 @@ import DocViewAppointments from "./Pages/Doctor_Pages/DocViewAppointments";
 import Live from "./Pages/Doctor_Pages/Live";
 
 import NoPermission from "./Pages/Admin_Pages/NoPermission";
+import SpecificCategory from "./Pages/User_Pages/SpecificCategory";
 function App() {
   return (
     <Router>
@@ -55,6 +56,7 @@ function App() {
 
         {/* User Panel */}
         <Route exact path="/" element={<HomePage />} />
+        {/* <Route exact path="/specific_category" element={<SpecificCategory />} /> */}
         <Route exact path="/sign_in" element={<SignIn />} />
         <Route exact path="/sign_up" element={<SignUp />} />
         <Route exact path="/checkout" element={<CheckoutContent />} />
