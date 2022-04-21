@@ -89,12 +89,7 @@ export default function Cart() {
   return (
     <div>
       <Header />
-      <h1 className="p-4 text-6xl font-bold">Cart -{">"}</h1>
-      {/* {products.length === 0 && (
-        <div className="grid place-items-center h-screen">
-          <div className="w-20 h-20 border-t-4 border-b-4 border-blue-900 rounded-full animate-spin"></div>
-        </div>
-      )} */}
+      <h1 className="p-4 text-4xl font-bold">Cart -{">"}</h1>
 
       {user ? (
         <>
@@ -103,7 +98,7 @@ export default function Cart() {
               <div className="w-20 h-20 border-t-4 border-b-4 border-blue-900 rounded-full animate-spin"></div>
             </div>
           ) : products.length === 0 ? (
-            <div> No item in cart! </div>
+            <div className="font-bold text-center"> The cart is empty! </div>
           ) : (
             <div className="p-20 justify-around">
               {products.map((item, key) => {
