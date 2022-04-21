@@ -1,22 +1,41 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { IconButton, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Link } from "react-router-dom";
-import { auth } from "../../../firebase-config";
+import { auth, db } from "../../../firebase-config";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-//import Ammar from "./images/ammar.jpg"
+import { collection, getDocs, query, where } from "firebase/firestore";
 
 export default function Header() {
+  const [products, setProducts] = useState([]);
+  const [user, setUser] = useState({});
+
+  const cartCollection = collection(db, "cart");
+
+  const getCartItems = async () => {
+    const q = await query(cartCollection, where("user", "==", user?.email));
+    await getDocs(q).then((res) => {
+      setProducts(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    });
+  };
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    getCartItems();
+  }, [user]);
+  // todo
+  useEffect(() => {
+    getCartItems();
+  }, []);
+
   const logout = async () => {
     await signOut(auth);
   };
 
-  const [user, setUser] = useState({});
-
-  onAuthStateChanged(auth, (currentUser) => {
-    setUser(currentUser);
-  });
   // return (
 
   //   <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800">
@@ -136,6 +155,9 @@ export default function Header() {
         <Link to={"/cart"}>
           <IconButton style={{ width: "55px", marginRight: "20px" }}>
             <ShoppingCartIcon sx={{ color: "blue" }} />
+            <span className="bg-red-600 p-1 text-white rounded-full text-sm">
+              {products.length}
+            </span>
           </IconButton>
         </Link>
       </div>
