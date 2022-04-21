@@ -68,7 +68,7 @@ export default function Inventory() {
       <div className="">
         <Sidebar />
         <div className="ml-72">
-          <h1 className="text-4xl font-bold m-8">Inventory -{">"}</h1>
+          <h1 className="text-4xl font-bold ml-8">Inventory -{">"}</h1>
           <table className=" w-11/12 m-auto divide-y divide-gray-200 table-fixed dark:divide-gray-700">
             {/* <ViewInventoryHead /> */}
             <thead className="p-4 bg-gray-100 dark:bg-gray-700">
@@ -95,10 +95,16 @@ export default function Inventory() {
                       {item &&
                         Object.keys(item.variants).map((key) => {
                           let variant = item?.variants[key];
-                          return <tr className="flex justify-between">
-                          <td key={key} className=" text-lg p-2 px-8">{variant[0]} </td>
-                          <td key={key} className=" text-lg p-2 px-8">{variant[1]} </td>
-                  </tr>      
+                          return (
+                            <tr className="flex justify-between">
+                              <td key={key} className=" text-lg p-2 px-8">
+                                {variant[0]}{" "}
+                              </td>
+                              <td key={key} className=" text-lg p-2 px-8">
+                                {variant[1]}{" "}
+                              </td>
+                            </tr>
+                          );
                         })}
                     </td>
                     <td className=" text-lg p-2  flex justify-end">

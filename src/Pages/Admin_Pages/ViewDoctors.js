@@ -56,7 +56,7 @@ export default function ViewDoctor() {
         <Sidebar />
 
         <div className="ml-72">
-          <h1 className="text-3xl font-bold m-12">List Of Doctors</h1>
+          <h1 className="text-3xl font-bold ml-8">List Of Doctors</h1>
           <table className="m-auto divide-y divide-gray-200 table-fixed dark:divide-gray-700">
             {/* <ViewInventoryHead /> */}
             <thead className="p-4 bg-gray-100 dark:bg-gray-700">
