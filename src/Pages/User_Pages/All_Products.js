@@ -9,11 +9,12 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase-config";
 import Footer from "./Components/Footer";
 
-export default function Products({ hideLoader }) {
+export default function Products() {
   //  Get Categories Names
   const [value, setValue] = React.useState([10, 50]);
 
   const [products, setProducts] = useState([]);
+  const [loader, setLoader] = useState(false);
   const productsCollection = collection(db, "products");
 
   useEffect(() => {
@@ -21,8 +22,10 @@ export default function Products({ hideLoader }) {
     const getCategories = async () => {
       const data = await getDocs(productsCollection);
       setProducts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      setLoader(false);
     };
     // Function Calls
+    setLoader(true);
     getCategories();
   }, []);
 
@@ -31,7 +34,7 @@ export default function Products({ hideLoader }) {
       <Header />
 
       <div className="flex">
-        <div className="w-96 p-16   text-black ">
+        <div className="w-96 p-16 text-black ">
           <div class="relative inline-block text-left">
             <div>
               <button
@@ -204,8 +207,29 @@ export default function Products({ hideLoader }) {
 
         <hr />
 
-        <div className="xl:flex">
-          {products.length === 0 ? (
+        {loader ? (
+          <div className="w-full">
+            <div className="flex justify-center items-center h-full">
+              <div className="w-20 h-20 border-t-4 border-b-4 border-blue-900 rounded-full animate-spin"></div>
+            </div>
+          </div>
+        ) : products.length === 0 ? (
+          <div>No products available!</div>
+        ) : (
+          <div className="xl:flex">
+            <div className="grid  lg:grid-cols-2 xl:grid-cols-3 xl:gap-6 2xl:grid-cols-4">
+              {products.map((item) => {
+                return (
+                  <div className="p-2">
+                    <MediaCard obj={item} />
+                  </div>
+                );
+              })}
+            </div>
+            <div className="w-96 h-full"></div>
+          </div>
+        )}
+        {/* {products.length === 0 ? (
             <div className="flex justify-center items-center h-full">
               <div className="w-20 h-20 border-t-4 border-b-4 border-blue-900 rounded-full animate-spin"></div>
             </div>
@@ -219,9 +243,8 @@ export default function Products({ hideLoader }) {
                 );
               })}
             </div>
-          )}
-          <div className="w-96 h-full"></div>
-        </div>
+          )} */}
+
       </div>
 
       <Footer />
