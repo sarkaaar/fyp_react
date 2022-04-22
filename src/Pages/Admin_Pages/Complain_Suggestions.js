@@ -29,7 +29,7 @@ const [description, setDescription] = useState("");
                 margin="normal"
                 required
                 fullWidth
-                label="Product Name"
+                label="Subject"
                 // value={name}
                 // onChange={(e) => setSubject(e.target.value)}
               />
