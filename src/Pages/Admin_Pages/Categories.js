@@ -77,9 +77,9 @@ export default function AddCategory() {
       <Header />
       <div className="">
         <Sidebar />
-        <div className="m-auto mt-4 ml-72">
+        <div className="m-auto  ml-72">
           <div className="m-auto">
-            <div className=" w-96 m-auto mt-24 p-5">
+            <div className=" w-96 m-auto  p-5">
               {/* <form> */}
               <h1 className="flex justify-center text-3xl">
                 Add Parent Category

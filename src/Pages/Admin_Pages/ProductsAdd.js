@@ -130,150 +130,162 @@ export default function AddProducts() {
   return (
     <div>
       <Header />
+
       <div className="flex">
         <Sidebar />
-        <div className="m-72"></div>
-        <div className="w-96  mt-6">
-          <h1 className="text-center text-3xl">Add a New Product</h1>
-          <div className="">
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              label="Product Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
 
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              label="Cost Price"
-              type="text"
-              value={costPrice}
-              onChange={(e) => setCostPrice(e.target.value)}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              label="Sale Price"
-              type="text"
-              value={salePrice}
-              onChange={(e) => setSalePrice(e.target.value)}
-            />
-            <Button
-              onClick={() => {
-                console.log(urls);
-              }}
-            >
-              Click URLS
-            </Button>
-
-            {variants.map(([variant, quantity], i) => (
-              <div key={i} className="flex items-center gap-4">
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  type="text"
-                  label="Varients"
-                  onChange={(e) => updateVariant([e.target.value, quantity], i)}
-                  value={variant}
-                />
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  type="text"
-                  label="Qunatity"
-                  onChange={(e) => updateVariant([variant, +e.target.value], i)}
-                  value={quantity}
-                />
-                <IconButton type="button" onClick={() => removeVariant(i)}>
-                  x
-                </IconButton>
+        <div className="m-96"></div>
+        <div className="  mt-6">
+          <div className="m-auto  align-center ">
+            <h1 className="text-center text-3xl">Add a New Product</h1>
+            <div className="w-full">
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                label="Product Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+              <div className="flex gap-4 ">
+                <div className="w-96">
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    label="Cost Price"
+                    type="text"
+                    value={costPrice}
+                    onChange={(e) => setCostPrice(e.target.value)}
+                  />
+                </div>
+                <div className="w-96">
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    label="Sale Price"
+                    type="text"
+                    value={salePrice}
+                    onChange={(e) => setSalePrice(e.target.value)}
+                  />
+                </div>
               </div>
-            ))}
-            <Button
-              sx={{ marginTop: "10px", marginBottom: "10px" }}
-              type="button"
-              fullWidth
-              variant="contained"
-              onClick={() => setVariants([...variants, ["", 0]])}
-            >
-              Add variant
-            </Button>
 
-            <FormControl fullWidth style={{ margin: "10px 0" }}>
-              <InputLabel id="demo-simple-select-label">Category</InputLabel>
-              <Select
-                value={category}
-                label="category"
-                onChange={(e) => {
-                  setCategory(e.target.value);
-                }}
+              {variants.map(([variant, quantity], i) => (
+                <div key={i} className="flex items-center gap-4">
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    type="text"
+                    label="Varients"
+                    onChange={(e) =>
+                      updateVariant([e.target.value, quantity], i)
+                    }
+                    value={variant}
+                  />
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    type="text"
+                    label="Qunatity"
+                    onChange={(e) =>
+                      updateVariant([variant, +e.target.value], i)
+                    }
+                    value={quantity}
+                  />
+                  <IconButton type="button" onClick={() => removeVariant(i)}>
+                    x
+                  </IconButton>
+                </div>
+              ))}
+              <Button
+                sx={{ marginTop: "10px", marginBottom: "10px" }}
+                type="button"
+                fullWidth
+                variant="outlined"
+                onClick={() => setVariants([...variants, ["", 0]])}
               >
-                {cat.map((item) => {
-                  return <MenuItem value={item}>{item}</MenuItem>;
-                })}
-              </Select>
-            </FormControl>
-
-            <FormControl fullWidth style={{ margin: "10px 0" }}>
-              <InputLabel id="demo-simple-select-label">
-                Sub-Category
-              </InputLabel>
-              <Select
-                value={subCategory}
-                label="category"
+                Add variant
+              </Button>
+              <div className="flex gap-4 ">
+                <div className="w-96">
+                  <FormControl fullWidth style={{ margin: "10px 0" }}>
+                    <InputLabel id="demo-simple-select-label">
+                      Category
+                    </InputLabel>
+                    <Select
+                      value={category}
+                      label="category"
+                      onChange={(e) => {
+                        setCategory(e.target.value);
+                      }}
+                    >
+                      {cat.map((item) => {
+                        return <MenuItem value={item}>{item}</MenuItem>;
+                      })}
+                    </Select>
+                  </FormControl>
+                </div>
+                <div className="w-96">
+                  <FormControl fullWidth style={{ margin: "10px 0" }}>
+                    <InputLabel id="demo-simple-select-label">
+                      Sub-Category
+                    </InputLabel>
+                    <Select
+                      value={subCategory}
+                      label="category"
+                      onChange={(e) => {
+                        setSubCategory(e.target.value);
+                      }}
+                    >
+                      {sub_cat.map((item) => {
+                        return <MenuItem value={item}>{item}</MenuItem>;
+                      })}
+                    </Select>
+                  </FormControl>
+                </div>
+              </div>
+              <TextareaAutosize
+                minRows={5}
+                placeholder="  Description*"
+                className="mt-8 w-full"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+              <p>Click on the "Choose File" button to upload a images:</p>
+              <input
+                type="file"
+                className="mb-6"
                 onChange={(e) => {
-                  setSubCategory(e.target.value);
+                  setImage(e.target.files);
                 }}
+                multiple
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                className="mt-6 mb-12"
+                onClick={upload}
               >
-                {sub_cat.map((item) => {
-                  return <MenuItem value={item}>{item}</MenuItem>;
-                })}
-              </Select>
-            </FormControl>
-            <TextareaAutosize
-              minRows={10}
-              placeholder="  Description*"
-              className="mt-8 w-full"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-            <p>Click on the "Choose File" button to upload a images:</p>
-            <input
-              type="file"
-              className="mb-6"
-              onChange={(e) => {
-                setImage(e.target.files);
-              }}
-              multiple
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              className="mt-6 mb-12"
-              onClick={upload}
-            >
-              Images Upload
-            </Button>
-            <h3>Uploaded {progress}</h3>
-            <hr className="mt-6" />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              className="mt-6 mb-12"
-              onClick={addProduct}
-              // className="mt-6 mb-12"
-            >
-              Add Product
-            </Button>
+                Images Upload
+              </Button>
+              <h3>Uploaded {progress}</h3>
+              <hr className="mt-6" />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                className="mt-6 mb-12"
+                onClick={addProduct}
+                // className="mt-6 mb-12"
+              >
+                Add Product
+              </Button>
+            </div>
           </div>
         </div>
       </div>

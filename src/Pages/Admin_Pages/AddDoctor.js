@@ -51,7 +51,7 @@ export default function AddDoctor() {
         <Sidebar />
         <div className="ml-72"></div>
         <div className="m-auto mt-12 align-center ">
-          <h1 className="text-4xl m-auto px-10">Add a New Doctor</h1>
+          <h1 className="text-4xl flex justify-center px-10">Add a New Doctor</h1>
 
           <div className="flex gap-4">
             <div className="w-96">

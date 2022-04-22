@@ -1,5 +1,5 @@
 import Header from "../Admin_Pages/admin_components/Header";
-import MiniDrawer from "./admin_components/Sidebar";
+import Sidebar from "./admin_components/Sidebar";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../../firebase-config";
 import { useState, useEffect } from "react";
@@ -43,7 +43,7 @@ export default function Dashboard() {
     <>
       <Header />
       <div className="flex">
-        <MiniDrawer />
+        <Sidebar />
         <div className="ml-96 mt-20">
           <h1>Logged in user is</h1>
           <h1>{user.email}</h1>
