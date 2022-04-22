@@ -55,6 +55,14 @@ export default function Product() {
   const handleClose = () => setOpen(false);
 
   const [addStaus, setAddStatus] = useState(false);
+  const decrementCounter = () => {
+    if (qty <= 1 ){
+      return;
+    }
+    else {
+      setQty(qty - 1);
+    }
+  }
 
   useEffect(() => {
     const getProduct = async () => {
@@ -231,9 +239,7 @@ export default function Product() {
                   <Button
                     className=" w-16 h-12"
                     style={{ border: "2px solid gray" }}
-                    onClick={() => {
-                      setQty(qty - 1);
-                    }}
+                    onClick={decrementCounter}
                   >
                     <RemoveIcon />
                   </Button>

@@ -155,9 +155,11 @@ export default function Header() {
         <Link to={"/cart"}>
           <IconButton style={{ width: "55px", marginRight: "20px" }}>
             <ShoppingCartIcon sx={{ color: "blue" }} />
-            <span className="bg-red-600 p-1 text-white rounded-full text-sm">
-              {products.length}
-            </span>
+            {products.length === 0 ?
+              <span className="hidden" /> :
+              <span className="bg-red-600 p-1 text-white rounded-full text-sm">
+                {products.length}
+              </span>}
           </IconButton>
         </Link>
       </div>
