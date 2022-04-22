@@ -120,10 +120,30 @@ export default function ViewAppointments() {
                 </div>
 
 
-              )} </>) : (
-        <>
-          <div className="text-3xl font-bold flex justify-center">You are not signed in!</div>
+              )}
         </>
+      ) : (
+        
+          <div className="flex flex-col items-center">
+            <div className="text-3xl font-bold">You are not signed in.</div>
+            <div className="w-74 px-10 sm:w-100 flex justify-center">
+            <Link
+                className="w-full mx-4 text-center border-2 border-indigo-600 bg-indigo-200 text-2xl rounded-lg"
+                to="/sign_in"
+              >
+                Sign In Now!
+              </Link>
+            </div>
+            {/* <div className="w-full justify-center">
+              <h1 className="text-3xl font-bold">You are not signed in!</h1>
+              <Link
+                className="w-full mx-2 border-2 border-indigo-600 bg-indigo-200 text-2xl rounded-lg"
+                to="/sign_in"
+              >
+                Sign In Now!
+              </Link>
+            </div> */}
+          </div>
       )
       }
 
