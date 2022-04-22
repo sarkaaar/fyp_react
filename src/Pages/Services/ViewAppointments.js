@@ -24,6 +24,8 @@ export default function ViewAppointments() {
 
   const appointmentsRef = collection(db, "appointments");
   const [user, setUser] = useState();
+  const [loader, setLoader] = useState(false);
+
   const cancelAppoitment = async (id) => {
     const prod = doc(db, "appointments", id);
     await updateDoc(prod, { status: false });
@@ -37,6 +39,7 @@ export default function ViewAppointments() {
     setAppointments(
       queryResults.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
     );
+    setLoader(false);
     console.log(appointments);
   };
 
@@ -44,7 +47,7 @@ export default function ViewAppointments() {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
-
+    setLoader(true);
     getAppointments();
   }, [user]);
 
@@ -59,54 +62,72 @@ export default function ViewAppointments() {
           +
         </Link>
       </div>
+      {user ? (
+        <>
+          {
+            loader ? (
+              <div className="grid place-items-center h-screen">
+                <div className="w-20 h-20 border-t-4 border-b-4 border-green-900 rounded-full animate-spin"></div>
+              </div>
+            ) :
+              appointments.length === 0 ? (
+                <div>
+                  <div className="font-bold text-center">You have no appointmets currently.</div>
+                </div>) : (
+                <div>
+                  <h1 className="text-3xl font-bold flex justify-center">
+                    You have the Following Appointments
+                  </h1>
+                  {appointments.map((item, key) => {
+                    return (
+                      <div className="w-10/12 border-2 border-slate-800 m-auto mb-4 bg-white hover:drop-shadow-2xl p-4 rounded-lg">
+                        <h1 className="text-3xl font-bold"> Dr. {item?.doctor?.name}</h1>
+                        <div className="flex">
+                          <div className="w-1/2">
+                            <h1 className="text-xl font-bold text-gray-600 ">
+                              Clinic Name : {item?.doctor?.clinicName}
+                            </h1>
+                            <h1 className="text-xl font-bold text-gray-600 ">
+                              Address : {item?.doctor?.clinicAddress}
+                            </h1>
+                            <h1 className="text-xl font-bold text-gray-600 ">
+                              Phone # {item?.doctor?.clinicPhone}
+                            </h1>
+                          </div>
+                          <div className="w-1/2">
+                            <h1 className="text-xl font-bold text-red-600 flex justify-end">
+                              Date : {item?.date}
+                            </h1>
+                            <h1 className="text-xl font-bold text-red-600 flex justify-end">
+                              Time : {item?.time}
+                            </h1>
+                          </div>
+                        </div>
+                        <div className="w-fit m-auto pt-4">
+                          <Button
+                            color="error"
+                            variant="outlined"
+                            onClick={() => {
+                              cancelAppoitment(item?.id);
+                            }}
+                          >
+                            Cancel Appointment
+                          </Button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
 
-      <h1 className="text-3xl font-bold flex justify-center">
-        You have the Following Appointments
-      </h1>
-      {appointments.length === 0 && (
-        <div className="grid place-items-center h-screen">
-          <div className="w-20 h-20 border-t-4 border-b-4 border-green-900 rounded-full animate-spin"></div>
-        </div>
-      )}
-      {appointments.map((item, key) => {
-        return (
-          <div className="w-10/12 border-2 border-slate-800 m-auto mb-4 bg-white hover:drop-shadow-2xl p-4 rounded-lg">
-            <h1 className="text-3xl font-bold"> Dr. {item?.doctor?.name}</h1>
-            <div className="flex">
-              <div className="w-1/2">
-                <h1 className="text-xl font-bold text-gray-600 ">
-                  Clinic Name : {item?.doctor?.clinicName}
-                </h1>
-                <h1 className="text-xl font-bold text-gray-600 ">
-                  Address : {item?.doctor?.clinicAddress}
-                </h1>
-                <h1 className="text-xl font-bold text-gray-600 ">
-                  Phone # {item?.doctor?.clinicPhone}
-                </h1>
-              </div>
-              <div className="w-1/2">
-                <h1 className="text-xl font-bold text-red-600 flex justify-end">
-                  Date : {item?.date}
-                </h1>
-                <h1 className="text-xl font-bold text-red-600 flex justify-end">
-                  Time : {item?.time}
-                </h1>
-              </div>
-            </div>
-            <div className="w-fit m-auto pt-4">
-              <Button
-                color="error"
-                variant="outlined"
-                onClick={() => {
-                  cancelAppoitment(item?.id);
-                }}
-              >
-                Cancel Appointment
-              </Button>
-            </div>
-          </div>
-        );
-      })}
+
+              )} </>) : (
+        <>
+          <div className="text-3xl font-bold flex justify-center">You are not signed in!</div>
+        </>
+      )
+      }
+
+
 
       <div>
         <h1>Current User Signed In</h1>
