@@ -54,6 +54,7 @@ function App() {
       <Routes>
         <Route exact path="/no-permission" element={<NoPermission />} />
 
+
         {/* User Panel */}
         <Route exact path="/" element={<HomePage />} />
         {/* <Route exact path="/specific_category" element={<SpecificCategory />} /> */}
