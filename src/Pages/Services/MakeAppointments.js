@@ -3,26 +3,14 @@ import Header from "../User_Pages/Components/Header";
 import { TextField, Button } from "@mui/material";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { useState, useEffect } from "react";
-import { db } from "../../firebase-config";
+import { db, auth } from "../../firebase-config";
 import { useNavigate, useParams } from "react-router-dom";
 import { collection, addDoc, getDoc, doc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../../firebase-config";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+import { getDocs, query, where } from "firebase/firestore";
 
 export default function MakeAppointments() {
   const appointmentsRef = collection(db, "appointments");
@@ -53,9 +41,22 @@ export default function MakeAppointments() {
 
   const [doctor, setDoctor] = useState();
   const [user, setUser] = useState({});
-
-  const [date, setDate] = useState();
+  const [booked, setBooked] = useState([]);
+  const [date, setDate] = useState("");
   const [time, setTime] = useState();
+
+  const getAppointments = async () => {
+    const q = query(
+      appointmentsRef,
+      where("doctor.email", "==", doctor?.email),
+      where("date", "==", date)
+    );
+    await getDocs(q).then((res) => {
+      setBooked(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      console.log("booked slots are");
+      console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    });
+  };
 
   const makeAppointment = async () => {
     let apppointment = {
@@ -69,6 +70,28 @@ export default function MakeAppointments() {
     });
     console.log("Appointment Made Sucessfully");
   };
+
+  // useEffect(() => {
+  //   onAuthStateChanged(auth, (currentUser) => {
+  //     setUser(currentUser);
+  //   });
+
+  //   const getDoctor = async () => {
+  //     console.log("id is ", id);
+  //     await getDocs(doc(db, `doctors/${id}`))
+  //       .then((res) => {
+  //         setDoctor({ id: res.id, ...res.data() });
+  //         console.log("doctor is");
+  //         console.log({ id: res.id, ...res.data() });
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //         console.log("error in getting doctor");
+  //       });
+  //   };
+
+  //   getDoctor();
+  // }, [false]);
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
@@ -84,6 +107,10 @@ export default function MakeAppointments() {
     getDoctor();
   }, [false]);
 
+  useEffect(() => {
+    getAppointments();
+  }, [date, time]);
+
   const [open, setOpen] = useState(false);
   const handleClose = () => {
     setOpen(false);
@@ -95,6 +122,22 @@ export default function MakeAppointments() {
       <Header />
       <h1 className="flex justify-center text-3xl font-bold m-6">
         You are making an appointment with &nbsp;
+        <Button
+          variant="outlined"
+          onClick={async () => {
+            console.log(booked);
+          }}
+        >
+          Click me
+        </Button>
+        <Button
+          variant="outlined"
+          onClick={async () => {
+            console.log(await getDocs(doc(db, `doctors/${id}`)));
+          }}
+        >
+          ID
+        </Button>
         <span className="text-violet-800"> Dr.{doctor?.name} </span>
       </h1>
 
@@ -103,12 +146,11 @@ export default function MakeAppointments() {
           margin="normal"
           required
           fullWidth
-          name="date"
-          label="Date"
           type="date"
           value={date}
           onChange={(e) => {
             setDate(e.target.value);
+            getAppointments();
           }}
           id="date"
         />
@@ -132,6 +174,10 @@ export default function MakeAppointments() {
           Submit
         </Button>
       </div>
+      {booked.map((item, key) => {
+        return <h1>{item?.time}</h1>;
+      })}
+
       <div>
         <h1>Current User Signed In</h1>
         <h1>{user?.email}</h1>
@@ -142,7 +188,19 @@ export default function MakeAppointments() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Appointment is created Sucessfully
           </Typography>

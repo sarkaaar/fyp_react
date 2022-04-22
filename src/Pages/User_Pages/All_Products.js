@@ -41,57 +41,56 @@ export default function Products() {
 
       <div className="flex bg-slate-100">
         <div className="w-96 p-16 text-black ">
-          <div class="relative inline-block text-left">
-            <div
-              className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none"
-              role="menu"
-              aria-orientation="vertical"
-              aria-labelledby="menu-button"
-              tabindex="-1"
-            >
-              <div class="py-1" role="none">
-                <h1 className="text-gray-700 block font-bold px-4 py-2 text-lg">
-                  Categories
-                </h1>
-                {categories?.map((item, key) => {
-                  return (
-                    <>
-                      <Link
-                        to={`/${item?.name}`}
-                        class="text-gray-700 block px-4 py-2 text-sm"
-                      >
-                        <p className="hover:font-bold">{item?.name}</p>
-                      </Link>
-                    </>
-                  );
-                })}
-              </div>
+          <div className="mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ">
+            <h1 className="text-gray-700 block font-bold px-4 py-2 text-lg">
+              Categories
+            </h1>
+            {categories?.map((item, key) => {
+              return (
+                <>
+                  <Link
+                    to={`/${item?.name}`}
+                    class="text-gray-700 block px-4 py-2 text-sm"
+                  >
+                    <p className="hover:font-bold">{item?.name}</p>
+                  </Link>
+                </>
+              );
+            })}
+          </div>
+          {/* Price component */}
+          <div className=" mt-2 w-56 rounded-md shadow-lg bg-white ring-1">
+            <p className="text-gray-700 block font-bold px-4 py-2 text-lg">
+              Price
+            </p>
+            <div className="text-gray-700  px-4 py-2 text-sm flex">
+              <input
+                placeholder="Min"
+                style={{ width: "60px", height: "30px" }}
+              />
+              <p className="text-lg text-center pl-4 pr-4 ">-</p>
+              <input
+                placeholder="Max"
+                value={value}
+                style={{ width: "60px", height: "30px" }}
+              />
             </div>
-            {/* Price component */}
-            <div className=" bg-white w-56">
-              <p className="font-bold text-2xl pt-72">Price</p>
-              <div className="flex py-0.5">
-                <input
-                  placeholder="Min"
-                  style={{ width: "60px", height: "30px" }}
-                />
-                <p className="text-lg text-center pl-4 pr-4 ">-</p>
-                <input
-                  placeholder="Max"
-                  style={{ width: "60px", height: "30px" }}
-                />
-              </div>
-              <div class="relative pt-1">
-                <label for="customRange2" class="form-label">
-                  Example range
-                </label>
-                <div className="flex">
-                  <p>300</p>
+            <div class="text-gray-700 block px-4 py-2 text-sm">
+              <label for="customRange2" class="form-label">
+                Select Range
+              </label>
+              <div className="flex">
+                <p>0</p>
 
-                  <input type="range" />
+                <input
+                  type="range"
+                  value={value}
+                  onChange={(e) => {
+                    setValue(e.target.value);
+                  }}
+                />
 
-                  <p>20000</p>
-                </div>
+                <p>100</p>
               </div>
             </div>
           </div>
