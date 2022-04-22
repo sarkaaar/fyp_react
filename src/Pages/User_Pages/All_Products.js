@@ -33,10 +33,10 @@ export default function Products() {
     <div>
       <Header />
 
-      <div className="flex">
+      <div className="flex bg-slate-100">
         <div className="w-96 p-16 text-black ">
           <div class="relative inline-block text-left">
-            <div>
+            {/* <div>
               <button
                 type="button"
                 class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
@@ -60,7 +60,7 @@ export default function Products() {
                   />
                 </svg>
               </button>
-            </div>
+            </div> */}
 
             <div
               class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none"
@@ -70,6 +70,7 @@ export default function Products() {
               tabindex="-1"
             >
               <div class="py-1" role="none">
+                <h1 className="text-gray-700 block font-bold px-4 py-2 text-lg">Categories</h1>
                 <a
                   href="#"
                   class="text-gray-700 block px-4 py-2 text-sm"
@@ -77,7 +78,6 @@ export default function Products() {
                   tabindex="-1"
                   id="menu-item-0"
                 >
-                  {" "}
                   <p className="hover:font-bold">Dog Food</p>
                 </a>
                 <a
@@ -87,7 +87,6 @@ export default function Products() {
                   tabindex="-1"
                   id="menu-item-1"
                 >
-                  {" "}
                   <p className="hover:font-bold">CatFood</p>
                 </a>
               </div>
@@ -244,7 +243,6 @@ export default function Products() {
               })}
             </div>
           )} */}
-
       </div>
 
       <Footer />

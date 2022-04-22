@@ -18,7 +18,7 @@ export default function MediaCard(obj) {
         />
 
         <div style={{ padding: "6px" }}>
-          <h1 className="2xl:text-2xl xl:text-large h-12">{obj.obj.name.slice(0, 25)}...</h1>
+          <h1 className="2xl:text-2xl xl:text-large  2xl:h-20 h-12">{obj.obj.name.slice(0, 25)}...</h1>
           <h2
             className="2xl:text-2xl xl:text-xl text-indigo-600 font-bold"
           // variant="h5"
