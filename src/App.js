@@ -15,6 +15,7 @@ import Profile from "./Pages/User_Pages/Profile/Profile";
 import Orders from "./Pages/User_Pages/Profile/Orders";
 import ProductReturns from "./Pages/User_Pages/Profile/ProductReturns";
 import Favourites from "./Pages/User_Pages/Profile/Favourites";
+import Slots from "./Pages/Doctor_Pages/Slots";
 // import Favourites from "./Pages/User_Pages/Components/viewFavourites/Favourites";
 
 // Clinical Pages
@@ -47,7 +48,7 @@ import DocViewAppointments from "./Pages/Doctor_Pages/DocViewAppointments";
 import Live from "./Pages/Doctor_Pages/Live";
 
 import NoPermission from "./Pages/Admin_Pages/NoPermission";
-import Complain_Suggestions from "./Pages/Admin_Pages/Complain_Suggestions";
+import Complain_Suggestions from "./Pages/User_Pages/Profile/Complain_Suggestions";
 function App() {
   return (
     <Router>
@@ -57,7 +58,7 @@ function App() {
 
         {/* User Panel */}
         <Route exact path="/" element={<HomePage />} />
-        <Route exact path="/profile/complain" element={<Complain_Suggestions/>} />
+        <Route exact path="/profile/complaint" element={<Complain_Suggestions/>} />
         <Route exact path="/sign_in" element={<SignIn />} />
         <Route exact path="/sign_up" element={<SignUp />} />
         <Route exact path="/checkout" element={<CheckoutContent />} />
@@ -106,6 +107,7 @@ function App() {
         {/* Doctors Panel */}
         <Route exact path="/doctor/dashboard" element={<DoctorDashboard />} />
         <Route exact path="/doctor/sign_in" element={<DoctorSignIn />} />
+        <Route exact path="/doctor/slots" element={<Slots />} />
         <Route exact path="/live" element={<Live />} />
         <Route
           exact

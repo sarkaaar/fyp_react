@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from "react";
-import Header from "./admin_components/Header";
-import Sidebar from "./admin_components/Sidebar";
+import Header from "../Components/Header";
+import Sidebar from "./Sidebar";
 import { TextField ,Button} from '@mui/material';
 import { TextareaAutosize } from '@mui/base';
 // import { Button } from 'rsuite';

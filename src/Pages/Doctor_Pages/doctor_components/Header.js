@@ -19,6 +19,13 @@ export default function Header() {
         >
           DASHBOARD
         </NavLink>
+        <NavLink
+          to={`/doctor/slots`}
+          // activeClassName="active"
+          style={{ textDecoration: "none", color: "white", padding: "10px" }}
+        >
+          SLOTS
+        </NavLink>
 
         <NavLink
           to={`/doctor/sign_in`}

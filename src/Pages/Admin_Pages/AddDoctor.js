@@ -8,8 +8,8 @@ import { db } from "../../firebase-config";
 import Sidebar from "./admin_components/Sidebar";
 
 export default function AddDoctor() {
-
   const doctorsCollection = collection(db, "doctors");
+  const availabilityRef = collection(db, "available_days");
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -41,9 +41,29 @@ export default function AddDoctor() {
       latitude: latitude,
       longitude: longitude,
     };
-    await addDoc(doctorsCollection, newDoctor);
+    // -------------------------------------------------------
+    const days = {
+      monday: true,
+      tuesday: true,
+      wednesday: true,
+      thursday: true,
+      friday: true,
+      saturday: true,
+      sunday: true,
+    };
+    await addDoc(doctorsCollection, newDoctor).then(async (res) => {
+      console.log(res);
+      await addDoc(availabilityRef, { doc_id: res.id, days }).then( (res) => {
+        console.log(res);
+        console.log("added");
+        // await addDoc(availabilityRef, { doc_id: res.id, days })
+      });
+    });
+
     console.log("Doctor Added");
   };
+  // -------------------------------------------------------
+
   return (
     <div>
       <Header />
@@ -51,7 +71,9 @@ export default function AddDoctor() {
         <Sidebar />
         <div className="ml-72"></div>
         <div className="m-auto mt-12 align-center ">
-          <h1 className="text-4xl flex justify-center px-10">Add a New Doctor</h1>
+          <h1 className="text-4xl flex justify-center px-10">
+            Add a New Doctor
+          </h1>
 
           <div className="flex gap-4">
             <div className="w-96">

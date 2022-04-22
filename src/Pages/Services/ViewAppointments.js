@@ -56,10 +56,10 @@ export default function ViewAppointments() {
       <Header />
       <div className="flex justify-end">
         <Link
-          className="m-4 p-4 w-16 font-black border-2 border-indigo-600 bg-indigo-200 text-3xl rounded-lg"
+          className="m-4 p-4 w-fit font-black border-2 border-indigo-600 bg-indigo-200 text-3xl rounded-lg"
           to="/viewDoctors"
         >
-          +
+          Make A New Appointment
         </Link>
       </div>
       {user ? (
