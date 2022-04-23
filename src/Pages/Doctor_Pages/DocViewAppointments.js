@@ -65,7 +65,7 @@ export default function DocViewAppointments() {
           </>
         );
       })}
-      <div className="overflow-x-auto">
+      <div className="overflow-x-scroll">
         <table className="table-auto text-sm w-full m-2 p-2">
           <thead className="bg-indigo-400">
             <tr className="border-b">
@@ -96,12 +96,6 @@ export default function DocViewAppointments() {
               <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:15 PM - 01:30 PM</td>
               <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:30 PM - 01:45 PM</td>
               <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:45 PM - 02:00 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>            
             </tr>
             <tr className="border-b">
               <td className="p-3 border-2 font-small text-gray-900 bg-gray-200 whitespace-nowrap">Tuesday</td>
@@ -125,12 +119,6 @@ export default function DocViewAppointments() {
               <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:15 PM - 01:30 PM</td>
               <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:30 PM - 01:45 PM</td>
               <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:45 PM - 02:00 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>            
             </tr> 
             <tr className="border-b">
               <td className="p-3 border-2 font-small text-gray-900 bg-gray-200 whitespace-nowrap">Wednesday</td>
@@ -154,12 +142,6 @@ export default function DocViewAppointments() {
               <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:15 PM - 01:30 PM</td>
               <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:30 PM - 01:45 PM</td>
               <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:45 PM - 02:00 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>            
             </tr> 
             <tr className="border-b">
               <td className="p-3 border-2 font-small text-gray-900 bg-gray-200 whitespace-nowrap">Thursday</td>
@@ -183,12 +165,6 @@ export default function DocViewAppointments() {
               <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:15 PM - 01:30 PM</td>
               <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:30 PM - 01:45 PM</td>
               <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:45 PM - 02:00 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>            
             </tr> 
             <tr className="border-b">
               <td className="p-3 border-2 font-small text-gray-900 bg-gray-200 whitespace-nowrap">Friday</td>
@@ -212,12 +188,6 @@ export default function DocViewAppointments() {
               <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:15 PM - 01:30 PM</td>
               <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:30 PM - 01:45 PM</td>
               <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:45 PM - 02:00 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>            
             </tr> 
             <tr className="border-b">
               <td className="p-3 border-2 font-small text-gray-900 bg-gray-200 whitespace-nowrap">Saturday</td>
@@ -241,12 +211,6 @@ export default function DocViewAppointments() {
               <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:15 PM - 01:30 PM</td>
               <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:30 PM - 01:45 PM</td>
               <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:45 PM - 02:00 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>            
             </tr> 
             <tr className="border-b">
               <td className="p-3 border-2 font-small text-gray-900 bg-gray-200 whitespace-nowrap">Sunday</td>
@@ -270,12 +234,6 @@ export default function DocViewAppointments() {
               <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:15 PM - 01:30 PM</td>
               <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:30 PM - 01:45 PM</td>
               <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:45 PM - 02:00 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
-              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>            
             </tr> 
  
           </tbody>
