@@ -48,7 +48,7 @@ export default function DocViewAppointments() {
           />
         </div>
       </div>
-      <hr/>
+      <hr />
       {appointments.map((item, key) => {
         return (
           <>
@@ -56,14 +56,231 @@ export default function DocViewAppointments() {
               <h1>{item?.user}</h1>
               <h1>{item?.time}</h1>
               <h1>{item?.date}</h1>
-              <Button variant="outlined" onClick={() => {}}>
+              <Button variant="outlined" onClick={() => { }}>
                 Done
               </Button>
             </div>
             <hr />
+
           </>
         );
       })}
+      <div className="overflow-x-auto">
+        <table className="table-auto text-sm w-full m-2 p-2">
+          <thead className="bg-indigo-400">
+            <tr className="border-b">
+              <th className="px-3 py-3 border-2">Week Days</th>
+              <th className="px-3 py-3">Slots</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="border-b">
+              <td className="p-3 border-2 font-small text-gray-900 bg-gray-200 whitespace-nowrap">Monday</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap bg-green-300">9:00 AM-9:15 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap ">9:15 AM-9:30 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap bg-green-300">9:30 AM - 9:45 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">9:45 AM - 10:00 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">10:00 AM - 10:15 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">10:15 AM - 10:30 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">10:30 AM - 10:45 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">10:45 AM - 11:00 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">11:00 AM - 11:15 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">11:15 AM - 11:30 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">11:30 AM - 11:45 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">11:45 AM - 12:00 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">12:00 PM - 12:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">12:15 PM - 12:30 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">12:30 PM - 12:45 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">12:45 PM - 01:00 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:00 PM - 01:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:15 PM - 01:30 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:30 PM - 01:45 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:45 PM - 02:00 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>            
+            </tr>
+            <tr className="border-b">
+              <td className="p-3 border-2 font-small text-gray-900 bg-gray-200 whitespace-nowrap">Tuesday</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap bg-green-300">9:00 AM-9:15 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap ">9:15 AM-9:30 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap bg-green-300">9:30 AM - 9:45 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">9:45 AM - 10:00 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">10:00 AM - 10:15 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">10:15 AM - 10:30 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">10:30 AM - 10:45 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">10:45 AM - 11:00 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">11:00 AM - 11:15 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">11:15 AM - 11:30 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">11:30 AM - 11:45 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">11:45 AM - 12:00 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">12:00 PM - 12:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">12:15 PM - 12:30 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">12:30 PM - 12:45 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">12:45 PM - 01:00 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:00 PM - 01:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:15 PM - 01:30 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:30 PM - 01:45 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:45 PM - 02:00 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>            
+            </tr> 
+            <tr className="border-b">
+              <td className="p-3 border-2 font-small text-gray-900 bg-gray-200 whitespace-nowrap">Wednesday</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap bg-green-300">9:00 AM-9:15 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap ">9:15 AM-9:30 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap bg-green-300">9:30 AM - 9:45 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">9:45 AM - 10:00 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">10:00 AM - 10:15 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">10:15 AM - 10:30 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">10:30 AM - 10:45 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">10:45 AM - 11:00 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">11:00 AM - 11:15 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">11:15 AM - 11:30 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">11:30 AM - 11:45 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">11:45 AM - 12:00 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">12:00 PM - 12:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">12:15 PM - 12:30 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">12:30 PM - 12:45 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">12:45 PM - 01:00 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:00 PM - 01:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:15 PM - 01:30 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:30 PM - 01:45 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:45 PM - 02:00 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>            
+            </tr> 
+            <tr className="border-b">
+              <td className="p-3 border-2 font-small text-gray-900 bg-gray-200 whitespace-nowrap">Thursday</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap bg-green-300">9:00 AM-9:15 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap ">9:15 AM-9:30 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap bg-green-300">9:30 AM - 9:45 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">9:45 AM - 10:00 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">10:00 AM - 10:15 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">10:15 AM - 10:30 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">10:30 AM - 10:45 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">10:45 AM - 11:00 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">11:00 AM - 11:15 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">11:15 AM - 11:30 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">11:30 AM - 11:45 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">11:45 AM - 12:00 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">12:00 PM - 12:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">12:15 PM - 12:30 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">12:30 PM - 12:45 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">12:45 PM - 01:00 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:00 PM - 01:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:15 PM - 01:30 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:30 PM - 01:45 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:45 PM - 02:00 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>            
+            </tr> 
+            <tr className="border-b">
+              <td className="p-3 border-2 font-small text-gray-900 bg-gray-200 whitespace-nowrap">Friday</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap bg-green-300">9:00 AM-9:15 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap ">9:15 AM-9:30 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap bg-green-300">9:30 AM - 9:45 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">9:45 AM - 10:00 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">10:00 AM - 10:15 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">10:15 AM - 10:30 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">10:30 AM - 10:45 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">10:45 AM - 11:00 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">11:00 AM - 11:15 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">11:15 AM - 11:30 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">11:30 AM - 11:45 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">11:45 AM - 12:00 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">12:00 PM - 12:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">12:15 PM - 12:30 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">12:30 PM - 12:45 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">12:45 PM - 01:00 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:00 PM - 01:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:15 PM - 01:30 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:30 PM - 01:45 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:45 PM - 02:00 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>            
+            </tr> 
+            <tr className="border-b">
+              <td className="p-3 border-2 font-small text-gray-900 bg-gray-200 whitespace-nowrap">Saturday</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap bg-green-300">9:00 AM-9:15 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap ">9:15 AM-9:30 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap bg-green-300">9:30 AM - 9:45 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">9:45 AM - 10:00 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">10:00 AM - 10:15 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">10:15 AM - 10:30 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">10:30 AM - 10:45 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">10:45 AM - 11:00 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">11:00 AM - 11:15 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">11:15 AM - 11:30 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">11:30 AM - 11:45 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">11:45 AM - 12:00 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">12:00 PM - 12:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">12:15 PM - 12:30 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">12:30 PM - 12:45 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">12:45 PM - 01:00 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:00 PM - 01:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:15 PM - 01:30 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:30 PM - 01:45 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:45 PM - 02:00 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>            
+            </tr> 
+            <tr className="border-b">
+              <td className="p-3 border-2 font-small text-gray-900 bg-gray-200 whitespace-nowrap">Sunday</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap bg-green-300">9:00 AM-9:15 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap ">9:15 AM-9:30 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap bg-green-300">9:30 AM - 9:45 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">9:45 AM - 10:00 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">10:00 AM - 10:15 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">10:15 AM - 10:30 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">10:30 AM - 10:45 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">10:45 AM - 11:00 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">11:00 AM - 11:15 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">11:15 AM - 11:30 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">11:30 AM - 11:45 AM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">11:45 AM - 12:00 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">12:00 PM - 12:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">12:15 PM - 12:30 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">12:30 PM - 12:45 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">12:45 PM - 01:00 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:00 PM - 01:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:15 PM - 01:30 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:30 PM - 01:45 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">01:45 PM - 02:00 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>
+              <td className="p-3 border-2 font-small text-gray-900 whitespace-nowrap">02:00 PM - 02:15 PM</td>            
+            </tr> 
+ 
+          </tbody>
+        </table>
+      </div>
     </>
   );
 }

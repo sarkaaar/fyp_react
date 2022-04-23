@@ -44,10 +44,11 @@ export default function ViewAppointments() {
   };
 
   useEffect(() => {
+    setLoader(true);
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
-    setLoader(true);
+    
     getAppointments();
   }, [user]);
 
@@ -118,7 +119,6 @@ export default function ViewAppointments() {
                     );
                   })}
                 </div>
-
 
               )}
         </>
