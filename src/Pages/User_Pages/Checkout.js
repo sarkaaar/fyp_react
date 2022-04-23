@@ -7,9 +7,9 @@ import { collection, addDoc } from "firebase/firestore";
 import { auth } from "../../firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
 import Footer from "./Components/Footer";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getDocs, deleteDoc, query, where, doc } from "firebase/firestore";
-
+import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 // import * as React from 'react';
 import Box from "@mui/material/Box";
 // import Button from '@mui/material/Button';
@@ -86,6 +86,7 @@ export default function Checkout() {
       cvv: cvv,
       cart: products,
     };
+setOpen(true);
 
     await addDoc(checkoutRef, newItem)
       .then((e) => {
@@ -254,6 +255,7 @@ export default function Checkout() {
               variant="outlined"
               style={{ height: "50px" }}
               onClick={check}
+              onClick={handleOpen}
             >
               Confirm Order
             </Button>
@@ -292,7 +294,7 @@ export default function Checkout() {
           </div>
         </div>
       </div>
-      <Button onClick={handleOpen}>Open modal</Button>
+      
       <Footer />
       <Modal
         open={open}
@@ -301,12 +303,13 @@ export default function Checkout() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
+          <Typography id="modal-modal-title" variant="h6" component="h2" className="" >
+          For Confirmation
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+          Please Goto profile /cart 
           </Typography>
+          <Link to="/" className="bg-purple-400" >View Store <DoubleArrowIcon/></Link>
         </Box>
       </Modal>
     </>
