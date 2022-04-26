@@ -8,9 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import { Button } from "@mui/material";
 
-
 export default function ViewDoctors() {
- 
+
   const [doctors, setDoctor] = useState([]);
   const doctorsCollection = collection(db, "doctors");
   const navigate = useNavigate();
@@ -26,13 +25,13 @@ export default function ViewDoctors() {
   return (
     <div>
       <Header />
-      <Button
+      {/* <Button
         onClick={() => {
           console.log(doctors);
         }}
       >
         Click
-      </Button>
+      </Button> */}
       {/* <div className="  mx-20  my-20 flex flex-row rounded justify-between "> */}
       {doctors.length === 0 && (
         <div className="grid place-items-center h-screen">
