@@ -29,7 +29,7 @@ export default function MediaCard(obj) {
         <hr className="w-10/12 m-auto" />
 
         {/* Buttons */}
-        <div className="flex justify-around">
+        {/* <div className="flex justify-around">
           <IconButton size="large">
             <ShoppingCartIcon />
           </IconButton>
@@ -39,7 +39,7 @@ export default function MediaCard(obj) {
           <IconButton size="large">
             <FavoriteBorderIcon />
           </IconButton>
-        </div>
+        </div> */}
       </Link>
     </div>
   );

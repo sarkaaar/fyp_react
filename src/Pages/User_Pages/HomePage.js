@@ -16,6 +16,7 @@ export default function HomePage() {
   const [loader, setLoader] = useState(false);
 
   useEffect(() => {
+    setLoader(true);
     const getProducts = async () => {
       await getDocs(productsRef)
         .then((res) => {
@@ -38,6 +39,7 @@ export default function HomePage() {
         .catch((err) => {
           console.log(err);
         });
+      setLoader(false);
     };
     setLoader(true);
     getProducts();
@@ -50,6 +52,7 @@ export default function HomePage() {
       <Banner />
       <hr />
       <div className="bg-slate-100">
+{/* <<<<<<< HEAD
         {loader ? (
           <div className="w-full mt-12">
             <div className="flex justify-center items-center h-full">
@@ -78,6 +81,56 @@ export default function HomePage() {
           </>
         )}
       </div>
+======= */}
+        {
+          loader ? (
+            <div className="grid place-items-center h-screen">
+              <div className="w-20 h-20 border-t-4 border-b-4 border-green-900 rounded-full animate-spin"></div>
+            </div>
+          ) : (
+            <>
+              {categories?.map((item) => (
+                <div className=" w-fit m-auto">
+                  <h1 className="text-3xl py-4 font-extrabold">{item?.name}</h1>
+                  <div className="   grid gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 ">
+                    {product?.map((product) => (
+                      <>
+                        {item?.name === product?.category ? (
+                          <MediaCard obj={product} />
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </>
+          )
+        }
+        {/* {categories?.map((item) => (
+        <div className=" w-fit m-auto">
+          <h1 className="text-3xl py-4 font-extrabold">{item?.name}</h1>
+          <div className="   grid gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 ">
+            {product?.map((product) => (
+              <>
+                {item?.name === product?.category ? (
+                  <MediaCard obj={product} />
+                ) : ( 
+                  <></>
+                )}
+              </>
+            ))}
+          </div>
+        </div>
+      ))} */}
+
+        <div classname="border-box">
+          {/* <Link to ="/"> */}
+        </div>
+      </div>
+      <Footer />
+{/* >>>>>>> 9fc9aff92f52d974d406b16c2457c1293097e76e */}
     </div>
   );
 }
