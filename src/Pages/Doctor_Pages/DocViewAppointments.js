@@ -112,13 +112,13 @@ export default function DocViewAppointments() {
           <thead className="bg-indigo-400">
             {/* <tr className="border-b">
               <th className="px-3 py-3 border-2">Week Days</th>
-<<<<<<< HEAD
+// <<<<<<< HEAD
               <th className="px-3 py-3">Slots</th>
             </tr> */}
-=======
-              <th className="px-3 py-3 row-span-3">Slots</th>
-            </tr>
->>>>>>> origin/HEAD
+            {/* ======= */}
+            {/* <th className="px-3 py-3 row-span-3">Slots</th> */}
+            {/* </tr> */}
+            {/* >>>>>>> origin/HEAD */}
           </thead>
           <tbody>
             {/* <tr className="border-b">
