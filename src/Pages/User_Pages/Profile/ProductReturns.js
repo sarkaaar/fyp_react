@@ -29,7 +29,6 @@ export default function PRoductReturns() {
       <Header />
       <Sidebar />
       <div className="ml-96">
-        
         {returns.map((item, key) => {
           return (
             <div className="p-4">
@@ -38,7 +37,7 @@ export default function PRoductReturns() {
               <h1>productID = {item?.productID}</h1>
               <h1>productName = {item?.productName}</h1>
               <h1>issue = {item?.issue}</h1>
-              <h1>date = {Date(item?.date)}</h1>
+              <h1>date = {item?.date?.toDate()?.toDateString()}</h1>
               <h1>user = {item?.user}</h1>
               <hr />
             </div>
