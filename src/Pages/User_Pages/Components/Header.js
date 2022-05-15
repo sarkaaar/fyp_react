@@ -91,7 +91,7 @@ export default function Header() {
             Services
           </Link>
           <Link
-            to={"/maps"}
+            to="/maps"
             className="font-medium text-gray-500 hover:text-gray-900"
           >
             Maps
@@ -125,7 +125,7 @@ export default function Header() {
             >
               Login
             </Link>
-          )}{" "}
+          )}
         </div>
       </div>
       <hr />

@@ -68,9 +68,9 @@ export default function Inventory() {
       <div className="">
         <Sidebar />
         <div className="ml-72">
-          <h1 className="text-4xl font-bold ml-8">Inventory -{">"}</h1>
+          <h1 className="text-4xl font-bold ml-8">y -{">"}</h1>
           <table className=" w-11/12 m-auto divide-y divide-gray-200 table-fixed dark:divide-gray-700">
-            {/* <ViewInventoryHead /> */}
+            {/* <ViewyHead /> */}
             <thead className="p-4 bg-gray-100 dark:bg-gray-700">
               <tr>
                 <th className="text-xl p-2 px-8">Name</th>
@@ -83,7 +83,7 @@ export default function Inventory() {
             </thead>
 
             {products.map((item, key) => (
-              // <ViewInventoryBody obj={item} />
+              // <ViewyBody obj={item} />
               <>
                 <tbody key={key}>
                   <tr>
