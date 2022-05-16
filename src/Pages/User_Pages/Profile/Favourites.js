@@ -42,8 +42,9 @@ export default function Favourites() {
   return (
     <>
       <Header />
+      {/* <div className="bg-gray-200 w-full h-full"> */}
       <Sidebar />
-      <div className="ml-96">
+      <div className="ml-96 bg-white">
         <h1>Favourites Profile Page</h1>
         {/* <button onClick={()=>{console.log(products)}}>Click</button>
          */}
@@ -61,6 +62,7 @@ export default function Favourites() {
           );
         })}
       </div>
+      {/* </div> */}
     </>
   );
 }
