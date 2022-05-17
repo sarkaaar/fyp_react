@@ -29,6 +29,7 @@ export default function PRoductReturns() {
       <Header />
       <Sidebar />
       <div className="ml-96">
+        <h1 className="text-2xl p-2 px-8">Returned Products</h1>
         <table className=" w-11/12 m-auto divide-y divide-gray-200 table-fixed dark:divide-gray-700">
           <thead className="p-4 bg-gray-100 dark:bg-gray-700">
             <tr>
@@ -55,7 +56,10 @@ export default function PRoductReturns() {
                   <td className=" text-lg p-2 px-8">
                     {item?.date?.toDate()?.toDateString()}
                   </td>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 196d53e3ee2c3f1092565126f20a5926e5ad34e2
                   {/* <td className=" text-lg p-2 px-8">{item?.user}</td> */}
                 </tr>
               </tbody>
