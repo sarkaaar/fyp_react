@@ -38,7 +38,7 @@ export default function PRoductReturns() {
               <th className="text-xl p-2 px-8">Description</th>
               <th className="text-xl p-2 px-8">Issue</th>
               <th className="text-xl p-2 ">Date</th>
-              <th className="text-xl p-2 ">Email</th>
+              {/* <th className="text-xl p-2 ">Email</th> */}
             </tr>
           </thead>
 
@@ -52,11 +52,11 @@ export default function PRoductReturns() {
                   <td className=" text-lg p-2 px-8">{item?.description}</td>
 
                   <td className=" text-lg p-2 px-8">{item?.issue}</td>
-<<<<<<< HEAD
-                  <td className=" text-lg p-2 px-8">{item?.date?.toDate()?.toDateString()}</td>
-=======
->>>>>>> 52dfd2b749e9dcbf30f73a3a5dc969d6a97ff231
-                  <td className=" text-lg p-2 px-8">{item?.user}</td>
+                  <td className=" text-lg p-2 px-8">
+                    {item?.date?.toDate()?.toDateString()}
+                  </td>
+
+                  {/* <td className=" text-lg p-2 px-8">{item?.user}</td> */}
                 </tr>
               </tbody>
             </>

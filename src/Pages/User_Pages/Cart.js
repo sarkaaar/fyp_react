@@ -1,9 +1,8 @@
 import * as React from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import { XIcon } from "@heroicons/react/outline";
+
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
-import { Fragment, useState, useEffect } from "react";
+import {  useState, useEffect } from "react";
 import { db } from "../../firebase-config";
 import { Link, useNavigate } from "react-router-dom";
 import {

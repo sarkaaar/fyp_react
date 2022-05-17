@@ -11,9 +11,10 @@ import Cart from "./Pages/User_Pages/Cart";
 import Chatbot from "./Pages/User_Pages/Chatbot";
 import ProductReturn from "./Pages/Services/ProductRetrun";
 import Product from "./Pages/User_Pages/Product";
+
 import Profile from "./Pages/User_Pages/Profile/Profile";
 import Orders from "./Pages/User_Pages/Profile/Orders";
-import ProductReturns from "./Pages/User_Pages/Profile/ProductReturns";
+import ProductReturns from "./Pages/User_Pages/Profile/ProductReturns"; 
 import Favourites from "./Pages/User_Pages/Profile/Favourites";
 import Slots from "./Pages/Doctor_Pages/Slots";
 // import Favourites from "./Pages/User_Pages/Components/viewFavourites/Favourites";
@@ -63,6 +64,7 @@ function App() {
         <Route exact path="/sign_up" element={<SignUp />} />
         <Route exact path="/checkout" element={<CheckoutContent />} />
         <Route exact path="/products" element={<Products />} />
+        
         <Route exact path="/cart" element={<Cart />} />
         <Route exact path="/maps" element={<Maps />} />
         <Route exact path="/chatbot" element={<Chatbot />} />

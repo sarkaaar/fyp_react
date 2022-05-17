@@ -42,44 +42,17 @@ export default function Favourites() {
   return (
     <div className="">
       <Header />
-      {/* <div className="bg-gray-200 w-full h-full"> */}
       <Sidebar />
-<<<<<<< HEAD
+
       <div className="ml-96 ">
         <h1 className="text-2xl font-bold mt-4">Favourites </h1>
-=======
-      <div className="ml-96 bg-white">
-        <h1>Favourites Profile Page</h1>
->>>>>>> 52dfd2b749e9dcbf30f73a3a5dc969d6a97ff231
-        {/* <button onClick={()=>{console.log(products)}}>Click</button>
-         */}
-        {/* <div className="lg:flex lg:justify-center"> */}
-          <div className="mt-8 lg:w-1/2  bg-white p-2">
-            {products.map((item, key) => {
-              return (
-         <MediaCard obj={item?.product}/>
 
-                // <Link to={`/product/${item.product.id}`}>
-                //   <div className="w-10/12 h-24 flex justify-between border-2 border-black">
-                //     <img
-                //       src={item.product.image[0]}
-                //       alt="img"
-                //       className="w-20 h-20 border-1 border-black"
-                //     />
-                //     <h1>{item.product.name.split(0, 20)}</h1>
-                //     <h1>Rs. {item.product.salePrice}</h1>
-                //   </div>
-                // </Link>
-              );
-            })}
-          </div>
-        {/* </div> */}
+        <div className="mt-8 lg:w-1/2  bg-white p-2">
+          {products.map((item, key) => {
+            return <MediaCard obj={item?.product} />;
+          })}
+        </div>
       </div>
-<<<<<<< HEAD
     </div>
-=======
-      {/* </div> */}
-    </>
->>>>>>> 52dfd2b749e9dcbf30f73a3a5dc969d6a97ff231
   );
 }
