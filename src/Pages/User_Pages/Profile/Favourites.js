@@ -42,9 +42,15 @@ export default function Favourites() {
   return (
     <div className="">
       <Header />
+      {/* <div className="bg-gray-200 w-full h-full"> */}
       <Sidebar />
+<<<<<<< HEAD
       <div className="ml-96 ">
         <h1 className="text-2xl font-bold mt-4">Favourites </h1>
+=======
+      <div className="ml-96 bg-white">
+        <h1>Favourites Profile Page</h1>
+>>>>>>> 52dfd2b749e9dcbf30f73a3a5dc969d6a97ff231
         {/* <button onClick={()=>{console.log(products)}}>Click</button>
          */}
         {/* <div className="lg:flex lg:justify-center"> */}
@@ -69,6 +75,11 @@ export default function Favourites() {
           </div>
         {/* </div> */}
       </div>
+<<<<<<< HEAD
     </div>
+=======
+      {/* </div> */}
+    </>
+>>>>>>> 52dfd2b749e9dcbf30f73a3a5dc969d6a97ff231
   );
 }
