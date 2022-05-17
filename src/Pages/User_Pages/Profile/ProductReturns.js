@@ -29,6 +29,7 @@ export default function PRoductReturns() {
       <Header />
       <Sidebar />
       <div className="ml-96">
+        <h1 className="text-2xl p-2 px-8">Returned Products</h1>
         <table className=" w-11/12 m-auto divide-y divide-gray-200 table-fixed dark:divide-gray-700">
           <thead className="p-4 bg-gray-100 dark:bg-gray-700">
             <tr>
@@ -38,7 +39,7 @@ export default function PRoductReturns() {
               <th className="text-xl p-2 px-8">Description</th>
               <th className="text-xl p-2 px-8">Issue</th>
               <th className="text-xl p-2 ">Date</th>
-              <th className="text-xl p-2 ">Email</th>
+              {/* <th className="text-xl p-2 ">Email</th> */}
             </tr>
           </thead>
 
@@ -52,11 +53,10 @@ export default function PRoductReturns() {
                   <td className=" text-lg p-2 px-8">{item?.description}</td>
 
                   <td className=" text-lg p-2 px-8">{item?.issue}</td>
-<<<<<<< HEAD
-                  <td className=" text-lg p-2 px-8">{item?.date?.toDate()?.toDateString()}</td>
-=======
->>>>>>> 52dfd2b749e9dcbf30f73a3a5dc969d6a97ff231
-                  <td className=" text-lg p-2 px-8">{item?.user}</td>
+                  <td className=" text-lg p-2 px-8">
+                    {item?.date?.toDate()?.toDateString()}
+                  </td>
+                  {/* <td className=" text-lg p-2 px-8">{item?.user}</td> */}
                 </tr>
               </tbody>
             </>
