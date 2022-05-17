@@ -8,7 +8,7 @@ import CheckoutContent from "./Pages/User_Pages/Checkout";
 import HomePage from "./Pages/User_Pages/HomePage";
 import Products from "./Pages/User_Pages/All_Products";
 import Cart from "./Pages/User_Pages/Cart";
-import Chatbot from "./Pages/User_Pages/Chatbot";
+import Chatbot from "./Pages/User_Pages/Components/Chatbot";
 import ProductReturn from "./Pages/Services/ProductRetrun";
 import Product from "./Pages/User_Pages/Product";
 import Profile from "./Pages/User_Pages/Profile/Profile";
