@@ -45,7 +45,7 @@ import Complaints from "./Pages/Admin_Pages/Complaints";
 import DoctorDashboard from "./Pages/Doctor_Pages/Dashboard";
 import DoctorSignIn from "./Pages/Doctor_Pages/Doctor_SignIn";
 import DocViewAppointments from "./Pages/Doctor_Pages/DocViewAppointments";
-import Live from "./Pages/Doctor_Pages/Live";
+import Live from "./Pages/Doctor_Pages/Live/Live";
 
 import NoPermission from "./Pages/Admin_Pages/NoPermission";
 import Complain_Suggestions from "./Pages/User_Pages/Profile/Complain_Suggestions";

@@ -1,17 +1,12 @@
-import React from 'react'
+import React from "react";
 import { useState } from "react";
 import Header from "../Components/Header";
 import Sidebar from "./Sidebar";
-import { TextField ,Button} from '@mui/material';
-import { TextareaAutosize } from '@mui/base';
-// import { Button } from 'rsuite';
-
+import { TextField, Button } from "@mui/material";
+import { TextareaAutosize } from "@mui/base";
 
 export default function Complain_Suggestions() {
-
-// const [subject, setSubject] = useState("");
-const [description, setDescription] = useState("");
-
+  const [description, setDescription] = useState("");
 
   return (
     <div>
@@ -33,7 +28,7 @@ const [description, setDescription] = useState("");
                 // value={name}
                 // onChange={(e) => setSubject(e.target.value)}
               />
-             
+
               <TextareaAutosize
                 minRows={5}
                 placeholder="  Description*"
@@ -41,7 +36,7 @@ const [description, setDescription] = useState("");
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
-             
+
               <Button
                 type="submit"
                 fullWidth
@@ -50,12 +45,12 @@ const [description, setDescription] = useState("");
                 // onClick={addProduct}
                 // className="mt-6 mb-12"
               >
-                Submit 
+                Submit
               </Button>
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
