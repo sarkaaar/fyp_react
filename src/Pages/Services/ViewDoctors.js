@@ -24,7 +24,7 @@ export default function ViewDoctors() {
   return (
     <div>
       <Header />
-      <figure class="md:flex place-content-between w-6/12 bg-slate-100 rounded-xl p-8 md:p-0 dark:bg-slate-800">
+      <figure class=" md:flex place-content-between w-6/12 bg-slate-100 rounded-xl p-8 md:p-0 dark:bg-slate-800 rounded-lg">
         <img
           class="w-24 h-24 md:w-48 md:h-auto md:rounded-none rounded-full mx-auto"
           src="/home/awb/Desktop/FYP/fyp_react/src/assets/images/doctor.png"
@@ -64,60 +64,91 @@ export default function ViewDoctors() {
       <div>
         {doctors.map((item, key) => {
           return (
-            <div
-              className="m-8
-            "
-            >
-              <div className="max-w-6xl hover:drop-shadow-2xl bg-white border-2 border-black mx-auto flex  bg-white rounded-lg shadow-xl ">
-                <PersonIcon
-                  style={{
-                    width: "130px",
-                    height: "130px",
-                    margin: "50px",
-                    marginTop: "70px",
-                  }}
-                />
-
-                <div className="  text-gray-900 p-6 ">
-                  <div className="  decoration-auto">
-                    <h1 className="font-bold leading-loose text-3xl">
-                      Dr. {item.name}
-                    </h1>
-                    <h1 className=" text-xl text-slate-800">
-                      {item.clinicName}
-                    </h1>
-                    <h1 className=" text-xl leading-loose text-slate-800">
-                      {item.clinicPhone}
-                    </h1>
-                    <div className="box-border border-x-zinc-900 border-4">
-                      <h1 className=" 	 text-xl leading-loose flex-auto text-slate-800">
-                        {item.clinicAddress}
-                      </h1>
-                    </div>
-                    <div className=" decoration-0">
-                      <h1 className="font-bold">
-                        Fee: Rs.
-                        <span className="text-slate-600">
-                          {" "}
-                          {item.fees}
-                        </span>{" "}
-                      </h1>
-                      {/* <h2>{item.description}</h2> */}
-                      <h3>Rating: 5 </h3>
-                    </div>
+            <figure class=" md:flex place-content-between w-6/12 bg-slate-100 rounded-xl p-8 md:p-0 dark:bg-slate-800 rounded-lg">
+              <PersonIcon
+                style={{
+                  width: "130px",
+                  height: "130px",
+                  margin: "50px",
+                  marginTop: "70px",
+                }}
+              />
+              <div class="pt-6 md:p-8 text-center md:text-left space-y-4">
+                <blockquote>
+                  <p class="text-lg font-bold">Dr. {item.name}</p>
+                
+                </blockquote>
+                <blockquote>
+                  <p class="text-md font-medium">{item.clinicName}</p>
+                 
+                </blockquote>
+                <blockquote>
+                  <p class="text-lg font-medium">  {item.clinicPhone}</p>
+                  
+                </blockquote>
+                <blockquote>
+                  <p class="text-lg font-medium">Dr. {item.name}</p>
+                  
+                </blockquote>
+                
+                <figcaption class="font-medium">
+                  <div class="text-sky-500 dark:text-sky-400">Sarah Dayan</div>
+                  <div class="text-slate-700 dark:text-slate-500">
+                    Staff Engineer, Algolia
                   </div>
-                  <Button
-                    variant="outlined"
-                    style={{ fontSize: "x-large" }}
-                    onClick={() => {
-                      navigate(`/makeAppointments/${item.id}`);
-                    }}
-                  >
-                    Book an Appointment
-                  </Button>
-                </div>
+                </figcaption>
               </div>
-            </div>
+            </figure>
+            // <div
+            //   className="m-8"
+            // >
+            //   <div className="max-w-6xl hover:drop-shadow-2xl bg-white border-2 border-black mx-auto flex  bg-white rounded-lg shadow-xl ">
+            // <PersonIcon
+            //   style={{
+            //     width: "130px",
+            //     height: "130px",
+            //     margin: "50px",
+            //     marginTop: "70px",
+            //   }}
+            // />
+
+            //     <div className="  text-gray-900 p-6 ">
+            //       <div className="  decoration-auto">
+            //         <h1 className="font-bold leading-loose text-3xl">
+            //           Dr. {item.name}
+            //         </h1>
+            //         <h1 className=" text-xl text-slate-800">
+            //           {item.clinicName}
+            //         </h1>
+            //         <h1 className=" text-xl leading-loose text-slate-800">
+            //           {item.clinicPhone}
+            //         </h1>
+            //         <div className="box-border border-x-zinc-900 border-4">
+            //           <h1 className=" 	 text-xl leading-loose flex-auto text-slate-800">
+            //             {item.clinicAddress}
+            //           </h1>
+            //         </div>
+            //         <div className=" decoration-0">
+            //           <h1 className="font-bold">
+            //             Fee: Rs.
+            //             <span className="text-slate-600">{item.fees}</span>
+            //           </h1>
+            //           {/* <h2>{item.description}</h2> */}
+            //           <h3>Rating: 5 </h3>
+            //         </div>
+            //       </div>
+            //       <Button
+            //         variant="outlined"
+            //         style={{ fontSize: "x-large" }}
+            //         onClick={() => {
+            //           navigate(`/makeAppointments/${item.id}`);
+            //         }}
+            //       >
+            //         Book an Appointment
+            //       </Button>
+            //     </div>
+            //   </div>
+            // </div>
           );
         })}
       </div>

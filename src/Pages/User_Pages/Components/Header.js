@@ -75,7 +75,7 @@ export default function Header() {
 
   // )
   return (
-    <div className="z-10">
+    <div className="z-10 bg-white">
       <div className="flex justify-between">
         <div className="flex p-2 px-8 gap-8">
           <Link
@@ -110,6 +110,12 @@ export default function Header() {
           </Link>
         </div>
         <div className="p-2 px-8">
+          <Link
+            to={"/profile"}
+            className="font-medium text-gray-500 hover:text-gray-900 px-8"
+          >
+            Profile
+          </Link>
           {user ? (
             <Link
               onClick={logout}
@@ -155,11 +161,13 @@ export default function Header() {
         <Link to={"/cart"}>
           <IconButton style={{ width: "55px", marginRight: "20px" }}>
             <ShoppingCartIcon sx={{ color: "blue" }} />
-            {products.length === 0 ?
-              <span className="hidden" /> :
+            {products.length === 0 ? (
+              <span className="hidden" />
+            ) : (
               <span className="bg-red-600 p-1 text-white rounded-full text-sm">
                 {products.length}
-              </span>}
+              </span>
+            )}
           </IconButton>
         </Link>
       </div>

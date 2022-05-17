@@ -59,7 +59,7 @@ export default function PRoductReturns() {
                   <td className=" text-lg p-2 px-8">{item?.description}</td>
                  
                   <td className=" text-lg p-2 px-8">{item?.issue}</td>
-                  {/* <td className=" text-lg p-2 px-8">{currentdate(item?.datetime)}</td> */}
+                  <td className=" text-lg p-2 px-8">{item?.date?.toDate()?.toDateString()}</td>
                   <td className=" text-lg p-2 px-8">{item?.user}</td>
                 </tr>
               </tbody>
