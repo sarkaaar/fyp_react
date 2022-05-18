@@ -3,6 +3,7 @@ import { ReactComponent as HangupIcon } from "./icons/hangup.svg";
 import { ReactComponent as MoreIcon } from "./icons/more-vertical.svg";
 import { ReactComponent as CopyIcon } from "./icons/copy.svg";
 import { db } from "../../../firebase-config";
+import { collection } from "firebase/firestore";
 import "./App.css";
 import "./index.css";
 
@@ -85,8 +86,13 @@ function Videos({ mode, callId, setPage }) {
     setWebcamActive(true);
 
     if (mode === "create") {
-      const callDoc = db.collection("calls").doc();
-      const offerCandidates = callDoc.collection("offerCandidates");
+      const callDoc = collection(db, "calls");
+      // const callDoc = db.collection("calls").doc();
+      // const productsCollection = collection(db, "products");
+
+      const offerCandidates = collection(db, "calls").doc(offerCandidates);
+      // const offerCandidates = callDoc.collection("offerCandidates");
+
       const answerCandidates = callDoc.collection("answerCandidates");
 
       setRoomId(callDoc.id);
@@ -211,6 +217,7 @@ function Videos({ mode, callId, setPage }) {
             <button
               onClick={() => {
                 navigator.clipboard.writeText(roomId);
+                console.log(roomId);
               }}
             >
               <CopyIcon /> Copy joining code
