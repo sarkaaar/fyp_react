@@ -56,10 +56,10 @@ export default function PRoductReturns() {
                   <td className=" text-lg p-2 px-8">
                     {item?.date?.toDate()?.toDateString()}
                   </td>
-<<<<<<< HEAD
+{/* <<<<<<< HEAD
 
 =======
->>>>>>> 196d53e3ee2c3f1092565126f20a5926e5ad34e2
+>>>>>>> 196d53e3ee2c3f1092565126f20a5926e5ad34e2 */}
                   {/* <td className=" text-lg p-2 px-8">{item?.user}</td> */}
                 </tr>
               </tbody>

@@ -46,13 +46,13 @@ export default function Favourites() {
 
       <div className="ml-96 ">
         <h1 className="text-2xl font-bold mt-4">Favourites </h1>
-<<<<<<< HEAD
+{/* <<<<<<< HEAD
 
         <div className="mt-8 lg:w-1/2  bg-white p-2">
           {products.map((item, key) => {
             return <MediaCard obj={item?.product} />;
           })}
-=======
+======= */}
         <div className="ml-96 bg-white">
           <div className="ml-96">
             <div className="mt-8 lg:w-1/2  bg-white p-2">
@@ -61,7 +61,7 @@ export default function Favourites() {
               })}
             </div>
           </div>
->>>>>>> 196d53e3ee2c3f1092565126f20a5926e5ad34e2
+{/* >>>>>>> 196d53e3ee2c3f1092565126f20a5926e5ad34e2 */}
         </div>
       </div>
     </div>
