@@ -5,7 +5,7 @@ import ArticleIcon from '@mui/icons-material/Article';
 
 export default function Sidebar() {
   return (
-    <aside class="w-64 bg-gray-800 fixed h-full left-0" aria-label="Sidebar">
+    <aside class="w-64 bg-gray-800 h-full left-0" aria-label="Sidebar">
       <div class="overflow-y-auto py-4 px-3  rounded ">
         <ul class="space-y-2">
           <li>

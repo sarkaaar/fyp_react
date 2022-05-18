@@ -1,12 +1,13 @@
 import * as React from "react";
 import MediaCard from "./Components/MediaCard";
 import Header from "./Components/Header";
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase-config";
 import Footer from "./Components/Footer";
-import { Link } from "react-router-dom";
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import Button from "@material-ui/core/Button";
+
 export default function Products() {
   //  Get Categories Names
   const [value, setValue] = React.useState([10, 50]);
@@ -24,13 +25,14 @@ export default function Products() {
       const data = await getDocs(productsCollection);
       setProducts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       setLoader(false);
+      console.log(products);
     };
     const getCategories = async () => {
       const data = await getDocs(categoriesCollection);
       setCategories(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       setLoader(false);
     };
-// specific data fetch for categories
+    // specific data fetch for categories
     const getSpecificProducts = async () => {
       const data = await getDocs(productsCollection);
       setProducts(data.docs.name.map((doc) => ({ ...doc.data(), id: doc.id })));
@@ -38,7 +40,7 @@ export default function Products() {
     };
     // Function Calls
     setLoader(true);
-    getSpecificProducts();// check
+    getSpecificProducts(); // check
     getProducts();
     getCategories();
   }, []);
@@ -47,7 +49,9 @@ export default function Products() {
     <div>
       <Header />
 
-      <h1 className="inline-flex">Categories <ArrowForwardIcon/> {currentCategory}</h1>
+      <h1 className="bg-slate-100 pl-96 flex">
+        Categories <ArrowForwardIcon /> {currentCategory}
+      </h1>
       <div className=" flex bg-slate-100">
         <div className="w-96 p-16 text-black ">
           <div className="flex flex-col items-start mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ">
@@ -57,14 +61,14 @@ export default function Products() {
             {categories?.map((item, key) => {
               return (
                 <>
-                <button className="text-black hover:font-bold px-4 py-2" onClick={()=>{setCurrentCategory(item.name)}}>{item?.name}</button>
-                  {/* <Link
-                    to={`/${item?.name}`} //check
-
-                    class="text-gray-700 block px-4 py-2 text-sm"
+                  <Button
+                    className="text-black hover:font-bold px-4 py-2"
+                    onClick={() => {
+                      setCurrentCategory(item.name);
+                    }}
                   >
-                    <p className="hover:font-bold">{item?.name}</p>
-                  </Link> */}
+                    {item?.name}
+                  </Button>
                 </>
               );
             })}
@@ -119,29 +123,29 @@ export default function Products() {
           <div>No products available!</div>
         ) : currentCategory != "" ? (
           <>
-          <div className="xl:flex">
-            <div className="grid  lg:grid-cols-2 xl:grid-cols-3 xl:gap-6 2xl:grid-cols-4">
-              {/* {currentcatergory && 
+            <div className="xl:flex">
+              <div className="grid  lg:grid-cols-2 xl:grid-cols-3 xl:gap-6 2xl:grid-cols-4">
+                {/* {currentcatergory && 
               products.filter(p => p.categorie === currrentcategory).map()} */}
-              {products.map((item) => {
-                return (
-                  // <div className="p-2">
-                  //   <MediaCard obj={item} />
-                  // </div>
-                  <>
+                {products.map((item) => {
+                  return (
+                    // <div className="p-2">
+                    //   <MediaCard obj={item} />
+                    // </div>
+                    <>
                       {currentCategory === item?.category ? (
                         <MediaCard obj={item} />
                       ) : (
                         <></>
                       )}
                     </>
-                );
-              })}
+                  );
+                })}
+              </div>
+              <div className="w-96 h-full"></div>
             </div>
-            <div className="w-96 h-full"></div>
-          </div>
           </>
-        ):(
+        ) : (
           <div className="xl:flex">
             <div className="grid  lg:grid-cols-2 xl:grid-cols-3 xl:gap-6 2xl:grid-cols-4">
               {/* {currentcatergory && 
