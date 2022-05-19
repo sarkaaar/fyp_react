@@ -7,7 +7,7 @@ import { auth, db } from "../../../firebase-config";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { collection, getDocs, query, where } from "firebase/firestore";
 
-export default function Header() {
+export default function Header(props) {
   const [products, setProducts] = useState([]);
   const [user, setUser] = useState({});
 
@@ -75,7 +75,7 @@ export default function Header() {
 
   // )
   return (
-    <div className="z-10 bg-white">
+    <div className="z-10 bg-white absolute w-full">
       <div className="flex justify-between">
         <div className="flex p-2 px-8 gap-8">
           <Link
@@ -165,7 +165,7 @@ export default function Header() {
               <span className="hidden" />
             ) : (
               <span className="bg-red-600 p-1 text-white rounded-full text-sm">
-                {products.length}
+                {props.prod_length ? props.prod_length : products.length}
               </span>
             )}
           </IconButton>

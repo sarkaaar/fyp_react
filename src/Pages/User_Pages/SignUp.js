@@ -78,7 +78,12 @@ export default function SignUp() {
                 type={"text"}
                 value={name}
                 onChange={(e) => {
-                  setName(e.target.value);
+                  const re = /^[A-Za-z]+$/;
+                  if (e.target.value === re.test(e.target.value)) {
+                    setName(e.target.value);
+                  }
+
+                  // if (e.target.value >= "a" && e.target.value <= "z")
                 }}
               />
               <TextField

@@ -42,11 +42,12 @@ export default function Cart() {
   return (
     <div>
       <Header />
+      <Sidebar />
       {user ? (
         <>
           <div className="flex">
             <div className="w-full lg:w-1/5">
-              <Sidebar />
+             
             </div>
             {loader ? (
               <div className="grid place-items-center w-full h-screen">
@@ -58,10 +59,10 @@ export default function Cart() {
                 No orders available!{" "}
               </div>
             ) : (
-              <div className="w-full lg:w-4/5">
+              <div className="w-full">
                 <div className="">
                   <h1 className="text-3xl font-bold m-8">Orders -{">"}</h1>
-                  <div className="flex">
+                  <div className="flex overflow-auto">
                     <table className="divide-y divide-gray-200">
                       <thead className="p-4 bg-gray-100">
                         <tr>

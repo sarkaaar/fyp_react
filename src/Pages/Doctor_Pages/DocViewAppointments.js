@@ -5,90 +5,70 @@ import { db, auth } from "../../firebase-config";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { Button, TextField } from "@mui/material";
 import { onAuthStateChanged } from "firebase/auth";
-import { Fragment, useRef } from 'react'
-import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, DotsHorizontalIcon } from '@heroicons/react/solid'
-import { Menu, Transition } from '@headlessui/react'
-
+import { Fragment, useRef } from "react";
+import {
+  ChevronDownIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  DotsHorizontalIcon,
+} from "@heroicons/react/solid";
+import { Menu, Transition } from "@headlessui/react";
 
 function className(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(" ");
 }
-
 
 export default function DocViewAppointments() {
   const appointmentsRef = collection(db, "appointments");
   const [appointments, setAppointments] = useState([]);
   const [date, setDate] = useState();
+  const [currDate, setCurrDate] = useState();
   const [user, setUser] = useState();
 
-  const days = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-  ];
-  const slots = [
-    "09:00",
-    "09:15",
-    "09:30",
-    "09:45",
-    "10:00",
-    "10:15",
-    "10:30",
-    "10:45",
-    "11:00",
-    "11:15",
-    "11:30",
-    "11:45",
-    "12:00",
-    "12:15",
-    "12:30",
-    "12:45",
-    "01:00",
-    "01:15",
-    "01:30",
-    "01:45",
-  ];
+  const getCurrentDay = () => {
+    const d = new Date();
+    setCurrDate(d.getDay() - 1);
+  };
+
+  const getAppointments = async () => {
+    const q = query(
+      appointmentsRef,
+      where("doctor.email", "==", "ammarzahid335@gmail.com"),
+      // where("date", "==", date)
+    );
+    await getDocs(q)
+      .then((res) => {
+        setAppointments(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
-    const getAppointments = async () => {
-      const q = query(
-        appointmentsRef,
-        where("doctor.email", "==", "ammarzahid335@gmail.com"),
-        where("date", "==", date)
-      );
-      await getDocs(q)
-        .then((res) => {
-          setAppointments(
-            res.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-          );
-          console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
+
     getAppointments();
+    getCurrentDay();
   }, [date, user]);
 
-  const container = useRef(null)
-  const containerNav = useRef(null)
-  const containerOffset = useRef(null)
+  const container = useRef(null);
+  const containerNav = useRef(null);
+  const containerOffset = useRef(null);
 
-  useEffect(() => {
-    // Set the container scroll position based on the current time.
-    const currentMinute = new Date().getHours() * 60
-    container.current.scrollTop =
-      ((container.current.scrollHeight - containerNav.current.offsetHeight - containerOffset.current.offsetHeight) *
-        currentMinute) /
-      1440
-  }, [])
-
+  // useEffect(() => {
+  //   // Set the container scroll position based on the current time.
+  //   const currentMinute = new Date().getHours() * 60;
+  //   container.current.scrollTop =
+  //     ((container.current.scrollHeight -
+  //       containerNav.current.offsetHeight -
+  //       containerOffset.current.offsetHeight) *
+  //       currentMinute) /
+  //     1440;
+  // }, []);
 
   return (
     <>
@@ -123,7 +103,7 @@ export default function DocViewAppointments() {
               <h1>{item?.user}</h1>
               <h1>{item?.time}</h1>
               <h1>{item?.date}</h1>
-              <Button variant="outlined" onClick={() => { }}>
+              <Button variant="outlined" onClick={() => {}}>
                 Done
               </Button>
             </div>
@@ -158,250 +138,83 @@ export default function DocViewAppointments() {
           <h1 className="text-lg font-semibold text-gray-900">
             <time dateTime="2022-01">January 2022</time>
           </h1>
-          <div className="flex items-center">
-            <div className="flex items-center rounded-md shadow-sm md:items-stretch">
-              <button
-                type="button"
-                className="flex items-center justify-center rounded-l-md border border-r-0 border-gray-300 bg-white py-2 pl-3 pr-4 text-gray-400 hover:text-gray-500 focus:relative md:w-9 md:px-2 md:hover:bg-gray-50"
-              >
-                <span className="sr-only">Previous month</span>
-                <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
-              </button>
-              <button
-                type="button"
-                className="hidden border-t border-b border-gray-300 bg-white px-3.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900 focus:relative md:block"
-              >
-                Today
-              </button>
-              <span className="relative -mx-px h-5 w-px bg-gray-300 md:hidden" />
-              <button
-                type="button"
-                className="flex items-center justify-center rounded-r-md border border-l-0 border-gray-300 bg-white py-2 pl-4 pr-3 text-gray-400 hover:text-gray-500 focus:relative md:w-9 md:px-2 md:hover:bg-gray-50"
-              >
-                <span className="sr-only">Next month</span>
-                <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
-              </button>
-            </div>
-            <div className="hidden md:ml-4 md:flex md:items-center">
-              <Menu as="div" className="relative">
-                <Menu.Button
-                  type="button"
-                  className="flex items-center rounded-md border border-gray-300 bg-white py-2 pl-3 pr-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
-                >
-                  Week view
-                  <ChevronDownIcon className="ml-2 h-5 w-5 text-gray-400" aria-hidden="true" />
-                </Menu.Button>
-
-                <Transition
-                  as={Fragment}
-                  enter="transition ease-out duration-100"
-                  enterFrom="transform opacity-0 scale-95"
-                  enterTo="transform opacity-100 scale-100"
-                  leave="transition ease-in duration-75"
-                  leaveFrom="transform opacity-100 scale-100"
-                  leaveTo="transform opacity-0 scale-95"
-                >
-                  <Menu.Items className="absolute right-0 mt-3 w-36 origin-top-right overflow-hidden rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <div className="py-1">
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="#"
-                            className={className(
-                              active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                              'block px-4 py-2 text-sm'
-                            )}
-                          >
-                            Day view
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="#"
-                            className={className(
-                              active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                              'block px-4 py-2 text-sm'
-                            )}
-                          >
-                            Week view
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="#"
-                            className={className(
-                              active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                              'block px-4 py-2 text-sm'
-                            )}
-                          >
-                            Month view
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="#"
-                            className={className(
-                              active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                              'block px-4 py-2 text-sm'
-                            )}
-                          >
-                            Year view
-                          </a>
-                        )}
-                      </Menu.Item>
-                    </div>
-                  </Menu.Items>
-                </Transition>
-              </Menu>
-              <div className="ml-6 h-6 w-px bg-gray-300" />
-              <button
-                type="button"
-                className="ml-6 rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-              >
-                Add event
-              </button>
-            </div>
-            <Menu as="div" className="relative ml-6 md:hidden">
-              <Menu.Button className="-mx-2 flex items-center rounded-full border border-transparent p-2 text-gray-400 hover:text-gray-500">
-                <span className="sr-only">Open menu</span>
-                <DotsHorizontalIcon className="h-5 w-5" aria-hidden="true" />
-              </Menu.Button>
-
-              <Transition
-                as={Fragment}
-                enter="transition ease-out duration-100"
-                enterFrom="transform opacity-0 scale-95"
-                enterTo="transform opacity-100 scale-100"
-                leave="transition ease-in duration-75"
-                leaveFrom="transform opacity-100 scale-100"
-                leaveTo="transform opacity-0 scale-95"
-              >
-                <Menu.Items className="absolute right-0 mt-3 w-36 origin-top-right divide-y divide-gray-100 overflow-hidden rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                  <div className="py-1">
-                    <Menu.Item>
-                      {({ active }) => (
-                        <a
-                          href="#"
-                          className={className(
-                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                            'block px-4 py-2 text-sm'
-                          )}
-                        >
-                          Create event
-                        </a>
-                      )}
-                    </Menu.Item>
-                  </div>
-                  <div className="py-1">
-                    <Menu.Item>
-                      {({ active }) => (
-                        <a
-                          href="#"
-                          className={className(
-                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                            'block px-4 py-2 text-sm'
-                          )}
-                        >
-                          Go to today
-                        </a>
-                      )}
-                    </Menu.Item>
-                  </div>
-                  <div className="py-1">
-                    <Menu.Item>
-                      {({ active }) => (
-                        <a
-                          href="#"
-                          className={className(
-                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                            'block px-4 py-2 text-sm'
-                          )}
-                        >
-                          Day view
-                        </a>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <a
-                          href="#"
-                          className={className(
-                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                            'block px-4 py-2 text-sm'
-                          )}
-                        >
-                          Week view
-                        </a>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <a
-                          href="#"
-                          className={className(
-                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                            'block px-4 py-2 text-sm'
-                          )}
-                        >
-                          Month view
-                        </a>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <a
-                          href="#"
-                          className={className(
-                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                            'block px-4 py-2 text-sm'
-                          )}
-                        >
-                          Year view
-                        </a>
-                      )}
-                    </Menu.Item>
-                  </div>
-                </Menu.Items>
-              </Transition>
-            </Menu>
-          </div>
+          <div className="flex items-center"></div>
         </header>
-        <div ref={container} className="flex flex-auto flex-col overflow-auto bg-white">
-          <div style={{ width: '165%' }} className="flex max-w-full flex-none flex-col sm:max-w-none md:max-w-full">
+        <div
+          ref={container}
+          className="flex flex-auto flex-col overflow-auto bg-white"
+        >
+          <div
+            style={{ width: "165%" }}
+            className="flex max-w-full flex-none flex-col sm:max-w-none md:max-w-full"
+          >
             <div
               ref={containerNav}
               className="sticky top-0 z-30 flex-none bg-white shadow ring-1 ring-black ring-opacity-5 sm:pr-8"
             >
               <div className="grid grid-cols-7 text-sm leading-6 text-gray-500 sm:hidden">
-                <button type="button" className="flex flex-col items-center pt-2 pb-3">
-                  M <span className="mt-1 flex h-8 w-8 items-center justify-center font-semibold text-gray-900">10</span>
+                <button
+                  type="button"
+                  className="flex flex-col items-center pt-2 pb-3"
+                >
+                  M{" "}
+                  <span className="mt-1 flex h-8 w-8 items-center justify-center font-semibold text-gray-900">
+                    10
+                  </span>
                 </button>
-                <button type="button" className="flex flex-col items-center pt-2 pb-3">
-                  T <span className="mt-1 flex h-8 w-8 items-center justify-center font-semibold text-gray-900">11</span>
+                <button
+                  type="button"
+                  className="flex flex-col items-center pt-2 pb-3"
+                >
+                  T{" "}
+                  <span className="mt-1 flex h-8 w-8 items-center justify-center font-semibold text-gray-900">
+                    11
+                  </span>
                 </button>
-                <button type="button" className="flex flex-col items-center pt-2 pb-3">
-                  W{' '}
+                <button
+                  type="button"
+                  className="flex flex-col items-center pt-2 pb-3"
+                >
+                  W{" "}
                   <span className="mt-1 flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 font-semibold text-white">
                     12
                   </span>
                 </button>
-                <button type="button" className="flex flex-col items-center pt-2 pb-3">
-                  T <span className="mt-1 flex h-8 w-8 items-center justify-center font-semibold text-gray-900">13</span>
+                <button
+                  type="button"
+                  className="flex flex-col items-center pt-2 pb-3"
+                >
+                  T{" "}
+                  <span className="mt-1 flex h-8 w-8 items-center justify-center font-semibold text-gray-900">
+                    13
+                  </span>
                 </button>
-                <button type="button" className="flex flex-col items-center pt-2 pb-3">
-                  F <span className="mt-1 flex h-8 w-8 items-center justify-center font-semibold text-gray-900">14</span>
+                <button
+                  type="button"
+                  className="flex flex-col items-center pt-2 pb-3"
+                >
+                  F{" "}
+                  <span className="mt-1 flex h-8 w-8 items-center justify-center font-semibold text-gray-900">
+                    14
+                  </span>
                 </button>
-                <button type="button" className="flex flex-col items-center pt-2 pb-3">
-                  S <span className="mt-1 flex h-8 w-8 items-center justify-center font-semibold text-gray-900">15</span>
+                <button
+                  type="button"
+                  className="flex flex-col items-center pt-2 pb-3"
+                >
+                  S{" "}
+                  <span className="mt-1 flex h-8 w-8 items-center justify-center font-semibold text-gray-900">
+                    15
+                  </span>
                 </button>
-                <button type="button" className="flex flex-col items-center pt-2 pb-3">
-                  S <span className="mt-1 flex h-8 w-8 items-center justify-center font-semibold text-gray-900">16</span>
+                <button
+                  type="button"
+                  className="flex flex-col items-center pt-2 pb-3"
+                >
+                  S{" "}
+                  <span className="mt-1 flex h-8 w-8 items-center justify-center font-semibold text-gray-900">
+                    16
+                  </span>
                 </button>
               </div>
 
@@ -409,17 +222,23 @@ export default function DocViewAppointments() {
                 <div className="col-end-1 w-14" />
                 <div className="flex items-center justify-center py-3">
                   <span>
-                    Mon <span className="items-center justify-center font-semibold text-gray-900">10</span>
+                    Mon{" "}
+                    <span className="items-center justify-center font-semibold text-gray-900">
+                      10
+                    </span>
                   </span>
                 </div>
                 <div className="flex items-center justify-center py-3">
                   <span>
-                    Tue <span className="items-center justify-center font-semibold text-gray-900">11</span>
+                    Tue{" "}
+                    <span className="items-center justify-center font-semibold text-gray-900">
+                      11
+                    </span>
                   </span>
                 </div>
                 <div className="flex items-center justify-center py-3">
                   <span className="flex items-baseline">
-                    Wed{' '}
+                    Wed{" "}
                     <span className="ml-1.5 flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 font-semibold text-white">
                       12
                     </span>
@@ -427,22 +246,34 @@ export default function DocViewAppointments() {
                 </div>
                 <div className="flex items-center justify-center py-3">
                   <span>
-                    Thu <span className="items-center justify-center font-semibold text-gray-900">13</span>
+                    Thu{" "}
+                    <span className="items-center justify-center font-semibold text-gray-900">
+                      13
+                    </span>
                   </span>
                 </div>
                 <div className="flex items-center justify-center py-3">
                   <span>
-                    Fri <span className="items-center justify-center font-semibold text-gray-900">14</span>
+                    Fri{" "}
+                    <span className="items-center justify-center font-semibold text-gray-900">
+                      14
+                    </span>
                   </span>
                 </div>
                 <div className="flex items-center justify-center py-3">
                   <span>
-                    Sat <span className="items-center justify-center font-semibold text-gray-900">15</span>
+                    Sat{" "}
+                    <span className="items-center justify-center font-semibold text-gray-900">
+                      15
+                    </span>
                   </span>
                 </div>
                 <div className="flex items-center justify-center py-3">
                   <span>
-                    Sun <span className="items-center justify-center font-semibold text-gray-900">16</span>
+                    Sun{" "}
+                    <span className="items-center justify-center font-semibold text-gray-900">
+                      16
+                    </span>
                   </span>
                 </div>
               </div>
@@ -453,42 +284,69 @@ export default function DocViewAppointments() {
                 {/* Horizontal lines */}
                 <div
                   className="col-start-1 col-end-2 row-start-1 grid divide-y divide-gray-300"
-                  style={{ gridTemplateRows: 'repeat(12, minmax(3.5rem, 1fr))' }}
+                  style={{
+                    gridTemplateRows: "repeat(20, minmax(3.5rem, 1fr))",
+                  }}
                 >
                   <div ref={containerOffset} className="row-end-1 h-7"></div>
                   <div>
                     <div className="sticky left-0 z-20 -mt-2.5 -ml-14 w-14 pr-2 text-right text-xs leading-5 text-gray-400">
-                      9AM
+                      09:00AM
                     </div>
                   </div>
                   <div />
                   <div>
                     <div className="sticky left-0 z-20 -mt-2.5 -ml-14 w-14 pr-2 text-right text-xs leading-5 text-gray-400">
-                      10AM
+                      09:30AM
                     </div>
                   </div>
                   <div />
                   <div>
                     <div className="sticky left-0 z-20 -mt-2.5 -ml-14 w-14 pr-2 text-right text-xs leading-5 text-gray-400">
-                      11AM
+                      10:00AM
                     </div>
                   </div>
                   <div />
                   <div>
                     <div className="sticky left-0 z-20 -mt-2.5 -ml-14 w-14 pr-2 text-right text-xs leading-5 text-gray-400">
-                      12PM
+                      10:30AM
                     </div>
                   </div>
                   <div />
                   <div>
                     <div className="sticky left-0 z-20 -mt-2.5 -ml-14 w-14 pr-2 text-right text-xs leading-5 text-gray-400">
-                      1PM
+                      11:00AM
                     </div>
                   </div>
                   <div />
                   <div>
                     <div className="sticky left-0 z-20 -mt-2.5 -ml-14 w-14 pr-2 text-right text-xs leading-5 text-gray-400">
-                      2PM
+                      11:30AM
+                    </div>
+                  </div>
+                  <div />
+                  <div>
+                    <div className="sticky left-0 z-20 -mt-2.5 -ml-14 w-14 pr-2 text-right text-xs leading-5 text-gray-400">
+                      12:00PM
+                    </div>
+                  </div>
+                  <div />
+                  <div>
+                    <div className="sticky left-0 z-20 -mt-2.5 -ml-14 w-14 pr-2 text-right text-xs leading-5 text-gray-400">
+                      01:00AM
+                    </div>
+                  </div>
+                  <div />
+                  <div>
+                    <div className="sticky left-0 z-20 -mt-2.5 -ml-14 w-14 pr-2 text-right text-xs leading-5 text-gray-400">
+                      01:30AM
+                    </div>
+                  </div>
+                  <div />
+
+                  <div>
+                    <div className="sticky left-0 z-20 -mt-2.5 -ml-14 w-14 pr-2 text-right text-xs leading-5 text-gray-400">
+                      02:00PM
                     </div>
                   </div>
                   <div />
@@ -505,7 +363,7 @@ export default function DocViewAppointments() {
                   <div className="col-start-7 row-span-full" />
                   <div className="col-start-8 row-span-full w-8" />
                 </div>
-
+                <div className="h-8"></div>
                 {/* Events */}
                 {/* <ol
                   className="col-start-1 col-end-2 row-start-1 grid grid-cols-1 sm:grid-cols-7 sm:pr-8"
@@ -550,7 +408,6 @@ export default function DocViewAppointments() {
           </div>
         </div>
       </div>
-
     </>
   );
 }

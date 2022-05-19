@@ -47,6 +47,7 @@ import DoctorDashboard from "./Pages/Doctor_Pages/Dashboard";
 import DoctorSignIn from "./Pages/Doctor_Pages/Doctor_SignIn";
 import DocViewAppointments from "./Pages/Doctor_Pages/DocViewAppointments";
 import Live from "./Pages/Doctor_Pages/Live/Live";
+import NotAuthenticated from "./Pages/NotAuthenticated";
 
 import NoPermission from "./Pages/Admin_Pages/NoPermission";
 import Complain_Suggestions from "./Pages/User_Pages/Profile/Complain_Suggestions";
@@ -64,6 +65,7 @@ function App() {
         <Route exact path="/sign_up" element={<SignUp />} />
         <Route exact path="/checkout" element={<CheckoutContent />} />
         <Route exact path="/products" element={<Products />} />
+        <Route exact path="/NotAuthorised" element={<NotAuthenticated />} />
         
         <Route exact path="/cart" element={<Cart />} />
         <Route exact path="/maps" element={<Maps />} />

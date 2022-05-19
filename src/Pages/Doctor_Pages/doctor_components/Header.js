@@ -1,47 +1,40 @@
 import * as React from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
     <div>
-      <div
-        style={{
-          background: "#1976d2",
-          flexGrow: 1,
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <NavLink
+      <div className="bg-gray-100 flex-1 flex justify-end">
+        <Link
           to={`/doctor/dashboard`}
           // activeClassName="active"
-          style={{ textDecoration: "none", color: "white", padding: "10px" }}
+          style={{ textDecoration: "none", padding: "10px", marginLeft:"10px" }}
         >
           DASHBOARD
-        </NavLink>
-        <NavLink
+        </Link>
+        {/* <Link
           to={`/doctor/slots`}
           // activeClassName="active"
-          style={{ textDecoration: "none", color: "white", padding: "10px" }}
+          style={{ textDecoration: "none",  padding: "10px" }}
         >
           SLOTS
-        </NavLink>
+        </Link> */}
 
-        <NavLink
+        <Link
           to={`/doctor/sign_in`}
           // activeClassName="active"
-          style={{ textDecoration: "none", color: "white", padding: "10px" }}
+          style={{ textDecoration: "none", padding: "10px" }}
         >
           LOGIN / LOGOUT
-        </NavLink>
+        </Link>
 
-        <NavLink
+        <Link
           to={`/doctor/viewAppointments`}
           // activeClassName="active"
-          style={{ textDecoration: "none", color: "white", padding: "10px" }}
+          style={{ textDecoration: "none", padding: "10px" }}
         >
           VIEW APPOINTMENTS
-        </NavLink>
+        </Link>
       </div>
     </div>
   );

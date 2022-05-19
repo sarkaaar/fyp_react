@@ -53,6 +53,7 @@ export default function Product() {
   const [favourite, setFavourite] = useState("");
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
+  const [products, setProducts] = useState([]);
 
   const [addStaus, setAddStatus] = useState(false);
   const decrementCounter = () => {
@@ -144,6 +145,15 @@ export default function Product() {
       });
   };
 
+  const cartCollection = collection(db, "cart");
+  const getCartItems = async () => {
+    const q = await query(cartCollection, where("user", "==", user?.email));
+    await getDocs(q).then((res) => {
+      setProducts(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    });
+  };
+
   const addToCart = async () => {
     setAddStatus(true);
     const newProduct = {
@@ -158,6 +168,7 @@ export default function Product() {
         })
       : setOpen(true);
     console.log("Product Added Sucessfully");
+    getCartItems();
   };
 
   const getFav = async () => {
@@ -179,7 +190,7 @@ export default function Product() {
 
   return (
     <>
-      <Header />
+      <Header prod_length={products.length}/>
       {/* <Button
         onClick={async () => {
           let x = await getDoc(doc(db, `products/AO0PsfBRSrqJ53dPPm5k`));
