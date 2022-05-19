@@ -56,15 +56,17 @@ export default function Product() {
 
   const [addStaus, setAddStatus] = useState(false);
   const decrementCounter = () => {
-    if (qty <= 1 ){
+    if (qty <= 1) {
       return;
-    }
-    else {
+    } else {
       setQty(qty - 1);
     }
-  }
+  };
 
   useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
     const getProduct = async () => {
       let x = await getDoc(doc(db, `products/${id}`));
       console.log({
@@ -157,10 +159,6 @@ export default function Product() {
       : setOpen(true);
     console.log("Product Added Sucessfully");
   };
-
-  onAuthStateChanged(auth, (currentUser) => {
-    setUser(currentUser);
-  });
 
   const getFav = async () => {
     const q = query(

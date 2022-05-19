@@ -10,37 +10,34 @@ import Button from "@material-ui/core/Button";
 
 export default function Products() {
   //  Get Categories Names
-  const [value, setValue] = React.useState([10, 50]);
+  const [value, setValue] = useState([10, 50]);
   const [categories, setCategories] = useState();
   const [currentCategory, setCurrentCategory] = useState("");
 
   const [products, setProducts] = useState([]);
   const [loader, setLoader] = useState(false);
+
   const productsCollection = collection(db, "products");
+
   const categoriesCollection = collection(db, "categories");
 
   useEffect(() => {
-    // Search Categories
+    // Get Products
     const getProducts = async () => {
       const data = await getDocs(productsCollection);
       setProducts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       setLoader(false);
       console.log(products);
     };
+    // Get All Categories
     const getCategories = async () => {
       const data = await getDocs(categoriesCollection);
       setCategories(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       setLoader(false);
     };
-    // specific data fetch for categories
-    const getSpecificProducts = async () => {
-      const data = await getDocs(productsCollection);
-      setProducts(data.docs.name.map((doc) => ({ ...doc.data(), id: doc.id })));
-      setLoader(false);
-    };
+
     // Function Calls
     setLoader(true);
-    getSpecificProducts(); // check
     getProducts();
     getCategories();
   }, []);
@@ -121,17 +118,12 @@ export default function Products() {
           </div>
         ) : products.length === 0 ? (
           <div>No products available!</div>
-        ) : currentCategory != "" ? (
+        ) : currentCategory !== "" ? (
           <>
             <div className="xl:flex">
               <div className="grid  lg:grid-cols-2 xl:grid-cols-3 xl:gap-6 2xl:grid-cols-4">
-                {/* {currentcatergory && 
-              products.filter(p => p.categorie === currrentcategory).map()} */}
                 {products.map((item) => {
                   return (
-                    // <div className="p-2">
-                    //   <MediaCard obj={item} />
-                    // </div>
                     <>
                       {currentCategory === item?.category ? (
                         <MediaCard obj={item} />
@@ -148,8 +140,6 @@ export default function Products() {
         ) : (
           <div className="xl:flex">
             <div className="grid  lg:grid-cols-2 xl:grid-cols-3 xl:gap-6 2xl:grid-cols-4">
-              {/* {currentcatergory && 
-              products.filter(p => p.categorie === currrentcategory).map()} */}
               {products.map((item) => {
                 return (
                   <div className="p-2">
@@ -167,11 +157,3 @@ export default function Products() {
     </div>
   );
 }
-
-// {product?.map((product) => (
-//   <>
-//     {item?.name === product?.category ? (
-//       <MediaCard obj={product} />
-//     ) : (
-//       <></>
-//     )}

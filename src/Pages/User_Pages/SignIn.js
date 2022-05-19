@@ -11,13 +11,13 @@ import { auth } from "../../firebase-config";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
 export default function SignIn() {
   const navigate = useNavigate();
 
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState({});
+  const [errorMessage, setErrorMessage] = useState("");
 
   onAuthStateChanged(auth, (currentUser) => {
     setUser(currentUser);
@@ -31,12 +31,11 @@ export default function SignIn() {
         email,
         password
       );
-      console.log(LoggedInUser);
-      console.log("User Logged in sucessfully");
 
       navigate("/");
     } catch (error) {
-      console.log(error);
+      console.log(error.code);
+      setErrorMessage(error.code);
     }
   };
 
@@ -85,6 +84,11 @@ export default function SignIn() {
                 }}
                 type="password"
               />
+              {errorMessage !== "" ? (
+                <h1 className="text-red-600 font-bold ">{errorMessage}</h1>
+              ) : (
+                <></>
+              )}
             </div>
             <div className="flex items-center justify-between">
               <div className="flex items-center">
