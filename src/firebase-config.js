@@ -5,6 +5,7 @@ import { getStorage } from "firebase/storage";
 
 // main PET_PLANET
 
+<<<<<<< HEAD
 // const firebaseConfig = {
 //   apiKey: "AIzaSyBlA6LWKSY6KOzKvpG0bQTXF-3Mr9Pxu5A",
 //   authDomain: "pet-planet-app.firebaseapp.com",
@@ -17,6 +18,8 @@ import { getStorage } from "firebase/storage";
 
 // Duplicate PET_PLANET
 
+=======
+>>>>>>> c6422cf533067776ac920a25d9408e7a4ce164b9
 const firebaseConfig = {
   apiKey: "AIzaSyCaIpOW2_zwKfkPllWhHq5nA7t_HQrsCV0",
   authDomain: "pet-planet-secondary.firebaseapp.com",
@@ -26,6 +29,18 @@ const firebaseConfig = {
   appId: "1:852005289493:web:35a7c692eb9cc4edb1d81c",
   measurementId: "G-VC2TF5BS3Y",
 };
+
+// Duplicate PET_PLANET
+
+// const firebaseConfig = {
+//   apiKey: "AIzaSyCUvt-mlb8UIYHfFUKn88eTSPUABrQroOU",
+//   authDomain: "pet-planet-bypass.firebaseapp.com",
+//   projectId: "pet-planet-bypass",
+//   storageBucket: "pet-planet-bypass.appspot.com",
+//   messagingSenderId: "370626904825",
+//   appId: "1:370626904825:web:b7802b9ef170b6af9b5828",
+//   measurementId: "G-QR8PS7Z9QY",
+// };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

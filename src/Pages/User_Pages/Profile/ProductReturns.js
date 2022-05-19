@@ -57,7 +57,10 @@ export default function PRoductReturns() {
                     {item?.date?.toDate()?.toDateString()}
                   </td>
 
+<<<<<<< HEAD
                   {/* <td className=" text-lg p-2 px-8">{item?.user}</td> */}
+=======
+>>>>>>> c6422cf533067776ac920a25d9408e7a4ce164b9
                 </tr>
               </tbody>
             </>

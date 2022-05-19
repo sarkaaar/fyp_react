@@ -2,34 +2,26 @@ import Header from "../Components/Header";
 import Sidebar from "./Sidebar";
 import MediaCard from "../Components/MediaCard";
 import * as React from "react";
-
 import { useState, useEffect } from "react";
 import { db, auth } from "../../../firebase-config";
-import { useNavigate, Link } from "react-router-dom";
-import {
-  collection,
-  getDocs,
-  deleteDoc,
-  query,
-  where,
-  doc,
-} from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
 export default function Favourites() {
-  const navigate = useNavigate();
   const [user, setUser] = useState();
-  const [total, setTotal] = useState(0);
   const [products, setProducts] = useState([]);
 
   const favouritesRef = collection(db, "favourites");
+
   const getCartItems = async () => {
     const q = await query(favouritesRef, where("user", "==", user?.email));
-    const queryResults = await getDocs(q);
-    setProducts(
-      queryResults.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-    );
-    console.log(products);
+    await getDocs(q)
+      .then((res) => {
+        setProducts(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   useEffect(() => {
@@ -40,10 +32,12 @@ export default function Favourites() {
   }, [user]);
 
   return (
-    <div className="">
+    <div>
       <Header />
-      <Sidebar />
+      <div className="flex">
+        <Sidebar />
 
+<<<<<<< HEAD
       <div className="ml-96 ">
         <h1 className="text-2xl font-bold mt-4">Favourites </h1>
 
@@ -60,6 +54,15 @@ export default function Favourites() {
                 return <MediaCard obj={item?.product} />;
               })}
             </div>
+=======
+        <div className="">
+          <h1 className="text-2xl font-bold mt-4">Favourites </h1>
+
+          <div className="mt-8 lg:w-1/2  bg-white p-2">
+            {products.map((item, key) => {
+              return <MediaCard obj={item?.product} />;
+            })}
+>>>>>>> c6422cf533067776ac920a25d9408e7a4ce164b9
           </div>
         </div>
       </div>

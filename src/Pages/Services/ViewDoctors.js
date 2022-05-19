@@ -24,25 +24,25 @@ export default function ViewDoctors() {
   return (
     <div>
       <Header />
-      <figure class=" md:flex place-content-between w-6/12 bg-slate-100 rounded-xl p-8 md:p-0 dark:bg-slate-800 rounded-lg">
+      <figure className=" md:flex place-content-between w-6/12 bg-slate-100 rounded-xl p-8 md:p-0 dark:bg-slate-800 rounded-lg">
         <img
-          class="w-24 h-24 md:w-48 md:h-auto md:rounded-none rounded-full mx-auto"
+          className="w-24 h-24 md:w-48 md:h-auto md:rounded-none rounded-full mx-auto"
           src="/home/awb/Desktop/FYP/fyp_react/src/assets/images/doctor.png"
           alt=""
           width="384"
           height="512"
         />
-        <div class="pt-6 md:p-8 text-center md:text-left space-y-4">
+        <div className="pt-6 md:p-8 text-center md:text-left space-y-4">
           <blockquote>
-            <p class="text-lg font-medium">
+            <p className="text-lg font-medium">
               “Tailwind CSS is the only framework that I've seen scale on large
               teams. It’s easy to customize, adapts to any design, and the build
               size is tiny.”
             </p>
           </blockquote>
-          <figcaption class="font-medium">
-            <div class="text-sky-500 dark:text-sky-400">Sarah Dayan</div>
-            <div class="text-slate-700 dark:text-slate-500">
+          <figcaption className="font-medium">
+            <div className="text-sky-500 dark:text-sky-400">Sarah Dayan</div>
+            <div className="text-slate-700 dark:text-slate-500">
               Staff Engineer, Algolia
             </div>
           </figcaption>
@@ -64,7 +64,7 @@ export default function ViewDoctors() {
       <div>
         {doctors.map((item, key) => {
           return (
-            <figure class=" md:flex place-content-between w-6/12 bg-slate-100 rounded-xl p-8 md:p-0 dark:bg-slate-800 rounded-lg">
+            <figure className=" md:flex place-content-between w-6/12 bg-slate-100 rounded-xl p-8 md:p-0 dark:bg-slate-800 rounded-lg">
               <PersonIcon
                 style={{
                   width: "130px",
@@ -73,18 +73,18 @@ export default function ViewDoctors() {
                   marginTop: "70px",
                 }}
               />
-              <div class="pt-6 md:p-8 text-center md:text-left space-y-4">
+              <div className="pt-6 md:p-8 text-center md:text-left space-y-4">
                 <blockquote>
-                  <p class="text-lg font-bold">Dr. {item.name}</p>
+                  <p className="text-lg font-bold">Dr. {item.name}</p>
                 </blockquote>
                 <blockquote>
-                  <p class="text-md font-medium">{item.clinicName}</p>
+                  <p className="text-md font-medium">{item.clinicName}</p>
                 </blockquote>
                 <blockquote>
-                  <p class="text-lg font-medium"> {item.clinicPhone}</p>
+                  <p className="text-lg font-medium"> {item.clinicPhone}</p>
                 </blockquote>
                 <blockquote>
-                  <p class="text-lg font-medium">
+                  <p className="text-lg font-medium">
                     {" "}
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -103,12 +103,12 @@ export default function ViewDoctors() {
                   </p>
                 </blockquote>
                 <blockquote>
-                  <p class="text-lg font-medium">Fee : {item.fees}</p>
+                  <p className="text-lg font-medium">Fee : {item.fees}</p>
                 </blockquote>
 
-                <figcaption class="font-medium">
-                  <div class="text-sky-500 dark:text-sky-400">Sarah Dayan</div>
-                  <div class="text-slate-700 dark:text-slate-500"></div>
+                <figcaption className="font-medium">
+                  <div className="text-sky-500 dark:text-sky-400">Sarah Dayan</div>
+                  <div className="text-slate-700 dark:text-slate-500"></div>
                 </figcaption>
               </div>
             </figure>

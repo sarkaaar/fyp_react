@@ -1,13 +1,16 @@
 import * as React from "react";
 import Header from "./Components/Header";
-import GoogleIcon from "@mui/icons-material/Google";  
+import GoogleIcon from "@mui/icons-material/Google";
 import { useState } from "react";
-import { onAuthStateChanged, signOut,createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  onAuthStateChanged,
+  signOut,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
 import { Button, TextField } from "@mui/material";
-import { auth ,db} from "../../firebase-config";
+import { auth, db } from "../../firebase-config";
 import { useNavigate } from "react-router-dom";
 import { collection, addDoc } from "firebase/firestore";
-
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -17,6 +20,7 @@ export default function SignUp() {
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
   const [name, setName] = useState();
+  const [errorMessage, setErrorMessage] = useState("");
 
   const usersCollection = collection(db, "users");
 
@@ -34,7 +38,8 @@ export default function SignUp() {
       );
       navigate("/");
     } catch (error) {
-      console.log(error.message);
+      setErrorMessage(error.code);
+      console.log(error.code);
       console.log("error creating user");
     }
   };
@@ -87,6 +92,11 @@ export default function SignUp() {
                   setEmail(e.target.value);
                 }}
               />
+              {errorMessage !== "" ? (
+                <h1 className="text-red-600 font-bold mb-2">{errorMessage}</h1>
+              ) : (
+                <></>
+              )}
               <TextField
                 style={{ paddingBottom: "15px" }}
                 fullWidth

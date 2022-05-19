@@ -2,7 +2,7 @@ import * as React from "react";
 
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
-import {  useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { db } from "../../firebase-config";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -14,22 +14,22 @@ import {
   doc,
   updateDoc,
 } from "firebase/firestore";
-import { Button } from "@mui/material";
+// import { Button } from "@mui/material";
 import { auth } from "../../firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
 
 export default function Cart() {
-  const updateQuantity = async (id, qty) => {
-    const prod = doc(db, "cart", id);
-    await updateDoc(prod, { quantity: qty })
-      .then(() => {
-        console.log("value updated");
-        getCartItems();
-      })
-      .catch(() => {
-        console.log("value not updated");
-      });
-  };
+  // const updateQuantity = async (id, qty) => {
+  //   const prod = doc(db, "cart", id);
+  //   await updateDoc(prod, { quantity: qty })
+  //     .then(() => {
+  //       console.log("value updated");
+  //       getCartItems();
+  //     })
+  //     .catch(() => {
+  //       console.log("value not updated");
+  //     });
+  // };
 
   const deleteProduct = async (id) => {
     const prod = doc(db, "cart", id);

@@ -5,12 +5,11 @@ import {
   signOut,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { Button, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import { Link } from "react-router-dom";
 import { auth } from "../../firebase-config";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 
 export default function SignIn() {
   const navigate = useNavigate();
@@ -18,6 +17,7 @@ export default function SignIn() {
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState({});
+  const [errorMessage, setErrorMessage] = useState("");
 
   onAuthStateChanged(auth, (currentUser) => {
     setUser(currentUser);
@@ -25,25 +25,21 @@ export default function SignIn() {
 
   // Login Function
   const login = async () => {
-    try {
-      const LoggedInUser = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      console.log(LoggedInUser);
-      console.log("User Logged in sucessfully");
-
-      navigate("/");
-    } catch (error) {
-      console.log(error);
-    }
+    await signInWithEmailAndPassword(auth, email, password)
+      .then((res) => {
+        console.log(res);
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err.code);
+        setErrorMessage(err.code);
+      });
   };
 
   // Logout Function
-  const logout = async () => {
-    await signOut(auth);
-  };
+  // const logout = async () => {
+  //   await signOut(auth);
+  // };
 
   return (
     <>
@@ -85,6 +81,11 @@ export default function SignIn() {
                 }}
                 type="password"
               />
+              {errorMessage !== "" ? (
+                <h1 className="text-red-600 font-bold ">{errorMessage}</h1>
+              ) : (
+                <></>
+              )}
             </div>
             <div className="flex items-center justify-between">
               <div className="flex items-center">
@@ -113,7 +114,6 @@ export default function SignIn() {
             </div>
             <div>
               <button
-                // type="submit"
                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 onClick={() => {
                   login();
@@ -141,12 +141,7 @@ export default function SignIn() {
           </div>
         </div>
       </div>
-      <div>
-        <h1>Current User Signed-In Information if present (Email)</h1>
-        <h1>{user?.email}</h1>
-
-        <Button onClick={logout}>Logout</Button>
-      </div>
+     
     </>
   );
 }
