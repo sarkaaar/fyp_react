@@ -301,7 +301,7 @@ export default function Inventory() {
             >
               Submit
             </Button>
-            <Button fullWidth variant="contained" color="warning">
+            <Button fullWidth variant="contained" color="warning" onClick={handleClose}>
               Cancel
             </Button>
           </div>
