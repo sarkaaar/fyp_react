@@ -87,8 +87,8 @@ export default function Products() {
                 style={{ width: "60px", height: "30px" }}
               />
             </div>
-            <div class="text-gray-700 block px-4 py-2 text-sm">
-              <label for="customRange2" class="form-label">
+            <div className="text-gray-700 block px-4 py-2 text-sm">
+              <label for="customRange2" className="form-label">
                 Select Range
               </label>
               <div className="flex">

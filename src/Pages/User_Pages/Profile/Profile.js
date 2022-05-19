@@ -1,117 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 import Header from "../Components/Header";
-import { Link } from "react-router-dom";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import ReplayIcon from "@mui/icons-material/Replay";
-import ArticleIcon from "@mui/icons-material/Article";
-
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import { Button } from "@mui/material";
+// import { Link } from "react-router-dom";
+// import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+// import ReplayIcon from "@mui/icons-material/Replay";
+// import ArticleIcon from "@mui/icons-material/Article";
+// import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+// import { Button } from "@mui/material";
 import { TextField } from "@mui/material";
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
+// import Box from "@mui/material/Box";
+// import Modal from "@mui/material/Modal";
 import Sidebar from "./Sidebar";
-
-// const style = {
-//   position: "absolute",
-//   top: "50%",
-//   left: "50%",
-//   transform: "translate(-50%, -50%)",
-//   width: 800,
-//   bgcolor: "background.paper",
-//   border: "2px solid #000",
-//   boxShadow: 24,
-//   p: 4,
-// };
-
-import { Fragment } from "react";
-import {
-  Disclosure,
-  Menu,
-  RadioGroup,
-  Switch,
-  Transition,
-} from "@headlessui/react";
-import { QuestionMarkCircleIcon, SearchIcon } from "@heroicons/react/solid";
-import {
-  BellIcon,
-  CogIcon,
-  CreditCardIcon,
-  KeyIcon,
-  MenuIcon,
-  UserCircleIcon,
-  ViewGridAddIcon,
-  XIcon,
-} from "@heroicons/react/outline";
-
-const user = {
-  name: "Lisa Marie",
-  email: "lisamarie@example.com",
-  imageUrl:
-    "https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=80",
-};
-const navigation = [
-  { name: "Dashboard", href: "#" },
-  { name: "Jobs", href: "#" },
-  { name: "Applicants", href: "#" },
-  { name: "Company", href: "#" },
-];
-const userNavigation = [
-  { name: "Your Profile", href: "#" },
-  { name: "Settings", href: "#" },
-  { name: "Sign out", href: "#" },
-];
-const subNavigation = [
-  { name: "Profile", href: "#", icon: UserCircleIcon, current: false },
-  { name: "Account", href: "#", icon: CogIcon, current: false },
-  { name: "Password", href: "#", icon: KeyIcon, current: false },
-  { name: "Notifications", href: "#", icon: BellIcon, current: false },
-  { name: "Plan & Billing", href: "#", icon: CreditCardIcon, current: true },
-  { name: "Integrations", href: "#", icon: ViewGridAddIcon, current: false },
-];
-const plans = [
-  {
-    name: "Startup",
-    priceMonthly: 29,
-    priceYearly: 290,
-    limit: "Up to 5 active job postings",
-  },
-  {
-    name: "Business",
-    priceMonthly: 99,
-    priceYearly: 990,
-    limit: "Up to 25 active job postings",
-  },
-  {
-    name: "Enterprise",
-    priceMonthly: 249,
-    priceYearly: 2490,
-    limit: "Unlimited active job postings",
-  },
-];
-const payments = [
-  {
-    id: 1,
-    date: "1/1/2020",
-    datetime: "2020-01-01",
-    description: "Business Plan - Annual Billing",
-    amount: "CA$109.00",
-    href: "#",
-  },
-  // More payments...
-];
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
-
+import PersonIcon from "@mui/icons-material/Person";
 export default function Profile() {
   // const [passwordModalOpen, SetpasswordModalOpen] = useState(false);
   // const [infoModalOpen, setInfoModalOpen] = useState(false);
-
   // const handleOpenPasswordModal = () => SetpasswordModalOpen(true);
   // const handleClosePasswordModal = () => SetpasswordModalOpen(false);
-
   // const handleOpenInfoModal = () => setInfoModalOpen(true);
   // const handleCloseInfoModal = () => setInfoModalOpen(false);
 
@@ -322,110 +226,71 @@ export default function Profile() {
   //   </div>
   // );
 
-  const [selectedPlan, setSelectedPlan] = useState(plans[1]);
-  const [annualBillingEnabled, setAnnualBillingEnabled] = useState(true);
-
   return (
     <>
       <Header />
       <div className="flex">
-        <div className="w-full lg:w-1/5">
-          <Sidebar />   
+        <div className="w-64">
+          <Sidebar />
         </div>
-        <div className="w-full lg:w-4/5">
-        <div className="h-full">
-        <main className="max-w-7xl mx-auto pb-10 lg:py-12 lg:px-8">
-          <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
-            <div className="space-y-6 sm:px-6 lg:px-0 lg:col-span-9">
-              <section aria-labelledby="payment-details-heading">
-                <form action="#" method="POST">
-                  <div className="shadow sm:rounded-md sm:overflow-hidden">
-                    <div className="bg-white py-6 px-4 sm:p-6">
-                      <div>
-                        <h2
-                          id="payment-details-heading"
-                          className="text-lg leading-6 font-medium text-gray-900"
-                        >
-                          Profile Details
-                        </h2>
-                        <p className="mt-1 text-sm text-gray-500">
-                          See and update your profile information.
-                        </p>
-                      </div>
-
-                      <div className="mt-6 grid grid-cols-4 gap-6">
-                        <div className="col-span-4 sm:col-span-2">
-                          <label
-                            htmlFor="first-name"
-                            className="block text-sm font-medium text-gray-700"
-                          >
-                            Name
-                          </label>
-                          <input
-                            type="text"
-                            name="first-name"
-                            id="first-name"
-                            autoComplete="cc-given-name"
-                            className="mt-1 block w-full border-solid border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                          />
-                        </div>
-
-                        <div className="col-span-4 sm:col-span-2">
-                          <label
-                            htmlFor="email-address"
-                            className="block text-sm font-medium text-gray-700"
-                          >
-                            Email address
-                          </label>
-                          <input
-                            type="text"
-                            name="email-address"
-                            id="email-address"
-                            autoComplete="email"
-                            className="mt-1 block w-full border-solid border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                          />
-                        </div>
-
-                        <div className="col-span-4 sm:col-span-2">
-                          <label
-                            htmlFor="security-code"
-                            className="flex items-center text-sm font-medium text-gray-700"
-                          >
-                            <span>Password</span>
-                            <QuestionMarkCircleIcon
-                              className="ml-1 flex-shrink-0 h-5 w-5 text-gray-300"
-                              aria-hidden="true"
+        <div className="w-full lg:w-4/5 flex justify-center">
+          <div className="h-full">
+            <main className="max-w-7xl mx-auto pb-10 lg:py-12 lg:px-8">
+              <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
+                <div className="space-y-6 sm:px-6 lg:px-0 lg:col-span-9">
+                  <section aria-labelledby="payment-details-heading">
+                    <form action="#" method="POST">
+                      <div className="shadow sm:rounded-md sm:overflow-hidden">
+                        <div className="bg-white py-6 px-4 sm:p-6">
+                          <div className="flex justify-between">
+                            <div>
+                              <h2
+                                id="payment-details-heading"
+                                className="text-lg leading-6 font-medium text-gray-900"
+                              >
+                                Profile Details
+                              </h2>
+                              <p className="mt-1 text-sm text-gray-500">
+                                See and update your profile information.
+                              </p>
+                            </div>
+                            <PersonIcon
+                              style={{
+                                width: "172",
+                                height: "172",
+                                borderRadius: "100%",
+                                color: "gray",
+                                border: "1px solid black",
+                              }}
                             />
-                          </label>
-                          <input
-                            type="password"
-                            name="security-code"
-                            id="security-code"
-                            autoComplete="cc-csc"
-                            className="mt-1 block w-full border-solid border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                          />
+                          </div>
+
+                          <div className="mt-6 flex flex-col gap-4">
+                            <TextField fullWidth label="Name" />
+                            <div className="flex gap-4">
+                              <TextField fullWidth label="Email" />
+                              <TextField fullWidth label="Phone Number" />
+                            </div>
+                            <TextField fullWidth label="Password" />
+                          </div>
+                        </div>
+                        <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                          <button
+                            type="submit"
+                            className="bg-gray-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
+                          >
+                            Save
+                          </button>
                         </div>
                       </div>
-                    </div>
-                    <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                      <button
-                        type="submit"
-                        className="bg-gray-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
-                      >
-                        Save
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </section>
-            </div>
+                    </form>
+                  </section>
+                </div>
+              </div>
+            </main>
           </div>
-        </main>
-      </div>
         </div>
       </div>
-
-      
     </>
   );
 }

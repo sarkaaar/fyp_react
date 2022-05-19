@@ -5,7 +5,7 @@ import {
   signOut,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { Button, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import { Link } from "react-router-dom";
 import { auth } from "../../firebase-config";
 import React, { useState } from "react";
@@ -37,9 +37,9 @@ export default function SignIn() {
   };
 
   // Logout Function
-  const logout = async () => {
-    await signOut(auth);
-  };
+  // const logout = async () => {
+  //   await signOut(auth);
+  // };
 
   return (
     <>

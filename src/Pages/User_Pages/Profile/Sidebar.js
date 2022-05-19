@@ -1,30 +1,28 @@
 import { Link } from "react-router-dom";
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ReplayIcon from "@mui/icons-material/Replay";
-import ArticleIcon from '@mui/icons-material/Article';
+import ArticleIcon from "@mui/icons-material/Article";
 
 export default function Sidebar() {
   return (
-    <aside class="w-64 bg-gray-800 h-full left-0" aria-label="Sidebar">
-      <div class="overflow-y-auto py-4 px-3  rounded ">
+    <aside class="w-64 bg-gray-800 h-full left-0 bottom-0" aria-label="Sidebar">
+      <div class=" py-4 px-3  rounded ">
         <ul class="space-y-2">
           <li>
             <Link
               to="/profile/favourites"
               class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white  hover:bg-gray-600 dark:hover:bg-gray-700"
             >
-            <FavoriteBorderIcon className="w-6 h-6 text-white"/>
+              <FavoriteBorderIcon className="w-6 h-6 text-white" />
               <span class="ml-3 text-white">Favourites</span>
             </Link>
           </li>
           <li>
-            
             <Link
               to="/profile/ProductReturns"
               class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white  hover:bg-gray-600 dark:hover:bg-gray-700"
             >
-
-              <ReplayIcon className="w-6 h-6 text-white "/>
+              <ReplayIcon className="w-6 h-6 text-white " />
               <span class="flex-1 text-white ml-3 whitespace-nowrap">
                 Product Return
               </span>
@@ -36,7 +34,7 @@ export default function Sidebar() {
               class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white  hover:bg-gray-600 dark:hover:bg-gray-700"
             >
               {/* <FontAwesomeIcon icon="fa-solid fa-money-check-pen" /> */}
-              <ArticleIcon className="w-6 h-6 text-white "/>
+              <ArticleIcon className="w-6 h-6 text-white " />
               <span class="flex-1 text-white ml-3 whitespace-nowrap">
                 Product Return Form
               </span>

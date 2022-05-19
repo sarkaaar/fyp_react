@@ -272,23 +272,23 @@ export default function Product() {
               </div>
               <div className="flex mt-4">
                 {addStaus ? (
-                  // <div class="flex justify-center bg-indigo-500 items-center">
+                  // <div className="flex justify-center bg-indigo-500 items-center">
                   //   <div
-                  //     class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full "
+                  //     className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full "
                   //     role="status"
                   //   >
-                  //     {/* <span class="visually-hidden">Loading...</span> */}
+                  //     {/* <span className="visually-hidden">Loading...</span> */}
                   //     <h1> Adding To Cart</h1>
                   //   </div>
                   // </div>
                   <button
                     type="button"
-                    class=" w-11/12 h-12 bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    className=" w-11/12 h-12 bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     disabled
                   >
                     <svg
                       role="status"
-                      class="mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                      className="mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
                       viewBox="0 0 100 101"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"

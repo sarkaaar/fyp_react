@@ -5,9 +5,9 @@ import PageNotFoundPic from "../../src/assets/images/page_not_found_pic.jpg";
 export default function PageNotFound() {
   return (
     <div className="flex flex-col items-center justify-center font-extrabold text-3xl">
-      {/* <span class="flex h-3 w-3">
-        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-500 opacity-75"></span>
-        <span class="relative inline-flex rounded-full h-3 w-3 bg-rose-500"></span>
+      {/* <span className="flex h-3 w-3">
+        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-500 opacity-75"></span>
+        <span className="relative inline-flex rounded-full h-3 w-3 bg-rose-500"></span>
       </span> */}
       <h1>This Page Does not Exists!</h1>
       <img className="h-56 m-2" src={PageNotFoundPic} alt="Page Not Found" />
