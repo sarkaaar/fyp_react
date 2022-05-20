@@ -13,23 +13,22 @@ import LocationSearchingIcon from "@mui/icons-material/LocationSearching";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 export default function Sidebar() {
   return (
-    <aside class="w-64 bg-gray-800 h-full left-0 bottom-0 fixed" aria-label="Sidebar">
+    <aside class="w-64 bg-gray-800 h-full left-0 bottom-0 fixed lg:overflow-auto" aria-label="Sidebar">
       <div class=" py-4 px-3  rounded mt-24">
          <ul className="space-y-2">
           <li>
             <Link
               to="/admin/dashboard "
-              className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white  hover:bg-gray-600 dark:hover:bg-gray-700"
+              className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-600"
             >
               <HomeIcon fontSize="medium" style={{ color: "white" }} />
-
               <span className="ml-3 text-white">Home</span>
             </Link>
           </li>
           <li>
             <Link
               to="/admin/inventory"
-              className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white  hover:bg-gray-600 dark:hover:bg-gray-700"
+              className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-600"
             >
               <InventoryIcon className="w-6 h-6 text-white " />
               <span className="ml-3 text-white">Inventory</span>
@@ -38,7 +37,7 @@ export default function Sidebar() {
           <li>
             <Link
               to="/admin/viewAllProducts"
-              className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white  hover:bg-gray-600 dark:hover:bg-gray-700"
+              className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-600"
             >
               <LocationSearchingIcon className="w-6 h-6 text-white " />
               <span className="flex-1 text-white ml-3 whitespace-nowrap">
@@ -49,7 +48,7 @@ export default function Sidebar() {
           <li>
             <Link
               to="/admin/addProducts"
-              className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white  hover:bg-gray-600 dark:hover:bg-gray-700"
+              className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-600"
             >
               <AddShoppingCartIcon className="w-6 h-6 text-white " />
               <span className="ml-3 text-white">Add Product</span>
@@ -59,10 +58,10 @@ export default function Sidebar() {
           <li>
             <Link
               to="/admin/orders"
-              className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white  hover:bg-gray-600 dark:hover:bg-gray-700"
+              className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-600"
             >
               <svg
-                className="flex-shrink-0 w-6 h-6 text-white transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                className="flex-shrink-0 w-6 h-6 text-white transition duration-75 group-hover:text-gray-900"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -77,7 +76,7 @@ export default function Sidebar() {
           <li>
             <Link
               to="/admin/productReturn"
-              className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white  hover:bg-gray-600 dark:hover:bg-gray-700"
+              className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-600"
             >
               <ReplayIcon className="w-6 h-6 text-white " />
 
@@ -87,7 +86,7 @@ export default function Sidebar() {
           <li>
             <Link
               to="/admin/complaints"
-              className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white  hover:bg-gray-600 dark:hover:bg-gray-700"
+              className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-600"
             >
               <ContactPhoneIcon className="w-6 h-6 text-white " />
               <span className="ml-3 text-white">Complaints</span>
@@ -96,7 +95,7 @@ export default function Sidebar() {
           <li>
             <Link
               to="/admin/categories"
-              className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white  hover:bg-gray-600 dark:hover:bg-gray-700"
+              className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-600"
             >
               <CategoryIcon className="w-6 h-6 text-white " />
               <span className="flex-1 text-white ml-3 whitespace-nowrap">
@@ -107,7 +106,7 @@ export default function Sidebar() {
           <li>
             <Link
               to="/admin/addDoctor"
-              className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white  hover:bg-gray-600 dark:hover:bg-gray-700"
+              className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-600"
             >
               <PersonAddIcon className="w-6 h-6 text-white " />
               <span className="flex-1 text-white ml-3 whitespace-nowrap">
@@ -118,7 +117,7 @@ export default function Sidebar() {
           <li>
             <Link
               to="/admin/viewDoctor"
-              className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white  hover:bg-gray-600 dark:hover:bg-gray-700"
+              className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-600"
             >
               <PersonSearchIcon className="w-6 h-6 text-white " />
               <span className="flex-1 text-white ml-3 whitespace-nowrap">
@@ -129,7 +128,7 @@ export default function Sidebar() {
           <li>
             <Link
               to="/admin/profile"
-              className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white  hover:bg-gray-600 dark:hover:bg-gray-700"
+              className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-600"
             >
               <AccountBoxIcon className="w-6 h-6 text-white " />
 
@@ -140,7 +139,7 @@ export default function Sidebar() {
           <li>
             <Link
               to="/admin/sign_in"
-              className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white  hover:bg-gray-600 dark:hover:bg-gray-700"
+              className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-600"
             >
               <ExitToAppIcon className="w-6 h-6 text-white "  />
               <span className="flex-1 text-white ml-3 whitespace-nowrap">

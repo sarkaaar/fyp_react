@@ -22,6 +22,7 @@ export default function Inventory() {
   const productsCollection = collection(db, "products");
   const [variants, setVariants] = useState([["", 0]]);
   const [s_Product, setS_Product] = useState();
+  const [loader, setLoader] = useState(false);
   // Modal
   const [open, setOpen] = React.useState(false);
   const [delOpen, setDelOpen] = React.useState(false);
@@ -34,10 +35,12 @@ export default function Inventory() {
     const getProducts = async () => {
       const data = await getDocs(productsCollection);
       setProducts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      setLoader(false);
     };
 
+    setLoader(true);
     getProducts();
-  }, []);
+  }, [productsCollection]);
 
   const updateVariant = (v, i) => {
     const tempVariants = [...variants];
@@ -64,14 +67,103 @@ export default function Inventory() {
   // render()
   return (
     <>
-      <Header />
-     
-        <Sidebar />
-        <div className="">
-        <div className="ml-72 p-16 bg-white rounded">
-          <h1 className="text-4xl font-bold ml-8">Inventory </h1>
+      <div className="flex flex-col">
+        <Header />
+        <div className="flex flex-row">
+          <div className="w-1/5">
+            <Sidebar />
+          </div>
+          <div className="w-4/5">
+            <h1 className="text-left font-bold text-2xl ">Inventory</h1>
+            {products.length < 1 ? (
+              <div className="flex justify-center items-center h-full">
+                <div className="w-20 h-20 border-t-4 border-b-4 border-blue-900 rounded-full animate-spin"></div>
+              </div>
+            ) : products.length === 0 ? (
+              <div className="text-center font-bond text-xl">Inventory is Empty!</div>
+            ) : (
+              <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-1 mr-2 mb-1">
+                <table className="w-full text-sm text-left text-gray-500">
+                  <thead className="text-xs text-gray-700 uppercase bg-gray-300">
+                    <tr>
+                      <th scope="col" className="px-6 py-3">
+                        Name
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Sale Price
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Cost Price
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Description
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Stock
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+
+                  {products.map((item, key) => (
+                    <>
+                      <tbody key={key}>
+                        <tr className="bg-white border-b hover:bg-gray-100">
+                          <td className="px-6 py-4">{item.name}</td>
+                          <td className="px-6 py-4">{item.salePrice}</td>
+                          <td className="px-6 py-4">{item.costPrice}</td>
+                          <td className="px-6 py-4">{item.description}</td>
+                          <td className="px-6 py-4">
+                            {item &&
+                              Object.keys(item.variants).map((key) => {
+                                let variant = item?.variants[key];
+                                return (
+                                  <tr className="">
+                                    {/* <td key={key} className="px-6 py-2">
+                                For {variant[0]}:
+                              </td> */}
+                                    <td key={key} className="px-6 py-2">
+                                      {variant[1]}
+                                    </td>
+                                  </tr>
+                                );
+                              })}
+                          </td>
+                          <td className="px-6 py-4">
+                            <>
+                              <Button
+                                onClick={() => {
+                                  setS_Product(item);
+                                  setOpen(true);
+                                }}
+                              >
+                                <EditIcon />
+                              </Button>
+                              <Button
+                                onClick={() => {
+                                  setS_Product(item);
+                                  setDelOpen(true);
+                                }}
+                              >
+                                <DeleteIcon />
+                              </Button>
+                            </>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </>
+                  ))}
+                </table>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+      {/* <div className="">
+        <div className="ml-72">
           <table className=" w-11/12 m-auto divide-y divide-gray-200 table-fixed dark:divide-gray-700">
-            {/* <ViewyHead /> */}
             <thead className="p-4 bg-gray-100 dark:bg-gray-700">
               <tr>
                 <th className="text-xl p-2 px-8">Name</th>
@@ -84,7 +176,6 @@ export default function Inventory() {
             </thead>
 
             {products.map((item, key) => (
-              // <ViewyBody obj={item} />
               <>
                 <tbody key={key}>
                   <tr>
@@ -134,7 +225,7 @@ export default function Inventory() {
             ))}
           </table>
         </div>
-      </div>
+      </div> */}
       {/* ------------------------------------------------------------------ */}
       {/* Delete Modal */}
       <Modal
