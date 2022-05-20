@@ -75,7 +75,7 @@ export default function Header(props) {
 
   // )
   return (
-    <div className="z-10 bg-white absolute w-full">
+    <div className="z-10 bg-white   w-full">
       <div className="flex justify-between">
         <div className="flex p-2 px-8 gap-8">
           <Link
