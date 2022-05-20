@@ -27,6 +27,18 @@ const firebaseConfig = {
 //   measurementId: "G-VC2TF5BS3Y",
 // };
 
+// Duplicate PET_PLANET
+
+// const firebaseConfig = {
+//   apiKey: "AIzaSyCaIpOW2_zwKfkPllWhHq5nA7t_HQrsCV0",
+//   authDomain: "pet-planet-secondary.firebaseapp.com",
+//   projectId: "pet-planet-secondary",
+//   storageBucket: "pet-planet-secondary.appspot.com",
+//   messagingSenderId: "852005289493",
+//   appId: "1:852005289493:web:35a7c692eb9cc4edb1d81c",
+//   measurementId: "G-VC2TF5BS3Y",
+// };
+
 
 // Duplicate PET_PLANET
 
