@@ -17,7 +17,7 @@ import { Button, TextField } from "@mui/material";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import { IconButton } from "@mui/material";
 
-export default function Inventory() {
+export default function ProductsList() {
   const [products, setProducts] = useState([]);
   const productsCollection = collection(db, "products");
 
@@ -39,7 +39,7 @@ export default function Inventory() {
     };
 
     getProducts();
-  }, [productsCollection]);
+  }, []);
 
   const updateVariant = (v, i) => {
     const tempVariants = [...variants];

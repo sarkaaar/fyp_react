@@ -41,7 +41,7 @@ export default function Checkout() {
 
   useEffect(() => {
     getTotal();
-  }, [products]);
+  }, []);
 
   const getTotal = () => {
     var num = 0;
@@ -254,7 +254,7 @@ setOpen(true);
               fullWidth
               variant="outlined"
               style={{ height: "50px" }}
-              onClick={check}
+              // onClick={check}
               onClick={handleOpen}
             >
               Confirm Order

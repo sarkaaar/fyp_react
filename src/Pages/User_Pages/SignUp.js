@@ -1,7 +1,7 @@
 import * as React from "react";
 import Header from "./Components/Header";
 import GoogleIcon from "@mui/icons-material/Google";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   onAuthStateChanged,
   signOut,
@@ -15,7 +15,9 @@ import { collection, addDoc } from "firebase/firestore";
 export default function SignUp() {
   const navigate = useNavigate();
 
-  const [user, setUser] = useState({});
+
+
+  const [user, setUser] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
@@ -25,33 +27,46 @@ export default function SignUp() {
 
   const usersCollection = collection(db, "users");
 
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+
+    if (user) {
+      navigate("/");
+    }
+  }, [user]);
+
   const signUp = async () => {
     let _user = { email: email, password: password, role: "user", name: name };
 
-    try {
-      await createUserWithEmailAndPassword(auth, email, password).then(
-        async () => {
+    if (password !== confirmPassword) {
+      setErrorMessage("Passwords do not match");
+      return;
+    } else {
+      await createUserWithEmailAndPassword(auth, email, password)
+        .then(async () => {
           console.log("user added to authentication");
-          await addDoc(usersCollection, _user).then(() => {
-            console.log("user added to firebase  firestore");
-          });
-        }
-      );
-      navigate("/");
-    } catch (error) {
-      setErrorMessage(error.code);
-      console.log(error.code);
-      console.log("error creating user");
+          await addDoc(usersCollection, _user)
+            .then((res) => {
+              console.log(res);
+              navigate("/");
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
+        .catch((error) => {
+          setErrorMessage(error.code);
+          console.log(error.code);
+          console.log("error creating user");
+        });
     }
   };
 
-  const logout = async () => {
-    await signOut(auth);
-  };
-
-  onAuthStateChanged(auth, (currentUser) => {
-    setUser(currentUser);
-  });
+  // const logout = async () => {
+  //   await signOut(auth);
+  // };
 
   return (
     <>
@@ -180,7 +195,7 @@ export default function SignUp() {
         <h1>Current User Signed In</h1>
         <h1>{user?.email}</h1>
 
-        <Button onClick={logout}>Logout</Button>
+        {/* <Button onClick={logout}>Logout</Button> */}
       </div>
     </>
   );

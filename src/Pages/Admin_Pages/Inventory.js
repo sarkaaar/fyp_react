@@ -37,7 +37,7 @@ export default function Inventory() {
     };
 
     getProducts();
-  }, [productsCollection]);
+  }, []);
 
   const updateVariant = (v, i) => {
     const tempVariants = [...variants];
