@@ -129,11 +129,5 @@ export default function HomePage() {
           {/* <Link to ="/"> */}
         </div>
 
-        
-
-
-    //   </div>
-    //   <Footer />
-    // </div>
   );
 }

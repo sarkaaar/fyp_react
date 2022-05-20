@@ -34,40 +34,16 @@ export default function Favourites() {
   return (
     <div>
       <Header />
-      <div className="flex">
-        <Sidebar />
+      <Sidebar />
+      <div className="ml-64 pt-32">
+        <h1 className="text-2xl font-bold m-4">Favourites </h1>
 
-      <div className="ml-96 ">
-        <h1 className="text-2xl font-bold mt-4">Favourites </h1>
-
-
-        <div className="mt-8 lg:w-1/2  bg-white p-2">
+        <div className=" ml-2 grid gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 ">
           {products.map((item, key) => {
             return <MediaCard obj={item?.product} />;
           })}
-
-        <div className="ml-96 bg-white">
-          <div className="ml-96">
-            <div className="mt-8 lg:w-1/2  bg-white p-2">
-              {products.map((item, key) => {
-                return <MediaCard obj={item?.product} />;
-              })}
-            </div>
-
-        <div className="">
-          <h1 className="text-2xl font-bold mt-4">Favourites </h1>
-
-          <div className="mt-8 lg:w-1/2  bg-white p-2">
-            {products.map((item, key) => {
-              return <MediaCard obj={item?.product} />;
-            })}
-          </div>
         </div>
       </div>
     </div>
-    </div>
-    </div>
-    </div></div>
-    
   );
 }

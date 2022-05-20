@@ -38,81 +38,87 @@ export default function ProductReturn() {
       user: user?.email,
       date: new Date(),
     };
-    await addDoc(product_Return_Collection, newProduct).then(()=>{console.log("product returned sucessfull")})
+    await addDoc(product_Return_Collection, newProduct).then(() => {
+      console.log("product returned sucessfull");
+    });
   };
   return (
-    <div>
+    <>
       <Header />
       <Sidebar />
-      <div className="m-auto mt-12 flex flex-col justify-center w-96">
-        <h1 className=" text-2xl font-bold flex justify-center">
-          Product Return Form
-        </h1>
-        <div>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            label="Order #"
-            autoFocus
-            value={orderNo}
-            onChange={(e) => setOrderNo(e.target.value)}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            label="Product ID"
-            type="text"
-            value={productID}
-            onChange={(e) => setProductID(e.target.value)}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            label="Product Name"
-            type="text"
-            value={productName}
-            onChange={(e) => setProductNme(e.target.value)}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            label="Issue"
-            type="text"
-            value={issue}
-            onChange={(e) => setIssue(e.target.value)}
-          />
+      <div className="flex justify-center pt-32 bg-gray-100">
+        <div className="p-8 ml-64 flex flex-col justify-center  bg-white rounded-lg">
+          <h1 className=" text-2xl font-bold flex justify-center">
+            Product Return Form
+          </h1>
+          <div className="flex gap-4">
+            <div className="w-96">
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                label="Order #"
+                autoFocus
+                value={orderNo}
+                onChange={(e) => setOrderNo(e.target.value)}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                label="Product ID"
+                type="text"
+                value={productID}
+                onChange={(e) => setProductID(e.target.value)}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                label="Product Name"
+                type="text"
+                value={productName}
+                onChange={(e) => setProductNme(e.target.value)}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                label="Issue"
+                type="text"
+                value={issue}
+                onChange={(e) => setIssue(e.target.value)}
+              />
+            </div>
+            <div className="w-96 mt-4">
+              <TextareaAutosize
+                minRows={9}
+                placeholder="  Description*"
+                value={description}
+                style={{ width: "384px", border: "1px solid gray" }}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+              <p>Click on the "Choose File" button to upload a file:</p>
+              <input
+                type="file"
+                name="file"
+                id="file"
+                value={images}
+                onChange={(e) => setImages(e.target.value)}
+              />
 
-          <TextareaAutosize
-            minRows={10}
-            placeholder="  Description*"
-            style={{ marginTop: "15px", width: "400px" }}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-          <p>Click on the "Choose File" button to upload a file:</p>
-          <input
-            type="file"
-            name="file"
-            id="file"
-            // value={images}
-            // onChange={(e) => setImages(e.target.value)}
-          />
-
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            onClick={productReturn}
-          >
-            Submit Form
-          </Button>
+              <Button
+                type="submit"
+                fullWidth
+                variant="outlined"
+                onClick={productReturn}
+              >
+                Submit Form
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
