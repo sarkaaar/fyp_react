@@ -63,8 +63,8 @@ export default function SignIn() {
     <>
       <Header />
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-md w-full space-y-8">
-          <div>
+        <div className="max-w-md w-full space-y-8 p-10 bg-white">
+          <div className="">
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
               Sign in to your account
             </h2>
@@ -140,11 +140,11 @@ export default function SignIn() {
                 Sign in
               </button>
             </div>
-            <div className="flex">
+            <div className="flex space-x-2">
               <p>New to Pet-Planet </p>
               <Link
                 to="/sign_up"
-                className="font-medium text-indigo-600 hover:text-indigo-500"
+                className="font-medium  text-indigo-600 hover:text-indigo-500"
               >
                 Sign Up
               </Link>

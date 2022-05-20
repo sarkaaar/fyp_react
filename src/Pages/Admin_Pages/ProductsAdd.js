@@ -271,3 +271,70 @@ export default function AddProducts() {
     </div>
   );
 }
+
+
+// <div>
+// <p>Click on the "Choose File" button to upload a images:</p>
+// <input
+//   type="file"
+//   className="mb-6"
+//   onChange={(e) => {
+//     setImage(e.target.files);
+//   }}
+//   multiple
+// />
+// <Button
+//   type="submit"
+//   fullWidth
+//   variant="contained"
+//   className="mt-6 mb-12"
+//   onClick={upload}
+// >
+//   Images Upload
+// </Button>
+// <h3>Uploaded {progress}</h3>
+// <hr className="mt-6" />
+// <Button
+//   type="submit"
+//   fullWidth
+//   variant="contained"
+//   className="mt-6 mb-12"
+//   onClick={addProduct}
+//   // className="mt-6 mb-12"
+// >
+//   Add Product
+// </Button>
+
+
+
+// <h3>Uploaded {progress}</h3>
+// </div>
+
+// const [progress, setProgress] = useState();
+
+// const upload = () => {
+//   if (!image[0]) return;
+//   const arr = [];
+
+//   for (let i = 0; i < image.length; i++) {
+//     const storageRef = ref(storage, `products/${image[i].name}`);
+//     const uploadTask = uploadBytesResumable(storageRef, image[i]);
+
+//     uploadTask.on(
+//       "state_changed",
+//       (snapshot) => {
+//         const prog = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+//         setProgress(prog);
+//       },
+//       (error) => console.log(error),
+//       () => {
+//         getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+//           console.log(url);
+//           arr.push(url);
+//           setUrls(arr);
+//         });
+//       }
+//     );
+//   }
+// };
