@@ -4,7 +4,6 @@ import Banner from "./Components/Banner";
 import Footer from "./Components/Footer";
 import { useState, useEffect } from "react";
 import { db } from "../../firebase-config";
-// import { Link, useParams } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 
 export default function HomePage() {
@@ -47,45 +46,17 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="relative bg-white overflow-hidden">
+    <div className="relative  overflow-hidden">
       <Header />
-      <Banner />
-      <hr />
-      <div className="bg-slate-100">
-
-        {loader ? (
-          <div className="w-full mt-12">
-            <div className="flex justify-center items-center h-full">
-              <div className="w-20 h-20 border-t-4 border-b-4 border-blue-900 rounded-full animate-spin"></div>
-            </div>
-          </div>
-        ) : (
-          <>
-            {categories?.map((item) => (
-              <div className=" w-fit m-auto">
-                <h1 className="text-3xl py-4 font-extrabold">{item?.name}</h1>
-                <div className="   grid gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 ">
-                  {product?.map((product) => (
-                    <>
-                      {item?.name === product?.category ? (
-                        <MediaCard obj={product} />
-                      ) : (
-                        <></>
-                      )}
-                    </>
-                  ))}
-                </div>
+      <div className="pt-24">
+        <Banner />
+        <hr />
+        <>
+          {loader ? (
+            <div className="w-full mt-12">
+              <div className="flex justify-center items-center h-full">
+                <div className="w-20 h-20 border-t-4 border-b-4 border-blue-900 rounded-full animate-spin"></div>
               </div>
-            ))}
-            <Footer />
-          </>
-        )}
-      </div>
-{/* 
-        {
-          loader ? (
-            <div className="grid place-items-center h-screen">
-              <div className="w-20 h-20 border-t-4 border-b-4 border-green-900 rounded-full animate-spin"></div>
             </div>
           ) : (
             <>
@@ -105,29 +76,11 @@ export default function HomePage() {
                   </div>
                 </div>
               ))}
+              <Footer />
             </>
-          )
-        } */}
-        {/* {categories?.map((item) => (
-        <div className=" w-fit m-auto">
-          <h1 className="text-3xl py-4 font-extrabold">{item?.name}</h1>
-          <div className="   grid gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 ">
-            {product?.map((product) => (
-              <>
-                {item?.name === product?.category ? (
-                  <MediaCard obj={product} />
-                ) : ( 
-                  <></>
-                )}
-              </>
-            ))}
-          </div>
-        </div>
-      ))} 
-
-        <div classname="border-box">
-          {/* <Link to ="/"> */}
-        </div>
-
+          )}
+        </>
+      </div>
+    </div>
   );
 }
