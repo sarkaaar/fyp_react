@@ -65,10 +65,11 @@ export default function Inventory() {
   return (
     <>
       <Header />
-      <div className="">
+     
         <Sidebar />
-        <div className="ml-72">
-          <h1 className="text-4xl font-bold ml-8">y -{">"}</h1>
+        <div className="">
+        <div className="ml-72 p-16 bg-white rounded">
+          <h1 className="text-4xl font-bold ml-8">Inventory </h1>
           <table className=" w-11/12 m-auto divide-y divide-gray-200 table-fixed dark:divide-gray-700">
             {/* <ViewyHead /> */}
             <thead className="p-4 bg-gray-100 dark:bg-gray-700">
