@@ -53,7 +53,8 @@ export default function Cart() {
 
   useEffect(() => {
     getTotal();
-  }, [products, total]);
+  }, []);
+// }, [products, total]);
 
   const getTotal = () => {
     var num = 0;

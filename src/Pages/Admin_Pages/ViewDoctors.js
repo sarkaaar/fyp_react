@@ -2,16 +2,27 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import Header from "./admin_components/Header";
 import Sidebar from "./admin_components/Sidebar";
-import { db } from "../../firebase-config";
+import { auth, db } from "../../firebase-config";
 import EditIcon from "@mui/icons-material/Edit";
-import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  updateDoc,
+  doc,
+  query,
+  where,
+} from "firebase/firestore";
 import Modal from "@mui/material/Modal";
 import { Button, TextField } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
+import { onAuthStateChanged } from "firebase/auth";
 
 export default function ViewDoctor() {
   //  Get Categories Names
   const [doctors, setDoctors] = useState([]);
+  const [queryUser, setQueryUser] = useState();
+  const [user, setUser] = useState();
+
   const doctorsCollection = collection(db, "doctors");
 
   const getDoctors = async () => {
@@ -21,8 +32,29 @@ export default function ViewDoctor() {
   };
 
   useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+
+    getRole();
     getDoctors();
-  }, []);
+  }, [user]);
+
+  const usersRef = collection(db, "users");
+
+  const getRole = async () => {
+    if (user) {
+      const q = await query(usersRef, where("email", "==", user?.email));
+      await getDocs(q)
+        .then((res) => {
+          setQueryUser(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+          console.log(queryUser[0].role);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
 
   const disableDoctor = async (id) => {
     const prod = doc(db, "doctors", id);

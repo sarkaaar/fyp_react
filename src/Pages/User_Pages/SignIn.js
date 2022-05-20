@@ -5,10 +5,11 @@ import {
   signOut,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { TextField } from "@mui/material";
 import { Link } from "react-router-dom";
-import { auth } from "../../firebase-config";
-import React, { useState } from "react";
+import { auth, db } from "../../firebase-config";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function SignIn() {
@@ -16,12 +17,29 @@ export default function SignIn() {
 
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState();
+  const [queryUser, setQueryUser] = useState();
   const [errorMessage, setErrorMessage] = useState("");
 
-  onAuthStateChanged(auth, (currentUser) => {
-    setUser(currentUser);
-  });
+  // onAuthStateChanged(auth, (currentUser) => {
+  //   setUser(currentUser);
+  // });
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+
+    if (user) {
+      navigate("/");
+    }
+
+    // getRole();
+  }, [user]);
+
+  // Get Role of Current User
+
+  const usersRef = collection(db, "users");
 
   // Login Function
   const login = async () => {
@@ -141,7 +159,6 @@ export default function SignIn() {
           </div>
         </div>
       </div>
-     
     </>
   );
 }

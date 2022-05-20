@@ -37,7 +37,7 @@ export default function Dashboard() {
       console.log("admin");
     }
     
-  }, [user, loading, db_user?.role?.stringValue]);
+  }, [user,]);
 
   return (
     <>
