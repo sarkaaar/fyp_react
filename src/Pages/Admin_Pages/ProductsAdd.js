@@ -107,36 +107,15 @@ export default function AddProducts() {
         }
       );
     }
-
-    // const storageRef = ref(storage, `products/${image.name}`);
-    //const uploadTask = uploadBytesResumable(storageRef, image);
-
-    // uploadTask.on(
-    //   "state_changed",
-    //   (snapshot) => {
-    //     const prog = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-
-    //     setProgress(prog);
-    //   },
-    //   (error) => console.log(error),
-    //   () => {
-    //     getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-    //       console.log(url);
-    //     });
-    //   }
-    // );
   };
 
   return (
     <div>
       <Header />
-
-      <div className="flex">
-        <Sidebar />
-
-        <div className="m-96"></div>
-        <div className="  mt-6">
-          <div className="m-auto  align-center ">
+      <Sidebar />
+      <div className="ml-64 pt-8">
+        <div className="pt-8 flex justify-center">
+          <div className="align-center bg-white rounded-lg p-4 mb-8">
             <h1 className="text-center text-3xl">Add a New Product</h1>
             <div className="w-full">
               <TextField
