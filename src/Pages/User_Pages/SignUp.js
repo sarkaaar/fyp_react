@@ -21,6 +21,7 @@ export default function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState();
   const [name, setName] = useState();
   const [errorMessage, setErrorMessage] = useState("");
+  const [nameError, setNameError] = useState(false);
 
   const usersCollection = collection(db, "users");
 
@@ -77,13 +78,10 @@ export default function SignUp() {
                 label="Name"
                 type={"text"}
                 value={name}
+                error={nameError}
+                helperText={"Only characters allowed"}
                 onChange={(e) => {
-                  const re = /^[A-Za-z]+$/;
-                  if (e.target.value === re.test(e.target.value)) {
-                    setName(e.target.value);
-                  }
-
-                  // if (e.target.value >= "a" && e.target.value <= "z")
+                  setName(e.target.value);
                 }}
               />
               <TextField

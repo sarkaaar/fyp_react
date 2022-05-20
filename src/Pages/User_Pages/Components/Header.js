@@ -17,7 +17,7 @@ export default function Header(props) {
     const q = await query(cartCollection, where("user", "==", user?.email));
     await getDocs(q).then((res) => {
       setProducts(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-      console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      // console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
   };
 
@@ -27,7 +27,7 @@ export default function Header(props) {
     });
     getCartItems();
   }, [user]);
-  // todo
+
   useEffect(() => {
     getCartItems();
   }, []);
@@ -37,7 +37,7 @@ export default function Header(props) {
   };
 
   return (
-    <div className="z-10 bg-white   w-full">
+    <div className="z-10 bg-white absolute w-full">
       <div className="flex justify-between">
         <div className="flex p-2 px-8 gap-8">
           <Link
@@ -72,20 +72,22 @@ export default function Header(props) {
           </Link>
         </div>
         <div className="p-2 px-8">
-          <Link
-            to={"/profile"}
-            className="font-medium text-gray-500 hover:text-gray-900 px-8"
-          >
-            Profile
-          </Link>
           {user ? (
-            <Link
-              onClick={logout}
-              to={"/sign_in"}
-              className="font-medium text-gray-500 hover:text-gray-900 px-8"
-            >
-              Logout
-            </Link>
+            <>
+              <Link
+                to={"/profile"}
+                className="font-medium text-gray-500 hover:text-gray-900 px-8"
+              >
+                Profile
+              </Link>
+              <Link
+                onClick={logout}
+                to={"/sign_in"}
+                className="font-medium text-gray-500 hover:text-gray-900 px-8"
+              >
+                Logout
+              </Link>
+            </>
           ) : (
             <Link
               to={"/sign_in"}
@@ -102,7 +104,7 @@ export default function Header(props) {
           to={"/products"}
           className="p-4 px-8 font-medium text-gray-500 hover:text-gray-900"
         >
-          Categories
+          All Products
         </Link>
         <div className="flex w-6/12">
           <TextField

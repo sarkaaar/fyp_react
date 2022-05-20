@@ -9,6 +9,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #f3f4f6;
+
 }
 
 code {
@@ -16,3 +18,6 @@ code {
     monospace;
 }
 
+#root {
+  background-color: #f3f4f6;
+}
