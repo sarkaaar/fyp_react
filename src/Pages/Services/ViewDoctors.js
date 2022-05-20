@@ -12,52 +12,64 @@ export default function ViewDoctors() {
   const [doctors, setDoctor] = useState([]);
   const doctorsCollection = collection(db, "doctors");
   const navigate = useNavigate();
-  useEffect(() => {
-    const getDoctor = async () => {
-      const data = await getDocs(doctorsCollection);
-      setDoctor(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
 
+  const getDoctor = async () => {
+    await getDocs(doctorsCollection).then((res) => {
+      setDoctor(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    });
+  };
+
+  useEffect(() => {
     getDoctor();
-  }, [doctors]);
+  }, []);
 
   return (
-    <div>
+    <>
       <Header />
       <div className="pt-32">
+        {/* <Button
+        onClick={() => {
+          console.log(doctors);
+        }}
+      >
+        Click
+      </Button> */}
+        {/* <div className="  mx-20  my-20 flex flex-row rounded justify-between "> */}
         {doctors.length === 0 && (
           <div className="grid place-items-center h-screen">
             <div className="w-20 h-20 border-t-4 border-b-4 border-green-900 rounded-full animate-spin"></div>
           </div>
         )}
-        <div>
+        <div className=" flex gap-4 flex-col px-[30rem] py-[4rem] justify-self-auto">
           {doctors.map((item, key) => {
             return (
-              <figure class=" md:flex place-content-between w-6/12 bg-white rounded-xl p-8 md:p-0 dark:bg-slate-800 ">
-                <PersonIcon
-                  style={{
-                    width: "130px",
-                    height: "130px",
-                    margin: "50px",
-                    marginTop: "70px",
-                  }}
-                />
-                <div class="pt-6 md:p-8 text-center md:text-left space-y-4">
+              <figure className=" md:flex place-content-between bg-white rounded-xl p-8 md:p-0 dark:bg-slate-800">
+                <div className="w-26">
+                  <PersonIcon
+                    style={{
+                      width: "100px",
+                      height: "100px",
+                      margin: "auto",
+                    }}
+                  />
+                </div>
+                <div className="border-1 border-gray-400"></div>
+                <div className="pt-6 md:p-8 text-center md:text-left space-y-4 w-96">
                   <blockquote>
-                    <p class="text-lg font-bold">Dr. {item.name}</p>
+                    <p className="text-lg font-bold">Dr. {item.name}</p>
                   </blockquote>
                   <blockquote>
-                    <p class="text-md font-medium">{item.clinicName}</p>
+                    <p className="text-md font-medium">{item.clinicName}</p>
                   </blockquote>
                   <blockquote>
-                    <p class="text-lg font-medium"> {item.clinicPhone}</p>
+                    <p className="text-lg font-medium"> {item.clinicPhone}</p>
                   </blockquote>
                   <blockquote>
-                    <p class="text-lg font-medium">
-                      {" "}
+                    <p className="text-lg font-medium italic">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5 inline"
+                        className="h-5 w-5 inline text-red-600"
                         viewBox="0 0 20 20"
                         fill="currentColor"
                       >
@@ -70,18 +82,24 @@ export default function ViewDoctors() {
                       {item.clinicAddress}
                     </p>
                   </blockquote>
+                  <div className="flex justify-between">
                   <blockquote>
-                    <p class="text-lg font-medium">Fee : {item.fees}</p>
+                    <p className="text-lg  text-sky-500 font-medium">
+                      Fee : {item.fees}
+                    </p>
                   </blockquote>
-
-                  <figcaption class="font-medium">
-                    <div class="text-sky-500 dark:text-sky-400">
-                      Sarah Dayan
-                    </div>
-                    <div class="text-slate-700 dark:text-slate-500"></div>
-                  </figcaption>
+                  <Button
+                    variant="outlined"
+                    onClick={() => {
+                      navigate(`/makeAppointments/${item.id}`);
+                    }}
+                  >
+                    Book an Appointment
+                  </Button>
+                  </div>
                 </div>
-              </figure> // <div
+              </figure>
+              // <div
               //   className="m-8"
               // >
               //   <div className="max-w-6xl hover:drop-shadow-2xl bg-white border-2 border-black mx-auto flex  bg-white rounded-lg shadow-xl ">
@@ -136,6 +154,6 @@ export default function ViewDoctors() {
         </div>
         <Footer />
       </div>
-    </div>
+    </>
   );
 }

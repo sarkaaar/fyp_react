@@ -120,93 +120,91 @@ export default function MakeAppointments() {
   return (
     <div>
       <Header />
-      <h1 className="flex justify-center text-3xl font-bold m-6">
-        You are making an appointment with &nbsp;
-        <Button
+      <div className="pt-32 ">
+        <h1 className="flex justify-center text-3xl font-bold m-6">
+          You are making an appointment with &nbsp;
+          {/* <Button
           variant="outlined"
           onClick={async () => {
             console.log(booked);
           }}
         >
           Click me
-        </Button>
-        <Button
+        </Button> */}
+          {/* <Button
           variant="outlined"
           onClick={async () => {
             console.log(await getDocs(doc(db, `doctors/${id}`)));
           }}
         >
           ID
-        </Button>
-        <span className="text-violet-800"> Dr.{doctor?.name} </span>
-      </h1>
+        </Button> */}
+          <span className="text-violet-800"> Dr.{doctor?.name} </span>
+        </h1>
 
-      <div style={{ width: "300px", margin: "auto" }}>
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          type="date"
-          value={date}
-          onChange={(e) => {
-            setDate(e.target.value);
-            getAppointments();
-          }}
-          id="date"
-        />
-        <FormControl fullWidth style={{ margin: "10px 0" }}>
-          <InputLabel id="demo-simple-select-label">Time Slot</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            label="Time Slot"
-            value={time}
+        <div style={{ width: "300px", margin: "auto" }}>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            type="date"
+            value={date}
             onChange={(e) => {
-              setTime(e.target.value);
+              setDate(e.target.value);
+              getAppointments();
+            }}
+            id="date"
+          />
+          <FormControl fullWidth style={{ margin: "10px 0" }}>
+            <InputLabel id="demo-simple-select-label">Time Slot</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              label="Time Slot"
+              value={time}
+              onChange={(e) => {
+                setTime(e.target.value);
+              }}
+            >
+              {timeSlots.map((item) => {
+                return <MenuItem value={item}>{item}</MenuItem>;
+              })}
+            </Select>
+          </FormControl>
+          <Button fullWidth variant="outlined" onClick={makeAppointment}>
+            Submit
+          </Button>
+        </div>
+        {booked.map((item, key) => {
+          return <h1>{item?.time}</h1>;
+        })}
+
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: 400,
+              bgcolor: "background.paper",
+              border: "2px solid #000",
+              boxShadow: 24,
+              p: 4,
             }}
           >
-            {timeSlots.map((item) => {
-              return <MenuItem value={item}>{item}</MenuItem>;
-            })}
-          </Select>
-        </FormControl>
-        <Button fullWidth variant="outlined" onClick={makeAppointment}>
-          Submit
-        </Button>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Appointment is created Sucessfully
+            </Typography>
+            <Button onClick={handleClose}> Close</Button>
+          </Box>
+        </Modal>
       </div>
-      {booked.map((item, key) => {
-        return <h1>{item?.time}</h1>;
-      })}
-
-      <div>
-        <h1>Current User Signed In</h1>
-        <h1>{user?.email}</h1>
-      </div>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 400,
-            bgcolor: "background.paper",
-            border: "2px solid #000",
-            boxShadow: 24,
-            p: 4,
-          }}
-        >
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Appointment is created Sucessfully
-          </Typography>
-          <Button onClick={handleClose}> Close</Button>
-        </Box>
-      </Modal>
     </div>
   );
 }
