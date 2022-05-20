@@ -37,36 +37,36 @@ export default function Favourites() {
       <div className="flex">
         <Sidebar />
 
-<<<<<<< HEAD
-      <div className="ml-96 ">
-        <h1 className="text-2xl font-bold mt-4">Favourites </h1>
-
-
-        <div className="mt-8 lg:w-1/2  bg-white p-2">
-          {products.map((item, key) => {
-            return <MediaCard obj={item?.product} />;
-          })}
-
-        <div className="ml-96 bg-white">
-          <div className="ml-96">
-            <div className="mt-8 lg:w-1/2  bg-white p-2">
-              {products.map((item, key) => {
-                return <MediaCard obj={item?.product} />;
-              })}
-            </div>
-=======
-        <div className="">
+        <div className="ml-96 ">
           <h1 className="text-2xl font-bold mt-4">Favourites </h1>
 
           <div className="mt-8 lg:w-1/2  bg-white p-2">
             {products.map((item, key) => {
               return <MediaCard obj={item?.product} />;
             })}
->>>>>>> c6422cf533067776ac920a25d9408e7a4ce164b9
+
+            <div className="ml-96 bg-white">
+              <div className="ml-96">
+                <div className="mt-8 lg:w-1/2  bg-white p-2">
+                  {products.map((item, key) => {
+                    return <MediaCard obj={item?.product} />;
+                  })}
+                </div>
+
+                <div className="">
+                  <h1 className="text-2xl font-bold mt-4">Favourites </h1>
+
+                  <div className="mt-8 lg:w-1/2  bg-white p-2">
+                    {products.map((item, key) => {
+                      return <MediaCard obj={item?.product} />;
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </div>
   );
 }
