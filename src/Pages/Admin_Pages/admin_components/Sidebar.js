@@ -13,9 +13,9 @@ import LocationSearchingIcon from "@mui/icons-material/LocationSearching";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 export default function Sidebar() {
   return (
-    <aside className="w-64 bg-gray-800 fixed h-full left-0" aria-label="Sidebar">
-      <div className="overflow-y-auto py-4 px-3  rounded ">
-        <ul className="space-y-2">
+    <aside class="w-64 bg-gray-800 h-full left-0 bottom-0 fixed" aria-label="Sidebar">
+      <div class=" py-4 px-3  rounded mt-24">
+         <ul className="space-y-2">
           <li>
             <Link
               to="/admin/dashboard "
@@ -31,7 +31,7 @@ export default function Sidebar() {
               to="/admin/inventory"
               className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white  hover:bg-gray-600 dark:hover:bg-gray-700"
             >
-              <InventoryIcon classNameName="w-6 h-6 text-white transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+              <InventoryIcon className="w-6 h-6 text-white " />
               <span className="ml-3 text-white">Inventory</span>
             </Link>
           </li>
@@ -40,7 +40,7 @@ export default function Sidebar() {
               to="/admin/viewAllProducts"
               className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white  hover:bg-gray-600 dark:hover:bg-gray-700"
             >
-              <LocationSearchingIcon classNameName="w-6 h-6 text-white " />
+              <LocationSearchingIcon className="w-6 h-6 text-white " />
               <span className="flex-1 text-white ml-3 whitespace-nowrap">
                 View Products
               </span>
@@ -51,7 +51,7 @@ export default function Sidebar() {
               to="/admin/addProducts"
               className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white  hover:bg-gray-600 dark:hover:bg-gray-700"
             >
-              <AddShoppingCartIcon classNameName="w-6 h-6 text-white transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+              <AddShoppingCartIcon className="w-6 h-6 text-white " />
               <span className="ml-3 text-white">Add Product</span>
             </Link>
           </li>
@@ -79,7 +79,7 @@ export default function Sidebar() {
               to="/admin/productReturn"
               className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white  hover:bg-gray-600 dark:hover:bg-gray-700"
             >
-              <ReplayIcon classNameName="w-6 h-6 text-white " />
+              <ReplayIcon className="w-6 h-6 text-white " />
 
               <span className="ml-3 text-white">Product Return</span>
             </Link>
@@ -89,7 +89,7 @@ export default function Sidebar() {
               to="/admin/complaints"
               className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white  hover:bg-gray-600 dark:hover:bg-gray-700"
             >
-              <ContactPhoneIcon classNameName="w-6 h-6 text-white " />
+              <ContactPhoneIcon className="w-6 h-6 text-white " />
               <span className="ml-3 text-white">Complaints</span>
             </Link>
           </li>
@@ -98,7 +98,7 @@ export default function Sidebar() {
               to="/admin/categories"
               className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white  hover:bg-gray-600 dark:hover:bg-gray-700"
             >
-              <CategoryIcon classNameName="w-6 h-6 text-white " />
+              <CategoryIcon className="w-6 h-6 text-white " />
               <span className="flex-1 text-white ml-3 whitespace-nowrap">
                 Categories
               </span>
@@ -109,7 +109,7 @@ export default function Sidebar() {
               to="/admin/addDoctor"
               className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white  hover:bg-gray-600 dark:hover:bg-gray-700"
             >
-              <PersonAddIcon classNameName="w-6 h-6 text-white " />
+              <PersonAddIcon className="w-6 h-6 text-white " />
               <span className="flex-1 text-white ml-3 whitespace-nowrap">
                 Add Doctor
               </span>
@@ -120,7 +120,7 @@ export default function Sidebar() {
               to="/admin/viewDoctor"
               className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white  hover:bg-gray-600 dark:hover:bg-gray-700"
             >
-              <PersonSearchIcon classNameName="w-6 h-6 text-white " />
+              <PersonSearchIcon className="w-6 h-6 text-white " />
               <span className="flex-1 text-white ml-3 whitespace-nowrap">
                 View Doctor
               </span>
@@ -131,7 +131,7 @@ export default function Sidebar() {
               to="/admin/profile"
               className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white  hover:bg-gray-600 dark:hover:bg-gray-700"
             >
-              <AccountBoxIcon classNameName="w-6 h-6 text-white " />
+              <AccountBoxIcon className="w-6 h-6 text-white " />
 
               <span className="ml-3 text-white">Profile</span>
             </Link>
@@ -142,7 +142,7 @@ export default function Sidebar() {
               to="/admin/sign_in"
               className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white  hover:bg-gray-600 dark:hover:bg-gray-700"
             >
-              <ExitToAppIcon classNameName="w-6 h-6 text-white "  />
+              <ExitToAppIcon className="w-6 h-6 text-white "  />
               <span className="flex-1 text-white ml-3 whitespace-nowrap">
                 Logout
               </span>
