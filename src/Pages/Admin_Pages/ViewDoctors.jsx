@@ -103,7 +103,7 @@ export default function ViewDoctor() {
       <Header />
       <Sidebar />
 
-      <div className="ml-96 pt-96">
+      <div className="ml-96 p-10">
         <Button
           onClick={() => {
             console.log(queryUser[0]);
