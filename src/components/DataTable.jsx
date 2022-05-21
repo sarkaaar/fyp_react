@@ -44,7 +44,7 @@ function renderActions(actions, row) {
         type="button" onClick={() => action.perform(row)}
         className={c(
           action.danger ? 'text-red-600 hover:text-red-800' : 'text-indigo-600 hover:text-indigo-800',
-          'font-medium',
+          'font-medium px-1',
         )}
       >
         {action.label}
