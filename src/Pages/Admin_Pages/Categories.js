@@ -77,7 +77,8 @@ export default function AddCategory() {
       <Header />
       <div className="">
         <Sidebar />
-        <div className="m-auto  ml-72">
+        <div className="m-auto  ml-72 p-16 bg-white rounded">
+        
           <div className="m-auto">
             <div className=" w-96 m-auto  p-5">
               {/* <form> */}
