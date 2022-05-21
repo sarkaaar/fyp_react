@@ -61,14 +61,8 @@ export default function ViewDoctor() {
             console.log("Admin is found");
 
             setLoadUser(false);
-
-
-
-            
-
-           
           } else {
-            console.log("user not found")
+            console.log("user not found");
             setLoadUser(false);
             navigate("/");
           }
