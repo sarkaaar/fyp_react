@@ -17,9 +17,5 @@ export default function FirebaseDataTable({ query, ...props }) {
       .catch(setError);
   }, [query]);
 
-  return (
-    <div>
-      <DataTable {...props} data={data} loading={!data && !error} />
-    </div>
-  );
+  return <DataTable {...props} data={data} loading={!data && !error} />;
 }

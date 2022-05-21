@@ -10,7 +10,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.1.18",
     "@googlemaps/react-wrapper": "^1.1.24",
-    "@headlessui/react": "^1.5.0",
+    "@headlessui/react": "^1.4.2",
     "@heroicons/react": "^1.0.5",
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
@@ -45,6 +45,7 @@
     "lint": "eslint ./src/**/*.jsx"
   },
   "devDependencies": {
+    "@tailwindcss/forms": "^0.5.2",
     "autoprefixer": "^10.4.2",
     "eslint": "^8.13.0",
     "eslint-config-airbnb": "^19.0.4",

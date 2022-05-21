@@ -3,7 +3,6 @@ import HomeIcon from '@mui/icons-material/Home';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import ViewInArIcon from '@mui/icons-material/ViewInAr';
 import ReplayIcon from '@mui/icons-material/Replay';
 import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
 import CategoryIcon from '@mui/icons-material/Category';
