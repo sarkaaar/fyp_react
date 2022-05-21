@@ -1,9 +1,10 @@
-import * as React from "react";
-import Header from "./admin_components/Header";
-import Sidebar from "./admin_components/Sidebar";
-import { useState, useEffect } from "react";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
+import React, { useState } from "react";
+import Modal from "@mui/material/Modal";
+import { IconButton } from "@mui/material";
+import { Button, TextField } from "@mui/material";
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+// import EditIcon from "@mui/icons-material/Edit";
+// import DeleteIcon from "@mui/icons-material/Delete";
 import {
   collection,
   getDocs,
@@ -11,18 +12,15 @@ import {
   updateDoc,
   doc,
 } from "firebase/firestore";
+
 import { db } from "../../firebase-config";
-import Modal from "@mui/material/Modal";
-import { Button, TextField } from "@mui/material";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import { IconButton } from "@mui/material";
+import Header from "./admin_components/Header";
+import Sidebar from "./admin_components/Sidebar";
+import FirebaseDataTable from "../../components/FirebaseDataTable";
 
 export default function Inventory() {
-  const [products, setProducts] = useState([]);
-  const productsCollection = collection(db, "products");
   const [variants, setVariants] = useState([["", 0]]);
   const [s_Product, setS_Product] = useState();
-  const [loader, setLoader] = useState(false);
   // Modal
   const [open, setOpen] = React.useState(false);
   const [delOpen, setDelOpen] = React.useState(false);
@@ -30,17 +28,6 @@ export default function Inventory() {
   const handleClose = () => setOpen(false);
 
   const handleDelClose = () => setDelOpen(false);
-
-  useEffect(() => {
-    const getProducts = async () => {
-      const data = await getDocs(productsCollection);
-      setProducts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-      setLoader(false);
-    };
-
-    setLoader(true);
-    getProducts();
-  }, [productsCollection]);
 
   const updateVariant = (v, i) => {
     const tempVariants = [...variants];
@@ -64,7 +51,6 @@ export default function Inventory() {
     await updateDoc(prod, { capital: true });
     console.log("Product Updated");
   };
-  // render()
   return (
     <>
       <div className="flex flex-col">
@@ -75,91 +61,29 @@ export default function Inventory() {
           </div>
           <div className="w-4/5">
             <h1 className="text-left font-bold text-2xl ">Inventory</h1>
-            {products.length < 1 ? (
-              <div className="flex justify-center items-center h-full">
-                <div className="w-20 h-20 border-t-4 border-b-4 border-blue-900 rounded-full animate-spin"></div>
-              </div>
-            ) : products.length === 0 ? (
-              <div className="text-center font-bond text-xl">
-                Inventory is Empty!
-              </div>
-            ) : (
-              <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-1 mr-2 mb-1">
-                <table className="w-full text-sm text-left text-gray-500">
-                  <thead className="text-xs text-gray-700 uppercase bg-gray-300">
-                    <tr>
-                      <th scope="col" className="px-6 py-3">
-                        Name
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                        Sale Price
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                        Cost Price
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                        Description
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                        Stock
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                        Actions
-                      </th>
-                    </tr>
-                  </thead>
-
-                  {products.map((item, key) => (
-                    <>
-                      <tbody key={key}>
-                        <tr className="bg-white border-b hover:bg-gray-100">
-                          <td className="px-6 py-4">{item.name}</td>
-                          <td className="px-6 py-4">{item.salePrice}</td>
-                          <td className="px-6 py-4">{item.costPrice}</td>
-                          <td className="px-6 py-4">{item.description}</td>
-                          <td className="px-6 py-4">
-                            {item &&
-                              Object.keys(item.variants).map((key) => {
-                                let variant = item?.variants[key];
-                                return (
-                                  <tr className="">
-                                    {/* <td key={key} className="px-6 py-2">
-                                For {variant[0]}:
-                              </td> */}
-                                    <td key={key} className="px-6 py-2">
-                                      {variant[1]}
-                                    </td>
-                                  </tr>
-                                );
-                              })}
-                          </td>
-                          <td className="px-6 flex py-4">
-                            
-                              <Button
-                                onClick={() => {
-                                  setS_Product(item);
-                                  setOpen(true);
-                                }}
-                              >
-                                <EditIcon />
-                              </Button>
-                              <Button
-                                onClick={() => {
-                                  setS_Product(item);
-                                  setDelOpen(true);
-                                }}
-                              >
-                                <DeleteIcon />
-                              </Button>
-                            
-                          </td>
-                        </tr>
-                      </tbody>
-                    </>
-                  ))}
-                </table>
-              </div>
-            )}
+            <FirebaseDataTable
+              query={collection(db, "products")}
+              columns={[
+                { key: 'name', name: 'Name' },
+                { key: 'salePrice', name: 'Sale Price' },
+                { key: 'costPrice', name: 'Cost Price' },
+                { key: 'description', name: 'Description' },
+                {
+                  key: 'variants',
+                  name: 'Variants',
+                  render: (row) => (
+                    <div className="flex flex-col">
+                      {Object.entries(row.variants).map(([k, v]) => (
+                        <div key={k} className="flex justify-between">
+                          <div>{v[0]}</div>
+                          <div className="text-right">{v[1]}</div>
+                        </div>
+                      ))}
+                    </div>
+                  ),
+                },
+              ]}
+            />
           </div>
         </div>
       </div>
