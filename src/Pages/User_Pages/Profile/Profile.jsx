@@ -4,7 +4,52 @@ import PersonIcon from '@mui/icons-material/Person';
 import Header from '../Components/Header';
 import Sidebar from './Sidebar';
 
+import { useState, useEffect } from "react";
+import { auth, db } from "../../../firebase-config";
+import {
+  collection,
+  getDocs,
+  updateDoc,
+  doc,
+  query,
+  where,
+} from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
+
 export default function Profile() {
+  const [queryUser, setQueryUser] = useState();
+  const [user, setUser] = useState();
+
+  const [name, setName] = useState();
+  const [phone, setPhone] = useState();
+  const [password, setPassword] = useState();
+
+  const usersRef = collection(db, "users");
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      // getRole();
+    });
+
+    getRole();
+    // getDoctors();
+  }, [user]);
+
+  const getRole = async () => {
+    if (user) {
+      const q = query(usersRef, where("email", "==", user?.email));
+      await getDocs(q)
+        .then((res) => {
+          setQueryUser(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+          console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
   return (
     <>
       <Header />
@@ -44,7 +89,14 @@ export default function Profile() {
                             </div>
 
                             <div className="mt-6 flex flex-col gap-4">
-                              <TextField fullWidth label="Name" />
+                              <TextField
+                                InputLabelProps={{
+                                  shrink: true,
+                                }}
+                                // value={queryUser[0]?.name}
+                                // fullWidth
+                                // label="Name"
+                              />
                               <div className="flex gap-4">
                                 <TextField fullWidth label="Email" />
                                 <TextField fullWidth label="Phone Number" />

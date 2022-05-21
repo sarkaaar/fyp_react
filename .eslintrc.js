@@ -20,6 +20,7 @@ module.exports = {
     '@typescript-eslint',
   ],
   rules: {
+    quotes: ['off', 'double'],
     'import/extensions': [
       'error',
       'ignorePackages',
