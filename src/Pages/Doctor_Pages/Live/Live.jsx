@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
-import { ReactComponent as HangupIcon } from "./icons/hangup.svg";
-import { ReactComponent as MoreIcon } from "./icons/more-vertical.svg";
-import { ReactComponent as CopyIcon } from "./icons/copy.svg";
+import HangupIcon from "./icons/hangup.svg";
+import MoreIcon from "./icons/more-vertical.svg";
+import CopyIcon from "./icons/copy.svg";
 import { db } from "../../../firebase-config";
 import { collection } from "firebase/firestore";
 import "./App.css";
