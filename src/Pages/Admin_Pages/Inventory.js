@@ -80,7 +80,9 @@ export default function Inventory() {
                 <div className="w-20 h-20 border-t-4 border-b-4 border-blue-900 rounded-full animate-spin"></div>
               </div>
             ) : products.length === 0 ? (
-              <div className="text-center font-bond text-xl">Inventory is Empty!</div>
+              <div className="text-center font-bond text-xl">
+                Inventory is Empty!
+              </div>
             ) : (
               <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-1 mr-2 mb-1">
                 <table className="w-full text-sm text-left text-gray-500">
@@ -131,8 +133,8 @@ export default function Inventory() {
                                 );
                               })}
                           </td>
-                          <td className="px-6 py-4">
-                            <>
+                          <td className="px-6 flex py-4">
+                            
                               <Button
                                 onClick={() => {
                                   setS_Product(item);
@@ -149,7 +151,7 @@ export default function Inventory() {
                               >
                                 <DeleteIcon />
                               </Button>
-                            </>
+                            
                           </td>
                         </tr>
                       </tbody>
@@ -369,10 +371,10 @@ export default function Inventory() {
                     fullWidth
                     type="text"
                     label="Varients"
-                    // onChange={(e) =>
-                    //   updateVariant([e.target.value, quantity], i)
-                    // }
-                    // value={variant}
+                    onChange={(e) =>
+                      updateVariant([e.target.value, quantity], i)
+                    }
+                    value={variant}
                   />
                   <TextField
                     margin="normal"
@@ -380,8 +382,8 @@ export default function Inventory() {
                     fullWidth
                     type="text"
                     label="Qunatity"
-                    // onChange={(e) => updateVariant([variant, +e.target.value], i)}
-                    // value={quantity}
+                    onChange={(e) => updateVariant([variant, e.target.value], i)}
+                    value={quantity}
                   />
                   <IconButton onClick={() => removeVariant(i)}>x</IconButton>
                 </div>
@@ -406,7 +408,12 @@ export default function Inventory() {
             >
               Submit
             </Button>
-            <Button fullWidth variant="contained" color="warning">
+            <Button
+              fullWidth
+              variant="contained"
+              color="warning"
+              onClick={handleClose}
+            >
               Cancel
             </Button>
           </div>

@@ -46,11 +46,21 @@ export default function PRoductReturns() {
             <>
               <tbody key={key}>
                 <tr className="">
-                  <td className="text-center text-lg p-2 px-8">{item?.productName}</td>
-                  <td className=" text-center text-lg p-2 px-8">{item?.orderNo}</td>
-                  <td className=" text-center text-lg p-2 px-8">{item?.productID}</td>
-                  <td className=" text-center text-lg p-2 px-8">{item?.description}</td>
-                  <td className=" text-center text-lg p-2 px-8">{item?.issue}</td>
+                  <td className="text-center text-lg p-2 px-8">
+                    {item?.productName}
+                  </td>
+                  <td className=" text-center text-lg p-2 px-8">
+                    {item?.orderNo}
+                  </td>
+                  <td className=" text-center text-lg p-2 px-8">
+                    {item?.productID}
+                  </td>
+                  <td className=" text-center text-lg p-2 px-8">
+                    {item?.description}
+                  </td>
+                  <td className=" text-center text-lg p-2 px-8">
+                    {item?.issue}
+                  </td>
                   <td className=" text-center text-lg p-2 px-8">
                     {item?.date?.toDate()?.toDateString()}
                   </td>

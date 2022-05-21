@@ -1,50 +1,52 @@
 import * as React from "react";
-import Header from "../User_Pages/Components/Header";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
+import Header from "../Components/Header";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import { useState } from "react";
-import Sidebar from "../User_Pages/Profile/Sidebar";
+import Sidebar from "./Sidebar";
 import { collection, addDoc } from "firebase/firestore";
-import { db, auth, storage } from "../../firebase-config";
-import { useEffect } from "react";
+import { db, auth, storage } from "../../../firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
 import { uploadBytesResumable, ref, getDownloadURL } from "firebase/storage";
+import { Button, TextField } from "@mui/material";
+import { useState, useEffect } from "react";
 
-export default function ProductReturn() {
+export default function ProductReturnForm() {
   const [orderNo, setOrderNo] = useState("");
   const [productID, setProductID] = useState("");
   const [productName, setProductNme] = useState("");
   const [issue, setIssue] = useState("");
   const [description, setDescription] = useState("");
-  const [image, setImage] = useState();
   const [urls, setUrls] = useState([]);
-
   const [user, setUser] = useState();
+
+  const [image, setImage] = useState();
 
   const [progress, setProgress] = useState();
 
   const upload = () => {
-    if (!image) return;
+    if (!image[0]) return;
+    const arr = [];
 
-    const storageRef = ref(storage, `returnedProducts/${image.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, image);
+    for (let i = 0; i < image.length; i++) {
+      const storageRef = ref(storage, `returnedProducts/${image[i].name}`);
+      const uploadTask = uploadBytesResumable(storageRef, image[i]);
 
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const prog = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const prog = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 
-        setProgress(prog);
-      },
-      (error) => console.log(error),
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-          console.log(url);
-          setUrls(url);
-        });
-      }
-    );
+          setProgress(prog);
+        },
+        (error) => console.log(error),
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+            console.log(url);
+            arr.push(url);
+            setUrls(arr);
+          });
+        }
+      );
+    }
   };
 
   const product_Return_Collection = collection(db, "productReturn");
@@ -61,8 +63,8 @@ export default function ProductReturn() {
       productName: productName,
       issue: issue,
       description: description,
-      // images: images,
-      // user: user?.email,
+      images: urls,
+      user: user?.email,
       date: new Date(),
     };
     await addDoc(product_Return_Collection, newProduct).then(() => {
@@ -133,17 +135,19 @@ export default function ProductReturn() {
                 onChange={(e) => {
                   setImage(e.target.files);
                 }}
-                
+                multiple
               />
               <h3>Uploaded {progress}</h3>
               <Button
                 type="submit"
                 fullWidth
-                variant="outlined"
+                variant="contained"
+                className="mt-6 mb-12"
                 onClick={upload}
               >
-                Upload
+                Images Upload
               </Button>
+
               <Button
                 type="submit"
                 fullWidth
@@ -159,38 +163,3 @@ export default function ProductReturn() {
     </>
   );
 }
-
-// <div>
-// <p>Click on the "Choose File" button to upload a images:</p>
-// <input
-//   type="file"
-//   className="mb-6"
-//   onChange={(e) => {
-//     setImage(e.target.files);
-//   }}
-//   multiple
-// />
-// <Button
-//   type="submit"
-//   fullWidth
-//   variant="contained"
-//   className="mt-6 mb-12"
-//   onClick={upload}
-// >
-//   Images Upload
-// </Button>
-
-// <hr className="mt-6" />
-// <Button
-//   type="submit"
-//   fullWidth
-//   variant="contained"
-//   className="mt-6 mb-12"
-//   onClick={addProduct}
-//   // className="mt-6 mb-12"
-// >
-//   Add Product
-// </Button>
-
-// <h3>Uploaded {progress}</h3>
-// </div>

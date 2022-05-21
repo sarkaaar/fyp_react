@@ -45,7 +45,7 @@ export default function ViewDoctor() {
 
   useEffect(() => {
     getRole();
-  }, [true]);
+  }, [loadUser]);
 
   const usersRef = collection(db, "users");
 
@@ -59,10 +59,16 @@ export default function ViewDoctor() {
 
           if (queryUser[0]?.role === "admin") {
             console.log("Admin is found");
+
             setLoadUser(false);
 
-            getRole();
+
+
+            
+
+           
           } else {
+            console.log("user not found")
             setLoadUser(false);
             navigate("/");
           }

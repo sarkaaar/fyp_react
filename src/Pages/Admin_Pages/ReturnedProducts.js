@@ -1,78 +1,78 @@
 import Header from "./admin_components/Header";
 import Sidebar from "./admin_components/Sidebar";
-import { useState,useEffect } from "react";
-import {
-  collection,
-  getDocs,
-  doc,
-  
-} from "firebase/firestore";
-
-import { db } from "../../firebase-config";
+import { useState, useEffect } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db, auth } from "../../firebase-config";
+import { onAuthStateChanged } from "firebase/auth";
 
 export default function ReturnedProducts() {
-  const ret = [
-    {
-      username: "Ali",
-      email: "Someone",
-      orderNo: "12",
-      products: ["Book", "Pen", "Pencil"],
-      reason: "dont like the colot",
-      date: "akhri hafta",
-      status: "koi ata pata nai",
-    },
-  ];
   const productReturn = collection(db, "productReturn");
-  const [products, setProducts] = useState([]);
-  
-  useEffect(() => {
-    const getReturnProducts = async () => {
-      const data = await getDocs(productReturn);
-      setProducts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
 
-    getReturnProducts();
-  }, []);
+  const [user, setUser] = useState();
+  const [returns, setreturns] = useState([]);
+
+  const getReturnedItems = async () => {
+    await getDocs(productReturn)
+      .then((res) => {
+        setreturns(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    getReturnedItems();
+  }, [user]);
 
   return (
     <>
       <Header />
-      {/* <div className="flex"> */}
       <Sidebar />
-      <div className="ml-72 p-10 bg-white rounded">
-        <h1 className="text-4xl m-12">Products Returned -{">"}</h1>
-        <div className="m-auto p-4 flex justify-between border-2 border-slate-900 w-11/12">
-          <p className="w-1/6 text-2xl font-bold">User</p>
-          <p className="w-1/6 text-2xl font-bold">Email</p>
-          <p className="w-1/6 text-2xl font-bold">Order No.</p>
-          <p className="w-1/6 text-2xl font-bold">Products</p>
-          <p className="w-1/6 text-2xl font-bold">Reason</p>
-          <p className="w-1/6 text-2xl font-bold">Date</p>
-          <p className="w-1/6 text-2xl font-bold">Status</p>
-        </div>
-        {products.map((item, key) => {
-          return (
+      <div className="ml-64 pt-32">
+        <h1 className="text-2xl p-2 px-8">Returned Products</h1>
+        <table className=" w-11/12 m-auto divide-y bg-white divide-gray-300 table-fixed dark:divide-gray-700">
+          <thead className="p-4 bg-gray-200 dark:bg-gray-700">
+            <tr>
+              <th className="text-xl p-2 px-8">Name</th>
+              <th className="text-xl p-2 px-8">Order # </th>
+              <th className="text-xl p-2 px-8">Product Id</th>
+              <th className="text-xl p-2 px-8">Description</th>
+              <th className="text-xl p-2 px-8">Issue</th>
+              <th className="text-xl p-2 ">Date</th>
+            </tr>
+          </thead>
+          {returns.map((item, key) => (
             <>
-              <div className="m-auto p-4 flex justify-between w-11/12">
-                <p className="w-1/6">{item.username}</p>
-                <p className="w-1/6">{item.productName}</p>
-
-                <p className="w-1/6">{item.orderNo}</p>
-                {/* <p className="w-1/6">
-                  {item.products.map((item) => {
-                    return <p>{item}</p>;
-                  })}
-                </p> */}
-                <p className="w-1/6">{item.issue}</p>
-                <p className="w-1/6">{item.description}</p>
-                <p className="w-1/6">{item.date}</p>
-              </div>
-              <hr className="w-10/12 m-auto" />
+              <tbody key={key}>
+                <tr className="">
+                  <td className="text-center text-lg p-2 px-8">
+                    {item?.productName}
+                  </td>
+                  <td className=" text-center text-lg p-2 px-8">
+                    {item?.orderNo}
+                  </td>
+                  <td className=" text-center text-lg p-2 px-8">
+                    {item?.productID}
+                  </td>
+                  <td className=" text-center text-lg p-2 px-8">
+                    {item?.description}
+                  </td>
+                  <td className=" text-center text-lg p-2 px-8">
+                    {item?.issue}
+                  </td>
+                  <td className=" text-center text-lg p-2 px-8">
+                    {item?.date?.toDate()?.toDateString()}
+                  </td>
+                </tr>
+              </tbody>
             </>
-          );
-        })}
+          ))}
+        </table>
       </div>
-      {/* </div> */}
     </>
   );
 }

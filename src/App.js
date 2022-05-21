@@ -9,7 +9,7 @@ import HomePage from "./Pages/User_Pages/HomePage";
 import Products from "./Pages/User_Pages/All_Products";
 import Cart from "./Pages/User_Pages/Cart";
 import Chatbot from "./Pages/User_Pages/Components/Chatbot";
-import ProductReturn from "./Pages/Services/ProductRetrun";
+import ProductReturnForm from "./Pages/User_Pages/Profile/ProductReturnForm";
 import Product from "./Pages/User_Pages/Product";
 
 import Profile from "./Pages/User_Pages/Profile/Profile";
@@ -70,7 +70,7 @@ function App() {
         <Route exact path="/cart" element={<Cart />} />
         <Route exact path="/maps" element={<Maps />} />
         <Route exact path="/chatbot" element={<Chatbot />} />
-        <Route exact path="/returnProduct" element={<ProductReturn />} />
+        <Route exact path="/returnProduct" element={<ProductReturnForm />} />
         <Route exact path="/product/:id" element={<Product />} />
         <Route exact path="/profile" element={<Profile />} />
         <Route exact path="/profile/orders" element={<Orders />} />

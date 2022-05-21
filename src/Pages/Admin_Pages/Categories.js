@@ -75,13 +75,11 @@ export default function AddCategory() {
   return (
     <div>
       <Header />
-      <div className="">
-        <Sidebar />
-        <div className="m-auto  ml-72 p-16 bg-white rounded">
-        
-          <div className="m-auto">
-            <div className=" w-96 m-auto  p-5">
-              {/* <form> */}
+      <Sidebar />
+      <div className="ml-64 pt-8">
+        <div className="flex mt-8 justify-center">
+          <div className="w-96 flex flex-col gap-4">
+            <div className=" w-96 p-4 bg-white ">
               <h1 className="flex justify-center text-3xl">
                 Add Parent Category
               </h1>
@@ -108,10 +106,9 @@ export default function AddCategory() {
                   Add Category
                 </Button>
               </div>
-              {/* </form> */}
             </div>
             <hr />
-            <div className=" w-96 mt-12 m-auto p-5">
+            <div className="w-96 m-auto p-4 bg-white ">
               <h1 className="flex justify-center text-3xl">
                 Add Child Category
               </h1>
@@ -157,40 +154,39 @@ export default function AddCategory() {
             </div>
             <hr />
           </div>
-          <hr />
-          <div className="flex m-auto w-fit">
-            <div style={{ border: "2px solid black w-96" }}>
-              <h1 className="text-4xl p-4">Parent Categories</h1>
-              <hr />
-              {cat.map((item) => {
-                return (
-                  <div className="p-2">
-                    <h1>{item}</h1>
-                    <hr />
-                  </div>
-                );
-              })}
-            </div>
+        </div>
+        <hr />
+        <div className="flex  w-fit">
+          <div className="bg-white p-4 m-4">
+            <h1 className="text-4xl p-4">Parent Categories</h1>
             <hr />
-            <div style={{ border: "2px solid black w-fit" }}>
-              <h1 className="text-4xl p-4">Child Categories</h1>
-              <hr />
-              {sub_cat.map((item) => {
-                return (
-                  <div className="flex justify-between p-2 ">
-                    <h1 className="w-96">{item.sub_}</h1>
-                    <h1  className="w-96">{item.cat_}</h1>
-                    <Button
-                      onClick={() => {
-                        deleteCategory(item.id);
-                      }}
-                    >
-                      DELETE
-                    </Button>
-                  </div>
-                );
-              })}
-            </div>
+            {cat.map((item) => {
+              return (
+                <div className="p-2">
+                  <h1>{item}</h1>
+                  <hr />
+                </div>
+              );
+            })}
+          </div>
+          <hr />
+          <div className="bg-white p-4 m-4">
+            <h1 className="text-4xl p-4">Child Categories</h1>
+            <hr />
+            {sub_cat.map((item) => {
+              return (
+                <div className="flex justify-between p-2 ">
+                  <h1 className="w-96">{item.sub_}</h1>
+                  <Button
+                    onClick={() => {
+                      deleteCategory(item.id);
+                    }}
+                  >
+                    DELETE
+                  </Button>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
