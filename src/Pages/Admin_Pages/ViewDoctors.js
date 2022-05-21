@@ -16,39 +16,56 @@ import Modal from "@mui/material/Modal";
 import { Button, TextField } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import { onAuthStateChanged } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 export default function ViewDoctor() {
   //  Get Categories Names
   const [doctors, setDoctors] = useState([]);
   const [queryUser, setQueryUser] = useState();
   const [user, setUser] = useState();
+  const [loadUser, setLoadUser] = useState(true);
 
   const doctorsCollection = collection(db, "doctors");
+  const navigate = useNavigate();
 
   const getDoctors = async () => {
     const data = await getDocs(doctorsCollection);
     setDoctors(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     console.log("Doctoers Recieved");
   };
-
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      getRole();
     });
 
     getRole();
     getDoctors();
   }, [user]);
 
+  useEffect(() => {
+    getRole();
+  }, [true]);
+
   const usersRef = collection(db, "users");
 
   const getRole = async () => {
     if (user) {
-      const q = await query(usersRef, where("email", "==", user?.email));
+      const q = query(usersRef, where("email", "==", user?.email));
       await getDocs(q)
         .then((res) => {
           setQueryUser(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-          console.log(queryUser[0].role);
+          console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+
+          if (queryUser[0]?.role === "admin") {
+            console.log("Admin is found");
+            setLoadUser(false);
+
+            getRole();
+          } else {
+            setLoadUser(false);
+            navigate("/");
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -84,81 +101,88 @@ export default function ViewDoctor() {
   return (
     <>
       <Header />
-      <div className="">
-        <Sidebar />
+      <Sidebar />
 
-        <div className="ml-72">
-          <h1 className="text-3xl font-bold ml-8">List Of Doctors</h1>
-          <table className="m-auto divide-y divide-gray-200 table-fixed dark:divide-gray-700">
-            {/* <ViewInventoryHead /> */}
-            <thead className="p-4 bg-gray-100 dark:bg-gray-700">
-              <tr>
-                <th className="text-lg p-2 mx-4">Name</th>
-                <th className="text-lg p-2 mx-4">Email</th>
-                <th className="text-lg p-2 mx-4">DOB</th>
-                <th className="text-lg p-2 mx-4">CNIC</th>
-                <th className="text-lg p-2 mx-4">Phone</th>
-                <th className="text-lg p-2 mx-4">Clinic Name</th>
-                <th className="text-lg p-2 mx-4">Clinic Adress</th>
-                <th className="text-lg p-2 mx-4">Clinic Phone</th>
-                <th className="text-lg p-2 mx-4">Fees</th>
-                <th className="text-lg p-2 mx-4">Commision</th>
-                <th className="text-lg p-2 ">Actions</th>
-              </tr>
-            </thead>
+      <div className="ml-96 pt-96">
+        <Button
+          onClick={() => {
+            console.log(queryUser[0]);
+          }}
+        >
+          Click Role
+        </Button>
+        {/* <Button onClick={()=>{navigate("/");}}>Navigate</Button> */}
+        <h1 className="text-3xl font-bold ml-8">List Of Doctors</h1>
+        <table className="m-auto divide-y divide-gray-200 table-fixed dark:divide-gray-700">
+          {/* <ViewInventoryHead /> */}
+          <thead className="p-4 bg-gray-100 dark:bg-gray-700">
+            <tr>
+              <th className="text-lg p-2 mx-4">Name</th>
+              <th className="text-lg p-2 mx-4">Email</th>
+              <th className="text-lg p-2 mx-4">DOB</th>
+              <th className="text-lg p-2 mx-4">CNIC</th>
+              <th className="text-lg p-2 mx-4">Phone</th>
+              <th className="text-lg p-2 mx-4">Clinic Name</th>
+              <th className="text-lg p-2 mx-4">Clinic Adress</th>
+              <th className="text-lg p-2 mx-4">Clinic Phone</th>
+              <th className="text-lg p-2 mx-4">Fees</th>
+              <th className="text-lg p-2 mx-4">Commision</th>
+              <th className="text-lg p-2 ">Actions</th>
+            </tr>
+          </thead>
 
-            {doctors.map((item, key) => (
-              // <ViewInventoryBody obj={item} />
-              <React.Fragment key={key}>
-                <tbody>
-                  <tr>
-                    <td className="text-lg p-2 mx-4">{item.name}</td>
-                    <td className="text-lg p-2 mx-4">{item.email}</td>
-                    <td className="text-lg p-2 mx-4">{item.dob}</td>
-                    <td className="text-lg p-2 mx-4">{item.cnic}</td>
-                    <td className="text-lg p-2 mx-4">{item.phone}</td>
-                    <td className="text-lg p-2 mx-4">{item.clinicName}</td>
-                    <td className="text-lg p-2 mx-4">{item.clinicAddress}</td>
-                    <td className="text-lg p-2 mx-4">{item.clinicPhone}</td>
-                    <td className="text-lg p-2 mx-4">{item.fees}</td>
-                    <td className="text-lg p-2 mx-4">{item.commision}</td>
-                    <td className=" p-2  flex justify-end">
-                      <>
+          {doctors.map((item, key) => (
+            // <ViewInventoryBody obj={item} />
+            <React.Fragment key={key}>
+              <tbody>
+                <tr>
+                  <td className="text-lg p-2 mx-4">{item.name}</td>
+                  <td className="text-lg p-2 mx-4">{item.email}</td>
+                  <td className="text-lg p-2 mx-4">{item.dob}</td>
+                  <td className="text-lg p-2 mx-4">{item.cnic}</td>
+                  <td className="text-lg p-2 mx-4">{item.phone}</td>
+                  <td className="text-lg p-2 mx-4">{item.clinicName}</td>
+                  <td className="text-lg p-2 mx-4">{item.clinicAddress}</td>
+                  <td className="text-lg p-2 mx-4">{item.clinicPhone}</td>
+                  <td className="text-lg p-2 mx-4">{item.fees}</td>
+                  <td className="text-lg p-2 mx-4">{item.commision}</td>
+                  <td className=" p-2  flex justify-end">
+                    <>
+                      <Button
+                        onClick={() => {
+                          setSDoctor(item);
+                          setOpen(true);
+                        }}
+                      >
+                        <EditIcon />
+                      </Button>
+                      {/* <h1>{item.status}</> */}
+                      {item.status ? (
                         <Button
                           onClick={() => {
-                            setSDoctor(item);
-                            setOpen(true);
+                            disableDoctor(item.id);
                           }}
                         >
-                          <EditIcon />
+                          <CheckIcon style={{ color: "green" }} />
                         </Button>
-                        {/* <h1>{item.status}</> */}
-                        {item.status ? (
-                          <Button
-                            onClick={() => {
-                              disableDoctor(item.id);
-                            }}
-                          >
-                            <CheckIcon style={{ color: "green" }} />
-                          </Button>
-                        ) : (
-                          <Button
-                            onClick={() => {
-                              enableDoctor(item.id);
-                            }}
-                          >
-                            <CheckIcon style={{ color: "red" }} />
-                          </Button>
-                        )}
-                      </>
-                    </td>
-                  </tr>
-                </tbody>
-              </React.Fragment>
-            ))}
-          </table>
-        </div>
+                      ) : (
+                        <Button
+                          onClick={() => {
+                            enableDoctor(item.id);
+                          }}
+                        >
+                          <CheckIcon style={{ color: "red" }} />
+                        </Button>
+                      )}
+                    </>
+                  </td>
+                </tr>
+              </tbody>
+            </React.Fragment>
+          ))}
+        </table>
       </div>
+
       <Modal
         open={open}
         onClose={handleClose}
