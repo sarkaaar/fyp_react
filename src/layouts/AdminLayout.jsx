@@ -1,7 +1,7 @@
-import c from 'classnames';
-import { Fragment, useState } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
-import { NavLink } from 'react-router-dom';
+import c from "classnames";
+import { Fragment, useEffect, useState } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   BellIcon,
   ClockIcon,
@@ -13,40 +13,68 @@ import {
   QuestionMarkCircleIcon,
   ScaleIcon,
   UserGroupIcon,
-  XIcon,
-} from '@heroicons/react/outline';
+  XIcon
+} from "@heroicons/react/outline";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth, db } from "../firebase-config";
+import { collection, getDocs, query, where } from "firebase/firestore";
 
 const navigation = [
   {
-    name: 'Home', href: '/admin/dashboard', icon: HomeIcon,
+    name: "Home", href: "/admin/dashboard", icon: HomeIcon
   },
   {
-    name: 'Inventory', href: '/admin/inventory', icon: ClockIcon,
+    name: "Inventory", href: "/admin/inventory", icon: ClockIcon
   },
   {
-    name: 'Orders', href: '/admin/orders', icon: ScaleIcon,
+    name: "Orders", href: "/admin/orders", icon: ScaleIcon
   },
   {
-    name: 'Product Return', href: '/admin/productReturn', icon: CreditCardIcon,
+    name: "Product Return", href: "/admin/productReturn", icon: CreditCardIcon
   },
   {
-    name: 'Complaints', href: '/admin/complaints', icon: UserGroupIcon,
+    name: "Complaints", href: "/admin/complaints", icon: UserGroupIcon
   },
   {
-    name: 'Categories', href: '/admin/categories', icon: DocumentReportIcon,
+    name: "Categories", href: "/admin/categories", icon: DocumentReportIcon
   },
   {
-    name: 'Doctors', href: '/admin/viewDoctor', icon: DocumentReportIcon,
-  },
+    name: "Doctors", href: "/admin/viewDoctor", icon: DocumentReportIcon
+  }
 ];
 
 const secondaryNavigation = [
-  { name: 'Profile', href: '/admin/profile', icon: QuestionMarkCircleIcon },
-  { name: 'Logout', href: '/admin/sign_in', icon: CogIcon },
+  { name: "Profile", href: "/admin/profile", icon: QuestionMarkCircleIcon },
+  { name: "Logout", href: "/admin/sign_in", icon: CogIcon }
 ];
 
 export default function AdminLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [authState, setAuthState] = useState('pending');
+  const navigate = useNavigate();
+
+  useEffect(() => onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      setAuthState('error');
+      return;
+    }
+
+    const q = query(collection(db, 'users'), where('email', '==', user?.email));
+    getDocs(q).then((record) => {
+      const data = record.docs[0].data();
+      if (data.role === 'admin') {
+        setAuthState('success');
+      } else {
+        setAuthState('error');
+      }
+    });
+  }), []);
+
+  useEffect(() => {
+    if (authState === 'error') {
+      navigate('/sign_in');
+    }
+  }, [authState]);
 
   return (
     <div className="min-h-full">
@@ -113,11 +141,11 @@ export default function AdminLayout({ children }) {
                         to={item.href}
                         className={({ isActive }) => c(
                           isActive
-                            ? 'bg-gray-900 text-white'
-                            : 'text-gray-300 hover:text-white hover:bg-gray-700',
-                          'group flex items-center px-2 py-2 text-base font-medium rounded-md',
+                            ? "bg-gray-900 text-white"
+                            : "text-gray-300 hover:text-white hover:bg-gray-700",
+                          "group flex items-center px-2 py-2 text-base font-medium rounded-md"
                         )}
-                        aria-current={item.current ? 'page' : undefined}
+                        aria-current={item.current ? "page" : undefined}
                       >
                         <item.icon className="mr-4 flex-shrink-0 h-6 w-6 text-gray-400" aria-hidden="true" />
                         {item.name}
@@ -166,10 +194,10 @@ export default function AdminLayout({ children }) {
                   key={item.name}
                   to={item.href}
                   className={({ isActive }) => c(
-                    isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:text-white hover:bg-gray-700',
-                    'group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md',
+                    isActive ? "bg-gray-900 text-white" : "text-gray-300 hover:text-white hover:bg-gray-700",
+                    "group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md"
                   )}
-                  aria-current={item.current ? 'page' : undefined}
+                  aria-current={item.current ? "page" : undefined}
                 >
                   <item.icon className="mr-4 flex-shrink-0 h-6 w-6 text-gray-400" aria-hidden="true" />
                   {item.name}
