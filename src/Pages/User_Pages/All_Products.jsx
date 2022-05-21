@@ -46,7 +46,7 @@ export default function Products() {
     <div>
       <Header />
       <div className="pt-32">
-        curren
+
         <h1 className="bg-slate-100 pl-96 flex">
           Categories
           {' '}
