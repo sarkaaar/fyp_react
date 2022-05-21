@@ -57,17 +57,19 @@ export default function Products() {
         <div className=" flex bg-slate-100">
           <div className="w-96 p-16 text-black ">
             <div className="flex flex-col items-start mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ">
-              <h1 className="text-gray-700 block font-bold px-4 py-2 text-lg">
+              <h1 className="w-full text-left text-gray-700 font-bold px-4 py-2 text-lg">
                 Categories
               </h1>
               {categories?.map((item, key) => (
                 <Button
-                  className="text-black hover:font-bold px-4 py-2"
+                  className="text-black hover:font-bold px-6 py-2 w-full"
                   onClick={() => {
                     setCurrentCategory(item.name);
                   }}
-                >
+                > <span className='w-full text-left'>
                   {item?.name}
+                </span>
+                  
                 </Button>
               ))}
             </div>
