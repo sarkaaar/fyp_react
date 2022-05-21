@@ -1,10 +1,12 @@
-import Header from "../Admin_Pages/admin_components/Header";
-import Sidebar from "./admin_components/Sidebar";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth, db } from "../../firebase-config";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { onAuthStateChanged } from 'firebase/auth';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import {
+  collection, getDocs, query, where,
+} from 'firebase/firestore';
+import { auth, db } from '../../firebase-config';
+import Sidebar from './admin_components/Sidebar';
+import Header from './admin_components/Header';
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -12,10 +14,10 @@ export default function Dashboard() {
   const [db_user, setdb_User] = useState({});
   const [loading, setLoading] = useState(false);
 
-  const userRef = collection(db, "users");
+  const userRef = collection(db, 'users');
 
   const getUser = async () => {
-    const q = query(userRef, where("email", "==", user?.email));
+    const q = query(userRef, where('email', '==', user?.email));
     await getDocs(q)
       .then((res) => {
         setLoading(true);
@@ -33,11 +35,10 @@ export default function Dashboard() {
       setUser(currentUser);
     });
     getUser();
-    if (loading === true && db_user?.role?.stringValue === "admin") {
-      console.log("admin");
+    if (loading === true && db_user?.role?.stringValue === 'admin') {
+      console.log('admin');
     }
-    
-  }, [user,]);
+  }, [user]);
 
   return (
     <>

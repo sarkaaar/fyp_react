@@ -1,5 +1,6 @@
-import Header from "./admin_components/Header";
-import Sidebar from "./admin_components/Sidebar";
+import Header from './admin_components/Header';
+import Sidebar from './admin_components/Sidebar';
+
 export default function Reports() {
   return (
     <>

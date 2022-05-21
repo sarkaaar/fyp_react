@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export default function Header() {
   return (
@@ -6,7 +6,7 @@ export default function Header() {
       <h1 className="font-medium bg-white drop-shadow-lg text-center text-xl text-gray-500 ">
         ADMIN PANEL
       </h1>
-     
+
     </div>
   );
 }

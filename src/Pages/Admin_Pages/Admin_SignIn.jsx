@@ -1,7 +1,7 @@
-import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Header from "../Admin_Pages/admin_components/Header";
+import * as React from 'react';
+import Avatar from '@mui/material/Avatar';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Header from './admin_components/Header';
 
 export default function AdminSignIn() {
   const handleSubmit = (event) => {};
@@ -12,7 +12,7 @@ export default function AdminSignIn() {
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>
-            <Avatar className="m-auto" sx={{ bgcolor: "secondary.main" }}>
+            <Avatar className="m-auto" sx={{ bgcolor: 'secondary.main' }}>
               <LockOutlinedIcon />
             </Avatar>
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">

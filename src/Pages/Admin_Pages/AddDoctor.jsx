@@ -1,45 +1,45 @@
-import * as React from "react";
-import { Button, TextField } from "@mui/material";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import Header from "./admin_components/Header";
-import { useState } from "react";
-import { collection, addDoc } from "firebase/firestore";
-import { db } from "../../firebase-config";
-import Sidebar from "./admin_components/Sidebar";
+import * as React from 'react';
+import { Button, TextField } from '@mui/material';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import { useState } from 'react';
+import { collection, addDoc } from 'firebase/firestore';
+import Header from './admin_components/Header';
+import { db } from '../../firebase-config';
+import Sidebar from './admin_components/Sidebar';
 
 export default function AddDoctor() {
-  const doctorsCollection = collection(db, "doctors");
-  const availabilityRef = collection(db, "available_days");
+  const doctorsCollection = collection(db, 'doctors');
+  const availabilityRef = collection(db, 'available_days');
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [dob, setDOB] = useState("");
-  const [cnic, setCNIC] = useState("");
-  const [phone, setPhone] = useState("");
-  const [clinicAddress, setClinicAddress] = useState("");
-  const [clinicName, setClinicName] = useState("");
-  const [clinicPhone, setClinicPhone] = useState("");
-  const [fees, setFees] = useState("");
-  const [commision, setCommision] = useState("");
-  const [description, setDescription] = useState("");
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [dob, setDOB] = useState('');
+  const [cnic, setCNIC] = useState('');
+  const [phone, setPhone] = useState('');
+  const [clinicAddress, setClinicAddress] = useState('');
+  const [clinicName, setClinicName] = useState('');
+  const [clinicPhone, setClinicPhone] = useState('');
+  const [fees, setFees] = useState('');
+  const [commision, setCommision] = useState('');
+  const [description, setDescription] = useState('');
+  const [latitude, setLatitude] = useState('');
+  const [longitude, setLongitude] = useState('');
 
   const addDoctor = async () => {
     const newDoctor = {
-      name: name,
-      email: email,
-      dob: dob,
-      cnic: cnic,
-      phone: phone,
-      clinicAddress: clinicAddress,
-      clinicName: clinicName,
-      clinicPhone: clinicPhone,
-      fees: fees,
-      commision: commision,
-      description: description,
-      latitude: latitude,
-      longitude: longitude,
+      name,
+      email,
+      dob,
+      cnic,
+      phone,
+      clinicAddress,
+      clinicName,
+      clinicPhone,
+      fees,
+      commision,
+      description,
+      latitude,
+      longitude,
     };
     // -------------------------------------------------------
     const days = {
@@ -53,14 +53,14 @@ export default function AddDoctor() {
     };
     await addDoc(doctorsCollection, newDoctor).then(async (res) => {
       console.log(res);
-      await addDoc(availabilityRef, { doc_id: res.id, days }).then( (res) => {
+      await addDoc(availabilityRef, { doc_id: res.id, days }).then((res) => {
         console.log(res);
-        console.log("added");
+        console.log('added');
         // await addDoc(availabilityRef, { doc_id: res.id, days })
       });
     });
 
-    console.log("Doctor Added");
+    console.log('Doctor Added');
   };
   // -------------------------------------------------------
 
@@ -69,7 +69,7 @@ export default function AddDoctor() {
       <Header />
       <div className="flex">
         <Sidebar />
-        <div className="ml-72"></div>
+        <div className="ml-72" />
         <div className="m-auto mt-12 align-center ">
           <h1 className="text-4xl flex justify-center px-10">
             Add a New Doctor

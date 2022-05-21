@@ -1,11 +1,11 @@
-import React, {Fragment} from 'react';
-import {Menu, Transition} from '@headlessui/react';
-import {DotsVerticalIcon} from '@heroicons/react/solid';
+import React, { Fragment } from 'react';
+import { Menu, Transition } from '@headlessui/react';
+import { DotsVerticalIcon } from '@heroicons/react/solid';
 import c from 'classnames';
 
 const renderLoader = (columnCount) => (
   <tbody className="bg-white divide-y divide-gray-200 animate-pulse">
-  {
+    {
     [1, 2, 3].map((i) => (
       <tr key={i}>
         {[...Array(columnCount)].map((_, j) => (
@@ -64,9 +64,10 @@ function renderActions(actions, row) {
 
       <Menu as="div">
         <Menu.Button
-          className="flex z-0 items-center text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500 rounded">
+          className="flex z-0 items-center text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500 rounded"
+        >
           <span className="sr-only">More options</span>
-          <DotsVerticalIcon className="h-5 w-5" aria-hidden="true"/>
+          <DotsVerticalIcon className="h-5 w-5" aria-hidden="true" />
         </Menu.Button>
 
         <Transition
@@ -79,7 +80,8 @@ function renderActions(actions, row) {
           leaveTo="transform opacity-0 scale-95"
         >
           <Menu.Items
-            className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+            className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+          >
             <div className="py-1 z-10">
               {actions.slice(1).map((action) => (
                 <Menu.Item key={action.label}>
@@ -120,7 +122,9 @@ function renderTableBody(data, columns, actions) {
   ));
 }
 
-export default function DataTable({columns, actions, loading, data}) {
+export default function DataTable({
+  columns, actions, loading, data,
+}) {
   const columnCount = columns.length + ((actions && actions.length) ? 1 : 0);
 
   return (
@@ -130,28 +134,28 @@ export default function DataTable({columns, actions, loading, data}) {
           <div className="border overflow-hidden border-b border-gray-200 sm:rounded-lg">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
-              <tr>
-                {columns.map((column) => (
-                  <th
-                    key={column.key} scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    {column.name}
-                  </th>
-                ))}
-                {actions && actions.length && (
+                <tr>
+                  {columns.map((column) => (
+                    <th
+                      key={column.key} scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      {column.name}
+                    </th>
+                  ))}
+                  {actions && actions.length && (
                   <th scope="col" className="relative px-6 py-3">
-                    <span className="sr-only"/>
+                    <span className="sr-only" />
                   </th>
-                )}
-              </tr>
+                  )}
+                </tr>
               </thead>
               {
                 loading ? renderLoader(columnCount) : (
                   <tbody className="bg-white divide-y divide-gray-200">
-                  {data.length
-                    ? renderTableBody(data, columns, actions)
-                    : renderNoData(columnCount)}
+                    {data.length
+                      ? renderTableBody(data, columns, actions)
+                      : renderNoData(columnCount)}
                   </tbody>
                 )
               }

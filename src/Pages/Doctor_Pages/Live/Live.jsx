@@ -1,16 +1,16 @@
-import { useRef, useState } from "react";
-import HangupIcon from "./icons/hangup.svg";
-import MoreIcon from "./icons/more-vertical.svg";
-import CopyIcon from "./icons/copy.svg";
-import { db } from "../../../firebase-config";
-import { collection } from "firebase/firestore";
-import "./App.css";
-import "./index.css";
+import { useRef, useState } from 'react';
+import { collection } from 'firebase/firestore';
+import HangupIcon from './icons/hangup.svg';
+import MoreIcon from './icons/more-vertical.svg';
+import CopyIcon from './icons/copy.svg';
+import { db } from '../../../firebase-config';
+import './App.css';
+import './index.css';
 
 const servers = {
   iceServers: [
     {
-      urls: ["stun:stun1.l.google.com:19302", "stun:stun2.l.google.com:19302"],
+      urls: ['stun:stun1.l.google.com:19302', 'stun:stun2.l.google.com:19302'],
     },
   ],
   iceCandidatePoolSize: 10,
@@ -19,12 +19,12 @@ const servers = {
 const pc = new RTCPeerConnection(servers);
 
 function App() {
-  const [currentPage, setCurrentPage] = useState("home");
-  const [joinCode, setJoinCode] = useState("");
+  const [currentPage, setCurrentPage] = useState('home');
+  const [joinCode, setJoinCode] = useState('');
 
   return (
     <div className="app">
-      {currentPage === "home" ? (
+      {currentPage === 'home' ? (
         <Menu
           joinCode={joinCode}
           setJoinCode={setJoinCode}
@@ -41,7 +41,7 @@ function Menu({ joinCode, setJoinCode, setPage }) {
   return (
     <div className="home">
       <div className="create box">
-        <button onClick={() => setPage("create")}>Create Call</button>
+        <button onClick={() => setPage('create')}>Create Call</button>
       </div>
 
       <div className="answer box">
@@ -50,7 +50,7 @@ function Menu({ joinCode, setJoinCode, setPage }) {
           onChange={(e) => setJoinCode(e.target.value)}
           placeholder="Join with code"
         />
-        <button onClick={() => setPage("join")}>Answer</button>
+        <button onClick={() => setPage('join')}>Answer</button>
       </div>
     </div>
   );
@@ -85,15 +85,15 @@ function Videos({ mode, callId, setPage }) {
 
     setWebcamActive(true);
 
-    if (mode === "create") {
-      const callDoc = collection(db, "calls");
+    if (mode === 'create') {
+      const callDoc = collection(db, 'calls');
       // const callDoc = db.collection("calls").doc();
       // const productsCollection = collection(db, "products");
 
-      const offerCandidates = collection(db, "calls").doc(offerCandidates);
+      const offerCandidates = collection(db, 'calls').doc(offerCandidates);
       // const offerCandidates = callDoc.collection("offerCandidates");
 
-      const answerCandidates = callDoc.collection("answerCandidates");
+      const answerCandidates = callDoc.collection('answerCandidates');
 
       setRoomId(callDoc.id);
 
@@ -121,16 +121,16 @@ function Videos({ mode, callId, setPage }) {
 
       answerCandidates.onSnapshot((snapshot) => {
         snapshot.docChanges().forEach((change) => {
-          if (change.type === "added") {
+          if (change.type === 'added') {
             const candidate = new RTCIceCandidate(change.doc.data());
             pc.addIceCandidate(candidate);
           }
         });
       });
-    } else if (mode === "join") {
-      const callDoc = db.collection("calls").doc(callId);
-      const answerCandidates = callDoc.collection("answerCandidates");
-      const offerCandidates = callDoc.collection("offerCandidates");
+    } else if (mode === 'join') {
+      const callDoc = db.collection('calls').doc(callId);
+      const answerCandidates = callDoc.collection('answerCandidates');
+      const offerCandidates = callDoc.collection('offerCandidates');
 
       pc.onicecandidate = (event) => {
         event.candidate && answerCandidates.add(event.candidate.toJSON());
@@ -140,7 +140,7 @@ function Videos({ mode, callId, setPage }) {
 
       const offerDescription = callData.offer;
       await pc.setRemoteDescription(
-        new RTCSessionDescription(offerDescription)
+        new RTCSessionDescription(offerDescription),
       );
 
       const answerDescription = await pc.createAnswer();
@@ -155,8 +155,8 @@ function Videos({ mode, callId, setPage }) {
 
       offerCandidates.onSnapshot((snapshot) => {
         snapshot.docChanges().forEach((change) => {
-          if (change.type === "added") {
-            let data = change.doc.data();
+          if (change.type === 'added') {
+            const data = change.doc.data();
             pc.addIceCandidate(new RTCIceCandidate(data));
           }
         });
@@ -164,7 +164,7 @@ function Videos({ mode, callId, setPage }) {
     }
 
     pc.onconnectionstatechange = (event) => {
-      if (pc.connectionState === "disconnected") {
+      if (pc.connectionState === 'disconnected') {
         hangUp();
       }
     };
@@ -174,9 +174,9 @@ function Videos({ mode, callId, setPage }) {
     pc.close();
 
     if (roomId) {
-      let roomRef = db.collection("calls").doc(roomId);
+      const roomRef = db.collection('calls').doc(roomId);
       await roomRef
-        .collection("answerCandidates")
+        .collection('answerCandidates')
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
@@ -184,7 +184,7 @@ function Videos({ mode, callId, setPage }) {
           });
         });
       await roomRef
-        .collection("offerCandidates")
+        .collection('offerCandidates')
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
@@ -220,7 +220,9 @@ function Videos({ mode, callId, setPage }) {
                 console.log(roomId);
               }}
             >
-              <CopyIcon /> Copy joining code
+              <CopyIcon />
+              {' '}
+              Copy joining code
             </button>
           </div>
         </div>
@@ -231,7 +233,7 @@ function Videos({ mode, callId, setPage }) {
           <div className="modal">
             <h3>Turn on your camera and microphone and start the call</h3>
             <div className="container">
-              <button onClick={() => setPage("home")} className="secondary">
+              <button onClick={() => setPage('home')} className="secondary">
                 Cancel
               </button>
               <button onClick={setupSources}>Start</button>

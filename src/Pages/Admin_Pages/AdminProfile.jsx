@@ -1,9 +1,9 @@
-import React from "react";
-import Header from "./admin_components/Header";
-import Sidebar from "./admin_components/Sidebar";
-import PersonIcon from "@mui/icons-material/Person";
-import { Button, TextField } from "@mui/material";
-import Modal from "@mui/material/Modal";
+import React from 'react';
+import PersonIcon from '@mui/icons-material/Person';
+import { Button, TextField } from '@mui/material';
+import Modal from '@mui/material/Modal';
+import Sidebar from './admin_components/Sidebar';
+import Header from './admin_components/Header';
 
 export default function AdminProfile() {
   // Edit Info
@@ -87,7 +87,7 @@ export default function AdminProfile() {
       >
         <div
           className="absolute inset-1/2	w-96 h-fit border-box bg-white drop-shadow-2xl	p-4"
-          style={{ transform: "translate(-50%, -50%)" }}
+          style={{ transform: 'translate(-50%, -50%)' }}
         >
           <h1 id="modal-modal-title" className="mt-2 text-xl">
             Update User Info
@@ -115,7 +115,7 @@ export default function AdminProfile() {
       >
         <div
           className="absolute inset-1/2	w-96 h-fit border-box bg-white drop-shadow-2xl	p-4"
-          style={{ transform: "translate(-50%, -50%)" }}
+          style={{ transform: 'translate(-50%, -50%)' }}
         >
           <h1 id="modal-modal-title" className="mt-2 text-xl">
             Update Password
@@ -152,7 +152,7 @@ export default function AdminProfile() {
       >
         <div
           className="absolute inset-1/2	w-96 h-fit border-box bg-white drop-shadow-2xl	p-4"
-          style={{ transform: "translate(-50%, -50%)" }}
+          style={{ transform: 'translate(-50%, -50%)' }}
         >
           <h1 id="modal-modal-title" className="mt-2  font-bold text-2xl">
             Deactivate Your Account

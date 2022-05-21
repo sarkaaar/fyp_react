@@ -1,36 +1,36 @@
-import * as React from "react";
-import { useState, useEffect } from "react";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Header from "./admin_components/Header";
+import * as React from 'react';
+import { useState, useEffect } from 'react';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import {
   collection,
   addDoc,
   getDocs,
   deleteDoc,
   doc,
-} from "firebase/firestore";
-import { db } from "../../firebase-config";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
-import Sidebar from "./admin_components/Sidebar";
+} from 'firebase/firestore';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import { db } from '../../firebase-config';
+import Header from './admin_components/Header';
+import Sidebar from './admin_components/Sidebar';
+
 export default function AddCategory() {
-  
-  const [currentCategory, setCurrentCategory] = useState("");
-  const [category, setCategory] = useState("");
-  const [subCategory, setSubCategory] = useState("");
+  const [currentCategory, setCurrentCategory] = useState('');
+  const [category, setCategory] = useState('');
+  const [subCategory, setSubCategory] = useState('');
 
   //  Get Categories Names
   const [cat, setCat] = useState([]);
-  const catCollection = collection(db, "categories");
+  const catCollection = collection(db, 'categories');
 
   // Get Sub-Categories Names
   const [sub_cat, setSub_Cat] = useState([]);
-  const sub_catCollection = collection(db, "sub-categories");
+  const sub_catCollection = collection(db, 'sub-categories');
 
   // Search Categories
   const getCategories = async () => {
@@ -63,13 +63,13 @@ export default function AddCategory() {
       () => {
         getCategories();
         getSub_Categories();
-      }
+      },
     );
   };
 
   // Delete Categories
   const deleteCategory = async (id) => {
-    const subCat_doc = doc(db, "sub-categories", id);
+    const subCat_doc = doc(db, 'sub-categories', id);
     await deleteDoc(subCat_doc).then(() => {
       getCategories();
       getSub_Categories();
@@ -129,7 +129,7 @@ export default function AddCategory() {
                   }}
                 />
 
-                <FormControl fullWidth style={{ margin: "10px 0" }}>
+                <FormControl fullWidth style={{ margin: '10px 0' }}>
                   <InputLabel id="demo-simple-select-label">
                     Category
                   </InputLabel>
@@ -140,9 +140,7 @@ export default function AddCategory() {
                       setCategory(e.target.value);
                     }}
                   >
-                    {cat.map((item) => {
-                      return <MenuItem value={item}>{item}</MenuItem>;
-                    })}
+                    {cat.map((item) => <MenuItem value={item}>{item}</MenuItem>)}
                   </Select>
                 </FormControl>
                 <Button
@@ -162,49 +160,45 @@ export default function AddCategory() {
         <hr />
         <div className="flex  w-fit">
           <div className="bg-white p-4 m-4">
-         
-          <h1 className="bg-slate-100 pl-96 flex">
-          Categories <ArrowForwardIcon /> {currentCategory}
-        </h1>
+
+            <h1 className="bg-slate-100 pl-96 flex">
+              Categories
+              {' '}
+              <ArrowForwardIcon />
+              {' '}
+              {currentCategory}
+            </h1>
             <h1 className="text-4xl p-4">Parent Categories</h1>
             <hr />
-            
-            {cat.map((item) => {
-              return (
-                <>
-                    <Button
-                      className="text-black hover:font-bold px-4 py-2"
-                      onClick={() => {
-                        setCurrentCategory(item.name);
-                      }}
-                    >
-                      {item?.name}
-                    </Button>
-                  </>
-              );
-            })}
+
+            {cat.map((item) => (
+              <Button
+                className="text-black hover:font-bold px-4 py-2"
+                onClick={() => {
+                  setCurrentCategory(item.name);
+                }}
+              >
+                {item?.name}
+              </Button>
+            ))}
           </div>
           <hr />
           <div className="bg-white p-4 m-4">
             <h1 className="text-4xl p-4">Child Categories</h1>
             <hr />
-            
-            
-            
-            {sub_cat.map((item) => {
-              return (
-                <div className="flex justify-between p-2 ">
-                  <h1 className="w-96">{item.sub_}</h1>
-                  <Button
-                    onClick={() => {
-                      deleteCategory(item.id);
-                    }}
-                  >
-                    DELETE
-                  </Button>
-                </div>
-              );
-            })}
+
+            {sub_cat.map((item) => (
+              <div className="flex justify-between p-2 ">
+                <h1 className="w-96">{item.sub_}</h1>
+                <Button
+                  onClick={() => {
+                    deleteCategory(item.id);
+                  }}
+                >
+                  DELETE
+                </Button>
+              </div>
+            ))}
           </div>
         </div>
       </div>

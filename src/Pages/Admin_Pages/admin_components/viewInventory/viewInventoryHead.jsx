@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 
 export default function ViewInventoryHead() {
   return (
@@ -12,7 +12,7 @@ export default function ViewInventoryHead() {
         <h2 className="w-1/6 text-2xl font-bold">Stock</h2>
         <h2 className="w-1/6 text-2xl font-bold">Actions</h2>
       </div>
-      <hr style={{ width: "90%" }} />
+      <hr style={{ width: '90%' }} />
     </div>
   );
 }

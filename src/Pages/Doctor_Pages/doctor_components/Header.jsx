@@ -1,14 +1,14 @@
-import * as React from "react";
-import { Link } from "react-router-dom";
+import * as React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Header() {
   return (
     <div>
       <div className="bg-gray-100 flex-1 flex justify-end">
         <Link
-          to={`/doctor/dashboard`}
+          to="/doctor/dashboard"
           // activeClassName="active"
-          style={{ textDecoration: "none", padding: "10px", marginLeft:"10px" }}
+          style={{ textDecoration: 'none', padding: '10px', marginLeft: '10px' }}
         >
           DASHBOARD
         </Link>
@@ -21,17 +21,17 @@ export default function Header() {
         </Link> */}
 
         <Link
-          to={`/doctor/sign_in`}
+          to="/doctor/sign_in"
           // activeClassName="active"
-          style={{ textDecoration: "none", padding: "10px" }}
+          style={{ textDecoration: 'none', padding: '10px' }}
         >
           LOGIN / LOGOUT
         </Link>
 
         <Link
-          to={`/doctor/viewAppointments`}
+          to="/doctor/viewAppointments"
           // activeClassName="active"
-          style={{ textDecoration: "none", padding: "10px" }}
+          style={{ textDecoration: 'none', padding: '10px' }}
         >
           VIEW APPOINTMENTS
         </Link>

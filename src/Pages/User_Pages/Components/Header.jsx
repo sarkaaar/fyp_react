@@ -1,20 +1,22 @@
-import { useState, useEffect } from "react";
-import { IconButton, TextField } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { Link } from "react-router-dom";
-import { auth, db } from "../../../firebase-config";
-import { onAuthStateChanged, signOut } from "firebase/auth";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { useState, useEffect } from 'react';
+import { IconButton, TextField } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { Link } from 'react-router-dom';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import {
+  collection, getDocs, query, where,
+} from 'firebase/firestore';
+import { auth, db } from '../../../firebase-config';
 
 export default function Header(props) {
   const [products, setProducts] = useState([]);
   const [user, setUser] = useState({});
 
-  const cartCollection = collection(db, "cart");
+  const cartCollection = collection(db, 'cart');
 
   const getCartItems = async () => {
-    const q = await query(cartCollection, where("user", "==", user?.email));
+    const q = await query(cartCollection, where('user', '==', user?.email));
     await getDocs(q).then((res) => {
       setProducts(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       // console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
@@ -41,13 +43,13 @@ export default function Header(props) {
       <div className="flex justify-between">
         <div className="flex p-2 px-8 gap-8">
           <Link
-            to={"/"}
+            to="/"
             className="font-medium text-gray-500 hover:text-gray-900"
           >
             Home
           </Link>
           <Link
-            to={"/services"}
+            to="/services"
             className="font-medium text-gray-500 hover:text-gray-900"
           >
             Services
@@ -59,13 +61,13 @@ export default function Header(props) {
             Maps
           </Link>
           <Link
-            to={"/returnProduct"}
+            to="/returnProduct"
             className="font-medium text-gray-500 hover:text-gray-900"
           >
             Product Return
           </Link>
           <Link
-            to={"/viewAppointments"}
+            to="/viewAppointments"
             className="font-medium text-gray-500 hover:text-gray-900"
           >
             Appointments
@@ -75,14 +77,14 @@ export default function Header(props) {
           {user ? (
             <>
               <Link
-                to={"/profile"}
+                to="/profile"
                 className="font-medium text-gray-500 hover:text-gray-900 px-8"
               >
                 Profile
               </Link>
               <Link
                 onClick={logout}
-                to={"/sign_in"}
+                to="/sign_in"
                 className="font-medium text-gray-500 hover:text-gray-900 px-8"
               >
                 Logout
@@ -90,7 +92,7 @@ export default function Header(props) {
             </>
           ) : (
             <Link
-              to={"/sign_in"}
+              to="/sign_in"
               className="font-medium text-gray-500 hover:text-gray-900"
             >
               Login
@@ -101,7 +103,7 @@ export default function Header(props) {
       <hr />
       <div className=" flex justify-between">
         <Link
-          to={"/products"}
+          to="/products"
           className="p-4 px-8 font-medium text-gray-500 hover:text-gray-900"
         >
           All Products
@@ -111,20 +113,20 @@ export default function Header(props) {
             id="cardName"
             label="Search"
             fullWidth
-            style={{ height: "55px" }}
+            style={{ height: '55px' }}
           />
           <span
             className="flex items-center w-16"
             style={{
-              border: "2px solid gray",
+              border: '2px solid gray',
             }}
           >
             <SearchIcon className="mx-auto" />
           </span>
         </div>
-        <Link to={"/cart"}>
-          <IconButton style={{ width: "55px", marginRight: "20px" }}>
-            <ShoppingCartIcon sx={{ color: "blue" }} />
+        <Link to="/cart">
+          <IconButton style={{ width: '55px', marginRight: '20px' }}>
+            <ShoppingCartIcon sx={{ color: 'blue' }} />
             {products.length === 0 ? (
               <span className="hidden" />
             ) : (

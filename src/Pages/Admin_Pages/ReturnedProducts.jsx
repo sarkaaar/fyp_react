@@ -1,12 +1,12 @@
-import Header from "./admin_components/Header";
-import Sidebar from "./admin_components/Sidebar";
-import { useState, useEffect } from "react";
-import { collection, getDocs } from "firebase/firestore";
-import { db, auth } from "../../firebase-config";
-import { onAuthStateChanged } from "firebase/auth";
+import { useState, useEffect } from 'react';
+import { collection, getDocs } from 'firebase/firestore';
+import { onAuthStateChanged } from 'firebase/auth';
+import Header from './admin_components/Header';
+import Sidebar from './admin_components/Sidebar';
+import { db, auth } from '../../firebase-config';
 
 export default function ReturnedProducts() {
-  const productReturn = collection(db, "productReturn");
+  const productReturn = collection(db, 'productReturn');
 
   const [user, setUser] = useState();
   const [returns, setreturns] = useState([]);
@@ -46,30 +46,28 @@ export default function ReturnedProducts() {
             </tr>
           </thead>
           {returns.map((item, key) => (
-            <>
-              <tbody key={key}>
-                <tr className="">
-                  <td className="text-center text-lg p-2 px-8">
-                    {item?.productName}
-                  </td>
-                  <td className=" text-center text-lg p-2 px-8">
-                    {item?.orderNo}
-                  </td>
-                  <td className=" text-center text-lg p-2 px-8">
-                    {item?.productID}
-                  </td>
-                  <td className=" text-center text-lg p-2 px-8">
-                    {item?.description}
-                  </td>
-                  <td className=" text-center text-lg p-2 px-8">
-                    {item?.issue}
-                  </td>
-                  <td className=" text-center text-lg p-2 px-8">
-                    {item?.date?.toDate()?.toDateString()}
-                  </td>
-                </tr>
-              </tbody>
-            </>
+            <tbody key={key}>
+              <tr className="">
+                <td className="text-center text-lg p-2 px-8">
+                  {item?.productName}
+                </td>
+                <td className=" text-center text-lg p-2 px-8">
+                  {item?.orderNo}
+                </td>
+                <td className=" text-center text-lg p-2 px-8">
+                  {item?.productID}
+                </td>
+                <td className=" text-center text-lg p-2 px-8">
+                  {item?.description}
+                </td>
+                <td className=" text-center text-lg p-2 px-8">
+                  {item?.issue}
+                </td>
+                <td className=" text-center text-lg p-2 px-8">
+                  {item?.date?.toDate()?.toDateString()}
+                </td>
+              </tr>
+            </tbody>
           ))}
         </table>
       </div>

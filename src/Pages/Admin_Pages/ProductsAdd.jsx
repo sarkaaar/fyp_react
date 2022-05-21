@@ -1,23 +1,23 @@
-import * as React from "react";
-import { Button, TextField } from "@mui/material";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import Header from "./admin_components/Header";
-import { useState, useEffect } from "react";
-import { IconButton } from "@mui/material";
-import { collection, addDoc, getDocs } from "firebase/firestore";
-import { db, storage } from "../../firebase-config";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { uploadBytesResumable, ref, getDownloadURL } from "firebase/storage";
-import Sidebar from "./admin_components/Sidebar";
+import * as React from 'react';
+import {
+  Button, TextField, IconButton, FormControl, InputLabel, MenuItem, Select,
+} from '@mui/material';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import { useState, useEffect } from 'react';
+import { collection, addDoc, getDocs } from 'firebase/firestore';
+import { uploadBytesResumable, ref, getDownloadURL } from 'firebase/storage';
+import { db, storage } from '../../firebase-config';
+import Header from './admin_components/Header';
+import Sidebar from './admin_components/Sidebar';
 
 export default function AddProducts() {
-  const [name, setName] = useState("");
-  const [costPrice, setCostPrice] = useState("");
-  const [salePrice, setSalePrice] = useState("");
-  const [variants, setVariants] = useState([["", 0]]);
-  const [category, setCategory] = useState("");
-  const [subCategory, setSubCategory] = useState("");
-  const [description, setDescription] = useState("");
+  const [name, setName] = useState('');
+  const [costPrice, setCostPrice] = useState('');
+  const [salePrice, setSalePrice] = useState('');
+  const [variants, setVariants] = useState([['', 0]]);
+  const [category, setCategory] = useState('');
+  const [subCategory, setSubCategory] = useState('');
+  const [description, setDescription] = useState('');
   const [image, setImage] = useState();
 
   const [progress, setProgress] = useState();
@@ -37,15 +37,15 @@ export default function AddProducts() {
   // ---------------------------------------------------------------------------------------------------------------------
   // Firebase
 
-  const productsCollection = collection(db, "products");
+  const productsCollection = collection(db, 'products');
 
   //  Get Categories Names
   const [cat, setCat] = useState([]);
-  const categoriesCollection = collection(db, "categories");
+  const categoriesCollection = collection(db, 'categories');
 
   // Get Sub-Categories Names
   const [sub_cat, setSub_Cat] = useState([]);
-  const sub_categoriesCollection = collection(db, "sub-categories");
+  const sub_categoriesCollection = collection(db, 'sub-categories');
 
   useEffect(() => {
     // Search Categories
@@ -69,14 +69,14 @@ export default function AddProducts() {
     const x = variants.reduce((acc, val, i) => ({ ...acc, [i]: val }), {});
 
     const newProduct = {
-      name: name,
-      costPrice: costPrice,
-      salePrice: salePrice,
+      name,
+      costPrice,
+      salePrice,
       variants: x,
-      category: category,
-      subCategory: subCategory,
-      description: description,
-      image: urls || "No Image Found",
+      category,
+      subCategory,
+      description,
+      image: urls || 'No Image Found',
     };
     console.log(newProduct);
     await addDoc(productsCollection, newProduct);
@@ -91,7 +91,7 @@ export default function AddProducts() {
       const uploadTask = uploadBytesResumable(storageRef, image[i]);
 
       uploadTask.on(
-        "state_changed",
+        'state_changed',
         (snapshot) => {
           const prog = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 
@@ -104,7 +104,7 @@ export default function AddProducts() {
             arr.push(url);
             setUrls(arr);
           });
-        }
+        },
       );
     }
   };
@@ -159,9 +159,7 @@ export default function AddProducts() {
                     fullWidth
                     type="text"
                     label="Varients"
-                    onChange={(e) =>
-                      updateVariant([e.target.value, quantity], i)
-                    }
+                    onChange={(e) => updateVariant([e.target.value, quantity], i)}
                     value={variant}
                   />
                   <TextField
@@ -170,9 +168,7 @@ export default function AddProducts() {
                     fullWidth
                     type="text"
                     label="Qunatity"
-                    onChange={(e) =>
-                      updateVariant([variant, +e.target.value], i)
-                    }
+                    onChange={(e) => updateVariant([variant, +e.target.value], i)}
                     value={quantity}
                   />
                   <IconButton type="button" onClick={() => removeVariant(i)}>
@@ -181,17 +177,17 @@ export default function AddProducts() {
                 </div>
               ))}
               <Button
-                sx={{ marginTop: "10px", marginBottom: "10px" }}
+                sx={{ marginTop: '10px', marginBottom: '10px' }}
                 type="button"
                 fullWidth
                 variant="outlined"
-                onClick={() => setVariants([...variants, ["", 0]])}
+                onClick={() => setVariants([...variants, ['', 0]])}
               >
                 Add variant
               </Button>
               <div className="flex gap-4 ">
                 <div className="w-96">
-                  <FormControl fullWidth style={{ margin: "10px 0" }}>
+                  <FormControl fullWidth style={{ margin: '10px 0' }}>
                     <InputLabel id="demo-simple-select-label">
                       Category
                     </InputLabel>
@@ -202,14 +198,12 @@ export default function AddProducts() {
                         setCategory(e.target.value);
                       }}
                     >
-                      {cat.map((item) => {
-                        return <MenuItem value={item}>{item}</MenuItem>;
-                      })}
+                      {cat.map((item) => <MenuItem value={item}>{item}</MenuItem>)}
                     </Select>
                   </FormControl>
                 </div>
                 <div className="w-96">
-                  <FormControl fullWidth style={{ margin: "10px 0" }}>
+                  <FormControl fullWidth style={{ margin: '10px 0' }}>
                     <InputLabel id="demo-simple-select-label">
                       Sub-Category
                     </InputLabel>
@@ -220,9 +214,7 @@ export default function AddProducts() {
                         setSubCategory(e.target.value);
                       }}
                     >
-                      {sub_cat.map((item) => {
-                        return <MenuItem value={item}>{item}</MenuItem>;
-                      })}
+                      {sub_cat.map((item) => <MenuItem value={item}>{item}</MenuItem>)}
                     </Select>
                   </FormControl>
                 </div>
@@ -252,7 +244,10 @@ export default function AddProducts() {
               >
                 Images Upload
               </Button>
-              <h3>Uploaded {progress}</h3>
+              <h3>
+                Uploaded
+                {progress}
+              </h3>
               <hr className="mt-6" />
               <Button
                 type="submit"
@@ -271,7 +266,6 @@ export default function AddProducts() {
     </div>
   );
 }
-
 
 // <div>
 // <p>Click on the "Choose File" button to upload a images:</p>
@@ -304,8 +298,6 @@ export default function AddProducts() {
 // >
 //   Add Product
 // </Button>
-
-
 
 // <h3>Uploaded {progress}</h3>
 // </div>

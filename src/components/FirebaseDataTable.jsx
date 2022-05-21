@@ -3,7 +3,7 @@ import { getDocs } from 'firebase/firestore';
 
 import DataTable from './DataTable';
 
-export default function FirebaseDataTable({query, ...props}) {
+export default function FirebaseDataTable({ query, ...props }) {
   const [data, setData] = useState();
   const [error, setError] = useState('');
 
@@ -21,5 +21,5 @@ export default function FirebaseDataTable({query, ...props}) {
     <div>
       <DataTable {...props} data={data} loading={!data && !error} />
     </div>
-  )
+  );
 }

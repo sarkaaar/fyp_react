@@ -1,25 +1,26 @@
-import Header from "./Components/Header";
-import GoogleIcon from "@mui/icons-material/Google";
+import GoogleIcon from '@mui/icons-material/Google';
 import {
   onAuthStateChanged,
   signOut,
   signInWithEmailAndPassword,
-} from "firebase/auth";
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { TextField } from "@mui/material";
-import { Link } from "react-router-dom";
-import { auth, db } from "../../firebase-config";
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+} from 'firebase/auth';
+import {
+  collection, getDocs, query, where,
+} from 'firebase/firestore';
+import { TextField } from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { auth, db } from '../../firebase-config';
+import Header from './Components/Header';
 
 export default function SignIn() {
   const navigate = useNavigate();
 
-  const [email, setemail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setemail] = useState('');
+  const [password, setPassword] = useState('');
   const [user, setUser] = useState();
   const [queryUser, setQueryUser] = useState();
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
 
   // onAuthStateChanged(auth, (currentUser) => {
   //   setUser(currentUser);
@@ -31,7 +32,7 @@ export default function SignIn() {
     });
 
     if (user) {
-      navigate("/");
+      navigate('/');
     }
 
     // getRole();
@@ -39,14 +40,14 @@ export default function SignIn() {
 
   // Get Role of Current User
 
-  const usersRef = collection(db, "users");
+  const usersRef = collection(db, 'users');
 
   // Login Function
   const login = async () => {
     await signInWithEmailAndPassword(auth, email, password)
       .then((res) => {
         console.log(res);
-        navigate("/");
+        navigate('/');
       })
       .catch((err) => {
         console.log(err.code);
@@ -78,7 +79,7 @@ export default function SignIn() {
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="rounded-md shadow-sm -space-y-px">
               <TextField
-                style={{ paddingBottom: "15px" }}
+                style={{ paddingBottom: '15px' }}
                 label="Email"
                 fullWidth
                 required
@@ -99,7 +100,7 @@ export default function SignIn() {
                 }}
                 type="password"
               />
-              {errorMessage !== "" ? (
+              {errorMessage !== '' ? (
                 <h1 className="text-red-600 font-bold ">{errorMessage}</h1>
               ) : (
                 <></>
@@ -154,7 +155,9 @@ export default function SignIn() {
           <div className="">
             <h2 className="w-6 m-auto">Or</h2>
             <button className="mt-4 py-2 px-4 w-full text-white bg-red-600 hover:bg-red-700 focus:ring-red-500 rounded-md">
-              Sign in with <GoogleIcon />
+              Sign in with
+              {' '}
+              <GoogleIcon />
             </button>
           </div>
         </div>

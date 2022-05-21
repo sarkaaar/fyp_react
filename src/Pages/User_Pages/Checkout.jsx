@@ -1,20 +1,20 @@
-import * as React from "react";
-import Header from "./Components/Header";
-import { TextField, Button } from "@mui/material";
-import { useState, useEffect } from "react";
-import { db } from "../../firebase-config";
-import { collection, addDoc } from "firebase/firestore";
-import { auth } from "../../firebase-config";
-import { onAuthStateChanged } from "firebase/auth";
-import Footer from "./Components/Footer";
-import { Link, useNavigate } from "react-router-dom";
-import { getDocs, deleteDoc, query, where, doc } from "firebase/firestore";
+import * as React from 'react';
+import { TextField, Button } from '@mui/material';
+import { useState, useEffect } from 'react';
+import {
+  collection, addDoc, getDocs, deleteDoc, query, where, doc,
+} from 'firebase/firestore';
+import { onAuthStateChanged } from 'firebase/auth';
+import { Link, useNavigate } from 'react-router-dom';
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 // import * as React from 'react';
-import Box from "@mui/material/Box";
+import Box from '@mui/material/Box';
 // import Button from '@mui/material/Button';
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import Footer from './Components/Footer';
+import { auth, db } from '../../firebase-config';
+import Header from './Components/Header';
 
 export default function Checkout() {
   const [open, setOpen] = React.useState(false);
@@ -22,13 +22,13 @@ export default function Checkout() {
   const handleClose = () => setOpen(false);
 
   const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
     width: 400,
-    bgcolor: "background.paper",
-    border: "2px solid #000",
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
     boxShadow: 24,
     p: 4,
   };
@@ -37,24 +37,24 @@ export default function Checkout() {
   const [total, setTotal] = useState(0);
   const [products, setProducts] = useState([]);
 
-  const cartCollection = collection(db, "cart");
+  const cartCollection = collection(db, 'cart');
 
   useEffect(() => {
     getTotal();
   }, []);
 
   const getTotal = () => {
-    var num = 0;
+    let num = 0;
     products.map((item) => {
       num += parseInt(item?.product?.salePrice) * parseInt(item?.quantity);
     });
     setTotal(num);
   };
   const getCartItems = async () => {
-    const q = await query(cartCollection, where("user", "==", user?.email));
+    const q = await query(cartCollection, where('user', '==', user?.email));
     const queryResults = await getDocs(q);
     setProducts(
-      queryResults.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+      queryResults.docs.map((doc) => ({ ...doc.data(), id: doc.id })),
     );
     console.log(products);
     getTotal();
@@ -68,35 +68,35 @@ export default function Checkout() {
     getTotal();
   }, [user]);
 
-  const checkoutRef = collection(db, "checkout");
+  const checkoutRef = collection(db, 'checkout');
 
   const check = async () => {
     const newItem = {
       authUserEamil: user?.email,
-      email: email,
-      fName: fName,
-      lName: lName,
-      address: address,
-      city: city,
-      postal: postal,
-      phone: phone,
-      card: card,
-      NOC: NOC,
-      expiry: expiry,
-      cvv: cvv,
+      email,
+      fName,
+      lName,
+      address,
+      city,
+      postal,
+      phone,
+      card,
+      NOC,
+      expiry,
+      cvv,
       cart: products,
     };
-setOpen(true);
+    setOpen(true);
 
     await addDoc(checkoutRef, newItem)
       .then((e) => {
         console.log(e);
-        console.log("sucessfully Checkout");
+        console.log('sucessfully Checkout');
         products.map(async (item) => {
-          const prod = doc(db, "cart", item?.id);
+          const prod = doc(db, 'cart', item?.id);
 
           await deleteDoc(prod).then(() => {
-            console.log("Product Sucessfully Deleted");
+            console.log('Product Sucessfully Deleted');
           });
           getCartItems();
 
@@ -107,7 +107,7 @@ setOpen(true);
       .catch((e) => {
         console.log(e);
       });
-    console.log("Checkout Sucessfull");
+    console.log('Checkout Sucessfull');
   };
 
   const [email, setEmail] = useState();
@@ -233,7 +233,7 @@ setOpen(true);
                 label="Expiry"
                 fullWidth
                 required
-                type={"date"}
+                type="date"
                 value={expiry}
                 onChange={(e) => {
                   setExpiry(e.target.value);
@@ -253,7 +253,7 @@ setOpen(true);
             <Button
               fullWidth
               variant="outlined"
-              style={{ height: "50px" }}
+              style={{ height: '50px' }}
               // onClick={check}
               onClick={handleOpen}
             >
@@ -269,32 +269,33 @@ setOpen(true);
             <h1 className=" text-3xl font-bold">In The Cart</h1>
             {products.length === 0 && (
               <div className="grid place-items-center h-screen">
-                <div className="w-20 h-20 border-t-4 border-b-4 border-blue-900 rounded-full animate-spin"></div>
+                <div className="w-20 h-20 border-t-4 border-b-4 border-blue-900 rounded-full animate-spin" />
               </div>
             )}
             <div>
-              {products.map((item, key) => {
-                return (
-                  <div key={key} className=" flex justify-between w-96">
-                    <h1 className="text-xl m-2">{item?.product?.name.split(0,20)}</h1>
-                    <h1 className="text-xl m-2">{item?.quantity}</h1>
-                    <h1 className="text-xl m-2">{item?.product?.salePrice}</h1>
-                    <h1 className="text-xl m-2">
-                      {parseInt(item?.product?.salePrice) *
-                        parseInt(item?.quantity)}
-                    </h1>
-                  </div>
-                );
-              })}
+              {products.map((item, key) => (
+                <div key={key} className=" flex justify-between w-96">
+                  <h1 className="text-xl m-2">{item?.product?.name.split(0, 20)}</h1>
+                  <h1 className="text-xl m-2">{item?.quantity}</h1>
+                  <h1 className="text-xl m-2">{item?.product?.salePrice}</h1>
+                  <h1 className="text-xl m-2">
+                    {parseInt(item?.product?.salePrice)
+                        * parseInt(item?.quantity)}
+                  </h1>
+                </div>
+              ))}
 
               <div>
-                <h1>Total = Rs. {total}</h1>
+                <h1>
+                  Total = Rs.
+                  {total}
+                </h1>
               </div>
             </div>
           </div>
         </div>
       </div>
-      
+
       <Footer />
       <Modal
         open={open}
@@ -303,13 +304,16 @@ setOpen(true);
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2" className="" >
-          For Confirmation
+          <Typography id="modal-modal-title" variant="h6" component="h2" className="">
+            For Confirmation
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          Please Goto profile /cart 
+            Please Goto profile /cart
           </Typography>
-          <Link to="/" className="bg-purple-400" >View Store <DoubleArrowIcon/></Link>
+          <Link to="/" className="bg-purple-400">
+            View Store
+            <DoubleArrowIcon />
+          </Link>
         </Box>
       </Modal>
     </>

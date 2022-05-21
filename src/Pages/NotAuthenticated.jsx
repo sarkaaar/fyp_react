@@ -1,6 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import PageNotFoundPic from "../../src/assets/images/page_not_found_pic.jpg";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import PageNotFoundPic from '../assets/images/page_not_found_pic.jpg';
 
 export default function NotAuthenticated() {
   return (

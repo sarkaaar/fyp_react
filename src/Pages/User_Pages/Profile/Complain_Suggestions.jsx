@@ -1,12 +1,11 @@
-import React from "react";
-import { useState } from "react";
-import Header from "../Components/Header";
-import Sidebar from "./Sidebar";
-import { TextField, Button } from "@mui/material";
-import { TextareaAutosize } from "@mui/base";
+import React, { useState } from 'react';
+import { TextField, Button } from '@mui/material';
+import { TextareaAutosize } from '@mui/base';
+import Header from '../Components/Header';
+import Sidebar from './Sidebar';
 
 export default function Complain_Suggestions() {
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState('');
 
   return (
     <div>
@@ -15,7 +14,7 @@ export default function Complain_Suggestions() {
       <div className="flex">
         <Sidebar />
 
-        <div className="m-96"></div>
+        <div className="m-96" />
         <div className="  mt-6">
           <div className="m-auto  align-center ">
             <h1 className="text-center text-3xl">Complaints and Suggestions</h1>

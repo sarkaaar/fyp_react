@@ -1,20 +1,20 @@
-import * as React from "react";
-import Header from "../Components/Header";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import Sidebar from "./Sidebar";
-import { collection, addDoc } from "firebase/firestore";
-import { db, auth, storage } from "../../../firebase-config";
-import { onAuthStateChanged } from "firebase/auth";
-import { uploadBytesResumable, ref, getDownloadURL } from "firebase/storage";
-import { Button, TextField } from "@mui/material";
-import { useState, useEffect } from "react";
+import * as React from 'react';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import { collection, addDoc } from 'firebase/firestore';
+import { onAuthStateChanged } from 'firebase/auth';
+import { uploadBytesResumable, ref, getDownloadURL } from 'firebase/storage';
+import { Button, TextField } from '@mui/material';
+import { useState, useEffect } from 'react';
+import { db, auth, storage } from '../../../firebase-config';
+import Sidebar from './Sidebar';
+import Header from '../Components/Header';
 
 export default function ProductReturnForm() {
-  const [orderNo, setOrderNo] = useState("");
-  const [productID, setProductID] = useState("");
-  const [productName, setProductNme] = useState("");
-  const [issue, setIssue] = useState("");
-  const [description, setDescription] = useState("");
+  const [orderNo, setOrderNo] = useState('');
+  const [productID, setProductID] = useState('');
+  const [productName, setProductNme] = useState('');
+  const [issue, setIssue] = useState('');
+  const [description, setDescription] = useState('');
   const [urls, setUrls] = useState([]);
   const [user, setUser] = useState();
 
@@ -31,7 +31,7 @@ export default function ProductReturnForm() {
       const uploadTask = uploadBytesResumable(storageRef, image[i]);
 
       uploadTask.on(
-        "state_changed",
+        'state_changed',
         (snapshot) => {
           const prog = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 
@@ -44,12 +44,12 @@ export default function ProductReturnForm() {
             arr.push(url);
             setUrls(arr);
           });
-        }
+        },
       );
     }
   };
 
-  const product_Return_Collection = collection(db, "productReturn");
+  const product_Return_Collection = collection(db, 'productReturn');
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -58,17 +58,17 @@ export default function ProductReturnForm() {
   // Add Products
   const productReturn = async () => {
     const newProduct = {
-      orderNo: orderNo,
-      productID: productID,
-      productName: productName,
-      issue: issue,
-      description: description,
+      orderNo,
+      productID,
+      productName,
+      issue,
+      description,
       images: urls,
       user: user?.email,
       date: new Date(),
     };
     await addDoc(product_Return_Collection, newProduct).then(() => {
-      console.log("product returned sucessfull");
+      console.log('product returned sucessfull');
     });
   };
   return (
@@ -124,7 +124,7 @@ export default function ProductReturnForm() {
                 minRows={9}
                 placeholder="  Description*"
                 value={description}
-                style={{ width: "384px", border: "1px solid gray" }}
+                style={{ width: '384px', border: '1px solid gray' }}
                 onChange={(e) => setDescription(e.target.value)}
               />
               <p>Click on the "Choose File" button to upload a file:</p>
@@ -137,7 +137,10 @@ export default function ProductReturnForm() {
                 }}
                 multiple
               />
-              <h3>Uploaded {progress}</h3>
+              <h3>
+                Uploaded
+                {progress}
+              </h3>
               <Button
                 type="submit"
                 fullWidth

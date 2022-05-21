@@ -1,8 +1,8 @@
-import React from "react";
-import Header from "../Components/Header";
-import { TextField } from "@mui/material";
-import Sidebar from "./Sidebar";
-import PersonIcon from "@mui/icons-material/Person";
+import React from 'react';
+import { TextField } from '@mui/material';
+import PersonIcon from '@mui/icons-material/Person';
+import Header from '../Components/Header';
+import Sidebar from './Sidebar';
 
 export default function Profile() {
   return (
@@ -34,11 +34,11 @@ export default function Profile() {
                               </div>
                               <PersonIcon
                                 style={{
-                                  width: "172",
-                                  height: "172",
-                                  borderRadius: "100%",
-                                  color: "gray",
-                                  border: "1px solid black",
+                                  width: '172',
+                                  height: '172',
+                                  borderRadius: '100%',
+                                  color: 'gray',
+                                  border: '1px solid black',
                                 }}
                               />
                             </div>

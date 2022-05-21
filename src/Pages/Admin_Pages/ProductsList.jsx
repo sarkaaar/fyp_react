@@ -1,27 +1,26 @@
-import * as React from "react";
-import Header from "./admin_components/Header";
-import Sidebar from "./admin_components/Sidebar";
-import { useState, useEffect } from "react";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
+import * as React from 'react';
+import { useState, useEffect } from 'react';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import {
   collection,
   getDocs,
   deleteDoc,
   updateDoc,
   doc,
-} from "firebase/firestore";
-import { db } from "../../firebase-config";
-import Modal from "@mui/material/Modal";
-import { Button, TextField } from "@mui/material";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import { IconButton } from "@mui/material";
+} from 'firebase/firestore';
+import Modal from '@mui/material/Modal';
+import { Button, TextField, IconButton } from '@mui/material';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import { db } from '../../firebase-config';
+import Sidebar from './admin_components/Sidebar';
+import Header from './admin_components/Header';
 
 export default function ProductsList() {
   const [products, setProducts] = useState([]);
-  const productsCollection = collection(db, "products");
+  const productsCollection = collection(db, 'products');
 
-  const [variants, setVariants] = useState([["", 0]]);
+  const [variants, setVariants] = useState([['', 0]]);
 
   const [s_Product, setS_Product] = useState();
   // Modal
@@ -53,24 +52,27 @@ export default function ProductsList() {
   };
 
   const deleteProduct = async (id) => {
-    const prod = doc(db, "products", id);
+    const prod = doc(db, 'products', id);
     await deleteDoc(prod);
-    console.log("Product Deleted");
+    console.log('Product Deleted');
   };
 
   const updateProduct = async (id) => {
-    const prod = doc(db, "products", id);
+    const prod = doc(db, 'products', id);
     await updateDoc(prod, { capital: true });
-    console.log("Product Updated");
+    console.log('Product Updated');
   };
   // render()
   return (
     <>
       <Header />
-      <div >
+      <div>
         <Sidebar />
         <div className="ml-72 p-16 bg-white rounded">
-          <h1 className="text-4xl font-bold ml-8">Products -{">"}</h1>
+          <h1 className="text-4xl font-bold ml-8">
+            Products -
+            {'>'}
+          </h1>
           <table className=" w-11/12 m-auto divide-y divide-gray-200 table-fixed dark:divide-gray-700">
             {/* <ViewInventoryHead /> */}
             <thead className="p-4 bg-gray-100 dark:bg-gray-700">
@@ -86,37 +88,33 @@ export default function ProductsList() {
 
             {products.map((item, key) => (
               // <ViewInventoryBody obj={item} />
-              <>
-                <tbody key={key}>
-                  <tr>
-                    <td className=" text-lg p-2 px-8">{item.name}</td>
-                    <td className=" text-lg p-2 px-8">{item.costPrice}</td>
-                    <td className=" text-lg p-2 px-8">{item.salePrice}</td>
-                    <td className=" text-lg p-2 px-8">{item.description}</td>
-                    <td className=" text-lg p-2 px-8">{item.stock}</td>
-                    <td className=" text-lg p-2  flex justify-end">
-                      <>
-                        <Button
-                          onClick={() => {
-                            setS_Product(item);
-                            setOpen(true);
-                          }}
-                        >
-                          <EditIcon />
-                        </Button>
-                        <Button
-                          onClick={() => {
-                            setS_Product(item);
-                            setDelOpen(true);
-                          }}
-                        >
-                          <DeleteIcon />
-                        </Button>
-                      </>
-                    </td>
-                  </tr>
-                </tbody>
-              </>
+              <tbody key={key}>
+                <tr>
+                  <td className=" text-lg p-2 px-8">{item.name}</td>
+                  <td className=" text-lg p-2 px-8">{item.costPrice}</td>
+                  <td className=" text-lg p-2 px-8">{item.salePrice}</td>
+                  <td className=" text-lg p-2 px-8">{item.description}</td>
+                  <td className=" text-lg p-2 px-8">{item.stock}</td>
+                  <td className=" text-lg p-2  flex justify-end">
+                    <Button
+                      onClick={() => {
+                        setS_Product(item);
+                        setOpen(true);
+                      }}
+                    >
+                      <EditIcon />
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        setS_Product(item);
+                        setDelOpen(true);
+                      }}
+                    >
+                      <DeleteIcon />
+                    </Button>
+                  </td>
+                </tr>
+              </tbody>
             ))}
           </table>
         </div>
@@ -131,7 +129,7 @@ export default function ProductsList() {
       >
         <div
           className="absolute inset-1/2	w-96 h-fit border-box bg-white drop-shadow-2xl	p-4"
-          style={{ transform: "translate(-50%, -50%)" }}
+          style={{ transform: 'translate(-50%, -50%)' }}
         >
           <h1 id="modal-modal-title" className="mt-2 text-xl">
             Delete Product
@@ -176,13 +174,14 @@ export default function ProductsList() {
       <Modal open={open} onClose={handleClose}>
         <div
           className="absolute inset-1/2	w-fit h-fit border-box bg-white drop-shadow-2xl	p-4"
-          style={{ transform: "translate(-50%, -50%)" }}
+          style={{ transform: 'translate(-50%, -50%)' }}
         >
           <h1 className="mt-2 text-2xl flex justify-center font-bold">
             Update Product
           </h1>
           <h1 className="mt-2 text-xl text-gray-700">
-            <span className="text-black font-bold">Product ID:</span>{" "}
+            <span className="text-black font-bold">Product ID:</span>
+            {' '}
             {s_Product?.id}
           </h1>
 
@@ -194,15 +193,13 @@ export default function ProductsList() {
                 fullWidth
                 label="Product Name"
                 value={s_Product?.name}
-                onChange={(e) =>
-                  setS_Product({
-                    name: e.target.value,
-                    costPrice: s_Product?.costPrice,
-                    salePrice: s_Product?.salePrice,
-                    id: s_Product?.id,
-                    description: s_Product?.description,
-                  })
-                }
+                onChange={(e) => setS_Product({
+                  name: e.target.value,
+                  costPrice: s_Product?.costPrice,
+                  salePrice: s_Product?.salePrice,
+                  id: s_Product?.id,
+                  description: s_Product?.description,
+                })}
               />
 
               <TextField
@@ -212,15 +209,13 @@ export default function ProductsList() {
                 label="Cost Price"
                 type="text"
                 value={s_Product?.costPrice}
-                onChange={(e) =>
-                  setS_Product({
-                    name: s_Product?.name,
-                    costPrice: e.target.value,
-                    salePrice: s_Product?.salePrice,
-                    id: s_Product?.id,
-                    description: s_Product?.description,
-                  })
-                }
+                onChange={(e) => setS_Product({
+                  name: s_Product?.name,
+                  costPrice: e.target.value,
+                  salePrice: s_Product?.salePrice,
+                  id: s_Product?.id,
+                  description: s_Product?.description,
+                })}
               />
               <TextField
                 margin="normal"
@@ -229,30 +224,26 @@ export default function ProductsList() {
                 label="Sale Price"
                 type="text"
                 value={s_Product?.salePrice}
-                onChange={(e) =>
-                  setS_Product({
-                    name: s_Product?.name,
-                    costPrice: s_Product?.costPrice,
-                    salePrice: e.target.value,
-                    id: s_Product?.id,
-                    description: s_Product?.description,
-                  })
-                }
+                onChange={(e) => setS_Product({
+                  name: s_Product?.name,
+                  costPrice: s_Product?.costPrice,
+                  salePrice: e.target.value,
+                  id: s_Product?.id,
+                  description: s_Product?.description,
+                })}
               />
               <TextareaAutosize
                 minRows={10}
                 placeholder="  Description*"
                 className="mt-8 w-full"
                 value={s_Product?.description}
-                onChange={(e) =>
-                  setS_Product({
-                    name: s_Product?.name,
-                    costPrice: s_Product?.costPrice,
-                    salePrice: s_Product?.salePrice,
-                    id: s_Product?.id,
-                    description: e.target.value,
-                  })
-                }
+                onChange={(e) => setS_Product({
+                  name: s_Product?.name,
+                  costPrice: s_Product?.costPrice,
+                  salePrice: s_Product?.salePrice,
+                  id: s_Product?.id,
+                  description: e.target.value,
+                })}
               />
             </div>
             <div className="w-96">
@@ -282,11 +273,11 @@ export default function ProductsList() {
                 </div>
               ))}
               <Button
-                sx={{ marginTop: "10px", marginBottom: "10px" }}
+                sx={{ marginTop: '10px', marginBottom: '10px' }}
                 type="button"
                 fullWidth
                 variant="contained"
-                onClick={() => setVariants([...variants, ["", 0]])}
+                onClick={() => setVariants([...variants, ['', 0]])}
               >
                 Add variant
               </Button>

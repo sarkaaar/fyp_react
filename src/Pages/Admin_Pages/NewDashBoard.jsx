@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 
 export default function NewDashBoard() {
   return (
@@ -46,7 +46,7 @@ export default function NewDashBoard() {
                     <tr>
                       <th className="text-left text-blue-900">COD Sales</th>
                       <th className="text-left text-blue-900">
-                        {" "}
+                        {' '}
                         Credit Card Sales
                       </th>
                       <th className="text-left text-blue-900"> Total Sales</th>
@@ -97,7 +97,7 @@ export default function NewDashBoard() {
                       <td>6/12/2022</td>
                       <td>9:00 AM</td>
                     </tr>
-                    
+
                   </tbody>
                 </table>
 
@@ -129,11 +129,11 @@ export default function NewDashBoard() {
                       <td>10%</td>
                     </tr>
                     <tr>
-                    <td>insta gram boosting /ad campaign</td>
+                      <td>insta gram boosting /ad campaign</td>
                       <td>5000</td>
                       <td>5%</td>
                     </tr>
-                   
+
                   </tbody>
                 </table>
 

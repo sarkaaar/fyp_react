@@ -1,72 +1,72 @@
-import "./App.css";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import PageNotFound from "./Pages/PageNotFound";
+import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import PageNotFound from './Pages/PageNotFound';
 // User Pages
-import SignIn from "./Pages/User_Pages/SignIn";
-import SignUp from "./Pages/User_Pages/SignUp";
-import CheckoutContent from "./Pages/User_Pages/Checkout";
-import HomePage from "./Pages/User_Pages/HomePage";
-import Products from "./Pages/User_Pages/All_Products";
-import Cart from "./Pages/User_Pages/Cart";
-import Chatbot from "./Pages/User_Pages/Components/Chatbot";
-import ProductReturnForm from "./Pages/User_Pages/Profile/ProductReturnForm";
-import Product from "./Pages/User_Pages/Product";
+import SignIn from './Pages/User_Pages/SignIn';
+import SignUp from './Pages/User_Pages/SignUp';
+import CheckoutContent from './Pages/User_Pages/Checkout';
+import HomePage from './Pages/User_Pages/HomePage';
+import Products from './Pages/User_Pages/All_Products';
+import Cart from './Pages/User_Pages/Cart';
+import Chatbot from './Pages/User_Pages/Components/Chatbot';
+import ProductReturnForm from './Pages/User_Pages/Profile/ProductReturnForm';
+import Product from './Pages/User_Pages/Product';
 
-import Profile from "./Pages/User_Pages/Profile/Profile";
-import Orders from "./Pages/User_Pages/Profile/Orders";
-import ProductReturns from "./Pages/User_Pages/Profile/ProductReturns"; 
-import Favourites from "./Pages/User_Pages/Profile/Favourites";
-import Slots from "./Pages/Doctor_Pages/Slots";
+import Profile from './Pages/User_Pages/Profile/Profile';
+import Orders from './Pages/User_Pages/Profile/Orders';
+import ProductReturns from './Pages/User_Pages/Profile/ProductReturns';
+import Favourites from './Pages/User_Pages/Profile/Favourites';
+import Slots from './Pages/Doctor_Pages/Slots';
 // import Favourites from "./Pages/User_Pages/Components/viewFavourites/Favourites";
 
 // Clinical Pages
-import MakeAppointments from "./Pages/Services/MakeAppointments";
-import ViewAppointments from "./Pages/Services/ViewAppointments";
-import ViewDoctorsUser from "./Pages/Services/ViewDoctors";
-import Maps from "./Pages/Services/Maps";
-import Services from "./Pages/Services/Services";
+import MakeAppointments from './Pages/Services/MakeAppointments';
+import ViewAppointments from './Pages/Services/ViewAppointments';
+import ViewDoctorsUser from './Pages/Services/ViewDoctors';
+import Maps from './Pages/Services/Maps';
+import Services from './Pages/Services/Services';
 
 // Admin Pages
-import AdminSignIn from "./Pages/Admin_Pages/Admin_SignIn";
-import Dashboard from "./Pages/Admin_Pages/Dashboard";
-import NewDashBoard from "./Pages/Admin_Pages/NewDashBoard";
-import AddDoctor from "./Pages/Admin_Pages/AddDoctor";
-import AddProducts from "./Pages/Admin_Pages/ProductsAdd";
-import Inventory from "./Pages/Admin_Pages/Inventory";
-import AdminOrders from "./Pages/Admin_Pages/AdminOrders";
-import ViewDoctors from "./Pages/Admin_Pages/ViewDoctors";
-import Categories from "./Pages/Admin_Pages/Categories";
-import ProductsList from "./Pages/Admin_Pages/ProductsList";
-import AdminProfile from "./Pages/Admin_Pages/AdminProfile";
-import ReturnedProducts from "./Pages/Admin_Pages/ReturnedProducts";
-import Reports from "./Pages/Admin_Pages/Reports";
-import Complaints from "./Pages/Admin_Pages/Complaints";
+import AdminSignIn from './Pages/Admin_Pages/Admin_SignIn';
+import Dashboard from './Pages/Admin_Pages/Dashboard';
+import NewDashBoard from './Pages/Admin_Pages/NewDashBoard';
+import AddDoctor from './Pages/Admin_Pages/AddDoctor';
+import AddProducts from './Pages/Admin_Pages/ProductsAdd';
+import Inventory from './Pages/Admin_Pages/Inventory';
+import AdminOrders from './Pages/Admin_Pages/AdminOrders';
+import ViewDoctors from './Pages/Admin_Pages/ViewDoctors';
+import Categories from './Pages/Admin_Pages/Categories';
+import ProductsList from './Pages/Admin_Pages/ProductsList';
+import AdminProfile from './Pages/Admin_Pages/AdminProfile';
+import ReturnedProducts from './Pages/Admin_Pages/ReturnedProducts';
+import Reports from './Pages/Admin_Pages/Reports';
+import Complaints from './Pages/Admin_Pages/Complaints';
 
 // Doctors Pages
-import DoctorDashboard from "./Pages/Doctor_Pages/Dashboard";
-import DoctorSignIn from "./Pages/Doctor_Pages/Doctor_SignIn";
-import DocViewAppointments from "./Pages/Doctor_Pages/DocViewAppointments";
-import Live from "./Pages/Doctor_Pages/Live/Live";
-import NotAuthenticated from "./Pages/NotAuthenticated";
+import DoctorDashboard from './Pages/Doctor_Pages/Dashboard';
+import DoctorSignIn from './Pages/Doctor_Pages/Doctor_SignIn';
+import DocViewAppointments from './Pages/Doctor_Pages/DocViewAppointments';
+import Live from './Pages/Doctor_Pages/Live/Live';
+import NotAuthenticated from './Pages/NotAuthenticated';
 
-import NoPermission from "./Pages/Admin_Pages/NoPermission";
-import Complain_Suggestions from "./Pages/User_Pages/Profile/Complain_Suggestions";
+import NoPermission from './Pages/Admin_Pages/NoPermission';
+import Complain_Suggestions from './Pages/User_Pages/Profile/Complain_Suggestions';
+
 function App() {
   return (
     <Router>
       <Routes>
         <Route exact path="/no-permission" element={<NoPermission />} />
 
-
         {/* User Panel */}
         <Route exact path="/" element={<HomePage />} />
-        <Route exact path="/profile/complaint" element={<Complain_Suggestions/>} />
+        <Route exact path="/profile/complaint" element={<Complain_Suggestions />} />
         <Route exact path="/sign_in" element={<SignIn />} />
         <Route exact path="/sign_up" element={<SignUp />} />
         <Route exact path="/checkout" element={<CheckoutContent />} />
         <Route exact path="/products" element={<Products />} />
         <Route exact path="/NotAuthorised" element={<NotAuthenticated />} />
-        
+
         <Route exact path="/cart" element={<Cart />} />
         <Route exact path="/maps" element={<Maps />} />
         <Route exact path="/chatbot" element={<Chatbot />} />

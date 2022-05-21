@@ -1,7 +1,5 @@
-export default function AddEditProduct({data, id}) {
+export default function AddEditProduct({ data, id }) {
   return (
-    <div>
-
-    </div>
-  )
+    <div />
+  );
 }

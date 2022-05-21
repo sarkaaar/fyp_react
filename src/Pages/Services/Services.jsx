@@ -1,9 +1,9 @@
-import * as React from "react";
-import Header from "../User_Pages/Components/Header";
-import Footer from "../User_Pages/Components/Footer";
-import doctor from "../../assets/images/doctor.png";
-import maps from "../../assets/images/maps.jpg";
-import mAppointments from "../../assets/images/makeappointments.png";
+import * as React from 'react';
+import Header from '../User_Pages/Components/Header';
+import Footer from '../User_Pages/Components/Footer';
+import doctor from '../../assets/images/doctor.png';
+import maps from '../../assets/images/maps.jpg';
+import mAppointments from '../../assets/images/makeappointments.png';
 
 export default function Services() {
   return (
@@ -51,11 +51,11 @@ export default function Services() {
         <hr />
       </div>
 
-      <div className="w-3/4 md:w-1/2  h-px bg-black m-auto mt-3"></div>
+      <div className="w-3/4 md:w-1/2  h-px bg-black m-auto mt-3" />
       <p className="mx-7 text-3xl p-4 font-bold flex justify-center">
         Services We Provide
       </p>
-      <div className="w-3/4 md:w-1/2  h-px bg-black m-auto mb-3"></div>
+      <div className="w-3/4 md:w-1/2  h-px bg-black m-auto mb-3" />
 
       <div className="max-w-md mx-auto m-5 bg-white rounded-xl shadow-lg overflow-hidden md:max-w-2xl">
         <a href="viewDoctors">
@@ -92,7 +92,6 @@ export default function Services() {
           </div>
         </a>
       </div>
-
 
       {/* <div className="m-5 ml-36">
         <a href="viewDoctors" className="flex flex-col items-center hover:bg-gray-100 bg-white rounded-lg border h-48 shadow-md md:flex-row md:max-w-xl dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">

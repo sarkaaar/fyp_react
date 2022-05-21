@@ -1,13 +1,13 @@
-import Header from "./Components/Header";
-import { useState, useEffect } from "react";
-import * as React from "react";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../firebase-config";
+import { useState, useEffect } from 'react';
+import * as React from 'react';
+import { collection, getDocs } from 'firebase/firestore';
+import Header from './Components/Header';
+import { db } from '../../firebase-config';
 
 export default function Categories() {
   //  Get Categories Names
   const [cat, setCat] = useState([]);
-  const catCollection = collection(db, "categories");
+  const catCollection = collection(db, 'categories');
 
   useEffect(() => {
     // Search Categories
@@ -24,15 +24,13 @@ export default function Categories() {
     <>
       <Header />
       <h1>Categories</h1>
-      {cat.map((item) => {
-        return (
-          <div className=" m-4 p-2">
-            <h1 className="p-12 text-6xl border-2 border-indigo-600 w-96 bg-indigo-300 hover:bg-indigo-400 flex justify-center hover:drop-shadow-xl">
-              {item}
-            </h1>
-          </div>
-        );
-      })}
+      {cat.map((item) => (
+        <div className=" m-4 p-2">
+          <h1 className="p-12 text-6xl border-2 border-indigo-600 w-96 bg-indigo-300 hover:bg-indigo-400 flex justify-center hover:drop-shadow-xl">
+            {item}
+          </h1>
+        </div>
+      ))}
     </>
   );
 }

@@ -1,10 +1,7 @@
-import * as React from "react";
+import * as React from 'react';
 
-import Header from "./Components/Header";
-import Footer from "./Components/Footer";
-import { useState, useEffect } from "react";
-import { db } from "../../firebase-config";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   collection,
   getDocs,
@@ -13,10 +10,13 @@ import {
   where,
   doc,
   updateDoc,
-} from "firebase/firestore";
+} from 'firebase/firestore';
+import { onAuthStateChanged } from 'firebase/auth';
+import Header from './Components/Header';
+import Footer from './Components/Footer';
+import { db } from '../../firebase-config';
 // import { Button } from "@mui/material";
-import { auth } from "../../firebase-config";
-import { onAuthStateChanged } from "firebase/auth";
+import { auth } from '../../firebase-config';
 
 export default function Cart() {
   // const updateQuantity = async (id, qty) => {
@@ -32,10 +32,10 @@ export default function Cart() {
   // };
 
   const deleteProduct = async (id) => {
-    const prod = doc(db, "cart", id);
+    const prod = doc(db, 'cart', id);
     await deleteDoc(prod)
       .then(() => {
-        console.log("deleted");
+        console.log('deleted');
         getCartItems();
       })
       .catch((e) => {
@@ -49,25 +49,25 @@ export default function Cart() {
   const [products, setProducts] = useState([]);
   const [loader, setLoader] = useState(false);
 
-  const cartCollection = collection(db, "cart");
+  const cartCollection = collection(db, 'cart');
 
   useEffect(() => {
     getTotal();
   }, []);
-// }, [products, total]);
+  // }, [products, total]);
 
   const getTotal = () => {
-    var num = 0;
+    let num = 0;
     products.map((item) => {
       num += parseInt(item?.quantity) * parseInt(item?.product?.salePrice);
     });
     setTotal(num);
   };
   const getCartItems = async () => {
-    const q = await query(cartCollection, where("user", "==", user?.email));
+    const q = await query(cartCollection, where('user', '==', user?.email));
     const queryResults = await getDocs(q);
     setProducts(
-      queryResults.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+      queryResults.docs.map((doc) => ({ ...doc.data(), id: doc.id })),
     );
     setLoader(false);
     console.log(products);
@@ -75,7 +75,7 @@ export default function Cart() {
   };
 
   const checkout = async () => {
-    navigate(`/checkout`);
+    navigate('/checkout');
   };
 
   useEffect(() => {
@@ -95,7 +95,7 @@ export default function Cart() {
           <>
             {loader ? (
               <div className="grid place-items-center h-screen">
-                <div className="w-20 h-20 border-t-4 border-b-4 border-blue-900 rounded-full animate-spin"></div>
+                <div className="w-20 h-20 border-t-4 border-b-4 border-blue-900 rounded-full animate-spin" />
               </div>
             ) : products.length === 0 ? (
               <div className="font-bold text-center"> The cart is empty! </div>
@@ -126,13 +126,15 @@ export default function Cart() {
                                 <div className="flex justify-between text-base font-medium text-gray-900">
                                   <h3>{product?.product?.name}</h3>
                                   <p className="ml-4">
-                                    Total:{" "}
-                                    {product?.product?.salePrice *
-                                      product?.quantity}
+                                    Total:
+                                    {' '}
+                                    {product?.product?.salePrice
+                                      * product?.quantity}
                                   </p>
                                 </div>
                                 <p className="ml-4">
-                                  {product?.product?.salePrice}/piece
+                                  {product?.product?.salePrice}
+                                  /piece
                                 </p>
                                 <p className="mt-1 text-sm text-gray-500">
                                   {product?.color}
@@ -140,7 +142,9 @@ export default function Cart() {
                               </div>
                               <div className="flex flex-1 items-end justify-between text-sm">
                                 <p className="text-gray-500">
-                                  Qty {product?.quantity}
+                                  Qty
+                                  {' '}
+                                  {product?.quantity}
                                 </p>
 
                                 <div className="flex">
@@ -198,9 +202,7 @@ export default function Cart() {
             )}
           </>
         ) : (
-          <>
-            <h1>user is not signed in</h1>
-          </>
+          <h1>user is not signed in</h1>
         )}
         <Footer />
       </div>

@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import Modal from "@mui/material/Modal";
-import { IconButton } from "@mui/material";
-import { Button, TextField } from "@mui/material";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import React, { useState } from 'react';
+import Modal from '@mui/material/Modal';
+import { IconButton, Button, TextField } from '@mui/material';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 // import EditIcon from "@mui/icons-material/Edit";
 // import DeleteIcon from "@mui/icons-material/Delete";
 import {
@@ -11,15 +10,15 @@ import {
   deleteDoc,
   updateDoc,
   doc,
-} from "firebase/firestore";
+} from 'firebase/firestore';
 
-import { db } from "../../firebase-config";
-import Header from "./admin_components/Header";
-import Sidebar from "./admin_components/Sidebar";
-import FirebaseDataTable from "../../components/FirebaseDataTable";
+import { db } from '../../firebase-config';
+import Header from './admin_components/Header';
+import Sidebar from './admin_components/Sidebar';
+import FirebaseDataTable from '../../components/FirebaseDataTable';
 
 export default function Inventory() {
-  const [variants, setVariants] = useState([["", 0]]);
+  const [variants, setVariants] = useState([['', 0]]);
   const [s_Product, setS_Product] = useState();
   // Modal
   const [open, setOpen] = React.useState(false);
@@ -41,15 +40,15 @@ export default function Inventory() {
   };
 
   const deleteProduct = async (id) => {
-    const prod = doc(db, "products", id);
+    const prod = doc(db, 'products', id);
     await deleteDoc(prod);
-    console.log("Product Deleted");
+    console.log('Product Deleted');
   };
 
   const updateProduct = async (id) => {
-    const prod = doc(db, "products", id);
+    const prod = doc(db, 'products', id);
     await updateDoc(prod, { capital: true });
-    console.log("Product Updated");
+    console.log('Product Updated');
   };
   return (
     <>
@@ -62,7 +61,7 @@ export default function Inventory() {
           <div className="w-4/5">
             <h1 className="text-left font-bold text-2xl ">Inventory</h1>
             <FirebaseDataTable
-              query={collection(db, "products")}
+              query={collection(db, 'products')}
               columns={[
                 { key: 'name', name: 'Name' },
                 { key: 'salePrice', name: 'Sale Price' },
@@ -162,7 +161,7 @@ export default function Inventory() {
       >
         <div
           className="absolute inset-1/2	w-96 h-fit border-box bg-white drop-shadow-2xl	p-4"
-          style={{ transform: "translate(-50%, -50%)" }}
+          style={{ transform: 'translate(-50%, -50%)' }}
         >
           <h1 id="modal-modal-title" className="mt-2 text-xl">
             Delete Product
@@ -207,13 +206,14 @@ export default function Inventory() {
       <Modal open={open} onClose={handleClose}>
         <div
           className="absolute inset-1/2	w-fit h-fit border-box bg-white drop-shadow-2xl	p-4"
-          style={{ transform: "translate(-50%, -50%)" }}
+          style={{ transform: 'translate(-50%, -50%)' }}
         >
           <h1 className="mt-2 text-2xl flex justify-center font-bold">
             Update Product
           </h1>
           <h1 className="mt-2 text-xl text-gray-700">
-            <span className="text-black font-bold">Product ID:</span>{" "}
+            <span className="text-black font-bold">Product ID:</span>
+            {' '}
             {s_Product?.id}
           </h1>
 
@@ -225,15 +225,13 @@ export default function Inventory() {
                 fullWidth
                 label="Product Name"
                 value={s_Product?.name}
-                onChange={(e) =>
-                  setS_Product({
-                    name: e.target.value,
-                    costPrice: s_Product?.costPrice,
-                    salePrice: s_Product?.salePrice,
-                    id: s_Product?.id,
-                    description: s_Product?.description,
-                  })
-                }
+                onChange={(e) => setS_Product({
+                  name: e.target.value,
+                  costPrice: s_Product?.costPrice,
+                  salePrice: s_Product?.salePrice,
+                  id: s_Product?.id,
+                  description: s_Product?.description,
+                })}
               />
 
               <TextField
@@ -243,15 +241,13 @@ export default function Inventory() {
                 label="Cost Price"
                 type="text"
                 value={s_Product?.costPrice}
-                onChange={(e) =>
-                  setS_Product({
-                    name: s_Product?.name,
-                    costPrice: e.target.value,
-                    salePrice: s_Product?.salePrice,
-                    id: s_Product?.id,
-                    description: s_Product?.description,
-                  })
-                }
+                onChange={(e) => setS_Product({
+                  name: s_Product?.name,
+                  costPrice: e.target.value,
+                  salePrice: s_Product?.salePrice,
+                  id: s_Product?.id,
+                  description: s_Product?.description,
+                })}
               />
               <TextField
                 margin="normal"
@@ -260,30 +256,26 @@ export default function Inventory() {
                 label="Sale Price"
                 type="text"
                 value={s_Product?.salePrice}
-                onChange={(e) =>
-                  setS_Product({
-                    name: s_Product?.name,
-                    costPrice: s_Product?.costPrice,
-                    salePrice: e.target.value,
-                    id: s_Product?.id,
-                    description: s_Product?.description,
-                  })
-                }
+                onChange={(e) => setS_Product({
+                  name: s_Product?.name,
+                  costPrice: s_Product?.costPrice,
+                  salePrice: e.target.value,
+                  id: s_Product?.id,
+                  description: s_Product?.description,
+                })}
               />
               <TextareaAutosize
                 minRows={10}
                 placeholder="  Description*"
                 className="mt-8 w-full"
                 value={s_Product?.description}
-                onChange={(e) =>
-                  setS_Product({
-                    name: s_Product?.name,
-                    costPrice: s_Product?.costPrice,
-                    salePrice: s_Product?.salePrice,
-                    id: s_Product?.id,
-                    description: e.target.value,
-                  })
-                }
+                onChange={(e) => setS_Product({
+                  name: s_Product?.name,
+                  costPrice: s_Product?.costPrice,
+                  salePrice: s_Product?.salePrice,
+                  id: s_Product?.id,
+                  description: e.target.value,
+                })}
               />
             </div>
             <div className="w-96">
@@ -295,9 +287,7 @@ export default function Inventory() {
                     fullWidth
                     type="text"
                     label="Varients"
-                    onChange={(e) =>
-                      updateVariant([e.target.value, quantity], i)
-                    }
+                    onChange={(e) => updateVariant([e.target.value, quantity], i)}
                     value={variant}
                   />
                   <TextField
@@ -313,11 +303,11 @@ export default function Inventory() {
                 </div>
               ))}
               <Button
-                sx={{ marginTop: "10px", marginBottom: "10px" }}
+                sx={{ marginTop: '10px', marginBottom: '10px' }}
                 type="button"
                 fullWidth
                 variant="contained"
-                onClick={() => setVariants([...variants, ["", 0]])}
+                onClick={() => setVariants([...variants, ['', 0]])}
               >
                 Add variant
               </Button>

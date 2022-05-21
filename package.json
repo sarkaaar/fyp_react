@@ -27,8 +27,6 @@
     "firebase": "^9.8.1",
     "google-maps": "^4.3.3",
     "google-maps-react": "^2.0.6",
-    "i": "^0.3.7",
-    "npm": "^8.5.1",
     "react": "^17.0.2",
     "react-awesome-mega-menu": "^1.0.3",
     "react-dom": "^17.0.2",
@@ -38,18 +36,26 @@
     "react-webcam": "^7.0.1",
     "recharts": "^2.1.8",
     "rsuite": "^5.7.1",
-    "styled-components": "^5.3.3",
-    "vite": "^2.9.9",
-    "web-vitals": "^2.1.2"
+    "styled-components": "^5.3.3"
   },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint ./src/**/*.jsx"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.2",
+    "eslint": "^8.13.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-hooks": "^4.4.0",
     "postcss": "^8.4.7",
-    "tailwindcss": "^3.0.23"
+    "prettier": "^2.6.2",
+    "prettier-plugin-tailwindcss": "^0.1.8",
+    "tailwindcss": "^3.0.23",
+    "vite": "^2.9.9"
   }
 }

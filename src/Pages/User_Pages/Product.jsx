@@ -1,14 +1,11 @@
-import Header from "./Components/Header";
-import Footer from "./Components/Footer";
-import * as React from "react";
-import { useState, useEffect } from "react";
-import { db, auth } from "../../firebase-config";
-import { Link, useParams } from "react-router-dom";
+import * as React from 'react';
+import { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
 
 import {
   collection,
@@ -19,38 +16,41 @@ import {
   query,
   where,
   getDocs,
-} from "firebase/firestore";
+} from 'firebase/firestore';
 
-import { onAuthStateChanged } from "firebase/auth";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
-import { Rating } from "@mui/material";
+import { onAuthStateChanged } from 'firebase/auth';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import { Rating } from '@mui/material';
+import { db, auth } from '../../firebase-config';
+import Footer from './Components/Footer';
+import Header from './Components/Header';
 
 export default function Product() {
   const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
     width: 400,
-    bgcolor: "background.paper",
-    border: "2px solid #000",
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
     boxShadow: 24,
     p: 4,
   };
   const { id } = useParams();
-  const cartRef = collection(db, "cart");
-  const reviewsRef = collection(db, "reviews");
-  const favouritesRef = collection(db, "favourites");
+  const cartRef = collection(db, 'cart');
+  const reviewsRef = collection(db, 'reviews');
+  const favouritesRef = collection(db, 'favourites');
 
   const [loader, setLoader] = useState(false);
   const [prod, setProduct] = useState();
   const [qty, setQty] = useState(1);
   const [user, setUser] = useState({});
   const [rating, setRating] = useState(1);
-  const [comments, setComments] = useState("");
+  const [comments, setComments] = useState('');
   const [getcomments, setgetComments] = useState([]);
-  const [favourite, setFavourite] = useState("");
+  const [favourite, setFavourite] = useState('');
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
   const [products, setProducts] = useState([]);
@@ -58,7 +58,7 @@ export default function Product() {
   const [addStaus, setAddStatus] = useState(false);
   const decrementCounter = () => {
     if (qty <= 1) {
-      return;
+
     } else {
       setQty(qty - 1);
     }
@@ -69,7 +69,7 @@ export default function Product() {
       setUser(currentUser);
     });
     const getProduct = async () => {
-      let x = await getDoc(doc(db, `products/${id}`));
+      const x = await getDoc(doc(db, `products/${id}`));
       console.log({
         id: x.id,
         ...x.data(),
@@ -84,18 +84,18 @@ export default function Product() {
   const addComment = async () => {
     const newComment = {
       comment: comments,
-      rating: rating,
+      rating,
       prod_id: prod?.id,
       user: user?.email,
     };
 
     user ? await addDoc(reviewsRef, newComment) : setOpen(true);
-    console.log("Comment Added Sucessfully");
+    console.log('Comment Added Sucessfully');
     getComment();
   };
 
   const getComment = async () => {
-    const q = query(reviewsRef, where("prod_id", "==", id));
+    const q = query(reviewsRef, where('prod_id', '==', id));
 
     await getDocs(q)
       .then((res) => {
@@ -111,32 +111,32 @@ export default function Product() {
     const newObj = {
       product: prod,
       user: user?.email,
-      status: "true",
+      status: 'true',
       product_id: prod.id,
     };
     setLoader(true);
     user
       ? await addDoc(favouritesRef, newObj)
-          .then(() => {
-            console.log("Add To Favourites Sucessfully");
-            getFav();
-            setAddStatus(false);
-            setLoader(false);
-          })
+        .then(() => {
+          console.log('Add To Favourites Sucessfully');
+          getFav();
+          setAddStatus(false);
+          setLoader(false);
+        })
 
-          .catch((err) => {
-            console.log(err);
-            setAddStatus(false);
-          })
+        .catch((err) => {
+          console.log(err);
+          setAddStatus(false);
+        })
       : setOpen(true);
   };
 
   const removeFavourites = async (id) => {
-    const refDoc = doc(db, "favourites", id);
+    const refDoc = doc(db, 'favourites', id);
     setLoader(true);
     await deleteDoc(refDoc)
       .then((res) => {
-        console.log("Favourites Removed Sucessfully");
+        console.log('Favourites Removed Sucessfully');
         getFav();
         setLoader(false);
       })
@@ -145,9 +145,9 @@ export default function Product() {
       });
   };
 
-  const cartCollection = collection(db, "cart");
+  const cartCollection = collection(db, 'cart');
   const getCartItems = async () => {
-    const q = await query(cartCollection, where("user", "==", user?.email));
+    const q = await query(cartCollection, where('user', '==', user?.email));
     await getDocs(q).then((res) => {
       setProducts(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
@@ -164,18 +164,18 @@ export default function Product() {
 
     user
       ? await addDoc(cartRef, newProduct).then(() => {
-          setAddStatus(false);
-        })
+        setAddStatus(false);
+      })
       : setOpen(true);
-    console.log("Product Added Sucessfully");
+    console.log('Product Added Sucessfully');
     getCartItems();
   };
 
   const getFav = async () => {
     const q = query(
       favouritesRef,
-      where("user", "==", user?.email),
-      where("product_id", "==", id)
+      where('user', '==', user?.email),
+      where('product_id', '==', id),
     );
 
     await getDocs(q)
@@ -190,7 +190,7 @@ export default function Product() {
 
   return (
     <>
-      <Header prod_length={products.length}/>
+      <Header prod_length={products.length} />
       {/* <Button
         onClick={async () => {
           let x = await getDoc(doc(db, `products/AO0PsfBRSrqJ53dPPm5k`));
@@ -201,11 +201,15 @@ export default function Product() {
         }}
       >
         Click
-      </Button>*/}
+      </Button> */}
       <section className="text-gray-700 body-font overflow-hidden bg-white">
         <div className="container p-4 mx-auto">
           <h1 className="ml-24 mb-4 text-xl font-semibold">
-            {prod?.category} {"->"} {prod?.subCategory}
+            {prod?.category}
+            {' '}
+            {'->'}
+            {' '}
+            {prod?.subCategory}
           </h1>
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
             <img
@@ -214,7 +218,7 @@ export default function Product() {
               src={
                 prod?.image
                   ? prod?.image[0]
-                  : "https://source.unsplash.com/random"
+                  : 'https://source.unsplash.com/random'
               }
             />
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
@@ -235,9 +239,9 @@ export default function Product() {
                   <span className="mr-3">Variant</span>
                   <div className="relative">
                     <select className="rounded border appearance-none border-gray-400 py-2 focus:outline-none focus:border-red-500 text-base pl-3 pr-10">
-                      {prod &&
-                        Object.keys(prod.variants).map((key) => {
-                          let variant = prod?.variants[key];
+                      {prod
+                        && Object.keys(prod.variants).map((key) => {
+                          const variant = prod?.variants[key];
                           return <option key={key}>{variant[0]}</option>;
                         })}
                     </select>
@@ -247,20 +251,20 @@ export default function Product() {
                 <div className="flex m-4 border-box">
                   <Button
                     className=" w-16 h-12"
-                    style={{ border: "2px solid gray" }}
+                    style={{ border: '2px solid gray' }}
                     onClick={decrementCounter}
                   >
                     <RemoveIcon />
                   </Button>
                   <div
                     className="w-20 h-12"
-                    style={{ border: "2px solid gray", padding: 5 }}
+                    style={{ border: '2px solid gray', padding: 5 }}
                   >
                     <span className="p-2 px-6 text-2xl">{qty}</span>
                   </div>
                   <Button
                     className="w-16 h-12 m-2"
-                    style={{ border: "2px solid gray" }}
+                    style={{ border: '2px solid gray' }}
                     onClick={() => {
                       setQty(qty + 1);
                     }}
@@ -271,14 +275,18 @@ export default function Product() {
               </div>
               <div className="flex justify-between">
                 <span className="title-font font-medium text-2xl text-gray-900">
-                  UNIT= ${prod?.salePrice}
+                  UNIT= $
+                  {prod?.salePrice}
                 </span>
                 <span className=" font-medium text-xl text-gray-900">
-                  x{qty}
+                  x
+                  {qty}
                 </span>
 
                 <span className="title-font font-medium text-2xl text-gray-900">
-                  $ {qty * prod?.salePrice}
+                  $
+                  {' '}
+                  {qty * prod?.salePrice}
                 </span>
               </div>
               <div className="flex mt-4">
@@ -327,7 +335,7 @@ export default function Product() {
                 )}
                 {loader ? (
                   <div className=" w-1/12 h-12 rounded-md bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
-                    <div className="w-4 h-4 border-t-4 border-b-4 border-blue-900 rounded-full animate-spin"></div>
+                    <div className="w-4 h-4 border-t-4 border-b-4 border-blue-900 rounded-full animate-spin" />
                   </div>
                 ) : (
                   <>
@@ -346,7 +354,7 @@ export default function Product() {
                           className="w-5 h-5"
                           viewBox="0 0 24 24"
                         >
-                          <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
+                          <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
                         </svg>
                       </button>
                     ) : (
@@ -364,7 +372,7 @@ export default function Product() {
                           className="w-5 h-5"
                           viewBox="0 0 24 24"
                         >
-                          <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
+                          <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
                         </svg>
                       </button>
                     )}
@@ -401,19 +409,17 @@ export default function Product() {
                 </Button>
               </div>
               <div>
-                {getcomments?.map((item, key) => {
-                  return (
-                    <>
-                      <div className="flex justify-between mt-2">
-                        <h1>{item?.user}</h1>
-                        <Rating readOnly value={item?.rating} />
-                      </div>
-                      <h1>{item?.comment}</h1>
-                      <hr className="mt-2 mb-2" />
-                      {/* <Rating readOnly value={item.rating} /> */}
-                    </>
-                  );
-                })}
+                {getcomments?.map((item, key) => (
+                  <>
+                    <div className="flex justify-between mt-2">
+                      <h1>{item?.user}</h1>
+                      <Rating readOnly value={item?.rating} />
+                    </div>
+                    <h1>{item?.comment}</h1>
+                    <hr className="mt-2 mb-2" />
+                    {/* <Rating readOnly value={item.rating} /> */}
+                  </>
+                ))}
               </div>
             </div>
           </div>

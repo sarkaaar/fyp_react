@@ -1,31 +1,29 @@
-import * as React from "react";
-import Header from "./Components/Header";
-import GoogleIcon from "@mui/icons-material/Google";
-import { useState, useEffect } from "react";
+import * as React from 'react';
+import GoogleIcon from '@mui/icons-material/Google';
+import { useState, useEffect } from 'react';
 import {
   onAuthStateChanged,
   signOut,
   createUserWithEmailAndPassword,
-} from "firebase/auth";
-import { Button, TextField } from "@mui/material";
-import { auth, db } from "../../firebase-config";
-import { useNavigate } from "react-router-dom";
-import { collection, addDoc } from "firebase/firestore";
+} from 'firebase/auth';
+import { Button, TextField } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { collection, addDoc } from 'firebase/firestore';
+import { auth, db } from '../../firebase-config';
+import Header from './Components/Header';
 
 export default function SignUp() {
   const navigate = useNavigate();
-
-
 
   const [user, setUser] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
   const [name, setName] = useState();
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
   const [nameError, setNameError] = useState(false);
 
-  const usersCollection = collection(db, "users");
+  const usersCollection = collection(db, 'users');
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
@@ -33,24 +31,25 @@ export default function SignUp() {
     });
 
     if (user) {
-      navigate("/");
+      navigate('/');
     }
   }, [user]);
 
   const signUp = async () => {
-    let _user = { email: email, password: password, role: "user", name: name };
+    const _user = {
+      email, password, role: 'user', name,
+    };
 
     if (password !== confirmPassword) {
-      setErrorMessage("Passwords do not match");
-      return;
+      setErrorMessage('Passwords do not match');
     } else {
       await createUserWithEmailAndPassword(auth, email, password)
         .then(async () => {
-          console.log("user added to authentication");
+          console.log('user added to authentication');
           await addDoc(usersCollection, _user)
             .then((res) => {
               console.log(res);
-              navigate("/");
+              navigate('/');
             })
             .catch((err) => {
               console.log(err);
@@ -59,7 +58,7 @@ export default function SignUp() {
         .catch((error) => {
           setErrorMessage(error.code);
           console.log(error.code);
-          console.log("error creating user");
+          console.log('error creating user');
         });
     }
   };
@@ -87,39 +86,39 @@ export default function SignUp() {
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="rounded-md shadow-sm -space-y-px">
               <TextField
-                style={{ paddingBottom: "15px" }}
+                style={{ paddingBottom: '15px' }}
                 fullWidth
                 // required
                 label="Name"
-                type={"text"}
+                type="text"
                 value={name}
                 error={nameError}
-                helperText={"Only characters allowed"}
+                helperText="Only characters allowed"
                 onChange={(e) => {
                   setName(e.target.value);
                 }}
               />
               <TextField
-                style={{ paddingBottom: "15px" }}
+                style={{ paddingBottom: '15px' }}
                 fullWidth
                 // required
                 label="Email Address"
-                type={"email"}
+                type="email"
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value);
                 }}
               />
-              {errorMessage !== "" ? (
+              {errorMessage !== '' ? (
                 <h1 className="text-red-600 font-bold mb-2">{errorMessage}</h1>
               ) : (
                 <></>
               )}
               <TextField
-                style={{ paddingBottom: "15px" }}
+                style={{ paddingBottom: '15px' }}
                 fullWidth
                 // required
-                type={"password"}
+                type="password"
                 label="Password"
                 value={password}
                 onChange={(e) => {
@@ -127,11 +126,11 @@ export default function SignUp() {
                 }}
               />
               <TextField
-                style={{ paddingBottom: "15px" }}
+                style={{ paddingBottom: '15px' }}
                 fullWidth
                 // required
                 label="Confirm Password"
-                type={"password"}
+                type="password"
                 value={confirmPassword}
                 onChange={(e) => {
                   setConfirmPassword(e.target.value);
@@ -185,7 +184,9 @@ export default function SignUp() {
             <div className="">
               <h2 className="w-6 m-auto">Or</h2>
               <button className="mt-4 py-2 px-4 w-full text-white bg-red-600 hover:bg-red-700 focus:ring-red-500 rounded-md">
-                Sign Up with <GoogleIcon />
+                Sign Up with
+                {' '}
+                <GoogleIcon />
               </button>
             </div>
           </form>
