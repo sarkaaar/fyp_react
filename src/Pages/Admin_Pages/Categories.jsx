@@ -34,8 +34,10 @@ export default function AddCategory() {
 
   // Search Categories
   const getCategories = async () => {
-    const data = await getDocs(catCollection);
-    setCat(data.docs.map((doc) => doc.data().name));
+    await getDocs(catCollection).then((res) => {
+    setCat(res.docs.map((doc) => doc.data().name));
+
+    }).catch((err) => {console.log(err)})
   };
 
   // Search Sub-Categories
@@ -166,14 +168,9 @@ export default function AddCategory() {
             <hr />
 
             {cat.map((item) => (
-              <Button
-                className="text-black hover:font-bold px-4 py-2"
-                onClick={() => {
-                  setCategory(item.name);
-                }}
-              >
-                {item?.name}
-              </Button>
+              <div key={item} className="flex justify-between p-4">  
+             <h1 className="w-96">{item}</h1>
+             </div>
             ))}
           </div>
           <hr />
