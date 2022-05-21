@@ -32,8 +32,8 @@ export default function ReturnedProducts() {
     <>
       <Header />
       <Sidebar />
-      <div className="ml-64 pt-32">
-        <h1 className="text-2xl p-2 px-8">Returned Products</h1>
+      <div className="ml-64 p-10">
+        <h1 className="text-2xl p-2 px-8 font-bold">Returned Products</h1>
         <table className=" w-11/12 m-auto divide-y bg-white divide-gray-300 table-fixed dark:divide-gray-700">
           <thead className="p-4 bg-gray-200 dark:bg-gray-700">
             <tr>
