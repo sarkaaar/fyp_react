@@ -161,13 +161,7 @@ export default function AddCategory() {
         <div className="flex  w-fit">
           <div className="bg-white p-4 m-4">
 
-            <h1 className="bg-slate-100 pl-96 flex">
-              Categories
-              {' '}
-              <ArrowForwardIcon />
-              {' '}
-              {currentCategory}
-            </h1>
+          
             <h1 className="text-4xl p-4">Parent Categories</h1>
             <hr />
 
@@ -175,7 +169,7 @@ export default function AddCategory() {
               <Button
                 className="text-black hover:font-bold px-4 py-2"
                 onClick={() => {
-                  setCurrentCategory(item.name);
+                  setCategory(item.name);
                 }}
               >
                 {item?.name}
