@@ -10,10 +10,10 @@ export default function Services() {
     <div>
       <Header />
 
-      <div className="relative bg-white overflow-hidden">
+      <div className="relative pt-36 px-auto bg-white overflow-hidden">
         {/* <Header /> */}
 
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-7xl  mx-auto">
           <div className="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
             <svg
               className="hidden lg:block absolute right-0 inset-y-0 h-full w-48 text-white transform translate-x-1/2"
@@ -43,7 +43,7 @@ export default function Services() {
         </div>
         <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
           <img
-            className="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full z-0"
+            className="pl-36 h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full z-0"
             src="https://w0.peakpx.com/wallpaper/863/1023/HD-wallpaper-how-we-feel-today-doctor-caine-funny-white-creative-puppy-dog-animal.jpg"
             alt="banner"
           />

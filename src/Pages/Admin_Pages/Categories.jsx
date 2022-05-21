@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Header from "./admin_components/Header";
+
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import {
   collection,
   addDoc,
@@ -17,6 +19,8 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Sidebar from "./admin_components/Sidebar";
 export default function AddCategory() {
+  
+  const [currentCategory, setCurrentCategory] = useState("");
   const [category, setCategory] = useState("");
   const [subCategory, setSubCategory] = useState("");
 
@@ -76,9 +80,9 @@ export default function AddCategory() {
     <div>
       <Header />
       <Sidebar />
-      <div className="ml-64 pt-8">
-        <div className="flex mt-8 justify-center">
-          <div className="w-96 flex flex-col gap-4">
+      <div className="ml-64 pt-8 ">
+        <div className="flex mt-8 justify-center ">
+          <div className="w-96 flex flex-col gap-4 ">
             <div className=" w-96 p-4 bg-white ">
               <h1 className="flex justify-center text-3xl">
                 Add Parent Category
@@ -158,14 +162,25 @@ export default function AddCategory() {
         <hr />
         <div className="flex  w-fit">
           <div className="bg-white p-4 m-4">
+         
+          <h1 className="bg-slate-100 pl-96 flex">
+          Categories <ArrowForwardIcon /> {currentCategory}
+        </h1>
             <h1 className="text-4xl p-4">Parent Categories</h1>
             <hr />
+            
             {cat.map((item) => {
               return (
-                <div className="p-2">
-                  <h1>{item}</h1>
-                  <hr />
-                </div>
+                <>
+                    <Button
+                      className="text-black hover:font-bold px-4 py-2"
+                      onClick={() => {
+                        setCurrentCategory(item.name);
+                      }}
+                    >
+                      {item?.name}
+                    </Button>
+                  </>
               );
             })}
           </div>
@@ -173,6 +188,9 @@ export default function AddCategory() {
           <div className="bg-white p-4 m-4">
             <h1 className="text-4xl p-4">Child Categories</h1>
             <hr />
+            
+            
+            
             {sub_cat.map((item) => {
               return (
                 <div className="flex justify-between p-2 ">

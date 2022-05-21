@@ -45,7 +45,7 @@ export default function Products() {
   return (
     <div>
       <Header />
-      <div className="pt-32">
+      <div className="pt-32">curren
         <h1 className="bg-slate-100 pl-96 flex">
           Categories <ArrowForwardIcon /> {currentCategory}
         </h1>
