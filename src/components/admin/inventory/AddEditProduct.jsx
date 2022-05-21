@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import { useEffect, useState } from "react";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import {
@@ -30,7 +31,7 @@ export default function AddEditProduct({ data }) {
   const [name, setName] = useState(data?.name);
   const [costPrice, setCostPrice] = useState(data?.costPrice);
   const [salePrice, setSalePrice] = useState(data?.salePrice);
-  const [variants, setVariants] = useState(data?.variants);
+  const [variants, setVariants] = useState(data?.variants || [['', 0]]);
   const [category, setCategory] = useState(data?.category);
   const [subCategory, setSubCategory] = useState(data?.subCategory);
   const [description, setDescription] = useState(data?.description);
@@ -161,7 +162,7 @@ export default function AddEditProduct({ data }) {
       </div>
 
       {variants?.map(([variant, quantity], i) => (
-        <div key={variant} className="flex items-center gap-4">
+        <div key={i} className="flex items-center gap-4">
           <TextField
             margin="normal"
             required
