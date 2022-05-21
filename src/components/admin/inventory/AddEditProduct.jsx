@@ -31,7 +31,7 @@ export default function AddEditProduct({ data }) {
   const [name, setName] = useState(data?.name);
   const [costPrice, setCostPrice] = useState(data?.costPrice);
   const [salePrice, setSalePrice] = useState(data?.salePrice);
-  const [variants, setVariants] = useState(data?.variants || [['', 0]]);
+  const [variants, setVariants] = useState(Object.values(data?.variants ?? {}).length ? Object.values(data?.variants) : [['', 0]]);
   const [category, setCategory] = useState(data?.category);
   const [subCategory, setSubCategory] = useState(data?.subCategory);
   const [description, setDescription] = useState(data?.description);
