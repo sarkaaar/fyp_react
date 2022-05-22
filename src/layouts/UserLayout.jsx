@@ -7,12 +7,12 @@ import {
   ClockIcon,
   CogIcon,
   CreditCardIcon,
-  DocumentReportIcon,
+  // DocumentReportIcon,
   HomeIcon,
   MenuAlt1Icon,
   QuestionMarkCircleIcon,
   ScaleIcon,
-  UserGroupIcon,
+  // UserGroupIcon,
   XIcon,
 } from "@heroicons/react/outline";
 import { onAuthStateChanged, signOut } from "firebase/auth";
@@ -20,6 +20,10 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { IconButton } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { auth, db } from "../firebase-config";
+import GrayLogo from "../assets/images/gray_logo.png";
+// import { signOut } from "firebase/auth";
+// import { auth } from "../firebase-config";
+import useUserRole from "../hooks/useUserRole";
 
 const navigation = [
   {
@@ -53,9 +57,9 @@ const navigation = [
   //   icon: DocumentReportIcon,
   // },
 ];
-const logout = async () => {
-  await signOut(auth);
-};
+// const logout = async () => {
+//   await signOut(auth);
+// };
 
 const secondaryNavigation = [
   { name: "Profile", href: "/profile", icon: QuestionMarkCircleIcon },
@@ -64,7 +68,7 @@ const secondaryNavigation = [
 
 export default function AdminLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [authState, setAuthState] = useState("pending");
+  const authState = useUserRole("user");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -130,9 +134,9 @@ export default function AdminLayout({ children }) {
                 <div className="flex-shrink-0 flex items-center px-4">
                   <img
                     className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/easywire-logo-cyan-300-mark-white-text.svg"
-                    alt="Easywire logo"
+                    src={GrayLogo}
                   />
+                  <p className="px-2 text-lg text-white">Pet Planet</p>
                 </div>
                 <nav
                   className="mt-5 flex-shrink-0 h-full divide-y divide-gray-900 overflow-y-auto"
@@ -195,9 +199,10 @@ export default function AdminLayout({ children }) {
           <div className="flex items-center flex-shrink-0 px-4">
             <img
               className="h-8 w-auto"
-              src="https://tailwindui.com/img/logos/easywire-logo-cyan-300-mark-white-text.svg"
-              alt="Easywire logo"
+              src={GrayLogo}
+              
             />
+            <p className="px-2 text-lg text-white">Pet Planet</p>
           </div>
           <nav
             className="mt-5 flex-1 flex flex-col divide-y divide-gray-900 overflow-y-auto"

@@ -15,9 +15,6 @@ import {
   UserGroupIcon,
   XIcon,
 } from "@heroicons/react/outline";
-// import { onAuthStateChanged } from "firebase/auth";
-// import { auth, db } from "../firebase-config";
-// import { collection, getDocs, query, where } from "firebase/firestore";
 import useUserRole from "../hooks/useUserRole";
 
 const navigation = [

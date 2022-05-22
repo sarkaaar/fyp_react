@@ -27,7 +27,7 @@ import Maps from './Pages/Services/Maps';
 import Services from './Pages/Services/Services';
 
 // Admin Pages
-import AdminSignIn from './Pages/Admin_Pages/Admin_SignIn';
+// import AdminSignIn from './Pages/Admin_Pages/Admin_SignIn';
 import Dashboard from './Pages/Admin_Pages/Dashboard';
 import NewDashBoard from './Pages/Admin_Pages/NewDashBoard';
 import AddDoctor from './Pages/Admin_Pages/AddDoctor';
@@ -90,7 +90,7 @@ function App() {
         <Route exact path="/services" element={<Services />} />
 
         {/* Admin Panel */}
-        <Route exact path="/admin/sign_in" element={<AdminSignIn />} />
+        {/* <Route exact path="/admin/sign_in" element={<AdminSignIn />} /> */}
         <Route exact path="/admin/dashboard" element={<Dashboard />} />
         <Route exact path="/admin/newdashboard" element={<NewDashBoard />} />
         <Route exact path="/admin/profile" element={<AdminProfile />} />
