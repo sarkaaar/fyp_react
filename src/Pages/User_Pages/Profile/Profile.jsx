@@ -77,9 +77,9 @@ export default function Profile() {
                               style={{
                                 width: "172",
                                 height: "172",
-                                borderRadius: "100%",
+                                borderRadius: "50%",
                                 color: "gray",
-                                border: "1px solid black",
+                                border: "1px solid gray",
                               }}
                             />
                           </div>
@@ -90,22 +90,36 @@ export default function Profile() {
                                 shrink: true,
                               }
                             }
-                              // value={queryUser[0]?.name}
+                              // value={name}
                               // fullWidth
-                              // label="Name"
+                               label="Name"
                             />
                             <div className="flex gap-4">
                               <TextField
+                                InputLabelProps={{
+                                  shrink: true,
+                                }
+                              }
                                fullWidth 
-                              //  label="Email" 
+                                label="Email" 
                               //  value={queryUser[0]?.email} 
                                />
-                              <TextField fullWidth label="Phone Number" />
+                              <TextField
+                                InputLabelProps={{
+                                  shrink: true,
+                                }
+                              }
+                               fullWidth 
+                               label="Phone Number" 
+                               />
                             </div>
                             <TextField
-                              type={password}
+                              InputLabelProps={{
+                                shrink: true,
+                              }
+                            }
                               fullWidth 
-                            //  label="Password" 
+                              label="Password" 
                              />
                           </div>
                         </div>

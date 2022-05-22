@@ -9,10 +9,10 @@ import {
   CreditCardIcon,
   HomeIcon,
   MenuAlt1Icon,
-  QuestionMarkCircleIcon,
   ScaleIcon,
   XIcon,
-  RewindIcon
+  RewindIcon,
+  UserCircleIcon
 } from "@heroicons/react/outline";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { collection, getDocs, query, where } from "firebase/firestore";
@@ -46,12 +46,9 @@ const navigation = [
     icon: CreditCardIcon,
   },
 ];
-// const logout = async () => {
-//   await signOut(auth);
-// };
 
 const secondaryNavigation = [
-  { name: "Profile", href: "/profile", icon: QuestionMarkCircleIcon },
+  { name: "Profile", href: "/profile", icon: UserCircleIcon },
   { name: "Home", href: "/", icon: RewindIcon },
   { name: "Logout", href: "/sign_in", icon: CogIcon },
 ];
@@ -68,9 +65,10 @@ export default function AdminLayout({ children }) {
   }, [authState]);
 
   const logout = async () => {
+    setOpen(true);
     await signOut(auth);
   };
-  
+
   return (
     <div className="min-h-full">
       <Transition.Root show={sidebarOpen} as={Fragment}>
@@ -166,6 +164,9 @@ export default function AdminLayout({ children }) {
                           key={item.name}
                           to={item.href}
                           className="group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-300 hover:text-white hover:bg-gray-700"
+                          onClick={() => {
+                            item.name === "Logout" ? logout() : null;
+                          }}
                         >
                           <item.icon
                             className="mr-4 h-6 w-6 text-gray-400"
