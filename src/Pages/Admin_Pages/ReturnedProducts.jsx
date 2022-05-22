@@ -5,6 +5,9 @@ import Header from './admin_components/Header';
 import Sidebar from './admin_components/Sidebar';
 import { db, auth } from '../../firebase-config';
 
+import FirebaseDataTable from "../../components/FirebaseDataTable";
+
+import AdminLayout from "../../layouts/AdminLayout";
 export default function ReturnedProducts() {
   const productReturn = collection(db, 'productReturn');
 
@@ -30,11 +33,26 @@ export default function ReturnedProducts() {
 
   return (
     <>
-      <Header />
-      <Sidebar />
-      <div className="ml-64 p-10">
-        <h1 className="text-2xl p-2 px-8 font-bold">Returned Products</h1>
-        <table className=" w-11/12 m-auto divide-y bg-white divide-gray-300 table-fixed dark:divide-gray-700">
+      <AdminLayout>
+      <h1 className="text-2xl p-2 px-8 font-bold">Returned Products</h1>
+       
+        <FirebaseDataTable
+        query={collection(db, "productReturn")}
+        columns={[
+          { key: "productName", name: "Name" },
+          { key: "orderNo", name: "Order#" },
+          { key: "date", name: "Return Date", render: (r) => r.date.toDate().toDateString() },
+          { key: "issue", name: "Issue" },
+          {key:"productID",name:"Product Id"}
+
+        ]}
+        />
+      </AdminLayout>
+    </>
+  );
+}
+
+        {/* <table className=" w-11/12 m-auto divide-y bg-white divide-gray-300 table-fixed dark:divide-gray-700">
           <thead className="p-4 bg-gray-200 dark:bg-gray-700">
             <tr>
               <th className="text-xl p-2 px-8">Name</th>
@@ -69,8 +87,5 @@ export default function ReturnedProducts() {
               </tr>
             </tbody>
           ))}
-        </table>
-      </div>
-    </>
-  );
-}
+        </table> */}
+     
