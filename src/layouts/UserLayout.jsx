@@ -42,32 +42,25 @@ const navigation = [
     href: "/profile/orders",
     icon: CreditCardIcon,
   },
-  {
-    name: "Profile",
-    href: "/profile",
-    icon: UserGroupIcon,
-  },
-  {
-    name: "Logout",
-    href: "/sign_in",
-    icon: DocumentReportIcon,
-  },
-  {
-    name: "Doctors",
-    href: "/admin/viewDoctor",
-    icon: DocumentReportIcon,
-  },
+  // {
+  //   name: "Profile",
+  //   href: "/profile",
+  //   icon: UserGroupIcon,
+  // },
+  // {
+  //   name: "Logout",
+  //   href: "/sign_in",
+  //   icon: DocumentReportIcon,
+  // },
 ];
 const logout = async () => {
   await signOut(auth);
 };
 
 const secondaryNavigation = [
-  { name: "Profile", href: "/admin/profile", icon: QuestionMarkCircleIcon },
-  { name: "Logout", href: "/admin/sign_in", icon: CogIcon },
+  { name: "Profile", href: "/profile", icon: QuestionMarkCircleIcon },
+  { name: "Logout", href: "/sign_in", icon: CogIcon },
 ];
-
-
 
 export default function AdminLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -155,7 +148,7 @@ export default function AdminLayout({ children }) {
                             isActive
                               ? "bg-gray-900 text-white"
                               : "text-gray-300 hover:text-white hover:bg-gray-700",
-                            "group flex items-center px-2 py-2 text-base font-medium rounded-md",
+                            "group flex items-center px-2 py-2 text-base font-medium rounded-md"
                           )
                         }
                         aria-current={item.current ? "page" : undefined}
