@@ -3,8 +3,6 @@ import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import AdminLayout from "../../layouts/AdminLayout";
->>>>>>> e43f5535da046d7bbee83be9479def80b57f4dec
-
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import {
   collection,
@@ -18,8 +16,6 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { db } from "../../firebase-config";
-
-import AdminLayout from "../../layouts/AdminLayout";
 
 export default function AddCategory() {
   const [currentCategory, setCurrentCategory] = useState("");

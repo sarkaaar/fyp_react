@@ -4,9 +4,6 @@ import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import { useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../firebase-config";
-import Header from "./admin_components/Header";
-import { db } from "../../firebase-config";
-import Sidebar from "./admin_components/Sidebar";
 import AdminLayout from "../../layouts/AdminLayout";
 
 export default function AddDoctor() {
