@@ -5,8 +5,6 @@ import {
   collection, getDocs, query, where,
 } from 'firebase/firestore';
 import { auth, db } from '../../firebase-config';
-import Sidebar from './admin_components/Sidebar';
-import Header from './admin_components/Header';
 import AdminLayout from "../../layouts/AdminLayout";
 
 

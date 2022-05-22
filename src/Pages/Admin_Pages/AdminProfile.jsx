@@ -2,8 +2,6 @@ import React from 'react';
 import PersonIcon from '@mui/icons-material/Person';
 import { Button, TextField } from '@mui/material';
 import Modal from '@mui/material/Modal';
-import Sidebar from './admin_components/Sidebar';
-import Header from './admin_components/Header';
 import AdminLayout from "../../layouts/AdminLayout";
 
 export default function AdminProfile() {
