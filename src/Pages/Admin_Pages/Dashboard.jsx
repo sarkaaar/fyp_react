@@ -4,53 +4,52 @@ import { CashIcon, ChevronRightIcon } from "@heroicons/react/solid";
 import AdminLayout from "../../layouts/AdminLayout";
 
 const cards = [
-  { name: "Account balance", href: "#", icon: ScaleIcon, amount: "$30,659.45" },
-  { name: "Account balance", href: "#", icon: ScaleIcon, amount: "$30,659.45" },
-  { name: "Account balance", href: "#", icon: ScaleIcon, amount: "$30,659.45" },
-  // More items...
+  { name: "E-Commerce balance", href: "#", icon: ScaleIcon, amount: "Rs.30,659" },
+  { name: "Clinical Services balance", href: "#", icon: ScaleIcon, amount: "Rs.40,000" },
+  { name: "Account balance", href: "#", icon: ScaleIcon, amount: "Rs.80,000" },
 ];
+
 const transactions = [
   {
     id: 1,
-    name: "Payment to Molly Sanders",
+    name: "Payment to Ahmad",
     href: "#",
-    amount: "$20,000",
-    currency: "USD",
+    amount: "Rs.20,000",
+    currency: "PKR",
     status: "success",
     date: "July 11, 2020",
     datetime: "2020-07-11",
   },
   {
-    id: 1,
-    name: "Payment to Molly Sanders",
+    id: 2,
+    name: "Payment to Ammar",
     href: "#",
-    amount: "$20,000",
-    currency: "USD",
+    amount: "Rs.20,0000",
+    currency: "PKR",
     status: "success",
     date: "July 11, 2020",
     datetime: "2020-07-11",
   },
   {
-    id: 1,
-    name: "Payment to Molly Sanders",
+    id: 3,
+    name: "Payment to Abdul Wali",
     href: "#",
-    amount: "$20,000",
-    currency: "USD",
+    amount: "Rs.10,000",
+    currency: "PKR",
     status: "success",
     date: "July 11, 2020",
     datetime: "2020-07-11",
   },
   {
-    id: 1,
-    name: "Payment to Molly Sanders",
+    id: 4,
+    name: "Payment to Hassan",
     href: "#",
-    amount: "$20,000",
-    currency: "USD",
+    amount: "Rs.100,000",
+    currency: "PKR",
     status: "success",
     date: "July 11, 2020",
     datetime: "2020-07-11",
   },
-  // More transactions...
 ];
 const statusStyles = {
   success: "bg-green-100 text-green-800",
