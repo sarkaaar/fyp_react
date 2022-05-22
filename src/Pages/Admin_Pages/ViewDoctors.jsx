@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { useState, useEffect } from 'react';
-import EditIcon from '@mui/icons-material/Edit';
+import * as React from "react";
+import { useState, useEffect } from "react";
+import EditIcon from "@mui/icons-material/Edit";
 import {
   collection,
   getDocs,
@@ -8,15 +8,15 @@ import {
   doc,
   query,
   where,
-} from 'firebase/firestore';
-import Modal from '@mui/material/Modal';
-import { Button, TextField } from '@mui/material';
-import CheckIcon from '@mui/icons-material/Check';
-import { onAuthStateChanged } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
-import { auth, db } from '../../firebase-config';
-import Sidebar from './admin_components/Sidebar';
-import Header from './admin_components/Header';
+} from "firebase/firestore";
+import Modal from "@mui/material/Modal";
+import { Button, TextField } from "@mui/material";
+import CheckIcon from "@mui/icons-material/Check";
+import { onAuthStateChanged } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { auth, db } from "../../firebase-config";
+import Sidebar from "./admin_components/Sidebar";
+import Header from "./admin_components/Header";
 
 export default function ViewDoctor() {
   //  Get Categories Names
@@ -25,14 +25,38 @@ export default function ViewDoctor() {
   const [user, setUser] = useState();
   const [loadUser, setLoadUser] = useState(true);
 
-  const doctorsCollection = collection(db, 'doctors');
+  const doctorsCollection = collection(db, "doctors");
   const navigate = useNavigate();
 
   const getDoctors = async () => {
     const data = await getDocs(doctorsCollection);
     setDoctors(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    console.log('Doctoers Recieved');
+    console.log("Doctoers Recieved");
   };
+  const getRole = async () => {
+    if (user) {
+      const q = query(usersRef, where("email", "==", user?.email));
+      await getDocs(q)
+        .then((res) => {
+          setQueryUser(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+          console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+
+          if (queryUser[0]?.role === "admin") {
+            console.log("Admin is found");
+
+            setLoadUser(false);
+          } else {
+            console.log("user not found");
+            setLoadUser(false);
+            navigate("/");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -47,49 +71,25 @@ export default function ViewDoctor() {
     getRole();
   }, [loadUser]);
 
-  const usersRef = collection(db, 'users');
-
-  const getRole = async () => {
-    if (user) {
-      const q = query(usersRef, where('email', '==', user?.email));
-      await getDocs(q)
-        .then((res) => {
-          setQueryUser(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-          console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-
-          if (queryUser[0]?.role === 'admin') {
-            console.log('Admin is found');
-
-            setLoadUser(false);
-          } else {
-            console.log('user not found');
-            setLoadUser(false);
-            navigate('/');
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  };
+  const usersRef = collection(db, "users");
 
   const disableDoctor = async (id) => {
-    const prod = doc(db, 'doctors', id);
+    const prod = doc(db, "doctors", id);
     await updateDoc(prod, { status: false });
-    console.log('Doctor Disabled ');
+    console.log("Doctor Disabled ");
     getDoctors();
   };
   const enableDoctor = async (id) => {
-    const prod = doc(db, 'doctors', id);
+    const prod = doc(db, "doctors", id);
     await updateDoc(prod, { status: true });
-    console.log('Doctor Enabled ', id);
+    console.log("Doctor Enabled ", id);
     getDoctors();
   };
 
   const updateDoctor = async (id) => {
-    const prod = doc(db, 'doctors', id);
+    const prod = doc(db, "doctors", id);
     await updateDoc(prod, sDoctor);
-    console.log('Doctor Updated ', id);
+    console.log("Doctor Updated ", id);
     console.log(prod);
     getDoctors();
   };
@@ -162,7 +162,7 @@ export default function ViewDoctor() {
                           disableDoctor(item.id);
                         }}
                       >
-                        <CheckIcon style={{ color: 'green' }} />
+                        <CheckIcon style={{ color: "green" }} />
                       </Button>
                     ) : (
                       <Button
@@ -170,7 +170,7 @@ export default function ViewDoctor() {
                           enableDoctor(item.id);
                         }}
                       >
-                        <CheckIcon style={{ color: 'red' }} />
+                        <CheckIcon style={{ color: "red" }} />
                       </Button>
                     )}
                   </td>
@@ -189,7 +189,7 @@ export default function ViewDoctor() {
       >
         <div
           className="absolute inset-1/2	w-fit h-fit border-box bg-white drop-shadow-2xl	p-4"
-          style={{ transform: 'translate(-50%, -50%)' }}
+          style={{ transform: "translate(-50%, -50%)" }}
         >
           <h1 id="modal-modal-title" className="mt-2 text-xl">
             Update Doctor
@@ -239,7 +239,9 @@ export default function ViewDoctor() {
                 type="text"
                 autoComplete="current-password"
                 value={sDoctor?.phone}
-                onChange={(e) => setSDoctor({ ...sDoctor, phone: e.target.value })}
+                onChange={(e) =>
+                  setSDoctor({ ...sDoctor, phone: e.target.value })
+                }
               />
             </div>
             <div className="w-96">
@@ -250,7 +252,9 @@ export default function ViewDoctor() {
                 label="Clinic Name"
                 type="text"
                 value={sDoctor?.clinicName}
-                onChange={(e) => setSDoctor({ ...sDoctor, clinicName: e.target.value })}
+                onChange={(e) =>
+                  setSDoctor({ ...sDoctor, clinicName: e.target.value })
+                }
               />
               <TextField
                 margin="normal"
@@ -259,7 +263,9 @@ export default function ViewDoctor() {
                 label="Clinic Address"
                 type="text"
                 value={sDoctor?.clinicAddress}
-                onChange={(e) => setSDoctor({ ...sDoctor, clinicaddress: e.target.value })}
+                onChange={(e) =>
+                  setSDoctor({ ...sDoctor, clinicaddress: e.target.value })
+                }
               />
               <TextField
                 margin="normal"
@@ -268,7 +274,9 @@ export default function ViewDoctor() {
                 label="Clinic Phone"
                 type="text"
                 value={sDoctor?.clinicPhone}
-                onChange={(e) => setSDoctor({ ...sDoctor, clinicPhone: e.target.value })}
+                onChange={(e) =>
+                  setSDoctor({ ...sDoctor, clinicPhone: e.target.value })
+                }
               />
               <TextField
                 margin="normal"
@@ -277,7 +285,9 @@ export default function ViewDoctor() {
                 label="Fees"
                 type="text"
                 value={sDoctor?.fees}
-                onChange={(e) => setSDoctor({ ...sDoctor, fees: e.target.value })}
+                onChange={(e) =>
+                  setSDoctor({ ...sDoctor, fees: e.target.value })
+                }
               />
               <TextField
                 margin="normal"
@@ -286,7 +296,9 @@ export default function ViewDoctor() {
                 label="Commision"
                 type="number"
                 value={sDoctor?.commision}
-                onChange={(e) => setSDoctor({ ...sDoctor, commision: e.target.value })}
+                onChange={(e) =>
+                  setSDoctor({ ...sDoctor, commision: e.target.value })
+                }
               />
 
               <div className="flex gap-4 w-96">
@@ -297,7 +309,9 @@ export default function ViewDoctor() {
                   label="Latitude"
                   type="number"
                   value={sDoctor?.latitude}
-                  onChange={(e) => setSDoctor({ latitide: e.target.value, ...sDoctor })}
+                  onChange={(e) =>
+                    setSDoctor({ latitide: e.target.value, ...sDoctor })
+                  }
                 />
                 <TextField
                   margin="normal"
@@ -306,7 +320,9 @@ export default function ViewDoctor() {
                   label="Longitude"
                   type="number"
                   value={sDoctor?.longitude}
-                  onChange={(e) => setSDoctor({ longitude: e.target.value, ...sDoctor })}
+                  onChange={(e) =>
+                    setSDoctor({ longitude: e.target.value, ...sDoctor })
+                  }
                 />
                 <Button
                   variant="contained"

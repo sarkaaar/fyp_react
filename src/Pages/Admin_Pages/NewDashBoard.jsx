@@ -30,7 +30,7 @@ export default function NewDashBoard() {
                 </table>
 
                 <p className="py-2">
-                  <a href="#">See More issues...</a>
+                  <a href="/">See More issues...</a>
                 </p>
               </div>
             </div>
@@ -63,7 +63,7 @@ export default function NewDashBoard() {
                 </table>
 
                 <p className="py-2">
-                  <a href="#">See More issues...</a>
+                  <a href="/">See More issues...</a>
                 </p>
               </div>
             </div>
@@ -102,7 +102,7 @@ export default function NewDashBoard() {
                 </table>
 
                 <p className="py-2">
-                  <a href="#">See More issues...</a>
+                  <a href="/">See More issues...</a>
                 </p>
               </div>
             </div>
@@ -138,7 +138,7 @@ export default function NewDashBoard() {
                 </table>
 
                 <p className="py-2">
-                  <a href="#">See More issues...</a>
+                  <a href="/">See More issues...</a>
                 </p>
               </div>
             </div>

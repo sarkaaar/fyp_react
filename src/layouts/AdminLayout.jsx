@@ -1,7 +1,7 @@
-import c from 'classnames';
-import { Fragment, useState } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
-import { NavLink } from 'react-router-dom';
+import c from "classnames";
+import { Fragment, useEffect, useState } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   BellIcon,
   ClockIcon,
@@ -14,44 +14,74 @@ import {
   ScaleIcon,
   UserGroupIcon,
   XIcon,
-} from '@heroicons/react/outline';
+} from "@heroicons/react/outline";
+// import { onAuthStateChanged } from "firebase/auth";
+// import { auth, db } from "../firebase-config";
+// import { collection, getDocs, query, where } from "firebase/firestore";
+import useUserRole from "../hooks/useUserRole";
 
 const navigation = [
   {
-    name: 'Home', href: '/admin/dashboard', icon: HomeIcon,
+    name: "Home",
+    href: "/admin/dashboard",
+    icon: HomeIcon,
   },
   {
-    name: 'Inventory', href: '/admin/inventory', icon: ClockIcon,
+    name: "Inventory",
+    href: "/admin/inventory",
+    icon: ClockIcon,
   },
   {
-    name: 'Orders', href: '/admin/orders', icon: ScaleIcon,
+    name: "Orders",
+    href: "/admin/orders",
+    icon: ScaleIcon,
   },
   {
-    name: 'Product Return', href: '/admin/productReturn', icon: CreditCardIcon,
+    name: "Product Return",
+    href: "/admin/productReturn",
+    icon: CreditCardIcon,
   },
   {
-    name: 'Complaints', href: '/admin/complaints', icon: UserGroupIcon,
+    name: "Complaints",
+    href: "/admin/complaints",
+    icon: UserGroupIcon,
   },
   {
-    name: 'Categories', href: '/admin/categories', icon: DocumentReportIcon,
+    name: "Categories",
+    href: "/admin/categories",
+    icon: DocumentReportIcon,
   },
   {
-    name: 'Doctors', href: '/admin/viewDoctor', icon: DocumentReportIcon,
+    name: "Doctors",
+    href: "/admin/viewDoctor",
+    icon: DocumentReportIcon,
   },
 ];
 
 const secondaryNavigation = [
-  { name: 'Profile', href: '/admin/profile', icon: QuestionMarkCircleIcon },
-  { name: 'Logout', href: '/admin/sign_in', icon: CogIcon },
+  { name: "Profile", href: "/admin/profile", icon: QuestionMarkCircleIcon },
+  { name: "Logout", href: "/admin/sign_in", icon: CogIcon },
 ];
 
 export default function AdminLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const authState = useUserRole("admin");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (authState === "error") {
+      navigate("/sign_in");
+    }
+  }, [authState]);
 
   return (
     <div className="min-h-full">
       <Transition.Root show={sidebarOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-40 lg:hidden" onClose={setSidebarOpen}>
+        <Dialog
+          as="div"
+          className="relative z-40 lg:hidden"
+          onClose={setSidebarOpen}
+        >
           <Transition.Child
             as={Fragment}
             enter="transition-opacity ease-linear duration-300"
@@ -91,7 +121,10 @@ export default function AdminLayout({ children }) {
                       onClick={() => setSidebarOpen(false)}
                     >
                       <span className="sr-only">Close sidebar</span>
-                      <XIcon className="h-6 w-6 text-white" aria-hidden="true" />
+                      <XIcon
+                        className="h-6 w-6 text-white"
+                        aria-hidden="true"
+                      />
                     </button>
                   </div>
                 </Transition.Child>
@@ -111,15 +144,20 @@ export default function AdminLayout({ children }) {
                       <NavLink
                         key={item.name}
                         to={item.href}
-                        className={({ isActive }) => c(
-                          isActive
-                            ? 'bg-gray-900 text-white'
-                            : 'text-gray-300 hover:text-white hover:bg-gray-700',
-                          'group flex items-center px-2 py-2 text-base font-medium rounded-md',
-                        )}
-                        aria-current={item.current ? 'page' : undefined}
+                        className={({ isActive }) =>
+                          c(
+                            isActive
+                              ? "bg-gray-900 text-white"
+                              : "text-gray-300 hover:text-white hover:bg-gray-700",
+                            "group flex items-center px-2 py-2 text-base font-medium rounded-md",
+                          )
+                        }
+                        aria-current={item.current ? "page" : undefined}
                       >
-                        <item.icon className="mr-4 flex-shrink-0 h-6 w-6 text-gray-400" aria-hidden="true" />
+                        <item.icon
+                          className="mr-4 flex-shrink-0 h-6 w-6 text-gray-400"
+                          aria-hidden="true"
+                        />
                         {item.name}
                       </NavLink>
                     ))}
@@ -132,7 +170,10 @@ export default function AdminLayout({ children }) {
                           to={item.href}
                           className="group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-300 hover:text-white hover:bg-gray-700"
                         >
-                          <item.icon className="mr-4 h-6 w-6 text-gray-400" aria-hidden="true" />
+                          <item.icon
+                            className="mr-4 h-6 w-6 text-gray-400"
+                            aria-hidden="true"
+                          />
                           {item.name}
                         </NavLink>
                       ))}
@@ -159,19 +200,29 @@ export default function AdminLayout({ children }) {
               alt="Easywire logo"
             />
           </div>
-          <nav className="mt-5 flex-1 flex flex-col divide-y divide-gray-900 overflow-y-auto" aria-label="Sidebar">
+          <nav
+            className="mt-5 flex-1 flex flex-col divide-y divide-gray-900 overflow-y-auto"
+            aria-label="Sidebar"
+          >
             <div className="px-2 space-y-1">
               {navigation.map((item) => (
                 <NavLink
                   key={item.name}
                   to={item.href}
-                  className={({ isActive }) => c(
-                    isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:text-white hover:bg-gray-700',
-                    'group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md',
-                  )}
-                  aria-current={item.current ? 'page' : undefined}
+                  className={({ isActive }) =>
+                    c(
+                      isActive
+                        ? "bg-gray-900 text-white"
+                        : "text-gray-300 hover:text-white hover:bg-gray-700",
+                      "group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md"
+                    )
+                  }
+                  aria-current={item.current ? "page" : undefined}
                 >
-                  <item.icon className="mr-4 flex-shrink-0 h-6 w-6 text-gray-400" aria-hidden="true" />
+                  <item.icon
+                    className="mr-4 flex-shrink-0 h-6 w-6 text-gray-400"
+                    aria-hidden="true"
+                  />
                   {item.name}
                 </NavLink>
               ))}
@@ -184,7 +235,10 @@ export default function AdminLayout({ children }) {
                     to={item.href}
                     className="group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md text-gray-400 hover:text-white hover:bg-indigo-600"
                   >
-                    <item.icon className="mr-4 h-6 w-6 text-gray-400" aria-hidden="true" />
+                    <item.icon
+                      className="mr-4 h-6 w-6 text-gray-400"
+                      aria-hidden="true"
+                    />
                     {item.name}
                   </NavLink>
                 ))}

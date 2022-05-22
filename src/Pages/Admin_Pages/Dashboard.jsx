@@ -1,6 +1,6 @@
 import { onAuthStateChanged } from 'firebase/auth';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import {
   collection, getDocs, query, where,
 } from 'firebase/firestore';
@@ -10,8 +10,8 @@ import Header from './admin_components/Header';
 
 
 export default function Dashboard() {
-  const navigate = useNavigate();
-  const [user, setUser] = useState({});
+  // const navigate = useNavigate();
+  const [user, set1User] = useState({});
   const [db_user, setdb_User] = useState({});
   const [loading, setLoading] = useState(false);
 
@@ -48,7 +48,7 @@ export default function Dashboard() {
         <Sidebar />
         <div className="ml-96 mt-20">
           <h1>Logged in user is</h1>
-          <h1>{user.email}</h1>
+          <h1>{user?.email}</h1>
           <button
             onClick={async () => {
               console.log(db_user?.role?.stringValue);
