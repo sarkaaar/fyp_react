@@ -15,8 +15,9 @@ import {
   // UserGroupIcon,
   XIcon,
 } from "@heroicons/react/outline";
-import { signOut } from "firebase/auth";
-import { auth } from "../firebase-config";
+// import { signOut } from "firebase/auth";
+// import { auth } from "../firebase-config";
+import useUserRole from "../hooks/useUserRole";
 
 const navigation = [
   {
@@ -61,7 +62,7 @@ const secondaryNavigation = [
 
 export default function AdminLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [authState, setAuthState] = useState("pending");
+  const authState = useUserRole("user");
   const navigate = useNavigate();
 
   useEffect(() => {

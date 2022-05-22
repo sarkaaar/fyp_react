@@ -1,34 +1,52 @@
-import * as React from 'react';
-import { TextField, Button } from '@mui/material';
-import { useState, useEffect } from 'react';
+import * as React from "react";
+import { TextField, Button } from "@mui/material";
+import { useState, useEffect } from "react";
 import {
-  collection, addDoc, getDocs, deleteDoc, query, where, doc,
-} from 'firebase/firestore';
-import { onAuthStateChanged } from 'firebase/auth';
-import { Link, useNavigate } from 'react-router-dom';
-import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  query,
+  where,
+  doc,
+} from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
+import { Link, useNavigate } from "react-router-dom";
+import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
 // import * as React from 'react';
-import Box from '@mui/material/Box';
+import Box from "@mui/material/Box";
 // import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import Footer from './Components/Footer';
-import { auth, db } from '../../firebase-config';
-import Header from './Components/Header';
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import Footer from "./Components/Footer";
+import { auth, db } from "../../firebase-config";
+import Header from "./Components/Header";
 
 export default function Checkout() {
+  const [email, setEmail] = useState();
+  const [fName, setFName] = useState();
+  const [lName, setLName] = useState();
+  const [address, setAddress] = useState();
+  const [city, setCity] = useState();
+  const [postal, setPostal] = useState();
+  const [phone, setPhone] = useState();
+  const [card, setCard] = useState();
+  const [NOC, setNOC] = useState();
+  const [expiry, setExpiry] = useState();
+  const [cvv, setCVV] = useState();
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
     width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
+    bgcolor: "background.paper",
+    border: "2px solid #000",
     boxShadow: 24,
     p: 4,
   };
@@ -37,7 +55,7 @@ export default function Checkout() {
   const [total, setTotal] = useState(0);
   const [products, setProducts] = useState([]);
 
-  const cartCollection = collection(db, 'cart');
+  const cartCollection = collection(db, "cart");
 
   useEffect(() => {
     getTotal();
@@ -51,10 +69,10 @@ export default function Checkout() {
     setTotal(num);
   };
   const getCartItems = async () => {
-    const q = await query(cartCollection, where('user', '==', user?.email));
+    const q = await query(cartCollection, where("user", "==", user?.email));
     const queryResults = await getDocs(q);
     setProducts(
-      queryResults.docs.map((doc) => ({ ...doc.data(), id: doc.id })),
+      queryResults.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
     );
     console.log(products);
     getTotal();
@@ -68,9 +86,9 @@ export default function Checkout() {
     getTotal();
   }, [user]);
 
-  const checkoutRef = collection(db, 'checkout');
+  const checkoutRef = collection(db, "checkout");
 
-  const check = async () => {
+  const checkout = async () => {
     const newItem = {
       authUserEamil: user?.email,
       email,
@@ -86,41 +104,30 @@ export default function Checkout() {
       cvv,
       cart: products,
     };
-    setOpen(true);
 
     await addDoc(checkoutRef, newItem)
       .then((e) => {
         console.log(e);
-        console.log('sucessfully Checkout');
+        console.log("sucessfully Checkout");
         products.map(async (item) => {
-          const prod = doc(db, 'cart', item?.id);
+          const prod = doc(db, "cart", item?.id);
 
           await deleteDoc(prod).then(() => {
-            console.log('Product Sucessfully Deleted');
+            console.log("Product Sucessfully Deleted");
           });
           getCartItems();
 
           console.log(products);
           getTotal();
+          setOpen(true);
         });
       })
       .catch((e) => {
         console.log(e);
       });
-    console.log('Checkout Sucessfull');
+    console.log("Checkout Sucessfull");
   };
 
-  const [email, setEmail] = useState();
-  const [fName, setFName] = useState();
-  const [lName, setLName] = useState();
-  const [address, setAddress] = useState();
-  const [city, setCity] = useState();
-  const [postal, setPostal] = useState();
-  const [phone, setPhone] = useState();
-  const [card, setCard] = useState();
-  const [NOC, setNOC] = useState();
-  const [expiry, setExpiry] = useState();
-  const [cvv, setCVV] = useState();
   return (
     <>
       <Header />
@@ -253,9 +260,9 @@ export default function Checkout() {
             <Button
               fullWidth
               variant="outlined"
-              style={{ height: '50px' }}
+              style={{ height: "50px" }}
               // onClick={check}
-              onClick={handleOpen}
+              onClick={checkout}
             >
               Confirm Order
             </Button>
@@ -275,12 +282,14 @@ export default function Checkout() {
             <div>
               {products.map((item, key) => (
                 <div key={key} className=" flex justify-between w-96">
-                  <h1 className="text-xl m-2">{item?.product?.name.split(0, 20)}</h1>
+                  <h1 className="text-xl m-2">
+                    {item?.product?.name.split(0, 20)}
+                  </h1>
                   <h1 className="text-xl m-2">{item?.quantity}</h1>
                   <h1 className="text-xl m-2">{item?.product?.salePrice}</h1>
                   <h1 className="text-xl m-2">
-                    {parseInt(item?.product?.salePrice)
-                        * parseInt(item?.quantity)}
+                    {parseInt(item?.product?.salePrice) *
+                      parseInt(item?.quantity)}
                   </h1>
                 </div>
               ))}
@@ -304,7 +313,12 @@ export default function Checkout() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2" className="">
+          <Typography
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+            className=""
+          >
             For Confirmation
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
