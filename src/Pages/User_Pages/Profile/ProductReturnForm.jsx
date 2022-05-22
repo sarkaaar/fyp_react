@@ -1,20 +1,21 @@
-import * as React from 'react';
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import { collection, addDoc } from 'firebase/firestore';
-import { onAuthStateChanged } from 'firebase/auth';
-import { uploadBytesResumable, ref, getDownloadURL } from 'firebase/storage';
-import { Button, TextField } from '@mui/material';
-import { useState, useEffect } from 'react';
-import { db, auth, storage } from '../../../firebase-config';
-import Sidebar from './Sidebar';
-import Header from '../Components/Header';
+import * as React from "react";
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import { collection, addDoc } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
+import { uploadBytesResumable, ref, getDownloadURL } from "firebase/storage";
+import { Button, TextField } from "@mui/material";
+import { useState, useEffect } from "react";
+import { db, auth, storage } from "../../../firebase-config";
+
+import FirebaseDataTable from "../../../components/FirebaseDataTable";
+import UserLayout from "../../../layouts/UserLayout";
 
 export default function ProductReturnForm() {
-  const [orderNo, setOrderNo] = useState('');
-  const [productID, setProductID] = useState('');
-  const [productName, setProductNme] = useState('');
-  const [issue, setIssue] = useState('');
-  const [description, setDescription] = useState('');
+  const [orderNo, setOrderNo] = useState("");
+  const [productID, setProductID] = useState("");
+  const [productName, setProductNme] = useState("");
+  const [issue, setIssue] = useState("");
+  const [description, setDescription] = useState("");
   const [urls, setUrls] = useState([]);
   const [user, setUser] = useState();
 
@@ -22,16 +23,22 @@ export default function ProductReturnForm() {
 
   const [progress, setProgress] = useState();
 
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+  }, [user]);
+
   const upload = () => {
     if (!image[0]) return;
     const arr = [];
 
-    for (let i = 0; i < image.length; i++) {
+    for (let i = 0; i < image.length; i += 1) {
       const storageRef = ref(storage, `returnedProducts/${image[i].name}`);
       const uploadTask = uploadBytesResumable(storageRef, image[i]);
 
       uploadTask.on(
-        'state_changed',
+        "state_changed",
         (snapshot) => {
           const prog = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 
@@ -44,12 +51,12 @@ export default function ProductReturnForm() {
             arr.push(url);
             setUrls(arr);
           });
-        },
+        }
       );
     }
   };
 
-  const product_Return_Collection = collection(db, 'productReturn');
+  const productReturnRef = collection(db, "productReturn");
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -67,16 +74,14 @@ export default function ProductReturnForm() {
       user: user?.email,
       date: new Date(),
     };
-    await addDoc(product_Return_Collection, newProduct).then(() => {
-      console.log('product returned sucessfull');
+    await addDoc(productReturnRef, newProduct).then(() => {
+      console.log("product returned sucessfull");
     });
   };
   return (
-    <>
-      <Header />
-      <Sidebar />
-      <div className="flex justify-center pt-32 bg-gray-100">
-        <div className="p-8 ml-64 flex flex-col justify-center  bg-white rounded-lg">
+    <UserLayout>
+      <div className="flex justify-center ">
+        <div className=" flex flex-col justify-center p-8 bg-white rounded-lg">
           <h1 className=" text-2xl font-bold flex justify-center">
             Product Return Form
           </h1>
@@ -121,13 +126,15 @@ export default function ProductReturnForm() {
             </div>
             <div className="w-96 mt-4">
               <TextareaAutosize
-                minRows={9}
+                minRows={4}
                 placeholder="  Description*"
                 value={description}
-                style={{ width: '384px', border: '1px solid gray' }}
+                style={{ width: "384px", border: "1px solid gray" }}
                 onChange={(e) => setDescription(e.target.value)}
               />
-              <p>Click on the "Choose File" button to upload a file:</p>
+              <p>
+                Click on the &quot;Choose File&quot; button to upload a file:
+              </p>
 
               <input
                 type="file"
@@ -141,28 +148,30 @@ export default function ProductReturnForm() {
                 Uploaded
                 {progress}
               </h3>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                className="mt-6 mb-12"
-                onClick={upload}
-              >
-                Images Upload
-              </Button>
+              <div className="flex flex-col gap-4">
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  className="mt-6 mb-12"
+                  onClick={upload}
+                >
+                  Images Upload
+                </Button>
 
-              <Button
-                type="submit"
-                fullWidth
-                variant="outlined"
-                onClick={productReturn}
-              >
-                Submit Form
-              </Button>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="outlined"
+                  onClick={productReturn}
+                >
+                  Submit Form
+                </Button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </UserLayout>
   );
 }
