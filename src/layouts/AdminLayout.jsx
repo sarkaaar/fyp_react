@@ -12,13 +12,13 @@ import {
   MenuAlt1Icon,
   QuestionMarkCircleIcon,
   ScaleIcon,
+  UserGroupIcon,
   XIcon,
   AcademicCapIcon,
   UserAddIcon,
 } from "@heroicons/react/outline";
 import useUserRole from "../hooks/useUserRole";
-import { ReplyIcon, UserIcon } from "@heroicons/react/solid";
-
+// import GrayLogo from "../assets/images/gray_logo.png";
 const navigation = [
   {
     name: "Home",
@@ -38,11 +38,15 @@ const navigation = [
   {
     name: "Product Return",
     href: "/admin/productReturn",
-    icon: ReplyIcon,
+    icon: CreditCardIcon,
   },
-
   {
-    name: " Add Categories",
+    name: "Complaints",
+    href: "/admin/complaints",
+    icon: UserGroupIcon,
+  },
+  {
+    name: "Categories",
     href: "/admin/categories",
     icon: DocumentReportIcon,
   },
@@ -53,11 +57,6 @@ const navigation = [
   },
   {
     name: "Add Doctor",
-    href: "/admin/addDoctor",
-    icon: UserAddIcon,
-  },
-  {
-    name: "AddDoctors",
     href: "/admin/addDoctor",
     icon: UserAddIcon,
   },
@@ -99,7 +98,7 @@ export default function AdminLayout({ children }) {
             <div className="fixed inset-0 bg-gray-600 bg-opacity-75" />
           </Transition.Child>
 
-          <div className="fixed inset-0 z-40 flex">
+          <div className="fixed inset-0 flex z-40">
             <Transition.Child
               as={Fragment}
               enter="transition ease-in-out duration-300 transform"
@@ -109,7 +108,7 @@ export default function AdminLayout({ children }) {
               leaveFrom="translate-x-0"
               leaveTo="-translate-x-full"
             >
-              <div className="relative flex w-full max-w-xs flex-1 flex-col bg-gray-800 pt-5 pb-4">
+              <div className="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-gray-800">
                 <Transition.Child
                   as={Fragment}
                   enter="ease-in-out duration-300"
@@ -122,7 +121,7 @@ export default function AdminLayout({ children }) {
                   <div className="absolute top-0 right-0 -mr-12 pt-2">
                     <button
                       type="button"
-                      className="ml-1 flex h-10 w-10 items-center justify-center rounded-full px-0 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                      className="ml-1 px-0 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                       onClick={() => setSidebarOpen(false)}
                     >
                       <span className="sr-only">Close sidebar</span>
@@ -133,16 +132,19 @@ export default function AdminLayout({ children }) {
                     </button>
                   </div>
                 </Transition.Child>
-                <div className="flex flex-shrink-0 items-center px-4">
-                  {/* <img className="h-8 w-auto" src={} /> */}
+                <div className="flex-shrink-0 flex items-center px-4">
+                  {/* <img
+                    className="h-8 w-auto"
+                    // src={GrayLogo}
+                  /> */}
                 </div>
-                <p className="px-2 text-lg font-bold text-white">Pet Planet</p>
+                <p className="px-2 text-lg text-white font-bold">Pet Planet</p>
 
                 <nav
-                  className="mt-5 h-full flex-shrink-0 divide-y divide-gray-900 overflow-y-auto"
+                  className="mt-5 flex-shrink-0 h-full divide-y divide-gray-900 overflow-y-auto"
                   aria-label="Sidebar"
                 >
-                  <div className="space-y-1 px-2">
+                  <div className="px-2 space-y-1">
                     {navigation.map((item) => (
                       <NavLink
                         key={item.name}
@@ -151,14 +153,14 @@ export default function AdminLayout({ children }) {
                           c(
                             isActive
                               ? "bg-gray-900 text-white"
-                              : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                            "group flex items-center rounded-md px-2 py-2 text-base font-medium"
+                              : "text-gray-300 hover:text-white hover:bg-gray-700",
+                            "group flex items-center px-2 py-2 text-base font-medium rounded-md",
                           )
                         }
                         aria-current={item.current ? "page" : undefined}
                       >
                         <item.icon
-                          className="mr-4 h-6 w-6 flex-shrink-0 text-gray-400"
+                          className="mr-4 flex-shrink-0 h-6 w-6 text-gray-400"
                           aria-hidden="true"
                         />
                         {item.name}
@@ -166,12 +168,12 @@ export default function AdminLayout({ children }) {
                     ))}
                   </div>
                   <div className="mt-6 pt-6">
-                    <div className="space-y-1 px-2">
+                    <div className="px-2 space-y-1">
                       {secondaryNavigation.map((item) => (
                         <NavLink
                           key={item.name}
                           to={item.href}
-                          className="group flex items-center rounded-md px-2 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                          className="group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-300 hover:text-white hover:bg-gray-700"
                         >
                           <item.icon
                             className="mr-4 h-6 w-6 text-gray-400"
@@ -185,7 +187,7 @@ export default function AdminLayout({ children }) {
                 </nav>
               </div>
             </Transition.Child>
-            <div className="w-14 flex-shrink-0" aria-hidden="true">
+            <div className="flex-shrink-0 w-14" aria-hidden="true">
               {/* Dummy element to force sidebar to shrink to fit close icon */}
             </div>
           </div>
@@ -193,92 +195,92 @@ export default function AdminLayout({ children }) {
       </Transition.Root>
 
       {/* Static sidebar for desktop */}
-      <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
+      <div className="hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0">
         {/* Sidebar component, swap this element with another sidebar if you like */}
-        <div className="flex flex-grow flex-col overflow-y-auto bg-gray-800 pt-5 pb-4">
-          <div className="flex flex-shrink-0 items-center px-4 text-4xl font-bold text-white">
-            PetPlanet
-            <div className="flex flex-shrink-0 items-center px-4">
-              {/* <img className="h-8 w-auto" src={GrayLogo} /> */}
-              <p className="px-2 text-lg font-bold text-white">Pet Planet</p>
+        <div className="flex flex-col flex-grow bg-gray-800 pt-5 pb-4 overflow-y-auto">
+          <div className="flex items-center flex-shrink-0 px-4">
+            {/* <img
+              className="h-8 w-auto"
+              // src={GrayLogo}
+            /> */}
+            <p className="px-2 text-lg text-white font-bold">Pet Planet</p>
+          </div>
+          <nav
+            className="mt-5 flex-1 flex flex-col divide-y divide-gray-900 overflow-y-auto"
+            aria-label="Sidebar"
+          >
+            <div className="px-2 space-y-1">
+              {navigation.map((item) => (
+                <NavLink
+                  key={item.name}
+                  to={item.href}
+                  className={({ isActive }) =>
+                    c(
+                      isActive
+                        ? "bg-gray-900 text-white"
+                        : "text-gray-300 hover:text-white hover:bg-gray-700",
+                      "group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md"
+                    )
+                  }
+                  aria-current={item.current ? "page" : undefined}
+                >
+                  <item.icon
+                    className="mr-4 flex-shrink-0 h-6 w-6 text-gray-400"
+                    aria-hidden="true"
+                  />
+                  {item.name}
+                </NavLink>
+              ))}
             </div>
-            <nav
-              className="mt-5 flex flex-1 flex-col divide-y divide-gray-900 overflow-y-auto"
-              aria-label="Sidebar"
-            >
-              <div className="space-y-1 px-2">
-                {navigation.map((item) => (
+            <div className="mt-6 pt-6">
+              <div className="px-2 space-y-1">
+                {secondaryNavigation.map((item) => (
                   <NavLink
                     key={item.name}
                     to={item.href}
-                    className={({ isActive }) =>
-                      c(
-                        isActive
-                          ? "bg-gray-900 text-white"
-                          : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                        "group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6"
-                      )
-                    }
-                    aria-current={item.current ? "page" : undefined}
+                    className="group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md text-gray-400 hover:text-white hover:bg-indigo-600"
                   >
                     <item.icon
-                      className="mr-4 h-6 w-6 flex-shrink-0 text-gray-400"
+                      className="mr-4 h-6 w-6 text-gray-400"
                       aria-hidden="true"
                     />
                     {item.name}
                   </NavLink>
                 ))}
               </div>
-              <div className="mt-6 pt-6">
-                <div className="space-y-1 px-2">
-                  {secondaryNavigation.map((item) => (
-                    <NavLink
-                      key={item.name}
-                      to={item.href}
-                      className="group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 text-gray-400 hover:bg-indigo-600 hover:text-white"
-                    >
-                      <item.icon
-                        className="mr-4 h-6 w-6 text-gray-400"
-                        aria-hidden="true"
-                      />
-                      {item.name}
-                    </NavLink>
-                  ))}
-                </div>
-              </div>
-            </nav>
-          </div>
+            </div>
+          </nav>
         </div>
+      </div>
 
-        <div className="flex flex-1 flex-col lg:pl-64">
-          <div className="relative z-10 flex h-16 flex-shrink-0 border-b border-gray-200 bg-white shadow lg:border-none">
-            <button
-              type="button"
-              className="border-r border-gray-200 px-4 text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 lg:hidden"
-              onClick={() => setSidebarOpen(true)}
-            >
-              <span className="sr-only">Open sidebar</span>
-              <MenuAlt1Icon className="h-6 w-6" aria-hidden="true" />
-            </button>
-            <div className="flex flex-1 justify-between px-4 sm:px-6 lg:mx-auto lg:max-w-6xl lg:px-8">
-              <div className="flex flex-1" />
-              <div className="ml-4 flex items-center md:ml-6">
-                <button
-                  type="button"
-                  className="rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
-              </div>
+      <div className="lg:pl-64 flex flex-col flex-1">
+        <div className="relative z-10 flex-shrink-0 flex h-16 bg-white border-b border-gray-200 lg:border-none shadow">
+          <button
+            type="button"
+            className="px-4 border-r border-gray-200 text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 lg:hidden"
+            onClick={() => setSidebarOpen(true)}
+          >
+            <span className="sr-only">Open sidebar</span>
+            <MenuAlt1Icon className="h-6 w-6" aria-hidden="true" />
+          </button>
+          <div className="flex-1 px-4 flex justify-between sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8">
+            <div className="flex-1 flex" />
+            <div className="ml-4 flex items-center md:ml-6">
+              <button
+                type="button"
+                className="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                <span className="sr-only">View notifications</span>
+                <BellIcon className="h-6 w-6" aria-hidden="true" />
+              </button>
             </div>
           </div>
-          <main className="flex-1 pb-8">
-            <div className="mx-auto mt-8 max-w-6xl px-4 sm:px-6 lg:px-8">
-              {children}
-            </div>
-          </main>
         </div>
+        <main className="flex-1 pb-8">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+            {children}
+          </div>
+        </main>
       </div>
     </div>
   );
