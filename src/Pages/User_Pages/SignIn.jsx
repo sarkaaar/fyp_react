@@ -4,7 +4,6 @@ import {
   signInWithEmailAndPassword,
   GoogleAuthProvider,
   getAuth,
-  getRedirectResult,
   signInWithRedirect,
 } from "firebase/auth";
 // import { GoogleAuthProvider } from "firebase/auth";
@@ -12,10 +11,11 @@ import { TextField } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { auth } from "../../firebase-config";
-// import Header from './Components/Header';
 
-// import { GoogleAuthProvider } from "firebase/auth";
-
+import { GoogleLogin, GoogleLogout } from "react-google-login";
+import { gapi } from "gapi-script";
+const client_id =
+  "270844617336-n634vgpabihm8ve1klq9tm7uir3oqdfe.apps.googleusercontent.com";
 export default function SignIn() {
   const navigate = useNavigate();
   const provider = new GoogleAuthProvider();
@@ -23,27 +23,14 @@ export default function SignIn() {
   const googleAuth = () => {
     const auth = getAuth();
     signInWithRedirect(auth, provider);
-    // const auth = getAuth();
-    // getRedirectResult(auth)
-    //   .then((result) => {
-    //     // This gives you a Google Access Token. You can use it to access Google APIs.
-    //     const credential = GoogleAuthProvider.credentialFromResult(result);
-    //     const token = credential.accessToken;
-
-    //     // The signed-in user info.
-    //     const user = result.user;
-    //   })
-    //   .catch((error) => {
-    //     // Handle Errors here.
-    //     const errorCode = error.code;
-    //     const errorMessage = error.message;
-    //     // The email of the user's account used.
-    //     const email = error.customData.email;
-    //     // The AuthCredential type that was used.
-    //     const credential = GoogleAuthProvider.credentialFromError(error);
-    //     // ...
-    //   });
   };
+
+  useEffect(() => {
+    function start() {
+      gapi.client.init({ clientId: client_id, scope: "" });
+    }
+  }, []);
+  // const googleLogin()=()=>{}
 
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
@@ -148,6 +135,7 @@ export default function SignIn() {
           </div>
 
           <button
+            type="button"
             className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             onClick={() => {
               login();
@@ -170,11 +158,32 @@ export default function SignIn() {
         <div className="">
           <h2 className="w-6 m-auto">Or</h2>
           <button
+            type="button"
             onClick={googleAuth}
             className="mt-4 py-2 px-4 w-full text-white bg-red-600 hover:bg-red-700 focus:ring-red-500 rounded-md"
           >
             Sign in with <GoogleIcon />
           </button>
+          <GoogleLogin
+            clientId
+            buttonText="Login using GOGO"
+            onSucess={() => {
+              console.log("login sucess");
+            }}
+            onFailure={() => {
+              console.log("login failed");
+            }}
+            cookiePolicy={"single-host-origin"}
+            isSignedIn={true}
+          />
+
+          <GoogleLogout
+            clientId={client_id}
+            buttonText={"Logout"}
+            onLogoutSuccess={() => {
+              console.log("Logout Success");
+            }}
+          />
         </div>
       </div>
     </div>

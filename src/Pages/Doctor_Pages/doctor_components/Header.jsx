@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 export default function Header() {
   return (
     <div>
-      <div className="bg-gray-100 flex-1 flex justify-end">
+      <div className="bg-white flex-1 flex justify-end">
         <Link
           to="/doctor/dashboard"
           // activeClassName="active"
