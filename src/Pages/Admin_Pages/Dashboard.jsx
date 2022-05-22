@@ -8,6 +8,7 @@ import { auth, db } from '../../firebase-config';
 import Sidebar from './admin_components/Sidebar';
 import Header from './admin_components/Header';
 
+
 export default function Dashboard() {
   const navigate = useNavigate();
   const [user, setUser] = useState({});
