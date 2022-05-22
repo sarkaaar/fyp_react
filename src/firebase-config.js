@@ -14,10 +14,7 @@ import { getStorage } from "firebase/storage";
 //   appId: "1:630307086662:web:373f4736e6608395f5c547",
 //   measurementId: "G-YBPRF2N6CR",
 // };
-<<<<<<< HEAD
 
-=======
->>>>>>> 0ac8c16b275cc0f998aeaf1f96e31e91c7cd1f78
 
 // Duplicate PET_PLANET
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -42,6 +42,7 @@ export default function Product() {
   const cartRef = collection(db, 'cart');
   const reviewsRef = collection(db, 'reviews');
   const favouritesRef = collection(db, 'favourites');
+  const navigate = useNavigate();
 
   const [loader, setLoader] = useState(false);
   const [prod, setProduct] = useState();
@@ -165,6 +166,7 @@ export default function Product() {
     user
       ? await addDoc(cartRef, newProduct).then(() => {
         setAddStatus(false);
+        navigate('/cart');
       })
       : setOpen(true);
     console.log('Product Added Sucessfully');

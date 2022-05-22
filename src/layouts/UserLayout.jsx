@@ -136,7 +136,7 @@ export default function AdminLayout({ children }) {
                     className="h-8 w-auto"
                     src={GrayLogo}
                   />
-                  <p className="px-2 text-lg text-white">Pet Planet</p>
+                  <p className="px-2 text-lg text-white font-bold">Pet Planet</p>
                 </div>
                 <nav
                   className="mt-5 flex-shrink-0 h-full divide-y divide-gray-900 overflow-y-auto"
@@ -202,7 +202,7 @@ export default function AdminLayout({ children }) {
               src={GrayLogo}
               
             />
-            <p className="px-2 text-lg text-white">Pet Planet</p>
+            <p className="px-2 text-lg text-white font-bold">Pet Planet</p>
           </div>
           <nav
             className="mt-5 flex-1 flex flex-col divide-y divide-gray-900 overflow-y-auto"
