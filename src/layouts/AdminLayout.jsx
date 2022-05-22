@@ -12,10 +12,12 @@ import {
   MenuAlt1Icon,
   QuestionMarkCircleIcon,
   ScaleIcon,
+  ShoppingCartIcon,
   UserGroupIcon,
   XIcon,
 } from "@heroicons/react/outline";
 import useUserRole from "../hooks/useUserRole";
+import { ReplyIcon, UserAddIcon, UserIcon } from "@heroicons/react/solid";
 
 const navigation = [
   {
@@ -36,23 +38,25 @@ const navigation = [
   {
     name: "Product Return",
     href: "/admin/productReturn",
-    icon: CreditCardIcon,
+    icon: ReplyIcon,
   },
+  
   {
-    name: "Complaints",
-    href: "/admin/complaints",
-    icon: UserGroupIcon,
-  },
-  {
-    name: "Categories",
+    name: " Add Categories",
     href: "/admin/categories",
     icon: DocumentReportIcon,
   },
   {
     name: "Doctors",
     href: "/admin/viewDoctor",
-    icon: DocumentReportIcon,
+    icon: UserIcon,
   },
+  {
+    name: "AddDoctors",
+    href: "/admin/addDoctor",
+    icon: UserAddIcon,
+  },
+  
 ];
 
 const secondaryNavigation = [
@@ -190,12 +194,8 @@ export default function AdminLayout({ children }) {
       <div className="hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0">
         {/* Sidebar component, swap this element with another sidebar if you like */}
         <div className="flex flex-col flex-grow bg-gray-800 pt-5 pb-4 overflow-y-auto">
-          <div className="flex items-center flex-shrink-0 px-4">
-            <img
-              className="h-8 w-auto"
-              src="https://tailwindui.com/img/logos/easywire-logo-cyan-300-mark-white-text.svg"
-              alt="Easywire logo"
-            />
+          <div className="flex text-white font-bold text-4xl items-center flex-shrink-0 px-4">
+           PetPlanet
           </div>
           <nav
             className="mt-5 flex-1 flex flex-col divide-y divide-gray-900 overflow-y-auto"
