@@ -14,6 +14,9 @@ import {
   ScaleIcon,
   UserGroupIcon,
   XIcon,
+  PlusCircleIcon,
+  AcademicCapIcon,
+  UserAddIcon,
 } from "@heroicons/react/outline";
 import useUserRole from "../hooks/useUserRole";
 import GrayLogo from "../assets/images/gray_logo.png";
@@ -27,6 +30,11 @@ const navigation = [
     name: "Inventory",
     href: "/admin/inventory",
     icon: ClockIcon,
+  },
+  {
+    name: "Add Products",
+    href: "/admin/addProducts",
+    icon: PlusCircleIcon,
   },
   {
     name: "Orders",
@@ -51,7 +59,12 @@ const navigation = [
   {
     name: "Doctors",
     href: "/admin/viewDoctor",
-    icon: DocumentReportIcon,
+    icon: AcademicCapIcon,
+  },
+  {
+    name: "Add Doctor",
+    href: "/admin/addDoctor",
+    icon: UserAddIcon,
   },
 ];
 
