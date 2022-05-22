@@ -16,8 +16,11 @@ import { getStorage } from "firebase/storage";
 // };
 <<<<<<< HEAD
 =======
+<<<<<<< HEAD
+=======
 
 >>>>>>> b78dbc6c58df8ab64006d22a6cb8345ada001630
+>>>>>>> refs/remotes/origin/main
 
 // Duplicate PET_PLANET
 
