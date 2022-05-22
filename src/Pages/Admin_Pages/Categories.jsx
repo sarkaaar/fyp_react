@@ -1,43 +1,45 @@
-import * as React from 'react';
-import { useState, useEffect } from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
+import * as React from "react";
+import { useState, useEffect } from "react";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import AdminLayout from "../../layouts/AdminLayout";
 
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import {
   collection,
   addDoc,
   getDocs,
   deleteDoc,
   doc,
-} from 'firebase/firestore';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import { db } from '../../firebase-config';
-import Header from './admin_components/Header';
-import Sidebar from './admin_components/Sidebar';
+} from "firebase/firestore";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import { db } from "../../firebase-config";
 
 export default function AddCategory() {
-  const [currentCategory, setCurrentCategory] = useState('');
-  const [category, setCategory] = useState('');
-  const [subCategory, setSubCategory] = useState('');
+  const [currentCategory, setCurrentCategory] = useState("");
+  const [category, setCategory] = useState("");
+  const [subCategory, setSubCategory] = useState("");
 
   //  Get Categories Names
   const [cat, setCat] = useState([]);
-  const catCollection = collection(db, 'categories');
+  const catCollection = collection(db, "categories");
 
   // Get Sub-Categories Names
   const [sub_cat, setSub_Cat] = useState([]);
-  const sub_catCollection = collection(db, 'sub-categories');
+  const sub_catCollection = collection(db, "sub-categories");
 
   // Search Categories
   const getCategories = async () => {
-    await getDocs(catCollection).then((res) => {
-    setCat(res.docs.map((doc) => doc.data().name));
-
-    }).catch((err) => {console.log(err)})
+    await getDocs(catCollection)
+      .then((res) => {
+        setCat(res.docs.map((doc) => doc.data().name));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   // Search Sub-Categories
@@ -65,13 +67,13 @@ export default function AddCategory() {
       () => {
         getCategories();
         getSub_Categories();
-      },
+      }
     );
   };
 
   // Delete Categories
   const deleteCategory = async (id) => {
-    const subCat_doc = doc(db, 'sub-categories', id);
+    const subCat_doc = doc(db, "sub-categories", id);
     await deleteDoc(subCat_doc).then(() => {
       getCategories();
       getSub_Categories();
@@ -79,120 +81,123 @@ export default function AddCategory() {
   };
 
   return (
-    <div>
-      <Header />
-      <Sidebar />
-      <div className="ml-64 pt-8 ">
-        <div className="flex mt-8 justify-center ">
-          <div className="w-96 flex flex-col gap-4 ">
-            <div className=" w-96 p-4 bg-white ">
-              <h1 className="flex justify-center text-3xl">
-                Add Parent Category
-              </h1>
-              <div>
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  label="Category Name"
-                  name="name"
-                  value={category}
-                  onChange={(e) => {
-                    setCategory(e.target.value);
-                  }}
-                />
-
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                  onClick={addParentCategory}
-                >
-                  Add Category
-                </Button>
-              </div>
-            </div>
-            <hr />
-            <div className="w-96 m-auto p-4 bg-white ">
-              <h1 className="flex justify-center text-3xl">
-                Add Child Category
-              </h1>
-              <div>
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  label="Sub-Category"
-                  name="name"
-                  value={subCategory}
-                  onChange={(e) => {
-                    setSubCategory(e.target.value);
-                  }}
-                />
-
-                <FormControl fullWidth style={{ margin: '10px 0' }}>
-                  <InputLabel id="demo-simple-select-label">
-                    Category
-                  </InputLabel>
-                  <Select
+    <AdminLayout>
+      <div>
+      <div className="flex justify-between">
+        <h1 className="mb-4 text-left text-2xl font-bold">Categories</h1>
+      </div>
+        <div className="pt-8 ">
+          <div className="mt-8 flex justify-center ">
+            <div className="flex w-96 flex-col gap-4 ">
+              <div className=" w-96 bg-white p-4 ">
+                <h1 className="flex justify-center text-3xl">
+                  Add Parent Category
+                </h1>
+                <div>
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    label="Category Name"
+                    name="name"
                     value={category}
-                    label="category"
                     onChange={(e) => {
                       setCategory(e.target.value);
                     }}
+                  />
+
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                    onClick={addParentCategory}
                   >
-                    {cat.map((item) => <MenuItem value={item}>{item}</MenuItem>)}
-                  </Select>
-                </FormControl>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                  onClick={addChildCategory}
-                >
-                  Add Sub-Category
-                </Button>
+                    Add Category
+                  </Button>
+                </div>
               </div>
+              <hr />
+              <div className="m-auto w-96 bg-white p-4 ">
+                <h1 className="flex justify-center text-3xl">
+                  Add Child Category
+                </h1>
+                <div>
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    label="Sub-Category"
+                    name="name"
+                    value={subCategory}
+                    onChange={(e) => {
+                      setSubCategory(e.target.value);
+                    }}
+                  />
+
+                  <FormControl fullWidth style={{ margin: "10px 0" }}>
+                    <InputLabel id="demo-simple-select-label">
+                      Category
+                    </InputLabel>
+                    <Select
+                      value={category}
+                      label="category"
+                      onChange={(e) => {
+                        setCategory(e.target.value);
+                      }}
+                    >
+                      {cat.map((item) => (
+                        <MenuItem value={item}>{item}</MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                    onClick={addChildCategory}
+                  >
+                    Add Sub-Category
+                  </Button>
+                </div>
+              </div>
+              <hr />
             </div>
-            <hr />
-          </div>
-        </div>
-        <hr />
-        <div className="flex  w-fit">
-          <div className="bg-white p-4 m-4">
-
-          
-            <h1 className="text-4xl p-4">Parent Categories</h1>
-            <hr />
-
-            {cat.map((item) => (
-              <div key={item} className="flex justify-between p-4">  
-             <h1 className="w-96">{item}</h1>
-             </div>
-            ))}
           </div>
           <hr />
-          <div className="bg-white p-4 m-4">
-            <h1 className="text-4xl p-4">Child Categories</h1>
-            <hr />
+          <div className="flex  w-fit">
+            <div className="m-4 bg-white p-4">
+              <h1 className="p-4 text-4xl">Parent Categories</h1>
+              <hr />
 
-            {sub_cat.map((item) => (
-              <div className="flex justify-between p-2 ">
-                <h1 className="w-96">{item.sub_}</h1>
-                <Button
-                  onClick={() => {
-                    deleteCategory(item.id);
-                  }}
-                >
-                  DELETE
-                </Button>
-              </div>
-            ))}
+              {cat.map((item) => (
+                <div key={item} className="flex justify-between p-4">
+                  <h1 className="w-96">{item}</h1>
+                </div>
+              ))}
+            </div>
+            <hr />
+            <div className="m-4 bg-white p-4">
+              <h1 className="p-4 text-4xl">Child Categories</h1>
+              <hr />
+
+              {sub_cat.map((item) => (
+                <div className="flex justify-between p-2 ">
+                  <h1 className="w-96">{item.sub_}</h1>
+                  <Button
+                    onClick={() => {
+                      deleteCategory(item.id);
+                    }}
+                  >
+                    DELETE
+                  </Button>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </AdminLayout>
   );
 }

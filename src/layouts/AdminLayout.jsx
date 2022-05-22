@@ -196,8 +196,8 @@ export default function AdminLayout({ children }) {
               className="h-8 w-auto"
               src={GrayLogo}
             />
+            <p className="px-2 text-lg text-white font-bold">Pet Planet</p>
           </div>
-          <p className="px-2 text-lg text-white font-bold">Pet Planet</p>
           <nav
             className="mt-5 flex-1 flex flex-col divide-y divide-gray-900 overflow-y-auto"
             aria-label="Sidebar"

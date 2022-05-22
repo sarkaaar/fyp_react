@@ -4,6 +4,7 @@ import { Button, TextField } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import Sidebar from './admin_components/Sidebar';
 import Header from './admin_components/Header';
+import AdminLayout from "../../layouts/AdminLayout";
 
 export default function AdminProfile() {
   // Edit Info
@@ -18,12 +19,14 @@ export default function AdminProfile() {
 
   return (
     <>
-      <Header />
+      <AdminLayout>
+      <div className="flex justify-between">
+        <h1 className="mb-4 text-left text-2xl font-bold">Profile</h1>
+      </div>
       <div className="">
-        <Sidebar />
-        <div className="ml-72 flex justify-center">
+        <div className="flex justify-center">
           <div className="">
-            <PersonIcon sx={{ fontSize: 350 }} />
+            <PersonIcon sx={{ fontSize: 150 }} />
             <div className="flex mb-4">
               <div>
                 <h1 className="text-xl font-bold p-1">Name</h1>
@@ -76,6 +79,7 @@ export default function AdminProfile() {
           </div>
         </div>
       </div>
+      </AdminLayout>
       {/* Modals */}
       {/* -------------------------------------------------------------- */}
       {/* Edit info Modal */}
