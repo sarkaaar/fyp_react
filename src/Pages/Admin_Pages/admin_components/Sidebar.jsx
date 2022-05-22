@@ -45,7 +45,7 @@ export default function Sidebar() {
               </span>
             </Link> */}
           </li>
-          <li>
+          {/* <li>
             <Link
               to="/admin/addProducts"
               className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-600"
@@ -53,7 +53,7 @@ export default function Sidebar() {
               <AddShoppingCartIcon className="w-6 h-6 text-white " />
               <span className="ml-3 text-white">Add Product</span>
             </Link>
-          </li>
+          </li> */}
 
           <li>
             <Link
@@ -99,7 +99,7 @@ export default function Sidebar() {
             >
               <CategoryIcon className="w-6 h-6 text-white " />
               <span className="flex-1 text-white ml-3 whitespace-nowrap">
-                Categories
+               Add Categories
               </span>
             </Link>
           </li>
