@@ -14,7 +14,6 @@ import {
   ScaleIcon,
   UserGroupIcon,
   XIcon,
-  PlusCircleIcon,
   AcademicCapIcon,
   UserAddIcon,
 } from "@heroicons/react/outline";
@@ -30,11 +29,6 @@ const navigation = [
     name: "Inventory",
     href: "/admin/inventory",
     icon: ClockIcon,
-  },
-  {
-    name: "Add Products",
-    href: "/admin/addProducts",
-    icon: PlusCircleIcon,
   },
   {
     name: "Orders",
