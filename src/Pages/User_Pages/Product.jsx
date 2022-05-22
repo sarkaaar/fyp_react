@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -42,6 +42,7 @@ export default function Product() {
   const cartRef = collection(db, 'cart');
   const reviewsRef = collection(db, 'reviews');
   const favouritesRef = collection(db, 'favourites');
+  const navigate = useNavigate();
 
   const [loader, setLoader] = useState(false);
   const [prod, setProduct] = useState();
@@ -55,7 +56,7 @@ export default function Product() {
   const handleClose = () => setOpen(false);
   const [products, setProducts] = useState([]);
 
-  const [addStaus, setAddStatus] = useState(false);
+  const [addStatus, setAddStatus] = useState(false);
   const decrementCounter = () => {
     if (qty <= 1) {
 
@@ -165,6 +166,7 @@ export default function Product() {
     user
       ? await addDoc(cartRef, newProduct).then(() => {
         setAddStatus(false);
+        navigate('/cart');
       })
       : setOpen(true);
     console.log('Product Added Sucessfully');
@@ -290,7 +292,7 @@ export default function Product() {
                 </span>
               </div>
               <div className="flex mt-4">
-                {addStaus ? (
+                {addStatus ? (
                   // <div className="flex justify-center bg-indigo-500 items-center">
                   //   <div
                   //     className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full "
@@ -441,7 +443,7 @@ export default function Product() {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Please login to Continue
           </Typography>
-          <Link to="/sign_in">Sign in</Link>
+          <Link to="/sign_in" className="text-blue-600">Sign in</Link>
         </Box>
       </Modal>
     </>
