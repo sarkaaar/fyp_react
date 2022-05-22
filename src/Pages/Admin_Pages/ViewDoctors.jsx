@@ -17,6 +17,9 @@ import { useNavigate } from "react-router-dom";
 import { auth, db } from "../../firebase-config";
 import Sidebar from "./admin_components/Sidebar";
 import Header from "./admin_components/Header";
+import FirebaseDataTable from "../../components/FirebaseDataTable";
+
+import AdminLayout from "../../layouts/AdminLayout";
 
 export default function ViewDoctor() {
   //  Get Categories Names
@@ -100,21 +103,30 @@ export default function ViewDoctor() {
 
   return (
     <>
-      <Header />
-      <Sidebar />
-
-      <div className="ml-96 p-10">
-        <Button
+      <AdminLayout>
+      
+        {/* <Button
           onClick={() => {
             console.log(queryUser[0]);
           }}
         >
           Click Role
-        </Button>
+        </Button> */}
         {/* <Button onClick={()=>{navigate("/");}}>Navigate</Button> */}
         <h1 className="text-3xl font-bold ml-8">List Of Doctors</h1>
-        <table className="m-auto divide-y divide-gray-200 table-fixed dark:divide-gray-700">
-          {/* <ViewInventoryHead /> */}
+        <FirebaseDataTable
+        query={collection(db, "doctors")}
+        columns={[
+          { key: "clinicName", name: "Name" },
+          { key: "clinicAddress", name: "Address" },
+
+          // { key: "date", name: "Return Date", render: (r) => r.date.toDate().toDateString() },
+          { key: "clinicPhone", name: "Phone# " },
+          { key: "fees", name: "Fee " },
+          {key:"email",name:"Email"}]}/>
+      
+        {/* <table className="m-auto divide-y divide-gray-200 table-fixed dark:divide-gray-700">
+          {/* <ViewInventoryHead /> 
           <thead className="p-4 bg-gray-100 dark:bg-gray-700">
             <tr>
               <th className="text-lg p-2 mx-4">Name</th>
@@ -155,7 +167,7 @@ export default function ViewDoctor() {
                     >
                       <EditIcon />
                     </Button>
-                    {/* <h1>{item.status}</> */}
+                    {/* <h1>{item.status}</> 
                     {item.status ? (
                       <Button
                         onClick={() => {
@@ -178,8 +190,9 @@ export default function ViewDoctor() {
               </tbody>
             </React.Fragment>
           ))}
-        </table>
-      </div>
+        </table>*/}
+      
+      </AdminLayout>
 
       <Modal
         open={open}
@@ -351,6 +364,7 @@ export default function ViewDoctor() {
           </div>
         </div>
       </Modal>
+      
     </>
   );
 }

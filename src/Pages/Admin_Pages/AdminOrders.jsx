@@ -36,52 +36,95 @@ export default function Orders() {
   return (
     <>
       <AdminLayout>
-        <div className="flex">
-          <div className="m-auto">
-            <h1 className="m-8 text-4xl font-bold">Orders -{">"}</h1>
-            <FirebaseDataTable
-              query={collection(db, "checkout")}
-              columns={[
-                { key: "id", name: "ID" },
-                { key: "fname", name: "Name" },
+        <h1 className="m-8 text-2xl font-bold">Orders -{">"}</h1>
+        <FirebaseDataTable
+          query={collection(db, "checkout")}
+          columns={[
+            { key: "id", name: "Order" },
+            { key: "email", name: "Email" },
+            {
+              key: "description",
+              name: "Name",
+              render: (row) => (
+                <div className="flex flex-col">
+                  <p> {row.fName}</p>
+                  <p> {row.lName}</p>
+                </div>
+              ),
+            },
+            {
+              key: "address",
+              name: "Address",
+              render: (row) => (
+                <div className="">
+                  <h1 className="w-48">{row.address}</h1>
+                  <h1>{row.city}</h1>
+                  
+                </div>
+              ),
+            },
+            { key: "phone", name: "Phone" },
+            { key: "quantity", name: "Product Qty",
+             render: (row) => (
+              <div className="flex flex-col">
+                {row.cart.map((prod, key) => (
+                  <tr key={key}>
+                    <td className="w-4">{prod?.quantity}</td>     </tr>
+                  ))}
+                </div>
+              ),
+            },
+            {
+              key: "description",
+              name: "Products",
+              render: (row) => (
+                <div className="flex flex-col">
+                  {row.cart.map((prod, key) => (
+                    <tr key={key}>
+                      
+                      <td className="w-12"> {prod?.product?.name}</td>
+                    </tr>
+                  ))}
+                </div>
+              ),
+            },
+          ]}
+          // actions={[
+          //   {
+          //     label: "Edit",
+          //     perform: (row) => {
+          //       setSelectedProduct(row);
+          //       setEditOpen(true);
+          //     },
+          //   },
+          //   {
+          //     label: "Delete",
+          //     danger: true,
+          //     perform: (row) => console.log(row),
+          //   },
+          // ]}
+        />
 
-                // { key: "name", name: "Name", render: (row) => (
-                //   <div className="">
-                //     <p>{row.fName}</p>
-                //     <p>{row.lName}</p>
-                //   </div>
-                // ), },
-                { key: "costPrice", name: "Cost Price" },
-                { key: "description", name: "Description" },
-                {
-                  key: "address",
-                  name: "Address",
-                  render: (row) => (
-                    <div className="">
-                      <p>{row.adress}</p>
-                      <p>{row.city}</p>
-                      <p>{row.postal}</p>
-                    </div>
-                  ),
-                },
-              ]}
-              actions={[
-                {
-                  label: "Edit",
-                  perform: (row) => {
-                    setSelectedProduct(row);
-                    setEditOpen(true);
-                  },
-                },
-                {
-                  label: "Delete",
-                  danger: true,
-                  perform: (row) => console.log(row),
-                },
-              ]}
-            />
+        {/* 
 
-            {/* <table className="  m-fix divide-y divide-gray-200 table-fixed dark:divide-gray-700">
+             <Button
+                        style={{ color: 'green' }}
+                        onClick={() => {
+                          handleNotCompleted(item.id);
+                        }}
+                      >
+                        <CheckIcon />
+                      </Button>
+                    ) : (
+                      <Button
+                        style={{ color: 'red' }}
+                        onClick={() => {
+                          handleCompleted(item.id);
+                        }}
+                      >
+                        <CheckIcon />
+                      </Button> 
+            <table className="  m-fix divide-y divide-gray-200 table-fixed dark:divide-gray-700">
             <thead className="p-4 bg-gray-100 dark:bg-gray-700">
               <tr>
                 <th className="text-xl p-2 px-8">Oreder ID</th>
@@ -158,8 +201,6 @@ export default function Orders() {
               </tbody>
             ))}
           </table> */}
-          </div>
-        </div>
       </AdminLayout>
     </>
   );
