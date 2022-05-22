@@ -7,12 +7,12 @@ import {
   ClockIcon,
   CogIcon,
   CreditCardIcon,
-  DocumentReportIcon,
+  // DocumentReportIcon,
   HomeIcon,
   MenuAlt1Icon,
   QuestionMarkCircleIcon,
   ScaleIcon,
-  UserGroupIcon,
+  // UserGroupIcon,
   XIcon,
 } from "@heroicons/react/outline";
 import { onAuthStateChanged, signOut } from "firebase/auth";
@@ -21,6 +21,10 @@ import { IconButton } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { auth, db } from "../firebase-config";
 import GrayLogo from "../assets/images/gray_logo.png";
+// import { signOut } from "firebase/auth";
+// import { auth } from "../firebase-config";
+import useUserRole from "../hooks/useUserRole";
+
 const navigation = [
   {
     name: "Favourites",
@@ -53,9 +57,9 @@ const navigation = [
   //   icon: DocumentReportIcon,
   // },
 ];
-const logout = async () => {
-  await signOut(auth);
-};
+// const logout = async () => {
+//   await signOut(auth);
+// };
 
 const secondaryNavigation = [
   { name: "Profile", href: "/profile", icon: QuestionMarkCircleIcon },
@@ -64,7 +68,7 @@ const secondaryNavigation = [
 
 export default function AdminLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [authState, setAuthState] = useState("pending");
+  const authState = useUserRole("user");
   const navigate = useNavigate();
 
   useEffect(() => {
