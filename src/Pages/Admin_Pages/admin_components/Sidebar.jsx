@@ -35,7 +35,7 @@ export default function Sidebar() {
             </Link>
           </li>
           <li>
-            <Link
+            {/* <Link
               to="/admin/viewAllProducts"
               className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-600"
             >
@@ -43,7 +43,7 @@ export default function Sidebar() {
               <span className="flex-1 text-white ml-3 whitespace-nowrap">
                 View Products
               </span>
-            </Link>
+            </Link> */}
           </li>
           <li>
             <Link
@@ -83,7 +83,7 @@ export default function Sidebar() {
               <span className="ml-3 text-white">Product Return</span>
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link
               to="/admin/complaints"
               className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-600"
@@ -91,7 +91,7 @@ export default function Sidebar() {
               <ContactPhoneIcon className="w-6 h-6 text-white " />
               <span className="ml-3 text-white">Complaints</span>
             </Link>
-          </li>
+          </li> */}
           <li>
             <Link
               to="/admin/categories"
