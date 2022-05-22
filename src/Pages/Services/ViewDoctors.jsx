@@ -43,7 +43,7 @@ export default function ViewDoctors() {
         )}
         <div className=" flex gap-4 flex-col px-[30rem] py-[4rem] justify-self-auto">
           {doctors.map((item, key) => (
-            <figure className=" md:flex place-content-between bg-white rounded-xl p-8 md:p-0 dark:bg-slate-800">
+            <figure className=" md:flex place-content-between bg-white rounded-xl p-8 md:p-0">
               <div className="w-26">
                 <PersonIcon
                   style={{
@@ -156,7 +156,10 @@ export default function ViewDoctors() {
             //     </div>
             //   </div>
             // </div>
+
           ))}
+        
+
         </div>
         <Footer />
       </div>
