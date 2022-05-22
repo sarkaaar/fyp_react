@@ -7,13 +7,12 @@ import {
   ClockIcon,
   CogIcon,
   CreditCardIcon,
-  // DocumentReportIcon,
   HomeIcon,
   MenuAlt1Icon,
   QuestionMarkCircleIcon,
   ScaleIcon,
-  // UserGroupIcon,
   XIcon,
+  RewindIcon
 } from "@heroicons/react/outline";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { collection, getDocs, query, where } from "firebase/firestore";
@@ -46,16 +45,6 @@ const navigation = [
     href: "/profile/orders",
     icon: CreditCardIcon,
   },
-  // {
-  //   name: "Profile",
-  //   href: "/profile",
-  //   icon: UserGroupIcon,
-  // },
-  // {
-  //   name: "Logout",
-  //   href: "/sign_in",
-  //   icon: DocumentReportIcon,
-  // },
 ];
 // const logout = async () => {
 //   await signOut(auth);
@@ -63,6 +52,7 @@ const navigation = [
 
 const secondaryNavigation = [
   { name: "Profile", href: "/profile", icon: QuestionMarkCircleIcon },
+  { name: "Home", href: "/", icon: RewindIcon },
   { name: "Logout", href: "/sign_in", icon: CogIcon },
 ];
 
@@ -77,6 +67,10 @@ export default function AdminLayout({ children }) {
     }
   }, [authState]);
 
+  const logout = async () => {
+    await signOut(auth);
+  };
+  
   return (
     <div className="min-h-full">
       <Transition.Root show={sidebarOpen} as={Fragment}>
@@ -234,10 +228,14 @@ export default function AdminLayout({ children }) {
             <div className="mt-6 pt-6">
               <div className="px-2 space-y-1">
                 {secondaryNavigation.map((item) => (
+                  
                   <NavLink
                     key={item.name}
                     to={item.href}
                     className="group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md text-gray-400 hover:text-white hover:bg-indigo-600"
+                    onClick={() => {
+                      item.name === "Logout" ? logout() : null;
+                    }}
                   >
                     <item.icon
                       className="mr-4 h-6 w-6 text-gray-400"
@@ -267,7 +265,7 @@ export default function AdminLayout({ children }) {
             <div className="ml-4 flex items-center md:ml-6">
               <button
                 type="button"
-                className="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="bg-white p-1 rounded-full border border-solid border-gray-200 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 <span className="sr-only">View notifications</span>
                 <BellIcon className="h-6 w-6" aria-hidden="true" />

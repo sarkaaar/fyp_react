@@ -1,9 +1,6 @@
 import React from "react";
 import { TextField } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
-import Header from "../Components/Header";
-import Sidebar from "./Sidebar";
-
 import { useState, useEffect } from "react";
 import { auth, db } from "../../../firebase-config";
 import {
@@ -91,16 +88,25 @@ export default function Profile() {
                             <TextField
                               InputLabelProps={{
                                 shrink: true,
-                              }}
+                              }
+                            }
                               // value={queryUser[0]?.name}
                               // fullWidth
                               // label="Name"
                             />
                             <div className="flex gap-4">
-                              <TextField fullWidth label="Email" />
+                              <TextField
+                               fullWidth 
+                              //  label="Email" 
+                              //  value={queryUser[0]?.email} 
+                               />
                               <TextField fullWidth label="Phone Number" />
                             </div>
-                            <TextField fullWidth label="Password" />
+                            <TextField
+                              type={password}
+                              fullWidth 
+                            //  label="Password" 
+                             />
                           </div>
                         </div>
                         <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
