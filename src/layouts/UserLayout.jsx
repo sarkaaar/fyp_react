@@ -7,19 +7,16 @@ import {
   ClockIcon,
   CogIcon,
   CreditCardIcon,
-  DocumentReportIcon,
+  // DocumentReportIcon,
   HomeIcon,
   MenuAlt1Icon,
   QuestionMarkCircleIcon,
   ScaleIcon,
-  UserGroupIcon,
+  // UserGroupIcon,
   XIcon,
 } from "@heroicons/react/outline";
-import { onAuthStateChanged, signOut } from "firebase/auth";
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { IconButton } from "@mui/material";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { auth, db } from "../firebase-config";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase-config";
 
 const navigation = [
   {
@@ -53,9 +50,9 @@ const navigation = [
   //   icon: DocumentReportIcon,
   // },
 ];
-const logout = async () => {
-  await signOut(auth);
-};
+// const logout = async () => {
+//   await signOut(auth);
+// };
 
 const secondaryNavigation = [
   { name: "Profile", href: "/profile", icon: QuestionMarkCircleIcon },
