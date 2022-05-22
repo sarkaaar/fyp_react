@@ -15,8 +15,6 @@ import CheckIcon from "@mui/icons-material/Check";
 import { onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { auth, db } from "../../firebase-config";
-import Sidebar from "./admin_components/Sidebar";
-import Header from "./admin_components/Header";
 import FirebaseDataTable from "../../components/FirebaseDataTable";
 
 import AdminLayout from "../../layouts/AdminLayout";
