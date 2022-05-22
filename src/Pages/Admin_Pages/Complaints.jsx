@@ -1,17 +1,13 @@
-import Header from './admin_components/Header';
-import Sidebar from './admin_components/Sidebar';
+import AdminLayout from "../../layouts/AdminLayout";
 
 export default function Complaints() {
   return (
     <>
-      <Header />
-      <div className="flex">
-        <Sidebar />
-        <div className="ml-72">
-          <h1>Complaints</h1>
+      <AdminLayout>
+        <div className="flex justify-between">
+          <h1 className="mb-4 text-left text-2xl font-bold">Complaints</h1>
         </div>
-      </div>
-
+      </AdminLayout>
     </>
   );
 }

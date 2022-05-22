@@ -5,8 +5,7 @@ import {
   collection, getDocs, query, where,
 } from 'firebase/firestore';
 import { auth, db } from '../../firebase-config';
-import Sidebar from './admin_components/Sidebar';
-import Header from './admin_components/Header';
+import AdminLayout from "../../layouts/AdminLayout";
 
 
 export default function Dashboard() {
@@ -43,10 +42,9 @@ export default function Dashboard() {
 
   return (
     <>
-      <Header />
+      <AdminLayout>
       <div className="flex">
-        <Sidebar />
-        <div className="ml-96 mt-20">
+        <div className="">
           <h1>Logged in user is</h1>
           <h1>{user?.email}</h1>
           <button
@@ -215,6 +213,7 @@ export default function Dashboard() {
           <Button variant="contained">View Queries</Button>
         </div> */}
       </div>
+      </AdminLayout>
     </>
   );
 }

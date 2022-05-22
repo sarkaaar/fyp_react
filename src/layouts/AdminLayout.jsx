@@ -132,10 +132,11 @@ export default function AdminLayout({ children }) {
                 <div className="flex-shrink-0 flex items-center px-4">
                   <img
                     className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/easywire-logo-cyan-300-mark-white-text.svg"
-                    alt="Easywire logo"
+                    src={GrayLogo}
                   />
                 </div>
+                <p className="px-2 text-lg text-white font-bold">Pet Planet</p>
+
                 <nav
                   className="mt-5 flex-shrink-0 h-full divide-y divide-gray-900 overflow-y-auto"
                   aria-label="Sidebar"
@@ -194,8 +195,17 @@ export default function AdminLayout({ children }) {
       <div className="hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0">
         {/* Sidebar component, swap this element with another sidebar if you like */}
         <div className="flex flex-col flex-grow bg-gray-800 pt-5 pb-4 overflow-y-auto">
+<<<<<<< HEAD
           <div className="flex text-white font-bold text-4xl items-center flex-shrink-0 px-4">
            PetPlanet
+=======
+          <div className="flex items-center flex-shrink-0 px-4">
+            <img
+              className="h-8 w-auto"
+              src={GrayLogo}
+            />
+            <p className="px-2 text-lg text-white font-bold">Pet Planet</p>
+>>>>>>> e43f5535da046d7bbee83be9479def80b57f4dec
           </div>
           <nav
             className="mt-5 flex-1 flex flex-col divide-y divide-gray-900 overflow-y-auto"

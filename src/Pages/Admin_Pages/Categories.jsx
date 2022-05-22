@@ -2,6 +2,10 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+<<<<<<< HEAD
+=======
+import AdminLayout from "../../layouts/AdminLayout";
+>>>>>>> e43f5535da046d7bbee83be9479def80b57f4dec
 
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import {
@@ -11,14 +15,20 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
+<<<<<<< HEAD
 
+=======
+>>>>>>> e43f5535da046d7bbee83be9479def80b57f4dec
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { db } from "../../firebase-config";
+<<<<<<< HEAD
 
 import AdminLayout from "../../layouts/AdminLayout";
+=======
+>>>>>>> e43f5535da046d7bbee83be9479def80b57f4dec
 
 export default function AddCategory() {
   const [currentCategory, setCurrentCategory] = useState("");
@@ -84,6 +94,7 @@ export default function AddCategory() {
 
   return (
     <AdminLayout>
+<<<<<<< HEAD
         <div className=" flex justify-center ">
           <div className="flex w-96 flex-col gap-4 ">
             <div className=" w-96 bg-white p-4 ">
@@ -137,12 +148,85 @@ export default function AddCategory() {
                     Category
                   </InputLabel>
                   <Select
+=======
+      <div>
+      <div className="flex justify-between">
+        <h1 className="mb-4 text-left text-2xl font-bold">Categories</h1>
+      </div>
+        <div className="pt-8 ">
+          <div className="mt-8 flex justify-center ">
+            <div className="flex w-96 flex-col gap-4 ">
+              <div className=" w-96 bg-white p-4 ">
+                <h1 className="flex justify-center text-3xl">
+                  Add Parent Category
+                </h1>
+                <div>
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    label="Category Name"
+                    name="name"
+>>>>>>> e43f5535da046d7bbee83be9479def80b57f4dec
                     value={category}
-                    label="category"
                     onChange={(e) => {
                       setCategory(e.target.value);
                     }}
+                  />
+
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                    onClick={addParentCategory}
                   >
+                    Add Category
+                  </Button>
+                </div>
+              </div>
+              <hr />
+              <div className="m-auto w-96 bg-white p-4 ">
+                <h1 className="flex justify-center text-3xl">
+                  Add Child Category
+                </h1>
+                <div>
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    label="Sub-Category"
+                    name="name"
+                    value={subCategory}
+                    onChange={(e) => {
+                      setSubCategory(e.target.value);
+                    }}
+                  />
+
+                  <FormControl fullWidth style={{ margin: "10px 0" }}>
+                    <InputLabel id="demo-simple-select-label">
+                      Category
+                    </InputLabel>
+                    <Select
+                      value={category}
+                      label="category"
+                      onChange={(e) => {
+                        setCategory(e.target.value);
+                      }}
+                    >
+                      {cat.map((item) => (
+                        <MenuItem value={item}>{item}</MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                    onClick={addChildCategory}
+                  >
+<<<<<<< HEAD
                     {cat.map((item) => (
                       <MenuItem value={item}>{item}</MenuItem>
                     ))}
@@ -157,8 +241,15 @@ export default function AddCategory() {
                 >
                   Add Sub-Category
                 </Button>
+=======
+                    Add Sub-Category
+                  </Button>
+                </div>
+>>>>>>> e43f5535da046d7bbee83be9479def80b57f4dec
               </div>
+              <hr />
             </div>
+<<<<<<< HEAD
             <hr />
           </div>
         </div>
@@ -177,23 +268,46 @@ export default function AddCategory() {
           <hr />
           <div className="m-4 bg-white p-4">
             <h1 className="p-4 text-4xl">Child Categories</h1>
-            <hr />
+=======
+          </div>
+          <hr />
+          <div className="flex  w-fit">
+            <div className="m-4 bg-white p-4">
+              <h1 className="p-4 text-4xl">Parent Categories</h1>
+              <hr />
 
-            {sub_cat.map((item) => (
-              <div className="flex justify-between p-2 ">
-                <h1 className="w-96">{item.sub_}</h1>
-                <Button
-                  onClick={() => {
-                    deleteCategory(item.id);
-                  }}
-                >
-                  DELETE
-                </Button>
-              </div>
-            ))}
+              {cat.map((item) => (
+                <div key={item} className="flex justify-between p-4">
+                  <h1 className="w-96">{item}</h1>
+                </div>
+              ))}
+            </div>
+>>>>>>> e43f5535da046d7bbee83be9479def80b57f4dec
+            <hr />
+            <div className="m-4 bg-white p-4">
+              <h1 className="p-4 text-4xl">Child Categories</h1>
+              <hr />
+
+              {sub_cat.map((item) => (
+                <div className="flex justify-between p-2 ">
+                  <h1 className="w-96">{item.sub_}</h1>
+                  <Button
+                    onClick={() => {
+                      deleteCategory(item.id);
+                    }}
+                  >
+                    DELETE
+                  </Button>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
+<<<<<<< HEAD
    
+=======
+      </div>
+>>>>>>> e43f5535da046d7bbee83be9479def80b57f4dec
     </AdminLayout>
   );
 }
