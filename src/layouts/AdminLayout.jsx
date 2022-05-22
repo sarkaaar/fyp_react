@@ -16,7 +16,7 @@ import {
   XIcon,
 } from "@heroicons/react/outline";
 import useUserRole from "../hooks/useUserRole";
-
+import GrayLogo from "../assets/images/gray_logo.png";
 const navigation = [
   {
     name: "Home",
@@ -128,10 +128,11 @@ export default function AdminLayout({ children }) {
                 <div className="flex-shrink-0 flex items-center px-4">
                   <img
                     className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/easywire-logo-cyan-300-mark-white-text.svg"
-                    alt="Easywire logo"
+                    src={GrayLogo}
                   />
                 </div>
+                <p className="px-2 text-lg text-white font-bold">Pet Planet</p>
+
                 <nav
                   className="mt-5 flex-shrink-0 h-full divide-y divide-gray-900 overflow-y-auto"
                   aria-label="Sidebar"
@@ -193,10 +194,10 @@ export default function AdminLayout({ children }) {
           <div className="flex items-center flex-shrink-0 px-4">
             <img
               className="h-8 w-auto"
-              src="https://tailwindui.com/img/logos/easywire-logo-cyan-300-mark-white-text.svg"
-              alt="Easywire logo"
+              src={GrayLogo}
             />
           </div>
+          <p className="px-2 text-lg text-white font-bold">Pet Planet</p>
           <nav
             className="mt-5 flex-1 flex flex-col divide-y divide-gray-900 overflow-y-auto"
             aria-label="Sidebar"

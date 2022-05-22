@@ -216,7 +216,7 @@ export default function Product() {
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
             <img
               alt="ecommerce"
-              className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"
+              className="lg:w-1/2 w-full  object-cover object-center rounded border border-gray-200"
               src={
                 prod?.image
                   ? prod?.image[0]
