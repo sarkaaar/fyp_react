@@ -157,12 +157,12 @@ export default function SignUp() {
                   type="checkbox"
                   className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                 />
-                <label
+                {/* <label
                   htmlFor="Policy"
                   className="ml-2 block text-sm text-gray-900"
                 >
                   I agree to all terms and conditions of the policy.
-                </label>
+                </label> */}
               </div>
             </div>
             <div>

@@ -55,7 +55,7 @@ export default function Product() {
   const handleClose = () => setOpen(false);
   const [products, setProducts] = useState([]);
 
-  const [addStaus, setAddStatus] = useState(false);
+  const [addStatus, setAddStatus] = useState(false);
   const decrementCounter = () => {
     if (qty <= 1) {
 
@@ -290,7 +290,7 @@ export default function Product() {
                 </span>
               </div>
               <div className="flex mt-4">
-                {addStaus ? (
+                {addStatus ? (
                   // <div className="flex justify-center bg-indigo-500 items-center">
                   //   <div
                   //     className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full "
@@ -441,7 +441,7 @@ export default function Product() {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Please login to Continue
           </Typography>
-          <Link to="/sign_in">Sign in</Link>
+          <Link to="/sign_in" className="text-blue-600">Sign in</Link>
         </Box>
       </Modal>
     </>
