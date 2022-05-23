@@ -18,6 +18,7 @@ export default function SignUp() {
   const [user, setUser] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [phone, setPhone] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
   const [name, setName] = useState();
   const [errorMessage, setErrorMessage] = useState("");
@@ -38,6 +39,7 @@ export default function SignUp() {
   const signUp = async () => {
     const _user = {
       email,
+      phone,
       password,
       role: "user",
       name,
@@ -91,7 +93,7 @@ export default function SignUp() {
               <TextField
                 style={{ paddingBottom: "15px" }}
                 fullWidth
-                // required
+                required
                 label="Name"
                 type="text"
                 value={name}
@@ -104,12 +106,26 @@ export default function SignUp() {
               <TextField
                 style={{ paddingBottom: "15px" }}
                 fullWidth
-                // required
+                required
                 label="Email Address"
                 type="email"
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value);
+                }}
+                
+              />
+              <TextField
+                style={{ paddingBottom: "15px" }}
+                fullWidth
+                required
+                label="Phone Number"
+                
+                type="text"
+                value={phone}
+                helperText="Type 11 digit numbers Only "
+                onChange={(e) => {
+                  setPhone(e.target.value);
                 }}
               />
               {errorMessage !== "" ? (
@@ -120,7 +136,7 @@ export default function SignUp() {
               <TextField
                 style={{ paddingBottom: "15px" }}
                 fullWidth
-                // required
+                required
                 type="password"
                 label="Password"
                 value={password}
@@ -131,7 +147,7 @@ export default function SignUp() {
               <TextField
                 style={{ paddingBottom: "15px" }}
                 fullWidth
-                // required
+                required
                 label="Confirm Password"
                 type="password"
                 value={confirmPassword}
@@ -149,7 +165,7 @@ export default function SignUp() {
                 )}
               </div>
             </div>
-            <div className="flex items-center justify-between">
+            {/* <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <input
                   id="remember-me"
@@ -157,14 +173,14 @@ export default function SignUp() {
                   type="checkbox"
                   className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                 />
-                {/* <label
+                <label
                   htmlFor="Policy"
                   className="ml-2 block text-sm text-gray-900"
                 >
                   I agree to all terms and conditions of the policy.
-                </label> */}
+                </label>
               </div>
-            </div>
+            </div> */}
             <div>
               <button
                 // type="submit"

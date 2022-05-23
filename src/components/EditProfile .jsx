@@ -10,6 +10,8 @@ import {
   Select,
   TextField,
 } from "@mui/material";
+import { onAuthStateChanged } from "firebase/auth";
+
 import {
   addDoc,
   collection,
@@ -18,115 +20,58 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { db, storage } from "../../../firebase-config";
+import { db, storage } from "../firebase-config";
 
-export default function AddEditProduct({ data }) {
-  const [cat, setCat] = useState([]);
-  const categoriesCollection = collection(db, "categories");
+export default function EditProfile({ data }) {
+  const usersCollection = collection(db, "users");
 
   // Get Sub-Categories Names
-  const [subCat, setSubCat] = useState([]);
-  const subCatRef = collection(db, "sub-categories");
-  const productsCollection = collection(db, "products");
+
+  const [user, setUser] = useState();
   const [name, setName] = useState(data?.name);
-  const [costPrice, setCostPrice] = useState(data?.costPrice);
-  const [salePrice, setSalePrice] = useState(data?.salePrice);
-  const [variants, setVariants] = useState(Object.values(data?.variants ?? {}).length ? Object.values(data?.variants) : [['', 0]]);
-  const [category, setCategory] = useState(data?.category);
-  const [subCategory, setSubCategory] = useState(data?.subCategory);
-  const [description, setDescription] = useState(data?.description);
-  const [image, setImage] = useState(data?.image);
-  const [urls, setUrls] = useState(data?.urls);
-  const [progress, setProgress] = useState();
+  const [phone, setPhone] = useState(data?.Phone);
+  const [password, setPassword] = useState(data?.password);
 
   // Add Products
-  const addProduct = async () => {
-    const x = variants.reduce((acc, val, i) => ({ ...acc, [i]: val }), {});
-
-    const newProduct = {
+  const editPofile = async () => {
+    const newProfile = {
       name,
-      costPrice,
-      salePrice,
-      variants: x,
-      category,
-      subCategory,
-      description,
-      image: urls || "No Image Found",
+
+      password,
+      phone,
     };
     console.log(newProduct);
-    await addDoc(productsCollection, newProduct);
+    const prod = doc(db, "users", id);
+    await updateDoc(prod, newProfile);
+    console.log("Profile Updated");
   };
+}
 
-  const upload = () => {
-    if (!image[0]) return;
-    const arr = [];
-
-    for (let i = 0; i < image.length; i = +1) {
-      const storageRef = ref(storage, `products/${image[i].name}`);
-      const uploadTask = uploadBytesResumable(storageRef, image[i]);
-
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const prog = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-
-          setProgress(prog);
-        },
-        (error) => console.log(error),
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-            console.log(url);
-            arr.push(url);
-            setUrls(arr);
-          });
-        },
-      );
-    }
-  };
-  // Search Categories
-  const getCategories = async () => {
-    await getDocs(categoriesCollection).then((res) => {
-      setCat(res.docs.map((d) => d.data().name));
+const getProfile = async () => {
+  const q = await query(ordersRef, where("authUserEamil", "==", user?.email));
+  await getDocs(q)
+    .then((res) => {
+      setProfile(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      console.log(profile);
+    })
+    .catch((e) => {
+      console.log(e);
     });
-  };
-
-  // Search Sub-Categories
-  const getSubCategories = async () => {
-    await getDocs(subCatRef)
-      .then((res) => {
-        // eslint-disable-next-line no-underscore-dangle
-        setSubCat(res.docs.map((d) => d.data().sub_));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
   useEffect(() => {
-    // Function Calls
-    getCategories();
-    getSubCategories();
+    getProfile();
+
+    () =>
+      onAuthStateChanged(auth, (user) => {
+        setUser(user);
+      });
   }, []);
 
-  const removeVariant = (i) => {
-    variants.splice(i, 1);
-    setVariants([...variants]);
-  };
-
-  const updateVariant = (v, i) => {
-    const tempVariants = [...variants];
-    tempVariants[i] = v;
-    setVariants(tempVariants);
-  };
-
-  const updateProduct = async (id) => {
-    const prod = doc(db, "products", id);
-    await updateDoc(prod, { capital: true });
-    console.log("Product Updated");
-  };
+  // Search Categories
 
   return (
-    <div className="absolute inset-1/2 w-96 h-fit border-box bg-white drop-shadow-2xl p-4 -translate-x-1/2 -translate-y-1/2">
+    <div className="border-box absolute inset-1/2 h-fit w-96 -translate-x-1/2 -translate-y-1/2 bg-white p-4 drop-shadow-2xl">
+      <Button />
       <TextField
         margin="normal"
         required
@@ -183,6 +128,13 @@ export default function AddEditProduct({ data }) {
           <IconButton type="button" onClick={() => removeVariant(i)}>
             x
           </IconButton>
+          <button
+            onClick={() => {
+              console.log();
+            }}
+          >
+            oclick
+          </button>
         </div>
       ))}
       <Button
@@ -281,4 +233,4 @@ export default function AddEditProduct({ data }) {
       </Button>
     </div>
   );
-}
+};

@@ -52,40 +52,4 @@ export default function ReturnedProducts() {
   );
 }
 
-        {/* <table className=" w-11/12 m-auto divide-y bg-white divide-gray-300 table-fixed dark:divide-gray-700">
-          <thead className="p-4 bg-gray-200 dark:bg-gray-700">
-            <tr>
-              <th className="text-xl p-2 px-8">Name</th>
-              <th className="text-xl p-2 px-8">Order # </th>
-              <th className="text-xl p-2 px-8">Product Id</th>
-              <th className="text-xl p-2 px-8">Description</th>
-              <th className="text-xl p-2 px-8">Issue</th>
-              <th className="text-xl p-2 ">Date</th>
-            </tr>
-          </thead>
-          {returns.map((item, key) => (
-            <tbody key={key}>
-              <tr className="">
-                <td className="text-center text-lg p-2 px-8">
-                  {item?.productName}
-                </td>
-                <td className=" text-center text-lg p-2 px-8">
-                  {item?.orderNo}
-                </td>
-                <td className=" text-center text-lg p-2 px-8">
-                  {item?.productID}
-                </td>
-                <td className=" text-center text-lg p-2 px-8">
-                  {item?.description}
-                </td>
-                <td className=" text-center text-lg p-2 px-8">
-                  {item?.issue}
-                </td>
-                <td className=" text-center text-lg p-2 px-8">
-                  {item?.date?.toDate()?.toDateString()}
-                </td>
-              </tr>
-            </tbody>
-          ))}
-        </table> */}
-     
+       
