@@ -10,12 +10,13 @@ import {
   getDocs,
   deleteDoc,
 } from "firebase/firestore";
-// import HangupIcon from './icons/hangup.svg';
-// import MoreIcon from './icons/more-vertical.svg';
-// import CopyIcon from './icons/copy.svg';
-import { db } from "../../../firebase-config";
-import "./App.css";
+import CallIcon from "@mui/icons-material/Call";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import { Button } from "@material-ui/core";
+// import "./App.css";
 import "./index.css";
+import { db } from "../../../firebase-config";
 
 const servers = {
   iceServers: [
@@ -28,50 +29,39 @@ const servers = {
 
 const pc = new RTCPeerConnection(servers);
 
-function App() {
-  const [currentPage, setCurrentPage] = useState("home");
-  const [joinCode, setJoinCode] = useState("");
-
-  return (
-    <div className="app">
-      {currentPage === "home" ? (
-        <Menu
-          joinCode={joinCode}
-          setJoinCode={setJoinCode}
-          setPage={setCurrentPage}
-        />
-      ) : (
-        <Videos mode={currentPage} callId={joinCode} setPage={setCurrentPage} />
-      )}
-    </div>
-  );
-}
-
-function Menu({ joinCode, setJoinCode, setPage }) {
-  return (
-    <div className="home">
-      <div className="create box">
-        <button onClick={() => setPage("create")}>Create Call</button>
-      </div>
-
-      <div className="answer box">
-        <input
-          value={joinCode}
-          onChange={(e) => setJoinCode(e.target.value)}
-          placeholder="Join with code"
-        />
-        <button onClick={() => setPage("join")}>Answer</button>
-      </div>
-    </div>
-  );
-}
-
 function Videos({ mode, callId, setPage }) {
   const [webcamActive, setWebcamActive] = useState(false);
   const [roomId, setRoomId] = useState(callId);
 
   const localRef = useRef();
   const remoteRef = useRef();
+
+  const hangUp = async () => {
+    pc.close();
+
+    if (roomId) {
+      const roomRef = doc(db, "calls", roomId);
+      await getDocs(collection(roomRef, "answerCandidates")).then(
+        (querySnapshot) => {
+          querySnapshot.forEach((d) => {
+            deleteDoc(d.ref);
+          });
+        }
+      );
+
+      await getDocs(collection(roomRef, "offerCandidates")).then(
+        (querySnapshot) => {
+          querySnapshot.forEach((d) => {
+            deleteDoc(d.ref);
+          });
+        }
+      );
+
+      await deleteDoc(roomRef);
+    }
+
+    window.location.reload();
+  };
 
   const setupSources = async () => {
     const localStream = await navigator.mediaDevices.getUserMedia({
@@ -175,67 +165,45 @@ function Videos({ mode, callId, setPage }) {
       });
     }
 
-    pc.onconnectionstatechange = (event) => {
+    pc.onconnectionstatechange = () => {
       if (pc.connectionState === "disconnected") {
         hangUp();
       }
     };
   };
 
-  const hangUp = async () => {
-    pc.close();
-
-    if (roomId) {
-      const roomRef = doc(db, "calls", roomId);
-      await getDocs(collection(roomRef, "answerCandidates")).then(
-        (querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            deleteDoc(doc.ref);
-          });
-        }
-      );
-
-      await getDocs(collection(roomRef, "offerCandidates")).then(
-        (querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            deleteDoc(doc.ref);
-          });
-        }
-      );
-
-      await deleteDoc(roomRef);
-    }
-
-    window.location.reload();
-  };
-
   return (
-    <div className="videos">
+    <div
+      className="videos"
+      // className="flex items-center whitespace-nowrap bg-whitetext-black"
+    >
       <video ref={localRef} autoPlay playsInline className="local" muted />
       <video ref={remoteRef} autoPlay playsInline className="remote" />
 
       <div className="buttonsContainer">
-        <button
+        <Button
+          variant="contained"
           type="button"
           onClick={hangUp}
           disabled={!webcamActive}
           className="hangup button"
         >
-          {/* <HangupIcon /> */}
-        </button>
+          <CallIcon />
+        </Button>
         <div tabIndex={0} role="button" className="more button">
-          {/* <MoreIcon /> */}
+          <MoreVertIcon />
           <div className="popover">
-            <button
+            <Button
+              variant="contained"
               type="button"
               onClick={() => {
                 navigator.clipboard.writeText(roomId);
                 console.log(roomId);
               }}
             >
-              {/* <CopyIcon /> */}
+              <ContentCopyIcon />
               Copy joining code
-            </button>
+            </Button>
           </div>
         </div>
       </div>
@@ -244,20 +212,89 @@ function Videos({ mode, callId, setPage }) {
         <div className="modalContainer">
           <div className="modal">
             <h3>Turn on your camera and microphone and start the call</h3>
-            <div className="container">
-              <button
+            <div
+              // className="container"
+              color="primary"
+              className="flex gap-4 mt-8"
+            >
+              <Button
                 type="button"
+                fullWidth
+                variant="contained"
                 onClick={() => setPage("home")}
-                className="secondary"
+                // className="secondary"
               >
                 Cancel
-              </button>
-              <button type="button" onClick={setupSources}>
+              </Button>
+              <Button
+                type="button"
+                variant="contained"
+                onClick={setupSources}
+                fullWidth
+              >
                 Start
-              </button>
+              </Button>
             </div>
           </div>
         </div>
+      )}
+    </div>
+  );
+}
+
+function Menu({ joinCode, setJoinCode, setPage }) {
+  return (
+    <div
+      // className="home"
+      style={{
+        height: "100vh",
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+        gap: "10vw",
+        padding: "30vh 20vw",
+      }}
+    >
+      <div
+        className="create flex flox-col items-center justify-center bg-gray-200 text-600 rounded-lg"
+        // className="create box"
+        style={{
+          padding: "40px 20px",
+        }}
+      >
+        <Button onClick={() => setPage("create")}>Create Call</Button>
+      </div>
+
+      <div
+        className="answer flex flox-col items-center justify-center bg-gray-200 text-600 rounded-lg"
+        // className="answer box"
+        style={{
+          padding: "40px 20px",
+        }}
+      >
+        <input
+          value={joinCode}
+          onChange={(e) => setJoinCode(e.target.value)}
+          placeholder="Join with code"
+        />
+        <Button onClick={() => setPage("join")}>Answer</Button>
+      </div>
+    </div>
+  );
+}
+function App() {
+  const [currentPage, setCurrentPage] = useState("home");
+  const [joinCode, setJoinCode] = useState("");
+
+  return (
+    <div className="app">
+      {currentPage === "home" ? (
+        <Menu
+          joinCode={joinCode}
+          setJoinCode={setJoinCode}
+          setPage={setCurrentPage}
+        />
+      ) : (
+        <Videos mode={currentPage} callId={joinCode} setPage={setCurrentPage} />
       )}
     </div>
   );

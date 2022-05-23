@@ -7,14 +7,14 @@
     --color-primary-light: #ebf5ff;
 }
 
-body {
+/* body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
         "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
         "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-}
+} */
 
 button {
     display: inline-block;
@@ -45,15 +45,15 @@ video {
     background: #ffffff;
 }
 
-.home {
+/* .home {
     height: 100vh;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 10vw;
     padding: 30vh 20vw;
-}
+} */
 
-.home .box {
+/* .home .box {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -62,7 +62,7 @@ video {
     color: var(--color-primary);
     border-radius: 8px;
     padding: 40px 20px;
-}
+} */
 
 .modalContainer {
     position: absolute;
@@ -180,6 +180,7 @@ video {
     color: black;
 }
 
+/* "flex items-center whitespace-nowrap bg-whitetext-black" */
 .videos .buttonsContainer .more .popover button svg {
     margin-right: 20px;
 }

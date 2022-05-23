@@ -1,73 +1,25 @@
 import * as React from "react";
-import { useState, useEffect, Fragment, useRef } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
-import { Button, TextField } from "@mui/material";
-import { onAuthStateChanged } from "firebase/auth";
 
-import { Menu, Transition } from "@headlessui/react";
-import { db, auth } from "../../firebase-config";
-import Header from "./doctor_components/Header";
+import { db } from "../../firebase-config";
 import DoctorLayout from "../../layouts/DoctorLayout";
 
-function className(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+// sm:col-start-5 sm:col-start-1 sm:col-start-2 sm:col-start-3 sm:col-start-4 sm:col-start-6 sm:col-start-7
 
 export default function DocViewAppointments() {
   const appointmentsRef = collection(db, "appointments");
   const [appointments, setAppointments] = useState([]);
-  const [date, setDate] = useState();
-  const [user, setUser] = useState();
-
-  const [currDay, setCurrDay] = useState();
-  const [currDate, setCurrDate] = useState();
-  const [daytime, setDayTime] = useState();
-
-  const getCurrentDay = () => {
-    const d = new Date();
-    setCurrDay(d.getDay());
-  };
-
-  const getCurrentDate = () => {
-    const d = new Date();
-    setCurrDate(d.getDate());
-  };
-
-  const getDayTime = () => {
-    const d = new Date();
-    setDayTime(d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear());
-  };
-
-  const timeSlots = [
-    "09:00 AM  -  09:15 AM",
-    "09:15 AM  -  09:30 AM",
-    "09:30 AM  -  10:00 AM",
-    "10:00 AM  -  10:15 AM",
-    "10:15 AM  -  10:30 AM",
-    "10:30 AM  -  10:45 AM",
-    "10:45 AM  -  11:00 AM",
-    "11:00 AM  -  11:15 AM",
-    "11:15 AM  -  11:30 AM",
-    "11:30 AM  -  11:45 AM",
-    "11:45 AM  -  12:00 AM",
-    "12:00 PM  -  12:15 PM",
-    "12:15 PM  -  12:30 PM",
-    "12:30 PM  -  12:45 PM",
-    "12:45 PM  -  01:00 PM",
-    "01:00 PM  -  01:15 PM",
-    "01:15 PM  -  01:30 PM",
-    "01:30 PM  -  01:45 PM",
-    "01:45 PM  -  02:00 PM",
-  ];
 
   const getVerticalPosition = (time) => {
-    let i = 0;
-    timeSlots.map((item, key) => {
-      i += 1;
-      if (time === item) return String(2 + i * 14) + "/ span 24";
-    });
-    // min  at 9 position vertical is 2
-    // 2nd slot is 16
+    const [startTime, endTime] = time.split("-");
+    const m = startTime.match(/(\d{1,2}):(\d{2}) (AM|PM)\s+/);
+    let sMin = m[1] * 60 + +m[2];
+    if (m[3] === "PM" && m[1] < 12) {
+      sMin += m[3] === "PM" ? 11.5 * 60 : 0;
+    }
+    return `${Math.floor((sMin - 540) / 15) + 2} / span 1`;
   };
 
   const getAppointments = async () => {
@@ -87,37 +39,27 @@ export default function DocViewAppointments() {
   };
 
   useEffect(() => {
-    onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
-
     getAppointments();
-    getCurrentDay();
-    getCurrentDate();
-    getDayTime();
-  }, [date, user]);
+  }, []);
+
+  const weekDates = useMemo(() => {
+    const d = new Date();
+    const weekDay = (d.getDay() + 6) % 7;
+    const monthDay = d.getDate();
+    return new Array(7).fill(0).map((_, i) => monthDay - weekDay + i);
+  }, [new Date().toDateString()]);
 
   const container = useRef(null);
   const containerNav = useRef(null);
   const containerOffset = useRef(null);
 
+  appointments.map((item) => {
+    console.log(new Date(item.date).getDay());
+    console.log(`" ${item.date} " ${new Date(item.date)} ${item.id}`);
+  });
+
   return (
     <DoctorLayout>
-      {/* <div className="flex justify-between p-4">
-        <h1 className="text-3xl font-bold mt-2">View All Appointments</h1>
-        <div className="flex gap-6">
-          <TextField
-            type="date"
-            label="Date"
-            value={date}
-            onChange={(e) => {
-              setDate(e.target.value);
-            }}
-          />
-        </div>
-      </div>
-      <hr /> */}
-
       <div className="flex h-full flex-col">
         <header className="relative z-40 flex flex-none items-center justify-between border-b border-gray-200 py-4 px-6">
           <h1 className="text-lg font-semibold text-gray-900">
@@ -138,129 +80,31 @@ export default function DocViewAppointments() {
               className="sticky top-0 z-30 flex-none bg-white shadow ring-1 ring-black ring-opacity-5 sm:pr-8"
             >
               <div className="grid grid-cols-7 text-sm leading-6 text-gray-500 sm:hidden">
-                <button
-                  type="button"
-                  className="flex flex-col items-center pt-2 pb-3"
-                >
-                  M{" "}
-                  <span className="mt-1 flex h-8 w-8 items-center justify-center font-semibold text-gray-900">
-                    10
-                  </span>
-                </button>
-                <button
-                  type="button"
-                  className="flex flex-col items-center pt-2 pb-3"
-                >
-                  T{" "}
-                  <span className="mt-1 flex h-8 w-8 items-center justify-center font-semibold text-gray-900">
-                    11
-                  </span>
-                </button>
-                <button
-                  type="button"
-                  className="flex flex-col items-center pt-2 pb-3"
-                >
-                  W{" "}
-                  <span className="mt-1 flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 font-semibold text-white">
-                    12
-                  </span>
-                </button>
-                <button
-                  type="button"
-                  className="flex flex-col items-center pt-2 pb-3"
-                >
-                  T{" "}
-                  <span className="mt-1 flex h-8 w-8 items-center justify-center font-semibold text-gray-900">
-                    13
-                  </span>
-                </button>
-                <button
-                  type="button"
-                  className="flex flex-col items-center pt-2 pb-3"
-                >
-                  F{" "}
-                  <span className="mt-1 flex h-8 w-8 items-center justify-center font-semibold text-gray-900">
-                    14
-                  </span>
-                </button>
-                <button
-                  type="button"
-                  className="flex flex-col items-center pt-2 pb-3"
-                >
-                  S{" "}
-                  <span className="mt-1 flex h-8 w-8 items-center justify-center font-semibold text-gray-900">
-                    15
-                  </span>
-                </button>
-                <button
-                  type="button"
-                  className="flex flex-col items-center pt-2 pb-3"
-                >
-                  S{" "}
-                  <span className="mt-1 flex h-8 w-8 items-center justify-center font-semibold text-gray-900">
-                    16
-                  </span>
-                </button>
+                {days.map((d, i) => (
+                  <button
+                    type="button"
+                    className="flex flex-col items-center pt-2 pb-3"
+                  >
+                    {`${d[0]} `}
+                    <span className="mt-1 flex h-8 w-8 items-center justify-center font-semibold text-gray-900">
+                      {weekDates[i]}
+                    </span>
+                  </button>
+                ))}
               </div>
 
               <div className="-mr-px hidden grid-cols-7 divide-x divide-gray-100 border-r border-gray-100 text-sm leading-6 text-gray-500 sm:grid">
                 <div className="col-end-1 w-14" />
-                <div className="flex items-center justify-center py-3">
-                  <span>
-                    Mon{" "}
-                    <span className="items-center justify-center font-semibold text-gray-900">
-                      10
+                {days.map((d, i) => (
+                  <div className="flex items-center justify-center py-3">
+                    <span>
+                      {`${d} `}
+                      <span className="items-center justify-center font-semibold text-gray-900">
+                        {weekDates[i]}
+                      </span>
                     </span>
-                  </span>
-                </div>
-                <div className="flex items-center justify-center py-3">
-                  <span>
-                    Tue{" "}
-                    <span className="items-center justify-center font-semibold text-gray-900">
-                      11
-                    </span>
-                  </span>
-                </div>
-                <div className="flex items-center justify-center py-3">
-                  <span className="flex items-baseline">
-                    Wed{" "}
-                    <span className="ml-1.5 flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 font-semibold text-white">
-                      12
-                    </span>
-                  </span>
-                </div>
-                <div className="flex items-center justify-center py-3">
-                  <span>
-                    Thu{" "}
-                    <span className="items-center justify-center font-semibold text-gray-900">
-                      13
-                    </span>
-                  </span>
-                </div>
-                <div className="flex items-center justify-center py-3">
-                  <span>
-                    Fri{" "}
-                    <span className="items-center justify-center font-semibold text-gray-900">
-                      14
-                    </span>
-                  </span>
-                </div>
-                <div className="flex items-center justify-center py-3">
-                  <span>
-                    Sat{" "}
-                    <span className="items-center justify-center font-semibold text-gray-900">
-                      15
-                    </span>
-                  </span>
-                </div>
-                <div className="flex items-center justify-center py-3">
-                  <span>
-                    Sun{" "}
-                    <span className="items-center justify-center font-semibold text-gray-900">
-                      16
-                    </span>
-                  </span>
-                </div>
+                  </div>
+                ))}
               </div>
             </div>
             <div className="flex flex-auto">
@@ -318,13 +162,19 @@ export default function DocViewAppointments() {
                   <div />
                   <div>
                     <div className="sticky left-0 z-20 -mt-2.5 -ml-14 w-14 pr-2 text-right text-xs leading-5 text-gray-400">
-                      01:00AM
+                      12:30PM
                     </div>
                   </div>
                   <div />
                   <div>
                     <div className="sticky left-0 z-20 -mt-2.5 -ml-14 w-14 pr-2 text-right text-xs leading-5 text-gray-400">
-                      01:30AM
+                      01:00PM
+                    </div>
+                  </div>
+                  <div />
+                  <div>
+                    <div className="sticky left-0 z-20 -mt-2.5 -ml-14 w-14 pr-2 text-right text-xs leading-5 text-gray-400">
+                      01:30PM
                     </div>
                   </div>
                   <div />
@@ -354,70 +204,23 @@ export default function DocViewAppointments() {
                   className="col-start-1 col-end-2 row-start-1 grid grid-cols-1 sm:grid-cols-7 sm:pr-8"
                   style={{
                     gridTemplateRows:
-                      "1.75rem repeat(288, minmax(0, 1fr)) auto",
+                      "1.75rem repeat(20, minmax(70px, 1fr)) auto",
                   }}
                 >
-                  {/* <li
-                    className="relative mt-px flex sm:col-start-3"
-                    style={{ gridRow: "74 / span 12" }}
-                  >
-                    <a
-                      href="/"
-                      className="group absolute inset-1 flex flex-col overflow-y-auto rounded-lg bg-blue-50 p-2 text-xs leading-5 hover:bg-blue-100"
-                    >
-                      <p className="order-1 font-semibold text-blue-700">
-                        Breakfast
-                      </p>
-                      <p className="text-blue-500 group-hover:text-blue-700">
-                        <time dateTime="2022-01-12T06:00">6:00 AM</time>
-                      </p>
-                    </a>
-                  </li>
-                  <li
-                    className="relative mt-px flex sm:col-start-3"
-                    style={{ gridRow: "92 / span 30" }}
-                  >
-                    <a
-                      href="/"
-                      className="group absolute inset-1 flex flex-col overflow-y-auto rounded-lg bg-pink-50 p-2 text-xs leading-5 hover:bg-pink-100"
-                    >
-                      <p className="order-1 font-semibold text-pink-700">
-                        Flight to Paris
-                      </p>
-                      <p className="text-pink-500 group-hover:text-pink-700">
-                        <time dateTime="2022-01-12T07:30">7:30 AM</time>
-                      </p>
-                    </a>
-                  </li>
-                  <li
-                    className="relative mt-px hidden sm:col-start-6 sm:flex"
-                    style={{ gridRow: "122 / span 24" }}
-                  >
-                    <a
-                      href="/"
-                      className="group absolute inset-1 flex flex-col overflow-y-auto rounded-lg bg-gray-100 p-2 text-xs leading-5 hover:bg-gray-200"
-                    >
-                      <p className="order-1 font-semibold text-gray-700">
-                        Meeting with design team at Disney
-                      </p>
-                      <p className="text-gray-500 group-hover:text-gray-700">
-                        <time dateTime="2022-01-15T10:00">10:00 AM</time>
-                      </p>
-                    </a>
-                  </li> */}
-                  {appointments.map((item, key) => (
+                  {appointments.map((item) => (
                     <li
-                      key="key"
-                      className="relative mt-px hidden sm:col-start-6 sm:flex"
-                      style={{ gridRow: getVerticalPosition(item?.time) }}
+                      key={item.id}
+                      className={`relative mt-px hidden sm:col-start-${
+                        ((new Date(item.date).getDay() + 6) % 7) + 1
+                      } sm:flex`}
+                      style={{ gridRow: getVerticalPosition(item.time) }}
                     >
                       <a
                         href="/"
                         className="group absolute inset-1 flex flex-col overflow-y-auto rounded-lg bg-gray-100 p-2 text-xs leading-5 hover:bg-gray-200"
                       >
-                        <p>{item?.user}</p>
-                        <p>{item?.time}</p>
-                        <p>{item?.date}</p>
+                        <p>{item.user}</p>
+                        <p>{item.time}</p>
                       </a>
                     </li>
                   ))}
@@ -427,14 +230,6 @@ export default function DocViewAppointments() {
           </div>
         </div>
       </div>
-      <button
-        type="button"
-        onClick={() => {
-          console.log(daytime);
-        }}
-      >
-        Click me
-      </button>
     </DoctorLayout>
   );
 }

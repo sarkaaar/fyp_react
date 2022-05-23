@@ -1,7 +1,7 @@
-import * as React from 'react';
+import * as React from "react";
 
-import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   collection,
   getDocs,
@@ -10,13 +10,13 @@ import {
   where,
   doc,
   updateDoc,
-} from 'firebase/firestore';
-import { onAuthStateChanged } from 'firebase/auth';
-import Header from './Components/Header';
-import Footer from './Components/Footer';
-import { db } from '../../firebase-config';
+} from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
+import Header from "./Components/Header";
+import Footer from "./Components/Footer";
+import { db } from "../../firebase-config";
 // import { Button } from "@mui/material";
-import { auth } from '../../firebase-config';
+import { auth } from "../../firebase-config";
 
 export default function Cart() {
   // const updateQuantity = async (id, qty) => {
@@ -32,10 +32,10 @@ export default function Cart() {
   // };
 
   const deleteProduct = async (id) => {
-    const prod = doc(db, 'cart', id);
+    const prod = doc(db, "cart", id);
     await deleteDoc(prod)
       .then(() => {
-        console.log('deleted');
+        console.log("deleted");
         getCartItems();
       })
       .catch((e) => {
@@ -49,7 +49,7 @@ export default function Cart() {
   const [products, setProducts] = useState([]);
   const [loader, setLoader] = useState(false);
 
-  const cartCollection = collection(db, 'cart');
+  const cartCollection = collection(db, "cart");
 
   useEffect(() => {
     getTotal();
@@ -64,10 +64,10 @@ export default function Cart() {
     setTotal(num);
   };
   const getCartItems = async () => {
-    const q = await query(cartCollection, where('user', '==', user?.email));
+    const q = await query(cartCollection, where("user", "==", user?.email));
     const queryResults = await getDocs(q);
     setProducts(
-      queryResults.docs.map((doc) => ({ ...doc.data(), id: doc.id })),
+      queryResults.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
     );
     setLoader(false);
     console.log(products);
@@ -75,7 +75,7 @@ export default function Cart() {
   };
 
   const checkout = async () => {
-    navigate('/checkout');
+    navigate("/checkout");
   };
 
   useEffect(() => {
@@ -126,10 +126,9 @@ export default function Cart() {
                                 <div className="flex justify-between text-base font-medium text-gray-900">
                                   <h3>{product?.product?.name}</h3>
                                   <p className="ml-4">
-                                    Total:
-                                    {' '}
-                                    {product?.product?.salePrice
-                                      * product?.quantity}
+                                    Total:{" "}
+                                    {product?.product?.salePrice *
+                                      product?.quantity}
                                   </p>
                                 </div>
                                 <p className="ml-4">
@@ -142,9 +141,7 @@ export default function Cart() {
                               </div>
                               <div className="flex flex-1 items-end justify-between text-sm">
                                 <p className="text-gray-500">
-                                  Qty
-                                  {' '}
-                                  {product?.quantity}
+                                  Qty {product?.quantity}
                                 </p>
 
                                 <div className="flex">
@@ -200,6 +197,7 @@ export default function Cart() {
                 </div> */}
               </div>
             )}
+            <h1> </h1>
           </>
         ) : (
           <h1>user is not signed in</h1>

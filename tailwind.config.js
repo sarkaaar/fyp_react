@@ -3,6 +3,9 @@ module.exports = {
   theme: {
     extend: {},
   },
+  safelist: [
+    { pattern: /col-start-\d/ },
+  ],
   plugins: [
     // eslint-disable-next-line global-require,import/no-extraneous-dependencies
     require('@tailwindcss/forms'),
