@@ -18,7 +18,7 @@ import {
   UserAddIcon,
 } from "@heroicons/react/outline";
 import useUserRole from "../hooks/useUserRole";
-// import GrayLogo from "../assets/images/gray_logo.png";
+import GrayLogo from "../assets/images/gray_logo.png";
 const navigation = [
   {
     name: "Home",
@@ -133,10 +133,10 @@ export default function AdminLayout({ children }) {
                   </div>
                 </Transition.Child>
                 <div className="flex-shrink-0 flex items-center px-4">
-                  {/* <img
+                  <img
                     className="h-8 w-auto"
-                    // src={GrayLogo}
-                  /> */}
+                    src={GrayLogo}
+                  />
                 </div>
                 <p className="px-2 text-lg text-white font-bold">Pet Planet</p>
 
@@ -199,10 +199,10 @@ export default function AdminLayout({ children }) {
         {/* Sidebar component, swap this element with another sidebar if you like */}
         <div className="flex flex-col flex-grow bg-gray-800 pt-5 pb-4 overflow-y-auto">
           <div className="flex items-center flex-shrink-0 px-4">
-            {/* <img
+            <img
               className="h-8 w-auto"
-              // src={GrayLogo}
-            /> */}
+              src={GrayLogo}
+            />
             <p className="px-2 text-lg text-white font-bold">Pet Planet</p>
           </div>
           <nav
