@@ -197,7 +197,7 @@ export default function Cart() {
                 </div> */}
               </div>
             )}
-            <h1> </h1>
+            <h1></h1>
           </>
         ) : (
           <h1>user is not signed in</h1>
