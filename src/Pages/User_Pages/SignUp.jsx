@@ -93,7 +93,7 @@ export default function SignUp() {
               <TextField
                 style={{ paddingBottom: "15px" }}
                 fullWidth
-                // required
+                required
                 label="Name"
                 type="text"
                 value={name}
@@ -106,7 +106,7 @@ export default function SignUp() {
               <TextField
                 style={{ paddingBottom: "15px" }}
                 fullWidth
-                // required
+                required
                 label="Email Address"
                 type="email"
                 value={email}
@@ -118,10 +118,10 @@ export default function SignUp() {
               <TextField
                 style={{ paddingBottom: "15px" }}
                 fullWidth
-                // required
+                required
                 label="Phone Number"
                 
-                type="number"
+                type="text"
                 value={phone}
                 helperText="Type 11 digit numbers Only "
                 onChange={(e) => {
@@ -136,7 +136,7 @@ export default function SignUp() {
               <TextField
                 style={{ paddingBottom: "15px" }}
                 fullWidth
-                // required
+                required
                 type="password"
                 label="Password"
                 value={password}
@@ -147,7 +147,7 @@ export default function SignUp() {
               <TextField
                 style={{ paddingBottom: "15px" }}
                 fullWidth
-                // required
+                required
                 label="Confirm Password"
                 type="password"
                 value={confirmPassword}
@@ -165,7 +165,7 @@ export default function SignUp() {
                 )}
               </div>
             </div>
-            <div className="flex items-center justify-between">
+            {/* <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <input
                   id="remember-me"
@@ -173,14 +173,14 @@ export default function SignUp() {
                   type="checkbox"
                   className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                 />
-                {/* <label
+                <label
                   htmlFor="Policy"
                   className="ml-2 block text-sm text-gray-900"
                 >
                   I agree to all terms and conditions of the policy.
-                </label> */}
+                </label>
               </div>
-            </div>
+            </div> */}
             <div>
               <button
                 // type="submit"
