@@ -1,23 +1,61 @@
 import { MenuAlt1Icon } from "@heroicons/react/outline";
-import { Fragment } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { SearchIcon } from "@heroicons/react/solid";
-import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
-import { Link } from "react-router-dom";
+import {
+  BellIcon,
+  MenuIcon,
+  XIcon,
+  ShoppingCartIcon,
+  ChevronDownIcon,
+} from "@heroicons/react/outline";
 import GrayLogo from "../assets/images/gray_logo.png";
+import c from "classnames";
+import { NavLink, useNavigate } from "react-router-dom";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { auth, db } from "../firebase-config";
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+// function classNames(...classes) {
+//   return classes.filter(Boolean).join(" ");
+// }
 
-export default function UserMainLayout({ children }) {
+export default function UserMainLayout({ children, props }) {
+  const [products, setProducts] = useState([]);
+  const [user, setUser] = useState({});
+  const navigate = useNavigate();
+  const cartCollection = collection(db, "cart");
+
+  const getCartItems = async () => {
+    const q = await query(cartCollection, where("user", "==", user?.email));
+    await getDocs(q).then((res) => {
+      setProducts(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      // console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    });
+  };
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    getCartItems();
+  }, [user]);
+
+  useEffect(() => {
+    getCartItems();
+  }, []);
+
+  const logout = async () => {
+    await signOut(auth);
+  };
+
   return (
     <div className="min-h-full">
       <Disclosure as="nav" className="bg-gray-800">
         {({ open }) => (
           <>
-            <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
-              <div className="relative flex items-center justify-between h-16">
+            <div className="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
+              <div className="relative flex h-16 items-center justify-between">
                 <div className="flex items-center px-2 lg:px-0">
                   <div className="flex-shrink-0">
                     <img
@@ -26,53 +64,80 @@ export default function UserMainLayout({ children }) {
                       alt="Pet Planet"
                     />
                   </div>
-                  <div className="hidden lg:block lg:ml-6">
+                  <div className="hidden lg:ml-6 lg:block">
                     <div className="flex space-x-4">
                       {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
-                      <Link
-                        to
-                        href="/"
-                        className="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+                      <NavLink
+                        to="/"
+                        className={({ isActive }) =>
+                          c(
+                            isActive
+                              ? "bg-gray-900 text-white"
+                              : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                            "rounded-md bg-gray-800 px-3 py-2 text-sm font-medium text-white"
+                          )
+                        }
                       >
                         Home{" "}
-                      </Link>
-                      <Link
+                      </NavLink>
+                      <NavLink
                         to="/services"
-                        className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                        className={({ isActive }) =>
+                          c(
+                            isActive
+                              ? "bg-gray-900 text-white"
+                              : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                            "rounded-md bg-gray-800 px-3 py-2 text-sm font-medium text-white"
+                          )
+                        }
                       >
                         Services
-                      </Link>
-                      <Link
+                      </NavLink>
+                      <NavLink
                         to="/viewAppointments"
-                        className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                        className={({ isActive }) =>
+                          c(
+                            isActive
+                              ? "bg-gray-900 text-white"
+                              : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                            "rounded-md bg-gray-800 px-3 py-2 text-sm font-medium text-white"
+                          )
+                        }
                       >
                         Appointments
-                      </Link>
-                      <Link
+                      </NavLink>
+                      <NavLink
                         to="/maps"
-                        className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                        className={({ isActive }) =>
+                          c(
+                            isActive
+                              ? "bg-gray-900 text-white"
+                              : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                            "rounded-md bg-gray-800 px-3 py-2 text-sm font-medium text-white"
+                          )
+                        }
                       >
                         Maps
-                      </Link>
+                      </NavLink>
                     </div>
                   </div>
                 </div>
-                <div className="flex-1 flex justify-center px-2 lg:ml-6 lg:justify-end">
-                  <div className="max-w-lg w-full lg:max-w-xs">
+                <div className="flex flex-1 justify-center px-2 lg:ml-6 lg:justify-end">
+                  <div className="w-full max-w-lg lg:max-w-xs">
                     <label htmlFor="search" className="sr-only">
                       Search
                     </label>
-                    <div className="pt-12 relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <div className="relative pt-12">
+                      <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                         <SearchIcon
-                          className="h-5 w-5  mt-12 text-gray-400"
+                          className="mt-12 h-5  w-5 text-gray-400"
                           aria-hidden="true"
                         />
                       </div>
                       <input
                         id="search"
                         name="search"
-                        className="block w-full pl-10 pr-3 py-2 border border-transparent rounded-md leading-5 bg-gray-700 text-gray-300 placeholder-gray-400 focus:outline-none focus:bg-white focus:border-white focus:ring-white focus:text-gray-900 sm:text-sm"
+                        className="block w-full rounded-md border border-transparent bg-gray-700 py-2 pl-10 pr-3 leading-5 text-gray-300 placeholder-gray-400 focus:border-white focus:bg-white focus:text-gray-900 focus:outline-none focus:ring-white sm:text-sm"
                         placeholder="Search"
                         type="search"
                       />
@@ -81,7 +146,7 @@ export default function UserMainLayout({ children }) {
                 </div>
                 <div className="flex lg:hidden">
                   {/* Mobile menu button */}
-                  <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                  <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                     <span className="sr-only">Open main menu</span>
                     {open ? (
                       <XIcon className="block h-6 w-6" aria-hidden="true" />
@@ -90,173 +155,222 @@ export default function UserMainLayout({ children }) {
                     )}
                   </Disclosure.Button>
                 </div>
-                <div className="hidden lg:block lg:ml-4">
+                <div className="hidden lg:ml-4 lg:block">
                   <div className="flex items-center">
-                    <button
-                      type="button"
-                      className="flex-shrink-0 bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-                    >
-                      <span className="sr-only">View notifications</span>
-                      <BellIcon className="h-6 w-6" aria-hidden="true" />
-                    </button>
-
-                    {/* Profile dropdown */}
-                    <Menu as="div" className="ml-4 relative flex-shrink-0">
-                      <div>
-                        <Menu.Button className="bg-gray-800 rounded-full flex text-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-                          <span className="sr-only">Open user menu</span>
-                          <img
-                            className="h-8 w-8 rounded-full"
-                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                            alt=""
+                    {user ? (
+                      <>
+                        <button
+                          type="button"
+                          className="flex flex-shrink-0 flex-row rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                          onClick={() => {
+                            navigate("/cart");
+                          }}
+                        >
+                          <span className="sr-only">View cart</span>
+                          <ShoppingCartIcon
+                            className="h-6 w-6 text-gray-300"
+                            aria-hidden="true"
                           />
-                        </Menu.Button>
-                      </div>
-                      <Transition
-                        as={Fragment}
-                        enter="transition ease-out duration-100"
-                        enterFrom="transform opacity-0 scale-95"
-                        enterTo="transform opacity-100 scale-100"
-                        leave="transition ease-in duration-75"
-                        leaveFrom="transform opacity-100 scale-100"
-                        leaveTo="transform opacity-0 scale-95"
+                          {products.length === 0 ? (
+                            <span className="hidden" />
+                          ) : (
+                            <span className="rounded-full bg-indigo-600 p-1 text-sm text-white">
+                              {products.length}
+                            </span>
+                          )}
+                        </button>
+
+                        <Menu as="div" className="relative ml-4 flex-shrink-0">
+                          <div>
+                            <Menu.Button className="flex flex-row items-center bg-gray-800 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                              <span
+                                className={({ isActive }) =>
+                                  c(
+                                    isActive
+                                      ? "bg-gray-900 text-white"
+                                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                                    "rounded-md bg-gray-800 px-3 py-2 text-sm font-medium text-white"
+                                  )
+                                }
+                              >
+                                Profile
+                              </span>
+                              <ChevronDownIcon className="h-5 w-5 text-gray-300" />
+                            </Menu.Button>
+                          </div>
+                          <Transition
+                            as={Fragment}
+                            enter="transition ease-out duration-100"
+                            enterFrom="transform opacity-0 scale-95"
+                            enterTo="transform opacity-100 scale-100"
+                            leave="transition ease-in duration-75"
+                            leaveFrom="transform opacity-100 scale-100"
+                            leaveTo="transform opacity-0 scale-95"
+                          >
+                            <Menu.Items className="z-15 absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                              <Menu.Item>
+                                {({ active }) => (
+                                  <a
+                                    href="/profile"
+                                    className={c(
+                                      active ? "bg-gray-100" : "",
+                                      "block px-4 py-2 text-sm text-gray-700"
+                                    )}
+                                  >
+                                    Your Profile
+                                  </a>
+                                )}
+                              </Menu.Item>
+                              <Menu.Item>
+                                {({ active }) => (
+                                  <a
+                                    href="/profile/favorites"
+                                    className={c(
+                                      active ? "bg-gray-100" : "",
+                                      "block px-4 py-2 text-sm text-gray-700"
+                                    )}
+                                  >
+                                    Favourites
+                                  </a>
+                                )}
+                              </Menu.Item>
+                              <Menu.Item>
+                                {({ active }) => (
+                                  <a
+                                    href="/sign_in"
+                                    onClick={() => {
+                                      logout();
+                                    }}
+                                    className={c(
+                                      active ? "bg-gray-100" : "",
+                                      "block px-4 py-2 text-sm text-gray-700"
+                                    )}
+                                  >
+                                    Log out
+                                  </a>
+                                )}
+                              </Menu.Item>
+                            </Menu.Items>
+                          </Transition>
+                        </Menu>
+                      </>
+                    ) : (
+                      <NavLink
+                        to="/sign_in"
+                        className={({ isActive }) =>
+                          c(
+                            isActive
+                              ? "bg-gray-900 text-white"
+                              : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                            "rounded-md bg-gray-800 px-3 py-2 text-sm font-medium text-white"
+                          )
+                        }
                       >
-                        <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                          <Menu.Item>
-                            {({ active }) => (
-                              <a
-                                href="#"
-                                className={classNames(
-                                  active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700"
-                                )}
-                              >
-                                Your Profile
-                              </a>
-                            )}
-                          </Menu.Item>
-                          <Menu.Item>
-                            {({ active }) => (
-                              <a
-                                href="#"
-                                className={classNames(
-                                  active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700"
-                                )}
-                              >
-                                Settings
-                              </a>
-                            )}
-                          </Menu.Item>
-                          <Menu.Item>
-                            {({ active }) => (
-                              <a
-                                href="#"
-                                className={classNames(
-                                  active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700"
-                                )}
-                              >
-                                Sign out
-                              </a>
-                            )}
-                          </Menu.Item>
-                        </Menu.Items>
-                      </Transition>
-                    </Menu>
+                        Login
+                      </NavLink>
+                    )}
                   </div>
                 </div>
               </div>
             </div>
-
             <Disclosure.Panel className="lg:hidden">
-              <div className="px-2 pt-2 pb-3 space-y-1">
+              <div className="space-y-1 px-2 pt-2 pb-3">
                 {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
                 <Disclosure.Button
-                  as="a"
                   href="/"
-                  className="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium"
+                  className="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
                 >
-                  Dashboard
+                  Home
                 </Disclosure.Button>
                 <Disclosure.Button
-                  as="a"
                   href="/services"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                  className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
                 >
                   Services
                 </Disclosure.Button>
                 <Disclosure.Button
-                  as="a"
-                  href="#"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                >
-                  Projects
-                </Disclosure.Button>
-                <Disclosure.Button
-                  as="a"
                   href="/viewAppointments"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                  className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
                 >
                   Appointments
                 </Disclosure.Button>
                 <Disclosure.Button
-                  as="a"
                   href="/maps"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                  className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
                 >
                   Maps
                 </Disclosure.Button>
               </div>
-              <div className="pt-4 pb-3 border-t border-gray-700">
-                <div className="flex items-center px-5">
-                  <div className="flex-shrink-0">
-                    <img
-                      className="h-10 w-10 rounded-full"
-                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                      alt=""
-                    />
-                  </div>
-                  <div className="ml-3">
-                    <div className="text-base font-medium text-white">
-                      Tom Cook
+              {user ? (
+                <>
+                  <div className="border-t border-gray-700 pt-4 pb-3">
+                    <div className="flex items-center px-5">
+                      <div className="flex-shrink-0">
+                        <button
+                          type="button"
+                          className="flex flex-shrink-0 flex-row rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                          onClick={() => {
+                            navigate("/cart");
+                          }}
+                        >
+                          <span className="sr-only">View cart</span>
+                          <ShoppingCartIcon
+                            className="h-6 w-6 text-gray-300"
+                            aria-hidden="true"
+                          />
+                          {products.length === 0 ? (
+                            <span className="hidden" />
+                          ) : (
+                            <span className="rounded-full bg-indigo-600 p-1 text-sm text-white">
+                              {products.length}
+                            </span>
+                          )}
+                        </button>
+                      </div>
+                      <div className="ml-3">
+                        <div className="text-base font-medium text-white">
+                          Cart
+                        </div>
+                      </div>
                     </div>
-                    <div className="text-sm font-medium text-gray-400">
-                      tom@example.com
+                    <div className="mt-3 space-y-1 px-2">
+                      <Disclosure.Button
+                        as="a"
+                        href="/profile"
+                        className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+                      >
+                        Your Profile
+                      </Disclosure.Button>
+                      <Disclosure.Button
+                        as="a"
+                        href="/profile/favourites"
+                        className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+                      >
+                        Favourites
+                      </Disclosure.Button>
+                      <Disclosure.Button
+                        as="a"
+                        href="/sign_in"
+                        onClick={() => {
+                          logout();
+                        }}
+                        className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+                      >
+                        Logout
+                      </Disclosure.Button>
                     </div>
                   </div>
-                  <button
-                    type="button"
-                    className="ml-auto flex-shrink-0 bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-                  >
-                    <span className="sr-only">View notifications</span>
-                    <BellIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
-                </div>
-                <div className="mt-3 px-2 space-y-1">
+                </>
+              ) : (
+                <>
                   <Disclosure.Button
-                    as="a"
-                    href="#"
-                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700"
+                    href="/sign_in"
+                    className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
                   >
-                    Your Profile
+                    Login
                   </Disclosure.Button>
-                  <Disclosure.Button
-                    as="a"
-                    href="#"
-                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700"
-                  >
-                    Settings
-                  </Disclosure.Button>
-                  <Disclosure.Button
-                    as="a"
-                    href="#"
-                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700"
-                  >
-                    Sign out
-                  </Disclosure.Button>
-                </div>
-              </div>
+                </>
+              )}
             </Disclosure.Panel>
           </>
         )}
