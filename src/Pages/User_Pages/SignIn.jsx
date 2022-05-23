@@ -35,6 +35,7 @@ export default function SignIn() {
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState();
+  const [phone, setPhone] = useState("");
 
   const [errorMessage, setErrorMessage] = useState("");
 

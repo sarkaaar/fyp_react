@@ -18,6 +18,7 @@ export default function SignUp() {
   const [user, setUser] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [phone, setPhone] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
   const [name, setName] = useState();
   const [errorMessage, setErrorMessage] = useState("");
@@ -38,6 +39,7 @@ export default function SignUp() {
   const signUp = async () => {
     const _user = {
       email,
+      phone,
       password,
       role: "user",
       name,
@@ -110,6 +112,20 @@ export default function SignUp() {
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value);
+                }}
+                
+              />
+              <TextField
+                style={{ paddingBottom: "15px" }}
+                fullWidth
+                // required
+                label="Phone Number"
+                
+                type="number"
+                value={phone}
+                helperText="Type 11 digit numbers Only "
+                onChange={(e) => {
+                  setPhone(e.target.value);
                 }}
               />
               {errorMessage !== "" ? (
