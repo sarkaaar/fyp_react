@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Modal from "@mui/material/Modal";
 import { Button } from "@mui/material";
 import { collection } from "firebase/firestore";
-
 import { db } from "../../firebase-config";
 import AdminLayout from "../../layouts/AdminLayout";
 import FirebaseDataTable from "../../components/FirebaseDataTable";

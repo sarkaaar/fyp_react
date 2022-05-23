@@ -83,7 +83,6 @@ export default function AddEditProduct({ data }) {
       );
     }
   };
-
   // Search Categories
   const getCategories = async () => {
     await getDocs(categoriesCollection).then((res) => {
