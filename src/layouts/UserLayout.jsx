@@ -65,7 +65,6 @@ export default function AdminLayout({ children }) {
   }, [authState]);
 
   const logout = async () => {
-    setOpen(true);
     await signOut(auth);
   };
 
