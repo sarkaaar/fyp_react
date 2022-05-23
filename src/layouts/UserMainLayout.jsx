@@ -4,12 +4,13 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { SearchIcon } from "@heroicons/react/solid";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import { Link } from "react-router-dom";
+import GrayLogo from "../assets/images/gray_logo.png";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function AdminLayout({ children }) {
+export default function UserMainLayout({ children }) {
   return (
     <div className="min-h-full">
       <Disclosure as="nav" className="bg-gray-800">
@@ -21,8 +22,8 @@ export default function AdminLayout({ children }) {
                   <div className="flex-shrink-0">
                     <img
                       className="block h-8 w-auto"
-                      src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
-                      alt="Workflow"
+                      src={GrayLogo}
+                      alt="Pet Planet"
                     />
                   </div>
                   <div className="hidden lg:block lg:ml-6">
