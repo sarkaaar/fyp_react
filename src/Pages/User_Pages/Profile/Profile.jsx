@@ -86,8 +86,8 @@ export default function Profile() {
                             }}
                             value={queryUser[0]?.name}
                             disabled
-                         
                             label="Name"
+                            style={{color: 'red'}}
                           />
                           <div className="flex gap-4">
                             <TextField
@@ -115,10 +115,11 @@ export default function Profile() {
                               shrink: true,
                             }}
                             value={queryUser[0]?.password}
-                            
+                            disabled
                             type="password"
                             fullWidth
                             label="Password"
+                            style={{color: "red"}}
                           />
                         </div>
                       </div>
