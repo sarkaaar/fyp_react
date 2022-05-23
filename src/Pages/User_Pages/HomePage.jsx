@@ -47,10 +47,10 @@ export default function HomePage() {
   }, []);
 
   return (
-    // <UseMainLayout>
-      <div className="relative  overflow-hidden">
-        <Header />
-        <div className="pt-24">
+    <UseMainLayout>
+       {/* <div className="relative  overflow-hidden">
+         <Header />
+         <div className="pt-24"> */}
           <Banner />
           <hr />
           {loader ? (
@@ -80,8 +80,8 @@ export default function HomePage() {
             </>
           )}
           <Footer />
-        </div>
-      </div>
-    // </UseMainLayout>
+        {/* </div>
+      </div> */}
+    </UseMainLayout>
   );
 }

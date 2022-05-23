@@ -7,6 +7,7 @@ import MediaCard from './Components/MediaCard';
 import Header from './Components/Header';
 import { db } from '../../firebase-config';
 import Footer from './Components/Footer';
+import UseMainLayout from "../../layouts/UserMainLayout";
 
 export default function Products() {
   //  Get Categories Names
@@ -43,6 +44,7 @@ export default function Products() {
   }, []);
 
   return (
+    <UseMainLayout>
     <div>
       <Header />
       <div className="pt-32">
@@ -153,5 +155,6 @@ export default function Products() {
         <Footer />
       </div>
     </div>
+    </UseMainLayout>
   );
 }

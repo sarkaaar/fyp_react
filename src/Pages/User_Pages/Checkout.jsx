@@ -21,6 +21,7 @@ import Modal from "@mui/material/Modal";
 import Footer from "./Components/Footer";
 import { auth, db } from "../../firebase-config";
 import Header from "./Components/Header";
+import UseMainLayout from "../../layouts/UserMainLayout";
 
 export default function Checkout() {
   const [email, setEmail] = useState();
@@ -129,8 +130,7 @@ export default function Checkout() {
   };
 
   return (
-    <>
-      <Header />
+    <UseMainLayout>
       <div className="min-h-full flex gap-4 items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>
@@ -330,6 +330,6 @@ export default function Checkout() {
           </Link>
         </Box>
       </Modal>
-    </>
+    </UseMainLayout>
   );
 }

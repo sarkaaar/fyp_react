@@ -260,18 +260,9 @@ export default function AdminLayout({ children }) {
           </>
         )}
       </Disclosure>
-      <main className="flex-1 pb-8">
+      <main className="flex-1">
         <div className="">{children}</div>
       </main>
     </div>
   );
 }
-
-// Home
-// Services
-// ProductReturn
-// Appointments
-// maps
-
-// All products
-// Cart

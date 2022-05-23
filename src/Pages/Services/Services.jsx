@@ -1,18 +1,14 @@
-import * as React from 'react';
-import Header from '../User_Pages/Components/Header';
-import Footer from '../User_Pages/Components/Footer';
-import doctor from '../../assets/images/doctor.png';
-import maps from '../../assets/images/maps.jpg';
-import mAppointments from '../../assets/images/makeappointments.png';
+import * as React from "react";
+import Footer from "../User_Pages/Components/Footer";
+import doctor from "../../assets/images/doctor.png";
+import maps from "../../assets/images/maps.jpg";
+import mAppointments from "../../assets/images/makeappointments.png";
+import UseMainLayout from "../../layouts/UserMainLayout";
 
 export default function Services() {
   return (
-    <div>
-      <Header />
-
+    <UseMainLayout>
       <div className="relative pt-36 px-auto bg-white overflow-hidden">
-        {/* <Header /> */}
-
         <div className="max-w-7xl  mx-auto">
           <div className="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
             <svg
@@ -60,10 +56,18 @@ export default function Services() {
       <div className="max-w-md mx-auto m-5 bg-white rounded-xl shadow-lg overflow-hidden md:max-w-2xl">
         <a href="viewDoctors">
           <div className="md:grid md:grid-cols-4">
-            <img className="object-contain mx-auto h-40 w-50 md:w-48 lg:h-50 lg:w-55 md:col-span-1" src={doctor} alt="View Doctors" />
+            <img
+              className="object-contain mx-auto h-40 w-50 md:w-48 lg:h-50 lg:w-55 md:col-span-1"
+              src={doctor}
+              alt="View Doctors"
+            />
             <div className="p-8 hover:bg-gray-200 md:col-span-3">
-              <h5 className="mb-2 text-center text-2xl font-bold tracking-tight text-gray-900 md:text-right">View Doctors</h5>
-              <p className="mt-2 text-center text-slate-500 md:text-right">View All World Qualified Veterinary Doctors Associated With Us.</p>
+              <h5 className="mb-2 text-center text-2xl font-bold tracking-tight text-gray-900 md:text-right">
+                View Doctors
+              </h5>
+              <p className="mt-2 text-center text-slate-500 md:text-right">
+                View All World Qualified Veterinary Doctors Associated With Us.
+              </p>
             </div>
           </div>
         </a>
@@ -73,10 +77,18 @@ export default function Services() {
         <a href="maps">
           <div className="md:grid md:grid-cols-4">
             <div className="p-8 hover:bg-gray-200 w-400 md:col-span-3">
-              <h5 className="mb-2 text-center text-2xl font-bold tracking-tight text-gray-900 md:text-left">View Maps</h5>
-              <p className="mt-2 text-center text-slate-500 md:text-left">View All Clinics in the Vicinity.</p>
+              <h5 className="mb-2 text-center text-2xl font-bold tracking-tight text-gray-900 md:text-left">
+                View Maps
+              </h5>
+              <p className="mt-2 text-center text-slate-500 md:text-left">
+                View All Clinics in the Vicinity.
+              </p>
             </div>
-            <img className="object-contain mx-auto h-40 w-50 md:w-48 md:col-span-1" src={maps} alt="Vew Maps" />
+            <img
+              className="object-contain mx-auto h-40 w-50 md:w-48 md:col-span-1"
+              src={maps}
+              alt="Vew Maps"
+            />
           </div>
         </a>
       </div>
@@ -84,48 +96,24 @@ export default function Services() {
       <div className="max-w-md mx-auto m-5 bg-white rounded-xl shadow-lg overflow-hidden md:max-w-2xl">
         <a href="viewAppointments">
           <div className="md:grid md:grid-cols-4">
-            <img className="object-contain mx-auto h-40 w-50 md:w-48 lg:h-50 lg:w-55 md:col-span-1" src={mAppointments} alt="View Doctors" />
+            <img
+              className="object-contain mx-auto h-40 w-50 md:w-48 lg:h-50 lg:w-55 md:col-span-1"
+              src={mAppointments}
+              alt="View Doctors"
+            />
             <div className="p-8 hover:bg-gray-200 md:col-span-3">
-              <h5 className="mb-2 text-center text-2xl font-bold tracking-tight text-gray-900 md:text-right">Book Appointments</h5>
-              <p className="mt-2 text-center text-slate-500 md:text-right">Make Appointmensts Online With Our Associated Doctors.</p>
+              <h5 className="mb-2 text-center text-2xl font-bold tracking-tight text-gray-900 md:text-right">
+                Book Appointments
+              </h5>
+              <p className="mt-2 text-center text-slate-500 md:text-right">
+                Make Appointmensts Online With Our Associated Doctors.
+              </p>
             </div>
           </div>
         </a>
       </div>
-
-      {/* <div className="m-5 ml-36">
-        <a href="viewDoctors" className="flex flex-col items-center hover:bg-gray-100 bg-white rounded-lg border h-48 shadow-md md:flex-row md:max-w-xl dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-          <img className="object-contain h-48 w-48 bg-white object-cover rounded-t-lg md:w-48 md:rounded-none md:rounded-l-lg" src={doctor} alt="View Doctors" />
-          <div className="flex flex-col justify-between p-4 leading-normal">
-            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white ">View Doctors</h5>
-            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">View All World Qualified Veterinary Doctors Associated With Us.</p>
-          </div>
-        </a>
-      </div>
-
-      <div className="flex justify-end items-right w-full">
-        <div className="m-5 mr-36">
-          <a href="#" className="md:max-w-xl flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-            <div className="flex flex-col justify-between p-4 leading-normal min-w-[360px]" >
-              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white ">View Maps</h5>
-              <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">View All Clinics in the Vicinity.</p>
-            </div>
-            <img className="object-cover h-96 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={maps} alt="View Maps" />
-          </a>
-        </div>
-      </div>
-
-      <div className="m-5 ml-36">
-        <a href="viewDoctors" className="flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row hover:bg-gray-100 md:max-w-xl dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-          <img className="object-cover w-full h-96 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={doctor} alt="View Doctors" />
-          <div className="flex flex-col justify-between p-4 leading-normal">
-            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white ">Make Appointment</h5>
-            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">Make Appointmensts Online With Our Associated Doctors.</p>
-          </div>
-        </a>
-      </div> */}
 
       <Footer />
-    </div>
+    </UseMainLayout>
   );
 }

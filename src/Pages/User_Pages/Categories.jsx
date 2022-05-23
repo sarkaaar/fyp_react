@@ -1,13 +1,14 @@
-import { useState, useEffect } from 'react';
-import * as React from 'react';
-import { collection, getDocs } from 'firebase/firestore';
-import Header from './Components/Header';
-import { db } from '../../firebase-config';
+import { useState, useEffect } from "react";
+import * as React from "react";
+import { collection, getDocs } from "firebase/firestore";
+import Header from "./Components/Header";
+import { db } from "../../firebase-config";
+import UseMainLayout from "../../layouts/UserMainLayout";
 
 export default function Categories() {
   //  Get Categories Names
   const [cat, setCat] = useState([]);
-  const catCollection = collection(db, 'categories');
+  const catCollection = collection(db, "categories");
 
   useEffect(() => {
     // Search Categories
@@ -21,8 +22,7 @@ export default function Categories() {
   }, []);
 
   return (
-    <>
-      <Header />
+    <UseMainLayout>
       <h1>Categories</h1>
       {cat.map((item) => (
         <div className=" m-4 p-2">
@@ -31,6 +31,6 @@ export default function Categories() {
           </h1>
         </div>
       ))}
-    </>
+    </UseMainLayout>
   );
 }

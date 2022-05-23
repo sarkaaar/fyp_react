@@ -2,6 +2,7 @@
 import React, { Component } from "react";
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from "google-maps-react";
 import Header from "../User_Pages/Components/Header";
+import UseMainLayout from "../../layouts/UserMainLayout";
 
 const mapStyles = {
   position: "relative",
@@ -44,6 +45,7 @@ export class MapContainer extends Component {
       bounds.extend(points[i]);
     }
     return (
+      <UseMainLayout>
       <div>
         <Header />
         <Map
@@ -103,6 +105,7 @@ export class MapContainer extends Component {
           /> */}
         </Map>
       </div>
+      </UseMainLayout>
     );
   }
 }
