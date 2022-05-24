@@ -28,10 +28,15 @@ export default function AddEditProduct({ data }) {
   const [subCat, setSubCat] = useState([]);
   const subCatRef = collection(db, "sub-categories");
   const productsCollection = collection(db, "products");
+  const [id, setID] = useState(data?.id);
   const [name, setName] = useState(data?.name);
   const [costPrice, setCostPrice] = useState(data?.costPrice);
   const [salePrice, setSalePrice] = useState(data?.salePrice);
-  const [variants, setVariants] = useState(Object.values(data?.variants ?? {}).length ? Object.values(data?.variants) : [['', 0]]);
+  const [variants, setVariants] = useState(
+    Object.values(data?.variants ?? {}).length
+      ? Object.values(data?.variants)
+      : [["", 0]]
+  );
   const [category, setCategory] = useState(data?.category);
   const [subCategory, setSubCategory] = useState(data?.subCategory);
   const [description, setDescription] = useState(data?.description);
@@ -79,7 +84,7 @@ export default function AddEditProduct({ data }) {
             arr.push(url);
             setUrls(arr);
           });
-        },
+        }
       );
     }
   };
@@ -120,13 +125,25 @@ export default function AddEditProduct({ data }) {
   };
 
   const updateProduct = async (id) => {
+    const x = variants.reduce((acc, val, i) => ({ ...acc, [i]: val }), {});
+
+    const newProduct = {
+      name,
+      costPrice,
+      salePrice,
+      variants: x,
+      category,
+      subCategory,
+      description,
+      image: urls || "No Image Found",
+    };
     const prod = doc(db, "products", id);
-    await updateDoc(prod, { capital: true });
+    await updateDoc(prod, newProduct);
     console.log("Product Updated");
   };
 
   return (
-    <div className="absolute inset-1/2 w-96 h-fit border-box bg-white drop-shadow-2xl p-4 -translate-x-1/2 -translate-y-1/2">
+    <div className="border-box absolute inset-1/2 h-fit w-96 -translate-x-1/2 -translate-y-1/2 bg-white p-4 drop-shadow-2xl">
       <TextField
         margin="normal"
         required
@@ -274,8 +291,9 @@ export default function AddEditProduct({ data }) {
         fullWidth
         variant="contained"
         className="mt-6 mb-12"
-        onClick={updateProduct}
-        // className="mt-6 mb-12"
+        onClick={() => {
+          updateProduct(id);
+        }}
       >
         Update Product
       </Button>

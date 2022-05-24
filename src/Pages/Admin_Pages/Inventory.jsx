@@ -58,7 +58,7 @@ export default function Inventory() {
               danger: true,
               perform: (row) => console.log(row),
             },
-          ]}
+          ]} 
         />
       </AdminLayout>
 
