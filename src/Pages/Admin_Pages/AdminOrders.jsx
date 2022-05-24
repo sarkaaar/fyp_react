@@ -88,6 +88,34 @@ export default function Orders() {
                 </div>
               ),
             },
+            {
+              key: "status",
+              name: "Status",
+              render: (row) => (
+                <div className="flex flex-col">
+                  {row.status ? (
+                    <Button
+                      style={{ color: "green" }}
+                      onClick={() => {
+                        handleNotCompleted(row.id);
+                      }}
+                    >
+                      Completed
+                    </Button>
+                  ) : (
+                    <Button
+                    style={{ color: "red" }}
+  
+                      onClick={() => {
+                        handleCompleted(row.id);
+                      }}
+                    >
+                      Not Completed
+                    </Button>
+                  )}
+                </div>
+              ),
+            },
           ]}
           // actions={[
           //   {

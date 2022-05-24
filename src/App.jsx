@@ -40,6 +40,7 @@ import AdminProfile from "./Pages/Admin_Pages/AdminProfile";
 import ReturnedProducts from "./Pages/Admin_Pages/ReturnedProducts";
 import Reports from "./Pages/Admin_Pages/Reports";
 import Complaints from "./Pages/Admin_Pages/Complaints";
+import Users from "./Pages/Admin_Pages/Users"
 
 // Doctors Pages
 import DoctorDashboard from "./Pages/Doctor_Pages/Dashboard";
@@ -108,6 +109,7 @@ function App() {
         <Route exact path="/admin/viewDoctor" element={<ViewDoctors />} />
         <Route exact path="/admin/viewAllProducts" element={<ProductsList />} />
         <Route exact path="/admin/reports" element={<Reports />} />
+        <Route exact path="/admin/users/info" element={<Users />} />
         <Route
           exact
           path="/admin/productReturn"

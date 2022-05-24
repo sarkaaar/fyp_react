@@ -39,6 +39,7 @@ export default function AddDoctor() {
       description,
       latitude,
       longitude,
+      status: false,
     };
     // -------------------------------------------------------
     const days = {
