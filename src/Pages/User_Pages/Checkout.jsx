@@ -125,7 +125,7 @@ export default function Checkout() {
       .catch((e) => {
         console.log(e);
       });
-    console.log("Checkout Sucessfull");
+    console.log("Checkout Successfull");
   };
 
   return (

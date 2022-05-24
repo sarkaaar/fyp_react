@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-
+import Placeholder from "../../assets/images/placeholder_products.jpg";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -214,7 +214,7 @@ export default function Product() {
               src={
                 prod?.image
                   ? prod?.image[0]
-                  : "https://source.unsplash.com/random"
+                  : Placeholder
               }
             />
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
