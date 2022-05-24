@@ -1,9 +1,12 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import PersonIcon from "@mui/icons-material/Person";
 import { Button, TextField } from "@mui/material";
 import Modal from "@mui/material/Modal";
 import AdminLayout from "../../layouts/AdminLayout";
-import EditProfile from "../../components/EditProfile ";
+import EditProfile from "../../components/EditProfile.jsx";
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { auth, db } from "../../firebase-config";
+import { onAuthStateChanged } from "firebase/auth";
 
 export default function AdminProfile() {
   const [queryUser, setQueryUser] = useState([]);
@@ -149,97 +152,6 @@ export default function AdminProfile() {
           </div>
         </Modal>{" "}
       </AdminLayout>
-
-      {/* <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <div
-          className="border-box absolute	inset-1/2 h-fit w-96 bg-white p-4	drop-shadow-2xl"
-          style={{ transform: "translate(-50%, -50%)" }}
-        >
-          <h1 id="modal-modal-title" className="mt-2 text-xl">
-            Update User Info
-          </h1>
-          <TextField margin="normal" required fullWidth label="Name" />
-          <TextField margin="normal" required fullWidth label="username" />
-          <TextField margin="normal" required fullWidth label="Email" />
-          <TextField margin="normal" required fullWidth label="Adress" />
-          <div className="mt-2 flex gap-4">
-            <Button color="primary" fullWidth variant="contained">
-              Save
-            </Button>
-            <Button color="warning" fullWidth variant="contained">
-              Cancel
-            </Button>
-          </div>
-        </div>
-      </Modal>
-      <Modal
-        open={passOpen}
-        onClose={handlePassClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <div
-          className="border-box absolute	inset-1/2 h-fit w-96 bg-white p-4	drop-shadow-2xl"
-          style={{ transform: "translate(-50%, -50%)" }}
-        >
-          <h1 id="modal-modal-title" className="mt-2 text-xl">
-            Update Password
-          </h1>
-          <TextField margin="normal" required fullWidth label="Password" />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            label="Retype Password"
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            label="Enter old password"
-          />
-          <div className="mt-2 flex gap-4">
-            <Button color="primary" fullWidth variant="contained">
-              Update
-            </Button>
-            <Button color="warning" fullWidth variant="contained">
-              Cancel
-            </Button>
-          </div>
-        </div>
-      </Modal>
-      <Modal
-        open={activeOpen}
-        onClose={handleActiveClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <div
-          className="border-box absolute	inset-1/2 h-fit w-96 bg-white p-4	drop-shadow-2xl"
-          style={{ transform: "translate(-50%, -50%)" }}
-        >
-          <h1 id="modal-modal-title" className="mt-2  text-2xl font-bold">
-            Deactivate Your Account
-          </h1>
-          <h1 id="modal-modal-title" className="mt-2 text-xl">
-            Are you Sure you want to deactivate your account. This process cnnor
-            be undone. Click yes to Continue
-          </h1>
-          <div className="mt-2 flex gap-4">
-            <Button color="error" fullWidth variant="contained">
-              Yes
-            </Button>
-            <Button color="primary" fullWidth variant="contained">
-              No
-            </Button>
-          </div>
-        </div>
-      </Modal> */}
     </>
   );
 }
