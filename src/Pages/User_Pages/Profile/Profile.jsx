@@ -119,10 +119,7 @@ export default function Profile() {
                               shrink: true,
                             }}
                             value={queryUser[0]?.password}
-<<<<<<< HEAD
-=======
                             disabled
->>>>>>> 4621bb7f918378575be55ed071b153e0b17da427
                             type="password"
                             fullWidth
                             label="Password"

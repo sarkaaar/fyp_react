@@ -182,76 +182,36 @@ export default function UserMainLayout({ children, props }) {
 
                         <Menu as="div" className="relative ml-4 flex-shrink-0">
                           <div>
-                            <Menu.Button className="flex flex-row items-center bg-gray-800 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                              <span
-                                className={({ isActive }) =>
-                                  c(
-                                    isActive
-                                      ? "bg-gray-900 text-white"
-                                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                                    "rounded-md bg-gray-800 px-3 py-2 text-sm font-medium text-white"
-                                  )
-                                }
-                              >
-                                Profile
-                              </span>
-                              <ChevronDownIcon className="h-5 w-5 text-gray-300" />
-                            </Menu.Button>
+                            <NavLink
+                              to="/profile"
+                              className={({ isActive }) =>
+                                c(
+                                  isActive
+                                    ? "bg-gray-900 text-white"
+                                    : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                                  "rounded-md bg-gray-800 px-3 py-2 text-sm font-medium text-white"
+                                )
+                              }
+                            >
+                              Your Profile
+                            </NavLink>
+                            <NavLink
+                              to="/sign_in"
+                              onClick={() => {
+                                logout();
+                              }}
+                              className={({ isActive }) =>
+                                c(
+                                  isActive
+                                    ? "bg-gray-900 text-white"
+                                    : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                                  "rounded-md bg-gray-800 px-3 py-2 text-sm font-medium text-white"
+                                )
+                              }
+                            >
+                              Logout
+                            </NavLink>
                           </div>
-                          <Transition
-                            as={Fragment}
-                            enter="transition ease-out duration-100"
-                            enterFrom="transform opacity-0 scale-95"
-                            enterTo="transform opacity-100 scale-100"
-                            leave="transition ease-in duration-75"
-                            leaveFrom="transform opacity-100 scale-100"
-                            leaveTo="transform opacity-0 scale-95"
-                          >
-                            <Menu.Items className="z-15 absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                              <Menu.Item>
-                                {({ active }) => (
-                                  <a
-                                    href="/profile"
-                                    className={c(
-                                      active ? "bg-gray-100" : "",
-                                      "block px-4 py-2 text-sm text-gray-700"
-                                    )}
-                                  >
-                                    Your Profile
-                                  </a>
-                                )}
-                              </Menu.Item>
-                              <Menu.Item>
-                                {({ active }) => (
-                                  <a
-                                    href="/profile/favorites"
-                                    className={c(
-                                      active ? "bg-gray-100" : "",
-                                      "block px-4 py-2 text-sm text-gray-700"
-                                    )}
-                                  >
-                                    Favourites
-                                  </a>
-                                )}
-                              </Menu.Item>
-                              <Menu.Item>
-                                {({ active }) => (
-                                  <a
-                                    href="/sign_in"
-                                    onClick={() => {
-                                      logout();
-                                    }}
-                                    className={c(
-                                      active ? "bg-gray-100" : "",
-                                      "block px-4 py-2 text-sm text-gray-700"
-                                    )}
-                                  >
-                                    Log out
-                                  </a>
-                                )}
-                              </Menu.Item>
-                            </Menu.Items>
-                          </Transition>
                         </Menu>
                       </>
                     ) : (
@@ -343,20 +303,16 @@ export default function UserMainLayout({ children, props }) {
                       </Disclosure.Button>
                       <Disclosure.Button
                         as="a"
-                        href="/profile/favourites"
-                        className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-                      >
-                        Favourites
-                      </Disclosure.Button>
-                      <Disclosure.Button
-                        as="a"
                         href="/sign_in"
-                        onClick={() => {
-                          logout();
-                        }}
                         className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                       >
-                        Logout
+                        <div
+                          onClick={() => {
+                            logout();
+                          }}
+                        >
+                          Logout
+                        </div>
                       </Disclosure.Button>
                     </div>
                   </div>
