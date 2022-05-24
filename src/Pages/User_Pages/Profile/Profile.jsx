@@ -91,7 +91,7 @@ export default function Profile() {
                             value={queryUser[0]?.name}
                             disabled
                             label="Name"
-                            style={{color: 'red'}}
+                            style={{ color: "red" }}
                           />
                           <div className="flex gap-4">
                             <TextField
@@ -119,28 +119,17 @@ export default function Profile() {
                               shrink: true,
                             }}
                             value={queryUser[0]?.password}
-<<<<<<< HEAD
-=======
                             disabled
->>>>>>> 4621bb7f918378575be55ed071b153e0b17da427
                             type="password"
                             fullWidth
                             label="Password"
-                            style={{color: "red"}}
+                            style={{ color: "red" }}
                           />
                         </div>
                       </div>
                       {/* <EditProfile/> */}
                       <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
-                        {/* <button
-                          type="submit"
-                          className="inline-flex justify-center rounded-md border border-transparent bg-gray-800 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
-                          onClick={() => {
-                            setEditOpen(true);
-                          }}
-                        >
-                          Edit Profile
-                        </button> */}
+                    
                         <button
                           onClick={() => {
                             setEditOpen(true);

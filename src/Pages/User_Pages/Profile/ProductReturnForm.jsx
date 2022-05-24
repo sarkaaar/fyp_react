@@ -94,7 +94,10 @@ export default function ProductReturnForm() {
                 label="Order #"
                 autoFocus
                 value={orderNo}
-                onChange={(e) => setOrderNo(e.target.value)}
+                onChange={(e) => {
+                  if (e.target.value.match(/^[A-Za-z0-9 ]+$/))
+                    setOrderNo(e.target.value);
+                }}
               />
               <TextField
                 margin="normal"

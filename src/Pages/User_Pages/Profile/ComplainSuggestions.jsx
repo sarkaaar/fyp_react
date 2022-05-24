@@ -4,7 +4,7 @@ import { TextareaAutosize } from "@mui/base";
 import Header from "../Components/Header";
 import Sidebar from "./Sidebar";
 
-export default function Complain_Suggestions() {
+export default function ComplainSuggestions() {
   const [description, setDescription] = useState("");
 
   return (

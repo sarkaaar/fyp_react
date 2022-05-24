@@ -48,17 +48,18 @@ export default function Inventory() {
           ]}
           actions={[
             {
-              label: 'Edit',
+              label: "Edit",
               perform: (row) => {
                 setSelectedProduct(row);
                 setEditOpen(true);
               },
-            }, {
-              label: 'Delete',
+            },
+            {
+              label: "Delete",
               danger: true,
               perform: (row) => console.log(row),
             },
-          ]} 
+          ]}
         />
       </AdminLayout>
 
