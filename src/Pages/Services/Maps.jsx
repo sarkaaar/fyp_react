@@ -1,7 +1,6 @@
 // import * as React from "react";
 import React, { Component } from "react";
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from "google-maps-react";
-import Header from "../User_Pages/Components/Header";
 import UseMainLayout from "../../layouts/UserMainLayout";
 
 const mapStyles = {
@@ -46,65 +45,53 @@ export class MapContainer extends Component {
     }
     return (
       <UseMainLayout>
-      <div>
-        <Header />
-        <Map
-          google={this.props.google}
-          onClick={this.onMapClicked}
-          zoom={12}
-          style={mapStyles}
-          initialCenter={{
-            lat: 31.45631,
-            lng: 74.32669,
-          }}
-          onReady={(mapProps, map) => this._mapLoaded(mapProps, map)}
-
-        >
-          <Marker
-            title="General Veterinary Hospital Lahore, Pakistan"
-            name="General Veterinary Hospital Lahore, Pakistan"
-            position={{ lat: 31.55792, lng: 74.41614 }}
-            onClick={this.onMarkerClick}
-          />
-          <Marker
-            title="Pets and Vets Clinic"
-            name="Pets and Vets Clinic"
-            position={{ lat: 31.48277, lng: 74.39716 }}
-            onClick={this.onMarkerClick}
-          />
-          <Marker
-            title="KM Pets Hospital MuslimTown"
-            name="KM Pets Hospital MuslimTown"
-            position={{ lat: 31.51734, lng: 74.32079 }}
-            onClick={this.onMarkerClick}
-          />
-          <Marker
-            title="Asim Pets Clinic (Defence)"
-            name="Asim Pets Clinic (Defence)"
-            position={{ lat: 31.47152, lng: 74.38868 }}
-            onClick={this.onMarkerClick}
-          />
-
-          <InfoWindow
-            marker={this.state.activeMarker}
-            visible={this.state.showingInfoWindow}
-          >
-            <div>
-              <h1>{this.state.selectedPlace.name}</h1>
-            </div>
-          </InfoWindow>
-
-          {/* <Marker
-            name={"Your position"}
-            position={{ lat: 37.762391, lng: -122.439192 }}
-            icon={{
-              url: "/path/to/custom_icon.png",
-              anchor: new google.maps.Point(32, 32),
-              scaledSize: new google.maps.Size(64, 64),
+        <div>
+          <Map
+            google={this.props.google}
+            onClick={this.onMapClicked}
+            zoom={12}
+            style={mapStyles}
+            initialCenter={{
+              lat: 31.45631,
+              lng: 74.32669,
             }}
-          /> */}
-        </Map>
-      </div>
+            onReady={(mapProps, map) => this._mapLoaded(mapProps, map)}
+          >
+            <Marker
+              title="General Veterinary Hospital Lahore, Pakistan"
+              name="General Veterinary Hospital Lahore, Pakistan"
+              position={{ lat: 31.55792, lng: 74.41614 }}
+              onClick={this.onMarkerClick}
+            />
+            <Marker
+              title="Pets and Vets Clinic"
+              name="Pets and Vets Clinic"
+              position={{ lat: 31.48277, lng: 74.39716 }}
+              onClick={this.onMarkerClick}
+            />
+            <Marker
+              title="KM Pets Hospital MuslimTown"
+              name="KM Pets Hospital MuslimTown"
+              position={{ lat: 31.51734, lng: 74.32079 }}
+              onClick={this.onMarkerClick}
+            />
+            <Marker
+              title="Asim Pets Clinic (Defence)"
+              name="Asim Pets Clinic (Defence)"
+              position={{ lat: 31.47152, lng: 74.38868 }}
+              onClick={this.onMarkerClick}
+            />
+
+            <InfoWindow
+              marker={this.state.activeMarker}
+              visible={this.state.showingInfoWindow}
+            >
+              <div>
+                <h1>{this.state.selectedPlace.name}</h1>
+              </div>
+            </InfoWindow>
+          </Map>
+        </div>
       </UseMainLayout>
     );
   }
