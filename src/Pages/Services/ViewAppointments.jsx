@@ -13,11 +13,14 @@ import {
 import { Button } from "@mui/material";
 import { onAuthStateChanged } from "firebase/auth";
 import { db, auth } from "../../firebase-config";
+
 import Footer from "../User_Pages/Components/Footer";
 import UseMainLayout from "../../layouts/UserMainLayout";
 
 export default function ViewAppointments() {
   const navigate = useNavigate();
+
+  const [addStatus, setAddStatus] = useState(false);
   const [appointments, setAppointments] = useState([]);
 
   const appointmentsRef = collection(db, "appointments");
@@ -115,6 +118,7 @@ export default function ViewAppointments() {
                         variant="outlined"
                         onClick={() => {
                           cancelAppoitment(item?.id);
+
                         }}
                       >
                         Cancel Appointment
