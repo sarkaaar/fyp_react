@@ -2,6 +2,8 @@ import React from 'react';
 
 import Footer from "../User_Pages/Components/Footer";
 import UseMainLayout from "../../layouts/UserMainLayout";
+import AboutUsPic from "../../assets/images/about.jpeg";
+
 export default function About() {
   return (
     <div> 
@@ -23,7 +25,7 @@ export default function About() {
               {/* <div className="sm:text-center lg:text-left"> */}
               <h1 className="pt-16 text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
                 <span className="block xl:inline">Contact</span>
-                <span className="block text-green-600 xl:inline">
+                <span className="block pl-4 text-green-600 xl:inline">
                 0334044482
                 </span>
               </h1>
@@ -36,8 +38,8 @@ export default function About() {
         </div>
         <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
           <img
-            className="pl-36 h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full z-0"
-            src="https://w0.peakpx.com/wallpaper/863/1023/HD-wallpaper-how-we-feel-today-doctor-caine-funny-white-creative-puppy-dog-animal.jpg"
+            className="pl-10   sm:h-72 md:h-96 lg:w-full lg:h-full z-0"
+            src={AboutUsPic}
             alt="banner"
           />
         </div>
