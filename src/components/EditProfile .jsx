@@ -38,7 +38,7 @@ export default function EditProfile({ data }) {
 
   const [user, setUser] = useState();
   const [name, setName] = useState(data?.name);
-  const [phone, setPhone] = useState(data?.Phone);
+  const [phone, setPhone] = useState(data?.phone);
   const [password, setPassword] = useState(data?.password);
 
   const [profile, setProfile] = useState();
@@ -78,7 +78,7 @@ export default function EditProfile({ data }) {
             id="payment-details-heading"
             className="text-lg font-medium leading-6 text-gray-900"
           >
-            Profile Details
+            Update Profile 
           </h2>
           <p className="mt-1 text-sm text-gray-500">
             See and update your profile information.
@@ -101,8 +101,8 @@ export default function EditProfile({ data }) {
           InputLabelProps={{
             shrink: true,
           }}
-          // value={queryUser[0]?.name}
-          disabled
+          value={data?.name}
+          
           label="Name"
         />
         <button onClick={()=>{console.log(data)}}>Edit Profile</button>
@@ -111,18 +111,17 @@ export default function EditProfile({ data }) {
             InputLabelProps={{
               shrink: true,
             }}
-            // value={queryUser[0]?.email}
-            disabled
+            value={data?.email}
+          disabled
             fullWidth
             label="Email"
-            //  value={queryUser[0]?.email}
           />
           <TextField
             InputLabelProps={{
               shrink: true,
             }}
-            // value={queryUser[0]?.phone}
-            disabled
+            value={data?.phone}
+            
             fullWidth
             label="Phone Number"
           />
@@ -131,12 +130,22 @@ export default function EditProfile({ data }) {
           InputLabelProps={{
             shrink: true,
           }}
-          // value={queryUser[0]?.password}
+          value={data?.password}
           type="password"
+          disabled
           fullWidth
           label="Password"
+          
         />
+         <h2
+            id="payment-details-heading"
+            className="text-lg font-medium leading-6 text-red-600"
+          
+          >
+            For more changes contact admin <h1 className="text-blue-500">ammarzahid335@gmail.com</h1>
+          </h2>
       </div>
     </div>
-  );
+
+);
 }

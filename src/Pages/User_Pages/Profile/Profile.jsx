@@ -89,7 +89,7 @@ export default function Profile() {
                             InputLabelProps={{
                               shrink: true,
                             }}
-                            value={queryUser[0]?.name}
+                            value={queryUser?.name}
                             disabled
                             label="Name"
                             style={{color: 'red'}}
@@ -99,7 +99,7 @@ export default function Profile() {
                               InputLabelProps={{
                                 shrink: true,
                               }}
-                              value={queryUser[0]?.email}
+                              value={queryUser?.email}
                               disabled
                               fullWidth
                               label="Email"
@@ -109,7 +109,7 @@ export default function Profile() {
                               InputLabelProps={{
                                 shrink: true,
                               }}
-                              value={queryUser[0]?.phone}
+                              value={queryUser?.phone}
                               disabled
                               fullWidth
                               label="Phone Number"
@@ -119,7 +119,7 @@ export default function Profile() {
                             InputLabelProps={{
                               shrink: true,
                             }}
-                            value={queryUser[0]?.password}
+                            value={queryUser?.password}
                             disabled
                             type="password"
                             fullWidth
@@ -130,15 +130,15 @@ export default function Profile() {
                       </div>
                       {/* <EditProfile/> */}
                       <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
-                        {/* <button
+                        <button
                           type="submit"
                           className="inline-flex justify-center rounded-md border border-transparent bg-gray-800 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
                           onClick={() => {
-                            setEditOpen(true);
+                            console.log(queryUser);
                           }}
                         >
                           Edit Profile
-                        </button> */}
+                        </button>
                         <button
                           onClick={() => {
                             setEditOpen(true);
@@ -160,6 +160,7 @@ export default function Profile() {
         </div>
       </div>
       <Modal
+   sx={{mb:70 ,ml: 'auto', mr: 'auto'}}
         open={editOpen}
         onClose={() => {
           setEditOpen(false);
