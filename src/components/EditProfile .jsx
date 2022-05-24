@@ -27,11 +27,21 @@ export default function EditProfile({ data }) {
 
   // Get Sub-Categories Names
 
+  useEffect(() => {
+    getProfile();
+
+    () =>
+      onAuthStateChanged(auth, (user) => {
+        setUser(user);
+      });
+  }, []);
+
   const [user, setUser] = useState();
   const [name, setName] = useState(data?.name);
   const [phone, setPhone] = useState(data?.Phone);
   const [password, setPassword] = useState(data?.password);
 
+  const [profile, setProfile] = useState();
   // Add Products
   const editPofile = async () => {
     const newProfile = {
@@ -45,192 +55,87 @@ export default function EditProfile({ data }) {
     await updateDoc(prod, newProfile);
     console.log("Profile Updated");
   };
-}
 
-const getProfile = async () => {
-  const q = await query(ordersRef, where("authUserEamil", "==", user?.email));
-  await getDocs(q)
-    .then((res) => {
-      setProfile(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-      console.log(profile);
-    })
-    .catch((e) => {
-      console.log(e);
-    });
-
-  useEffect(() => {
-    getProfile();
-
-    () =>
-      onAuthStateChanged(auth, (user) => {
-        setUser(user);
+  const getProfile = async () => {
+    const q = await query(ordersRef, where("authUserEamil", "==", user?.email));
+    await getDocs(q)
+      .then((res) => {
+        setProfile(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        console.log(profile);
+      })
+      .catch((e) => {
+        console.log(e);
       });
-  }, []);
+  };
 
   // Search Categories
 
   return (
-    <div className="border-box absolute inset-1/2 h-fit w-96 -translate-x-1/2 -translate-y-1/2 bg-white p-4 drop-shadow-2xl">
-      <Button />
-      <TextField
-        margin="normal"
-        required
-        fullWidth
-        label="Product Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <div className="flex gap-4 ">
-        <div className="w-96">
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            label="Cost Price"
-            type="text"
-            value={costPrice}
-            onChange={(e) => setCostPrice(e.target.value)}
-          />
-        </div>
-        <div className="w-96">
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            label="Sale Price"
-            type="text"
-            value={salePrice}
-            onChange={(e) => setSalePrice(e.target.value)}
-          />
-        </div>
-      </div>
-
-      {variants?.map(([variant, quantity], i) => (
-        <div key={i} className="flex items-center gap-4">
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            type="text"
-            label="Varients"
-            onChange={(e) => updateVariant([e.target.value, quantity], i)}
-            value={variant}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            type="text"
-            label="Qunatity"
-            onChange={(e) => updateVariant([variant, +e.target.value], i)}
-            value={quantity}
-          />
-          <IconButton type="button" onClick={() => removeVariant(i)}>
-            x
-          </IconButton>
-          <button
-            onClick={() => {
-              console.log();
-            }}
+    <div className="bg-white py-6 px-4 sm:p-6">
+      <div className="flex justify-between">
+        <div>
+          <h2
+            id="payment-details-heading"
+            className="text-lg font-medium leading-6 text-gray-900"
           >
-            oclick
-          </button>
+            Profile Details
+          </h2>
+          <p className="mt-1 text-sm text-gray-500">
+            See and update your profile information.
+          </p>
         </div>
-      ))}
-      <Button
-        sx={{ marginTop: "10px", marginBottom: "10px" }}
-        type="button"
-        fullWidth
-        variant="outlined"
-        onClick={() => setVariants([...variants, ["", 0]])}
-      >
-        Add variant
-      </Button>
-      <div className="flex gap-4 ">
-        <div className="w-96">
-          <FormControl fullWidth style={{ margin: "10px 0" }}>
-            <InputLabel id="demo-simple-select-label">Category</InputLabel>
-            <Select
-              value={category}
-              label="category"
-              onChange={(e) => {
-                setCategory(e.target.value);
-              }}
-            >
-              {cat.map((item) => (
-                <MenuItem value={item}>{item}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </div>
-        <div className="w-96">
-          <FormControl fullWidth style={{ margin: "10px 0" }}>
-            <InputLabel id="demo-simple-select-label">Sub-Category</InputLabel>
-            <Select
-              value={subCategory}
-              label="category"
-              onChange={(e) => {
-                setSubCategory(e.target.value);
-              }}
-            >
-              {subCat.map((item) => (
-                <MenuItem value={item}>{item}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </div>
-      </div>
-      <TextareaAutosize
-        minRows={5}
-        placeholder="  Description*"
-        className="mt-8 w-full"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      />
-      <p>Click on the &quot;Choose File&quot; button to upload a images:</p>
-      <input
-        type="file"
-        className="mb-6"
-        onChange={(e) => {
-          setImage(e.target.files);
-        }}
-        multiple
-      />
-      <Button
-        type="submit"
-        fullWidth
-        variant="contained"
-        className="mt-6 mb-12"
-        onClick={upload}
-      >
-        Images Upload
-      </Button>
-      <h3>
-        Uploaded
-        {progress}
-      </h3>
-      <hr className="mt-6" />
-      <Button
-        type="submit"
-        fullWidth
-        variant="contained"
-        className="mt-6 mb-12"
-        onClick={addProduct}
-        // className="mt-6 mb-12"
-      >
-        Add Product
-      </Button>
 
-      <Button
-        type="submit"
-        fullWidth
-        variant="contained"
-        className="mt-6 mb-12"
-        onClick={updateProduct}
-        // className="mt-6 mb-12"
-      >
-        Update Product
-      </Button>
+        {/* <PersonIcon
+          style={{
+            width: "172",
+            height: "172",
+            borderRadius: "50%",
+            color: "gray",
+            border: "1px solid gray",
+          }}
+        /> */}
+      </div>
+
+      <div className="mt-6 flex flex-col gap-4">
+        <TextField
+          InputLabelProps={{
+            shrink: true,
+          }}
+          // value={queryUser[0]?.name}
+          disabled
+          label="Name"
+        />
+        <div className="flex gap-4">
+          <TextField
+            InputLabelProps={{
+              shrink: true,
+            }}
+            // value={queryUser[0]?.email}
+            disabled
+            fullWidth
+            label="Email"
+            //  value={queryUser[0]?.email}
+          />
+          <TextField
+            InputLabelProps={{
+              shrink: true,
+            }}
+            // value={queryUser[0]?.phone}
+            disabled
+            fullWidth
+            label="Phone Number"
+          />
+        </div>
+        <TextField
+          InputLabelProps={{
+            shrink: true,
+          }}
+          // value={queryUser[0]?.password}
+          type="password"
+          fullWidth
+          label="Password"
+        />
+      </div>
     </div>
   );
-};
+}

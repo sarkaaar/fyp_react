@@ -3,7 +3,7 @@ import { TextField } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import { useState, useEffect } from "react";
 import { auth, db } from "../../../firebase-config";
-import EditProfile from "../../../components/EditProfile ";
+// import EditProfile from "../../../components/EditProfile ";
 import {
   collection,
   getDocs,
@@ -13,12 +13,16 @@ import {
   where,
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
-
+import Modal from "@mui/material/Modal";
 import UserLayout from "../../../layouts/UserLayout";
-
+import EditProfile from "../../../components/EditProfile ";
 export default function Profile() {
+  const [selectedProduct, setSelectedProduct] = useState();
+  // const [editOpen, setEditOpen] = useState(false);
+
   const [queryUser, setQueryUser] = useState([]);
   const [user, setUser] = useState();
+  const [editOpen, setEditOpen] = useState(false);
 
   const usersRef = collection(db, "users");
 
@@ -86,7 +90,6 @@ export default function Profile() {
                             }}
                             value={queryUser[0]?.name}
                             disabled
-                         
                             label="Name"
                           />
                           <div className="flex gap-4">
@@ -115,30 +118,32 @@ export default function Profile() {
                               shrink: true,
                             }}
                             value={queryUser[0]?.password}
-                            
                             type="password"
                             fullWidth
                             label="Password"
                           />
                         </div>
                       </div>
+                      {/* <EditProfile/> */}
                       <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
-                        <button
+                        {/* <button
                           type="submit"
                           className="inline-flex justify-center rounded-md border border-transparent bg-gray-800 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
+                          onClick={() => {
+                            setEditOpen(true);
+                          }}
                         >
-                          Save
-                        </button>
+                          Edit Profile
+                        </button> */}
                         <button
                           onClick={() => {
-                            console.log(queryUser[0]);
+                            setEditOpen(true);
                           }}
                           type="submit"
                           className="inline-flex justify-center rounded-md border border-transparent bg-gray-800 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
                         >
                           Test
                         </button>
-                        
                       </div>
                     </div>
                     {/* </form> */}
@@ -149,6 +154,19 @@ export default function Profile() {
           </div>
         </div>
       </div>
+      <Modal
+        open={editOpen}
+        onClose={() => {
+          setEditOpen(false);
+          setSelectedProduct(undefined);
+        }}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <div className="border-box absolute inset-1/2 h-fit w-96 bg-white p-4 drop-shadow-2xl">
+          <EditProfile data={selectedProduct} />
+        </div>
+      </Modal>
     </UserLayout>
   );
 }
