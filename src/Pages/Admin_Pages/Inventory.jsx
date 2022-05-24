@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 import Modal from "@mui/material/Modal";
 import { Button } from "@mui/material";
-import { collection } from "firebase/firestore";
+import { collection,doc,deleteDoc } from "firebase/firestore";
 import { db } from "../../firebase-config";
 import AdminLayout from "../../layouts/AdminLayout";
 import FirebaseDataTable from "../../components/FirebaseDataTable";
 import AddEditProduct from "../../components/admin/inventory/AddEditProduct";
 
+
+const DeleteProduct = async (id) => {
+  const prod = doc(db, "products", id);
+  await deleteDoc(prod);
+  console.log("Product deleted ", id);
+  // getAppointments();
+};
 export default function Inventory() {
   const [selectedProduct, setSelectedProduct] = useState();
   const [editOpen, setEditOpen] = useState(false);
@@ -57,7 +64,7 @@ export default function Inventory() {
             {
               label: "Delete",
               danger: true,
-              perform: (row) => console.log(row),
+              perform: (row) => {DeleteProduct(row.id)},
             },
           ]}
         />

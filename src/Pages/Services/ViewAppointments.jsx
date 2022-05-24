@@ -8,6 +8,7 @@ import {
   updateDoc,
   query,
   where,
+  deleteDoc
 } from "firebase/firestore";
 import { Button } from "@mui/material";
 import { onAuthStateChanged } from "firebase/auth";
@@ -24,8 +25,8 @@ export default function ViewAppointments() {
   const [loader, setLoader] = useState(false);
 
   const cancelAppoitment = async (id) => {
-    const prod = doc(db, "appointments", id);
-    await updateDoc(prod, { status: false });
+    const appointment = doc(db, "appointments", id);
+    await deleteDoc(appointment);
     console.log("Appointment Canceled ", id);
     getAppointments();
   };
