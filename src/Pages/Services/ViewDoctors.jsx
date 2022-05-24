@@ -6,7 +6,6 @@ import { collection, getDocs } from 'firebase/firestore';
 import { Button } from '@mui/material';
 import { db } from '../../firebase-config';
 import Footer from '../User_Pages/Components/Footer';
-import Header from '../User_Pages/Components/Header';
 import UseMainLayout from "../../layouts/UserMainLayout";
 
 export default function ViewDoctors() {
@@ -28,7 +27,6 @@ export default function ViewDoctors() {
   return (
     <UseMainLayout>
     <>
-      <Header />
       <div className="pt-32">
         {/* <Button
         onClick={() => {

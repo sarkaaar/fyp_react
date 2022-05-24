@@ -20,7 +20,6 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Footer from "./Components/Footer";
 import { auth, db } from "../../firebase-config";
-import Header from "./Components/Header";
 import UseMainLayout from "../../layouts/UserMainLayout";
 
 export default function Checkout() {

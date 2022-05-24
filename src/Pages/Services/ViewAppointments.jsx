@@ -13,7 +13,6 @@ import { Button } from "@mui/material";
 import { onAuthStateChanged } from "firebase/auth";
 import { db, auth } from "../../firebase-config";
 import Footer from "../User_Pages/Components/Footer";
-import Header from "../User_Pages/Components/Header";
 import UseMainLayout from "../../layouts/UserMainLayout";
 
 export default function ViewAppointments() {

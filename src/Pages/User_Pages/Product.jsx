@@ -25,7 +25,6 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import { Rating } from "@mui/material";
 import { db, auth } from "../../firebase-config";
 import Footer from "./Components/Footer";
-import Header from "./Components/Header";
 
 export default function Product() {
   const style = {
