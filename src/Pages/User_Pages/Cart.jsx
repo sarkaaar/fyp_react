@@ -12,7 +12,6 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
-import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import { db } from "../../firebase-config";
 // import { Button } from "@mui/material";
@@ -91,7 +90,6 @@ export default function Cart() {
   return (
     <UseMainLayout>
       <div>
-        <Header />
         <div className="bg-gray-200">
           {user ? (
             <>

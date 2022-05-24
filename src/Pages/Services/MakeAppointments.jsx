@@ -23,7 +23,6 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { db, auth } from "../../firebase-config";
-import Header from "../User_Pages/Components/Header";
 import UseMainLayout from "../../layouts/UserMainLayout";
 
 export default function MakeAppointments() {

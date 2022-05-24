@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import * as React from "react";
 import { collection, getDocs } from "firebase/firestore";
-import Header from "./Components/Header";
 import { db } from "../../firebase-config";
 import UseMainLayout from "../../layouts/UserMainLayout";
 
