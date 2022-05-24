@@ -2,7 +2,7 @@ import * as React from "react";
 import PersonIcon from "@mui/icons-material/Person";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { Button } from "@mui/material";
 import { db } from "../../firebase-config";
 import Footer from "../User_Pages/Components/Footer";
@@ -15,7 +15,9 @@ export default function ViewDoctors() {
   const navigate = useNavigate();
 
   const getDoctor = async () => {
-    await getDocs(doctorsCollection).then((res) => {
+    const q = query(doctorsCollection, where("status", "==", false));
+
+    await getDocs(q).then((res) => {
       setDoctor(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });

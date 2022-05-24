@@ -60,6 +60,11 @@ const navigation = [
     href: "/admin/addDoctor",
     icon: UserAddIcon,
   },
+  {
+    name: "Users",
+    href: "/admin/users/info",
+    icon: UserAddIcon,
+  },
 ];
 
 const secondaryNavigation = [
