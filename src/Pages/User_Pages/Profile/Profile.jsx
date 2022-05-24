@@ -15,7 +15,7 @@ import {
 import { onAuthStateChanged } from "firebase/auth";
 import Modal from "@mui/material/Modal";
 import UserLayout from "../../../layouts/UserLayout";
-import EditProfile from "../../../components/EditProfile ";
+import EditProfile from "../../../components/EditProfile.jsx";
 export default function Profile() {
   const [selectedProduct, setSelectedProduct] = useState();
   // const [editOpen, setEditOpen] = useState(false);
