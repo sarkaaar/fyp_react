@@ -105,6 +105,7 @@ export default function EditProfile({ data }) {
           disabled
           label="Name"
         />
+        <button onClick={()=>{console.log(data)}}>Edit Profile</button>
         <div className="flex gap-4">
           <TextField
             InputLabelProps={{

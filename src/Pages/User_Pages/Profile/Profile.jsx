@@ -39,7 +39,8 @@ export default function Profile() {
       const q = query(usersRef, where("email", "==", user?.email));
       await getDocs(q)
         .then((res) => {
-          setQueryUser(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+          const data =res.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+          setQueryUser(data[0]);
           console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
         })
         .catch((err) => {
@@ -144,8 +145,9 @@ export default function Profile() {
                           }}
                           type="submit"
                           className="inline-flex justify-center rounded-md border border-transparent bg-gray-800 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
+                        
                         >
-                          Test
+                          Edit Profile
                         </button>
                       </div>
                     </div>
@@ -167,7 +169,7 @@ export default function Profile() {
         aria-describedby="modal-modal-description"
       >
         <div className="border-box absolute inset-1/2 h-fit w-96 bg-white p-4 drop-shadow-2xl">
-          <EditProfile data={selectedProduct} />
+          <EditProfile data={queryUser} />
         </div>
       </Modal>
     </UserLayout>
