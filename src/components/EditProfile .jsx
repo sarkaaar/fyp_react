@@ -17,6 +17,8 @@ import {
   collection,
   getDocs,
   doc,
+  query,
+  where,
   updateDoc,
 } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
@@ -37,10 +39,12 @@ export default function EditProfile({ data }) {
   }, []);
 
   const [user, setUser] = useState();
+  const [id, setID] = useState(data?.id);
   const [name, setName] = useState(data?.name);
-  const [phone, setPhone] = useState(data?.Phone);
+  const [email, setEmail] = useState(data?.email);
+  const [phone, setPhone] = useState(data?.phone);
   const [password, setPassword] = useState(data?.password);
-
+  // const [phone,setPhone]
   const [profile, setProfile] = useState();
   // Add Products
   const editPofile = async () => {
@@ -67,6 +71,15 @@ export default function EditProfile({ data }) {
         console.log(e);
       });
   };
+  const updateProfile = async (id) => {
+    const newProfile = {
+      name,
+      phone,
+    };
+    const profile = doc(db, "users", id);
+    await updateDoc(profile, newProfile);
+    console.log("Profile Updated");
+  };
 
   // Search Categories
 
@@ -78,7 +91,7 @@ export default function EditProfile({ data }) {
             id="payment-details-heading"
             className="text-lg font-medium leading-6 text-gray-900"
           >
-            Profile Details
+            Update Profile
           </h2>
           <p className="mt-1 text-sm text-gray-500">
             See and update your profile information.
@@ -101,8 +114,8 @@ export default function EditProfile({ data }) {
           InputLabelProps={{
             shrink: true,
           }}
-          // value={queryUser[0]?.name}
-          disabled
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           label="Name"
         />
         <div className="flex gap-4">
@@ -110,18 +123,8 @@ export default function EditProfile({ data }) {
             InputLabelProps={{
               shrink: true,
             }}
-            // value={queryUser[0]?.email}
-            disabled
-            fullWidth
-            label="Email"
-            //  value={queryUser[0]?.email}
-          />
-          <TextField
-            InputLabelProps={{
-              shrink: true,
-            }}
-            // value={queryUser[0]?.phone}
-            disabled
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
             fullWidth
             label="Phone Number"
           />
@@ -130,11 +133,36 @@ export default function EditProfile({ data }) {
           InputLabelProps={{
             shrink: true,
           }}
-          // value={queryUser[0]?.password}
+          value={email}
+          disabled
+          fullWidth
+          label="Email"
+        />
+        <TextField
+          InputLabelProps={{
+            shrink: true,
+          }}
+          value={data?.password}
           type="password"
+          disabled
           fullWidth
           label="Password"
         />
+
+        <button
+          onClick={() => {
+            updateProfile(id);
+          }}
+        >
+          Edit Profile
+        </button>
+        <h2
+          id="payment-details-heading"
+          className="text-lg font-medium leading-6 text-red-600"
+        >
+          For more changes contact admin{" "}
+          <h1 className="text-blue-500">ammarzahid335@gmail.com</h1>
+        </h2>
       </div>
     </div>
   );

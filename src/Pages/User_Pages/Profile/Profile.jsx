@@ -39,7 +39,8 @@ export default function Profile() {
       const q = query(usersRef, where("email", "==", user?.email));
       await getDocs(q)
         .then((res) => {
-          setQueryUser(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+          const data =res.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+          setQueryUser(data[0]);
           console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
         })
         .catch((err) => {
@@ -88,7 +89,7 @@ export default function Profile() {
                             InputLabelProps={{
                               shrink: true,
                             }}
-                            value={queryUser[0]?.name}
+                            value={queryUser?.name}
                             disabled
                             label="Name"
                             style={{ color: "red" }}
@@ -98,7 +99,7 @@ export default function Profile() {
                               InputLabelProps={{
                                 shrink: true,
                               }}
-                              value={queryUser[0]?.email}
+                              value={queryUser?.email}
                               disabled
                               fullWidth
                               label="Email"
@@ -108,7 +109,7 @@ export default function Profile() {
                               InputLabelProps={{
                                 shrink: true,
                               }}
-                              value={queryUser[0]?.phone}
+                              value={queryUser?.phone}
                               disabled
                               fullWidth
                               label="Phone Number"
@@ -118,7 +119,7 @@ export default function Profile() {
                             InputLabelProps={{
                               shrink: true,
                             }}
-                            value={queryUser[0]?.password}
+                            value={queryUser?.password}
                             disabled
                             type="password"
                             fullWidth
@@ -129,15 +130,15 @@ export default function Profile() {
                       </div>
                       {/* <EditProfile/> */}
                       <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
-                    
                         <button
                           onClick={() => {
                             setEditOpen(true);
                           }}
                           type="submit"
                           className="inline-flex justify-center rounded-md border border-transparent bg-gray-800 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
+                        
                         >
-                          Test
+                          Edit Profile
                         </button>
                       </div>
                     </div>
@@ -150,6 +151,7 @@ export default function Profile() {
         </div>
       </div>
       <Modal
+   sx={{mb:70 ,ml: 'auto', mr: 'auto'}}
         open={editOpen}
         onClose={() => {
           setEditOpen(false);
@@ -159,7 +161,7 @@ export default function Profile() {
         aria-describedby="modal-modal-description"
       >
         <div className="border-box absolute inset-1/2 h-fit w-96 bg-white p-4 drop-shadow-2xl">
-          <EditProfile data={selectedProduct} />
+          <EditProfile data={queryUser} />
         </div>
       </Modal>
     </UserLayout>

@@ -33,16 +33,6 @@ export class MapContainer extends Component {
   };
 
   render() {
-    var points = [
-      { lat: 31.55798, lng: 74.41612 },
-      { lat: 31.48277, lng: 74.39716 },
-      { lat: 31.51754, lng: 74.32085 },
-      { lat: 31.4716, lng: 74.38873 },
-    ];
-    var bounds = new this.props.google.maps.LatLngBounds();
-    for (var i = 0; i < points.length; i++) {
-      bounds.extend(points[i]);
-    }
     return (
       <UseMainLayout>
         <div>

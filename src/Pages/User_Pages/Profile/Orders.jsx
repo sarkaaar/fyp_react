@@ -51,8 +51,8 @@ export default function Cart() {
             name: "Name",
             render: (row) => (
               <div className="flex flex-col">
-                {/* <p> {row.fName}</p>
-                <p> {row.lName}</p> */}
+               <p> {row.fName}</p>
+                <p> {row.lName}</p> 
               </div>
             ),
           },

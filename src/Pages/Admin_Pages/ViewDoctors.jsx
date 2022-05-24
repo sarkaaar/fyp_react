@@ -12,7 +12,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { auth, db } from "../../firebase-config";
 import FirebaseDataTable from "../../components/FirebaseDataTable";
-
+import Button from "@material-ui/core/Button"
 import AdminLayout from "../../layouts/AdminLayout";
 
 export default function ViewDoctor() {
@@ -96,21 +96,47 @@ export default function ViewDoctor() {
   const [sDoctor, setSDoctor] = useState({});
 
   return (
-    <>
-      <AdminLayout>
-        <h1 className="text-3xl font-bold ml-8">List Of Doctors</h1>
-        <FirebaseDataTable
-          query={collection(db, "doctors")}
-          columns={[
-            { key: "clinicName", name: "Name" },
-            { key: "clinicAddress", name: "Address" },
-            // { key: "date", name: "Return Date", render: (r) => r.date.toDate().toDateString() },
-            { key: "clinicPhone", name: "Phone# " },
-            { key: "fees", name: "Fee " },
-            { key: "email", name: "Email" },
-          ]}
-        />
-      </AdminLayout>
-    </>
+    <AdminLayout>
+      <h1 className="text-3xl font-bold ml-8">List Of Doctors</h1>
+      <FirebaseDataTable
+        query={collection(db, "doctors")}
+        columns={[
+          { key: "clinicName", name: "Name" },
+          { key: "clinicAddress", name: "Address" },
+          // { key: "date", name: "Return Date", render: (r) => r.date.toDate().toDateString() },
+          { key: "clinicPhone", name: "Phone# " },
+          { key: "fees", name: "Fee " },
+          { key: "email", name: "Email" },
+          {
+            key: "status",
+            name: "Status",
+            render: (row) => (
+              <div className="flex flex-col">
+                {row.status ? (
+                  <Button
+                    style={{ color: "green" }}
+                    onClick={() => {
+                      disableDoctor(row.id);
+                    }}
+                  >
+                    Enabled
+                  </Button>
+                ) : (
+                  <Button
+                  style={{ color: "red" }}
+
+                    onClick={() => {
+                      enableDoctor(row.id);
+                    }}
+                  >
+                    Disabled
+                  </Button>
+                )}
+              </div>
+            ),
+          },
+        ]}
+      />
+    </AdminLayout>
   );
 }

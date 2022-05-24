@@ -6,7 +6,6 @@ import { collection, getDocs } from "firebase/firestore";
 import { Button } from "@mui/material";
 import { db } from "../../firebase-config";
 import Footer from "../User_Pages/Components/Footer";
-import Header from "../User_Pages/Components/Header";
 import UseMainLayout from "../../layouts/UserMainLayout";
 import DoctorCard from "../../components/doctor/DoctorCard";
 
@@ -28,7 +27,7 @@ export default function ViewDoctors() {
 
   return (
     <UseMainLayout>
-      <div className="min-h-[100vh]">
+      <div className="pt-32">
         {doctors.length === 0 && (
           <div className="grid place-items-center h-screen">
             <div className="w-20 h-20 border-t-4 border-b-4 border-green-900 rounded-full animate-spin" />

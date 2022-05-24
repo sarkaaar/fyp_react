@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
-import Header from "./Components/Header";
 import MediaCard from "./Components/MediaCard";
 import Banner from "./Components/Banner";
 import Footer from "./Components/Footer";
@@ -49,7 +48,6 @@ export default function HomePage() {
   return (
     <UseMainLayout>
        {/* <div className="relative  overflow-hidden">
-         <Header />
          <div className="pt-24"> */}
           <Banner />
           <hr />

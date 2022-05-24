@@ -1,198 +1,164 @@
-import React from 'react';
-import PersonIcon from '@mui/icons-material/Person';
-import { Button, TextField } from '@mui/material';
-import Modal from '@mui/material/Modal';
+import React from "react";
+import PersonIcon from "@mui/icons-material/Person";
+import { Button, TextField } from "@mui/material";
+import Modal from "@mui/material/Modal";
 import AdminLayout from "../../layouts/AdminLayout";
+import EditProfile from "../../components/EditProfile ";
 
 export default function AdminProfile() {
-  // Edit Info
-  const [open, setOpen] = React.useState(false);
-  const handleClose = () => setOpen(false);
-  // Edit Password
-  const [passOpen, setPassOpen] = React.useState(false);
-  const handlePassClose = () => setPassOpen(false);
-  // Deactivate Modal
-  const [activeOpen, setActiveOpen] = React.useState(false);
-  const handleActiveClose = () => setActiveOpen(false);
+  const [queryUser, setQueryUser] = useState([]);
+  const [user, setUser] = useState();
+  const [editOpen, setEditOpen] = useState(false);
+  const usersRef = collection(db, "users");
 
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+
+    getUserInfo();
+  }, [user]);
+
+  const getUserInfo = async () => {
+    if (user) {
+      const q = query(usersRef, where("email", "==", user?.email));
+      await getDocs(q)
+        .then((res) => {
+          const data =res.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+          setQueryUser(data[0]);
+          console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
   return (
     <>
       <AdminLayout>
-      <div className="flex justify-between">
-        <h1 className="mb-4 text-left text-2xl font-bold">Profile</h1>
-      </div>
-      <div className="flex justify-center">
-        <div className="flex w-full justify-center lg:w-4/5">
-          <div className="h-full">
-            <main className="mx-auto max-w-7xl pb-10 lg:py-12 lg:px-8">
-              <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
-                <div className="space-y-6 sm:px-6 lg:col-span-9 lg:px-0">
-                  <section aria-labelledby="payment-details-heading">
-                    {/* <form action="#" method="POST"> */}
-                    <div className="shadow sm:overflow-hidden sm:rounded-md">
-                      <div className="bg-white py-6 px-4 sm:p-6">
-                        <div className="flex justify-between">
-                          <div>
-                            <h2
-                              id="payment-details-heading"
-                              className="text-lg font-medium leading-6 text-gray-900"
-                            >
-                              Profile Details
-                            </h2>
-                            <p className="mt-1 text-sm text-gray-500">
-                              See and update your profile information.
-                            </p>
-                          </div>
-
-                          <PersonIcon
-                            style={{
-                              width: "172",
-                              height: "172",
-                              borderRadius: "50%",
-                              color: "gray",
-                              border: "1px solid gray",
-                            }}
-                          />
-                        </div>
-
-                        <div className="mt-6 flex flex-col gap-4">
-                          <TextField
-                            InputLabelProps={{
-                              shrink: true,
-                            }}
-                            // value={queryUser[0]?.name}
-                            disabled
-                         
-                            label="Name"
-                          />
-                          <div className="flex gap-4">
-                            <TextField
-                              InputLabelProps={{
-                                shrink: true,
-                              }}
-                              // value={queryUser[0]?.email}
-                              disabled
-                              fullWidth
-                              label="Email"
-                            />
-                            <TextField
-                              InputLabelProps={{
-                                shrink: true,
-                              }}
-                              // value={queryUser[0]?.phone}
-                              disabled
-                              fullWidth
-                              label="Phone Number"
-                            />
-                          </div>
-                          <TextField
-                            InputLabelProps={{
-                              shrink: true,
-                            }}
-                            // value={queryUser[0]?.password}
-                            disabled
-                            type="password"
-                            fullWidth
-                            label="Password"
-                          />
-                        </div>
-                      </div>
-                      <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
-                        <button
-                          type="submit"
-                          className="inline-flex justify-center rounded-md border border-transparent bg-gray-800 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
-                        >
-                          Save
-                        </button>
-                        <button
-                          // onClick={() => {
-                          //   console.log(queryUser[0]);
-                          // }}
-                          type="submit"
-                          className="inline-flex justify-center rounded-md border border-transparent bg-gray-800 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
-                        >
-                          Test
-                        </button>
-                        
-                      </div>
-                    </div>
-                    {/* </form> */}
-                  </section>
-                </div>
-              </div>
-            </main>
-          </div>
-        </div>
-      </div>
-      {/* <div className="">
         <div className="flex justify-center">
-          <div className="">
-            <PersonIcon sx={{ fontSize: 150 }} />
-            <div className="flex mb-4">
-              <div>
-                <h1 className="text-xl font-bold p-1">Name</h1>
-                <h1 className="text-xl font-bold p-1">username</h1>
-                <h1 className="text-xl font-bold p-1">Email</h1>
-                <h1 className="text-xl font-bold p-1">Role</h1>
-                <h1 className="text-xl font-bold p-1">Address</h1>
-                <h1 className="text-xl font-bold p-1">Password</h1>
-              </div>
-              <div>
-                <h2 className="text-xl p-1 ml-4 ">Abdul Wali</h2>
-                <h2 className="text-xl p-1 ml-4 ">waliabdul144</h2>
-                <h2 className="text-xl p-1 ml-4 ">waliabdul144@gmail.com</h2>
-                <h2 className="text-xl p-1 ml-4 ">Admin</h2>
-                <h2 className="text-xl p-1 ml-4 ">Lahore</h2>
-                <h2 className="text-xl p-1 ml-4 ">********</h2>
-              </div>
+          <div className="flex w-full justify-center lg:w-4/5">
+            <div className="h-full">
+              <main className="mx-auto max-w-7xl pb-10 lg:py-12 lg:px-8">
+                <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
+                  <div className="space-y-6 sm:px-6 lg:col-span-9 lg:px-0">
+                    <section aria-labelledby="payment-details-heading">
+                      {/* <form action="#" method="POST"> */}
+                      <div className="shadow sm:overflow-hidden sm:rounded-md">
+                        <div className="bg-white py-6 px-4 sm:p-6">
+                          <div className="flex justify-between">
+                            <div>
+                              <h2
+                                id="payment-details-heading"
+                                className="text-lg font-medium leading-6 text-gray-900"
+                              >
+                                Profile Details
+                              </h2>
+                              <p className="mt-1 text-sm text-gray-500">
+                                See and update your profile information.
+                              </p>
+                            </div>
+
+                            <PersonIcon
+                              style={{
+                                width: "172",
+                                height: "172",
+                                borderRadius: "50%",
+                                color: "gray",
+                                border: "1px solid gray",
+                              }}
+                            />
+                          </div>
+
+                          <div className="mt-6 flex flex-col gap-4">
+                            <TextField
+                              InputLabelProps={{
+                                shrink: true,
+                              }}
+                              value={queryUser?.name}
+                              disabled
+                              label="Name"
+                              style={{ color: "red" }}
+                            />
+                            <div className="flex gap-4">
+                              <TextField
+                                InputLabelProps={{
+                                  shrink: true,
+                                }}
+                                value={queryUser?.email}
+                                disabled
+                                fullWidth
+                                label="Email"
+                              />
+                              <TextField
+                                InputLabelProps={{
+                                  shrink: true,
+                                }}
+                                value={queryUser?.phone}
+                                disabled
+                                fullWidth
+                                label="Phone Number"
+                              />
+                            </div>
+                            <TextField
+                              InputLabelProps={{
+                                shrink: true,
+                              }}
+                              value={queryUser?.password}
+                              disabled
+                              type="password"
+                              fullWidth
+                              label="Password"
+                              style={{ color: "red" }}
+                            />
+                          </div>
+                        </div>
+                        {/* <EditProfile/> */}
+                        <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
+                          <button
+                            onClick={() => {
+                              setEditOpen(true);
+                            }}
+                            type="submit"
+                            className="inline-flex justify-center rounded-md border border-transparent bg-gray-800 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
+                          >
+                            Edit Profile
+                          </button>
+                        </div>
+                      </div>
+                      {/* </form> */}
+                    </section>
+                  </div>
+                </div>
+              </main>
             </div>
-            <div className=" flex gap-4 mb-4">
-              <Button
-                variant="contained"
-                fullWidth
-                onClick={() => {
-                  setOpen(true);
-                }}
-              >
-                Update Info
-              </Button>
-              <Button
-                variant="contained"
-                color="warning"
-                fullWidth
-                onClick={() => {
-                  setPassOpen(true);
-                }}
-              >
-                Update Password
-              </Button>
-            </div>
-            <Button
-              variant="contained"
-              color="error"
-              fullWidth
-              onClick={() => {
-                setActiveOpen(true);
-              }}
-            >
-              Deactivate Account
-            </Button>
           </div>
         </div>
-      </div> */}
+        <Modal
+          sx={{ mb: 70, ml: "auto", mr: "auto" }}
+          open={editOpen}
+          onClose={() => {
+            setEditOpen(false);
+            setSelectedProduct(undefined);
+          }}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <div className="border-box absolute inset-1/2 h-fit w-96 bg-white p-4 drop-shadow-2xl">
+            <EditProfile data={queryUser} />
+          </div>
+        </Modal>{" "}
       </AdminLayout>
-      {/* Modals */}
-      {/* -------------------------------------------------------------- */}
-      {/* Edit info Modal */}
-      <Modal
+
+      {/* <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <div
-          className="absolute inset-1/2	w-96 h-fit border-box bg-white drop-shadow-2xl	p-4"
-          style={{ transform: 'translate(-50%, -50%)' }}
+          className="border-box absolute	inset-1/2 h-fit w-96 bg-white p-4	drop-shadow-2xl"
+          style={{ transform: "translate(-50%, -50%)" }}
         >
           <h1 id="modal-modal-title" className="mt-2 text-xl">
             Update User Info
@@ -211,7 +177,6 @@ export default function AdminProfile() {
           </div>
         </div>
       </Modal>
-      {/* Edit Pasword Modal */}
       <Modal
         open={passOpen}
         onClose={handlePassClose}
@@ -219,8 +184,8 @@ export default function AdminProfile() {
         aria-describedby="modal-modal-description"
       >
         <div
-          className="absolute inset-1/2	w-96 h-fit border-box bg-white drop-shadow-2xl	p-4"
-          style={{ transform: 'translate(-50%, -50%)' }}
+          className="border-box absolute	inset-1/2 h-fit w-96 bg-white p-4	drop-shadow-2xl"
+          style={{ transform: "translate(-50%, -50%)" }}
         >
           <h1 id="modal-modal-title" className="mt-2 text-xl">
             Update Password
@@ -248,7 +213,6 @@ export default function AdminProfile() {
           </div>
         </div>
       </Modal>
-      {/* Deactivate Account Modal */}
       <Modal
         open={activeOpen}
         onClose={handleActiveClose}
@@ -256,10 +220,10 @@ export default function AdminProfile() {
         aria-describedby="modal-modal-description"
       >
         <div
-          className="absolute inset-1/2	w-96 h-fit border-box bg-white drop-shadow-2xl	p-4"
-          style={{ transform: 'translate(-50%, -50%)' }}
+          className="border-box absolute	inset-1/2 h-fit w-96 bg-white p-4	drop-shadow-2xl"
+          style={{ transform: "translate(-50%, -50%)" }}
         >
-          <h1 id="modal-modal-title" className="mt-2  font-bold text-2xl">
+          <h1 id="modal-modal-title" className="mt-2  text-2xl font-bold">
             Deactivate Your Account
           </h1>
           <h1 id="modal-modal-title" className="mt-2 text-xl">
@@ -275,7 +239,7 @@ export default function AdminProfile() {
             </Button>
           </div>
         </div>
-      </Modal>
+      </Modal> */}
     </>
   );
 }

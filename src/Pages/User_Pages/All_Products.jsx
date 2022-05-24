@@ -4,7 +4,6 @@ import { collection, getDocs } from 'firebase/firestore';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Button from '@material-ui/core/Button';
 import MediaCard from './Components/MediaCard';
-import Header from './Components/Header';
 import { db } from '../../firebase-config';
 import Footer from './Components/Footer';
 import UseMainLayout from "../../layouts/UserMainLayout";
@@ -46,7 +45,6 @@ export default function Products() {
   return (
     <UseMainLayout>
     <div>
-      <Header />
       <div className="pt-32">
 
         <h1 className="bg-slate-100 pl-96 flex">
