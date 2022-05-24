@@ -7,7 +7,6 @@ import {
   MenuIcon,
   XIcon,
   ShoppingCartIcon,
-  ChevronDownIcon,
 } from "@heroicons/react/outline";
 import GrayLogo from "../assets/images/gray_logo.png";
 import c from "classnames";
@@ -16,13 +15,11 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { auth, db } from "../firebase-config";
 
-// function classNames(...classes) {
-//   return classes.filter(Boolean).join(" ");
-// }
-
 export default function UserMainLayout({ children, props }) {
   const [products, setProducts] = useState([]);
   const [user, setUser] = useState({});
+  const [dbUser, setDBUser] = useState({});
+  const [profileURL, setProfileURL] = useState("");
   const navigate = useNavigate();
   const cartCollection = collection(db, "cart");
 
@@ -39,11 +36,19 @@ export default function UserMainLayout({ children, props }) {
       setUser(currentUser);
     });
     getCartItems();
+    getDBUser();
+
+    dbUser?.role === "admin"
+      ? setProfileURL("/admin/profile")
+      : setProfileURL("/profile");
   }, [user]);
 
-  useEffect(() => {
-    getCartItems();
-  }, []);
+  const getDBUser = async () => {
+    const q = query(collection(db, "users"), where("email", "==", user?.email));
+    await getDocs(q).then((record) => {
+      setDBUser(record.docs[0].data());
+    });
+  };
 
   const logout = async () => {
     await signOut(auth);
@@ -183,7 +188,7 @@ export default function UserMainLayout({ children, props }) {
                         <Menu as="div" className="relative ml-4 flex-shrink-0">
                           <div>
                             <NavLink
-                              to="/profile"
+                              to={profileURL}
                               className={({ isActive }) =>
                                 c(
                                   isActive
@@ -296,7 +301,7 @@ export default function UserMainLayout({ children, props }) {
                     <div className="mt-3 space-y-1 px-2">
                       <Disclosure.Button
                         as="a"
-                        href="/profile"
+                        href={profileURL}
                         className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                       >
                         Your Profile
