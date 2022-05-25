@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 
+import DoctorPic from "../../assets/images/doctor.png";
 export default function DoctorCard(person) {
   return (
     <div className="bg-white">
@@ -10,7 +11,7 @@ export default function DoctorCard(person) {
             <div className="h-0 aspect-w-3 aspect-h-2 sm:aspect-w-3 sm:aspect-h-4">
               <img
                 className="object-cover shadow-lg rounded-lg"
-                src="https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTgwMTc5MTIxNDE2OTcxNjA4/gettyimages-1165301142.jpg"
+                src={DoctorPic}
                 alt="image"
               />
             </div>
