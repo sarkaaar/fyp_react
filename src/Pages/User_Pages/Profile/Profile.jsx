@@ -103,7 +103,6 @@ export default function Profile() {
                               disabled
                               fullWidth
                               label="Email"
-                              //  value={queryUser[0]?.email}
                             />
                             <TextField
                               InputLabelProps={{
