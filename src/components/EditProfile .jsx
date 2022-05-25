@@ -115,7 +115,18 @@ export default function EditProfile({ data }) {
             shrink: true,
           }}
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => {
+            let value = e.target.value;
+            value = value.replace(/[^A-Za-z]/gi, "");
+            setName({
+              value,
+            });
+            // const re = /^[A-Za-z]+$/;
+            // if (e.target.value === "" || re.test(e.target.value)) {
+            //   setName(e.target.value);
+            // }
+            // if (e.target.value.match(/^[A-Za-z ]+$/)) setName(e.target.value);
+          }}
           label="Name"
         />
         <div className="flex gap-4">
@@ -124,7 +135,11 @@ export default function EditProfile({ data }) {
               shrink: true,
             }}
             value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            onChange={(e) => {
+              value = { phone };
+              if (e.target.value.match(/^[0-9]+$/) && phone.length <= 11)
+                setPhone(e.target.value);
+            }}
             fullWidth
             label="Phone Number"
           />

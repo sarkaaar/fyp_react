@@ -52,6 +52,7 @@ export default function ComplainSuggestions() {
       setUser(currentUser);
     });
   }, [user]);
+  
   return (
     <UserLayout>
       <div className="flex " />
@@ -71,6 +72,7 @@ export default function ComplainSuggestions() {
 
             <TextareaAutosize
               minRows={5}
+              required
               placeholder="  Description*"
               className="mt-8 w-full"
               value={description}

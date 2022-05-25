@@ -6,16 +6,16 @@ import {
   getAuth,
   signInWithRedirect,
 } from "firebase/auth";
-// import { GoogleAuthProvider } from "firebase/auth";
 import { TextField } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { auth } from "../../firebase-config";
-
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 import { gapi } from "gapi-script";
+
 const client_id =
-  "270844617336-n634vgpabihm8ve1klq9tm7uir3oqdfe.apps.googleusercontent.com";
+  "572694052327-ei53un0bp26h2cuunimgvmnk8lurvd1a.apps.googleusercontent.com";
+
 export default function SignIn() {
   const navigate = useNavigate();
   const provider = new GoogleAuthProvider();
@@ -35,7 +35,6 @@ export default function SignIn() {
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState();
- 
 
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -59,11 +58,6 @@ export default function SignIn() {
         setErrorMessage(err.code);
       });
   };
-
-  // Logout Function
-  // const logout = async () => {
-  //   await signOut(auth);
-  // };
 
   return (
     <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -133,16 +127,17 @@ export default function SignIn() {
         </form>
         <div className="">
           <h2 className="w-6 m-auto">Or</h2>
-          <button
+          {/* <button
             type="button"
             onClick={googleAuth}
             className="mt-4 py-2 px-4 w-full text-white bg-red-600 hover:bg-red-700 focus:ring-red-500 rounded-md"
           >
             Sign in with <GoogleIcon />
-          </button>
+          </button> */}
           <GoogleLogin
-            clientId
-            buttonText="Login using GOGO"
+            clientId={client_id}
+            className="w-full"
+            buttonText="Login using Google"
             onSucess={() => {
               console.log("login sucess");
             }}
@@ -153,13 +148,13 @@ export default function SignIn() {
             isSignedIn={true}
           />
 
-          <GoogleLogout
+          {/* <GoogleLogout
             clientId={client_id}
             buttonText={"Logout"}
             onLogoutSuccess={() => {
               console.log("Logout Success");
             }}
-          />
+          /> */}
         </div>
       </div>
     </div>

@@ -24,10 +24,9 @@ import {
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "../firebase-config";
 
-export default function EditProfile({ data }) {
+export default function EditProfile({ data, modalState }) {
+  
   const usersCollection = collection(db, "users");
-
-  // Get Sub-Categories Names
 
   useEffect(() => {
     getProfile();
@@ -46,19 +45,6 @@ export default function EditProfile({ data }) {
   const [password, setPassword] = useState(data?.password);
   // const [phone,setPhone]
   const [profile, setProfile] = useState();
-  // Add Products
-  const editPofile = async () => {
-    const newProfile = {
-      name,
-
-      password,
-      phone,
-    };
-    console.log(newProduct);
-    const prod = doc(db, "users", id);
-    await updateDoc(prod, newProfile);
-    console.log("Profile Updated");
-  };
 
   const getProfile = async () => {
     const q = await query(ordersRef, where("authUserEamil", "==", user?.email));
@@ -78,10 +64,9 @@ export default function EditProfile({ data }) {
     };
     const profile = doc(db, "users", id);
     await updateDoc(profile, newProfile);
+    modalState(false);
     console.log("Profile Updated");
   };
-
-  // Search Categories
 
   return (
     <div className="bg-white py-6 px-4 sm:p-6">

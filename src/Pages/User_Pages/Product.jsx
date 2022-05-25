@@ -57,6 +57,14 @@ export default function Product() {
   const [products, setProducts] = useState([]);
   const [addStatus, setAddStatus] = useState(false);
   const [totalRating, setTotalRating] = useState(0);
+  
+  const incrementCounter = () => {
+    if (qty === prod.variants[0][1]) {
+    } else {
+      setQty(qty + 1);
+    }
+  }
+  
   const decrementCounter = () => {
     if (qty <= 1) {
     } else {
@@ -115,8 +123,6 @@ export default function Product() {
     })
     r = r/getcomments?.length;
     setTotalRating(r);
-    console.log(r);
-    console.log(totalRating);
   }
 
   useEffect(() => {
@@ -229,9 +235,6 @@ export default function Product() {
                 <Rating
                   value={totalRating}
                   readOnly
-                  // onChange={(e, newVal) => {
-                  //   setRating(newVal);
-                  // }}
                 />
               </div>
               <p className="leading-relaxed">{prod?.description}</p>
@@ -266,9 +269,7 @@ export default function Product() {
                   <Button
                     className="w-16 h-12 m-2"
                     style={{ border: "2px solid gray" }}
-                    onClick={() => {
-                      setQty(qty + 1);
-                    }}
+                    onClick={incrementCounter}
                   >
                     <AddIcon />
                   </Button>
@@ -276,14 +277,14 @@ export default function Product() {
               </div>
               <div className="flex justify-between">
                 <span className="title-font font-medium text-2xl text-gray-900">
-                  UNIT= ${prod?.salePrice}
+                  UNIT= Rs.{prod?.salePrice}
                 </span>
                 <span className=" font-medium text-xl text-gray-900">
                   x{qty}
                 </span>
 
                 <span className="title-font font-medium text-2xl text-gray-900">
-                  $ {qty * prod?.salePrice}
+                  Rs. {qty * prod?.salePrice}
                 </span>
               </div>
               <div className="flex mt-4">
@@ -436,16 +437,3 @@ export default function Product() {
     </UseMainLayout>
   );
 }
-
-// {prod &&
-//   Object.keys(prod.variants).map((key) => {
-//     let variant = prod?.variants[key];
-//     return (
-//       <div key={key}>
-//         <h1 className="bg-gray-200 w-fit m-2 p-2 rounded-md">
-//           {variant[0]}
-//         </h1>
-//         {/* <h1>{variant[1]}</h1> */}
-//       </div>
-//     );
-//   })}
