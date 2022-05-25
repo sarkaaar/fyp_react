@@ -200,21 +200,21 @@ export default function SignUp() {
               </a>
             </div>
             <hr />
-            <div className="">
+            {/* <div className="">
               <h2 className="w-6 m-auto">Or</h2>
               <button className="mt-4 py-2 px-4 w-full text-white bg-red-600 hover:bg-red-700 focus:ring-red-500 rounded-md">
                 Sign Up with <GoogleIcon />
               </button>
-            </div>
+            </div> */}
           </form>
         </div>
       </div>
-      <div>
+      {/* <div>
         <h1>Current User Signed In</h1>
         <h1>{user?.email}</h1>
 
+      </div> */}
         {/* <Button onClick={logout}>Logout</Button> */}
-      </div>
-    </>
+        </>
   );
 }

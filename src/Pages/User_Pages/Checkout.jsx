@@ -55,6 +55,7 @@ export default function Checkout() {
   const [user, setUser] = useState();
   const [total, setTotal] = useState(0);
   const [products, setProducts] = useState([]);
+  const [product, setProduct] = useState([]);
 
   const cartCollection = collection(db, "cart");
 
@@ -113,8 +114,17 @@ export default function Checkout() {
         products.map(async (item) => {
           const prod = doc(db, "cart", item?.id);
 
-          await deleteDoc(prod).then(() => {
+          await deleteDoc(prod).then(async () => {
             console.log("Product Sucessfully Deleted");
+            
+            await getDoc(doc(db, "products", item?.id)).then(async (res) => {
+              setProduct({ id: res.id, ...res.data() });
+              console.log({ id: res.id, ...res.data() });
+              // const subCat_doc = doc(db, "products", item?.id);
+
+              // const udatedProduct = {product.variants[0]:(variants[0]-item.qty)}
+              // await updateDoc(doc(db, "products", id), variants[0]);
+            });
             // for inventory update getDoc(id).then(qty-update karni hay)
           });
           getCartItems();
@@ -133,7 +143,7 @@ export default function Checkout() {
   return (
     <UseMainLayout>
       <div className="min-h-full flex gap-4 items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-md w-full space-y-8">
+        <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-xl">
           <div>
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
               Checkout

@@ -8,11 +8,12 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import { Button, TextField, Box } from "@mui/material";
+import { Button } from "@mui/material";
 import { onAuthStateChanged } from "firebase/auth";
 import { db, auth } from "../../firebase-config";
-import Header from "./doctor_components/Header";
+// import Header from "./doctor_components/Header";
 import FirebaseDataTable from "../../components/FirebaseDataTable";
+import DoctorLayout from "../../layouts/DoctorLayout";
 
 export default function Dashboard() {
   const appointmentsRef = collection(db, "appointments");
@@ -81,8 +82,7 @@ export default function Dashboard() {
   }, [user]);
 
   return (
-    <div>
-      <Header />
+    <DoctorLayout>
       <div>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-lg leading-6 font-medium text-gray-900">
@@ -185,6 +185,6 @@ export default function Dashboard() {
           />
         </div>
       </div>
-    </div>
+    </DoctorLayout>
   );
 }
