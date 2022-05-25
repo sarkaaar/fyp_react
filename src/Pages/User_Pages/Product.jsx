@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-
+import Placeholder from "../../assets/images/placeholder_products.jpg";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -55,8 +55,8 @@ export default function Product() {
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
   const [products, setProducts] = useState([]);
-
   const [addStatus, setAddStatus] = useState(false);
+  const [totalRating, setTotalRating] = useState(0);
   const decrementCounter = () => {
     if (qty <= 1) {
     } else {
@@ -106,6 +106,22 @@ export default function Product() {
         console.log(e);
       });
   };
+
+  function calRating() {
+    let r=0;
+    getcomments?.map((item)=>{
+      console.log(item.rating);
+      r+=item.rating;
+    })
+    r = r/getcomments?.length;
+    setTotalRating(r);
+    console.log(r);
+    console.log(totalRating);
+  }
+
+  useEffect(() => {
+    calRating();
+  }, [getcomments]);
 
   const addToFavourites = async () => {
     const newObj = {
@@ -188,20 +204,8 @@ export default function Product() {
         console.log(e);
       });
   };
-
   return (
     <UseMainLayout>
-      {/* <Button
-        onClick={async () => {
-          let x = await getDoc(doc(db, `products/AO0PsfBRSrqJ53dPPm5k`));
-          console.log({
-            id: x.id,
-            ...x.data(),
-          });
-        }}
-      >
-        Click
-      </Button> */}
       <section className="text-gray-700 body-font overflow-hidden bg-white">
         <div className="container p-4 mx-auto">
           <h1 className="ml-24 mb-4 text-xl font-semibold">
@@ -214,7 +218,7 @@ export default function Product() {
               src={
                 prod?.image
                   ? prod?.image[0]
-                  : "https://source.unsplash.com/random"
+                  : Placeholder
               }
             />
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
@@ -223,10 +227,11 @@ export default function Product() {
               </h1>
               <div className="flex mb-4">
                 <Rating
-                  value={rating}
-                  onChange={(e, newVal) => {
-                    setRating(newVal);
-                  }}
+                  value={totalRating}
+                  readOnly
+                  // onChange={(e, newVal) => {
+                  //   setRating(newVal);
+                  // }}
                 />
               </div>
               <p className="leading-relaxed">{prod?.description}</p>
@@ -400,7 +405,6 @@ export default function Product() {
                     </div>
                     <h1>{item?.comment}</h1>
                     <hr className="mt-2 mb-2" />
-                    {/* <Rating readOnly value={item.rating} /> */}
                   </>
                 ))}
               </div>

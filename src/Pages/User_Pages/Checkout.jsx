@@ -9,6 +9,7 @@ import {
   query,
   where,
   doc,
+  getDoc,
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
@@ -114,6 +115,7 @@ export default function Checkout() {
 
           await deleteDoc(prod).then(() => {
             console.log("Product Sucessfully Deleted");
+            // for inventory update getDoc(id).then(qty-update karni hay)
           });
           getCartItems();
 
@@ -125,7 +127,7 @@ export default function Checkout() {
       .catch((e) => {
         console.log(e);
       });
-    console.log("Checkout Sucessfull");
+    console.log("Checkout Successfull");
   };
 
   return (

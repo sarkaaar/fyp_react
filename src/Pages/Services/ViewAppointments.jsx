@@ -8,15 +8,19 @@ import {
   updateDoc,
   query,
   where,
+  deleteDoc
 } from "firebase/firestore";
 import { Button } from "@mui/material";
 import { onAuthStateChanged } from "firebase/auth";
 import { db, auth } from "../../firebase-config";
+
 import Footer from "../User_Pages/Components/Footer";
 import UseMainLayout from "../../layouts/UserMainLayout";
 
 export default function ViewAppointments() {
   const navigate = useNavigate();
+
+  const [addStatus, setAddStatus] = useState(false);
   const [appointments, setAppointments] = useState([]);
 
   const appointmentsRef = collection(db, "appointments");
@@ -24,8 +28,8 @@ export default function ViewAppointments() {
   const [loader, setLoader] = useState(false);
 
   const cancelAppoitment = async (id) => {
-    const prod = doc(db, "appointments", id);
-    await updateDoc(prod, { status: false });
+    const appointment = doc(db, "appointments", id);
+    await deleteDoc(appointment);
     console.log("Appointment Canceled ", id);
     getAppointments();
   };
@@ -114,6 +118,7 @@ export default function ViewAppointments() {
                         variant="outlined"
                         onClick={() => {
                           cancelAppoitment(item?.id);
+
                         }}
                       >
                         Cancel Appointment
