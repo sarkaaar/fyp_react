@@ -12,7 +12,8 @@ import {
   ScaleIcon,
   XIcon,
   RewindIcon,
-  UserCircleIcon
+  UserCircleIcon,
+  PhoneIcon
 } from "@heroicons/react/outline";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { collection, getDocs, query, where } from "firebase/firestore";
@@ -45,6 +46,13 @@ const navigation = [
     href: "/profile/orders",
     icon: CreditCardIcon,
   },
+
+  {
+    name: "Complain & Suggestions",
+    href: "/profile/complaint",
+    icon: PhoneIcon,
+  },
+  
 ];
 
 const secondaryNavigation = [
