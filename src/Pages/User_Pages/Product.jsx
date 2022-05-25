@@ -57,6 +57,14 @@ export default function Product() {
   const [products, setProducts] = useState([]);
   const [addStatus, setAddStatus] = useState(false);
   const [totalRating, setTotalRating] = useState(0);
+  
+  const incrementCounter = () => {
+    if (qty === prod.variants[0][1]) {
+    } else {
+      setQty(qty + 1);
+    }
+  }
+  
   const decrementCounter = () => {
     if (qty <= 1) {
     } else {
@@ -261,9 +269,7 @@ export default function Product() {
                   <Button
                     className="w-16 h-12 m-2"
                     style={{ border: "2px solid gray" }}
-                    onClick={() => {
-                      setQty(qty + 1);
-                    }}
+                    onClick={incrementCounter}
                   >
                     <AddIcon />
                   </Button>
@@ -271,14 +277,14 @@ export default function Product() {
               </div>
               <div className="flex justify-between">
                 <span className="title-font font-medium text-2xl text-gray-900">
-                  UNIT= ${prod?.salePrice}
+                  UNIT= Rs.{prod?.salePrice}
                 </span>
                 <span className=" font-medium text-xl text-gray-900">
                   x{qty}
                 </span>
 
                 <span className="title-font font-medium text-2xl text-gray-900">
-                  $ {qty * prod?.salePrice}
+                  Rs. {qty * prod?.salePrice}
                 </span>
               </div>
               <div className="flex mt-4">

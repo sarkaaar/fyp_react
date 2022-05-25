@@ -53,22 +53,6 @@ export default function ComplainSuggestions() {
     });
   }, [user]);
 
-  // const getComplain = async () => {
-  //   const q = query(
-  //     favouritesRef,
-  //     where("user", "==", user?.email),
-  //     where("subject", "==", subj)
-  //   );
-
-  //   await getDocs(q)
-  //     .then((res) => {
-  //       setComplain(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-  //       console.log(res);
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //     });
-  // };
   return (
     <UserLayout>
       <div className="flex " />
@@ -88,6 +72,7 @@ export default function ComplainSuggestions() {
 
             <TextareaAutosize
               minRows={5}
+              required
               placeholder="  Description*"
               className="mt-8 w-full"
               value={description}

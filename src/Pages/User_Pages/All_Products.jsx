@@ -90,7 +90,7 @@ export default function Products() {
                   style={{ width: '60px', height: '30px' }}
                 />
               </div>
-              <div className="text-gray-700 block px-4 py-2 text-sm">
+              {/* <div className="text-gray-700 block px-4 py-2 text-sm">
                 <label htmlFor="customRange2" className="form-label">
                   Select Range
                 </label>
@@ -107,7 +107,7 @@ export default function Products() {
 
                   <p>100</p>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
 
