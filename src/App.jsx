@@ -44,7 +44,7 @@ import Complaints from "./Pages/Admin_Pages/Complaints";
 
 // Doctors Pages
 import DoctorDashboard from "./Pages/Doctor_Pages/Dashboard";
-import DoctorSignIn from "./Pages/Doctor_Pages/Doctor_SignIn";
+// import DoctorSignIn from "./Pages/Doctor_Pages/Doctor_SignIn";
 import DocViewAppointments from "./Pages/Doctor_Pages/DocViewAppointments";
 import Live from "./Pages/Doctor_Pages/Live/Live";
 import NotAuthenticated from "./Pages/NotAuthenticated";
@@ -123,7 +123,7 @@ function App() {
 
         {/* Doctors Panel */}
         <Route exact path="/doctor/dashboard" element={<DoctorDashboard />} />
-        <Route exact path="/doctor/sign_in" element={<DoctorSignIn />} />
+        {/* <Route exact path="/doctor/sign_in" element={<DoctorSignIn />} /> */}
         <Route exact path="/doctor/slots" element={<Slots />} />
         <Route exact path="/live" element={<Live />} />
         <Route

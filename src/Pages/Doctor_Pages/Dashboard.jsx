@@ -1,6 +1,13 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { collection, getDocs, query, doc,updateDoc, where } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  query,
+  doc,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import { Button, TextField, Box } from "@mui/material";
 import { onAuthStateChanged } from "firebase/auth";
 import { db, auth } from "../../firebase-config";
@@ -18,7 +25,10 @@ export default function Dashboard() {
   const getAppointments = async () => {
     const q = query(
       appointmentsRef,
-      where(("doctor.email", "==", user?.email), ("date", "==", date))
+      where(
+        // ("doctor.email", "==", "ammarzahid335@gmail.com"),
+        ("date", "==", date)
+      )
     );
     await getDocs(q)
       .then((res) => {
@@ -32,25 +42,23 @@ export default function Dashboard() {
 
   const disableDoctor = async (id) => {
     const prod = doc(db, "appointments", id);
-    await updateDoc(prod, { status: false }).then(()=>{
+    await updateDoc(prod, { status: false }).then(() => {
       console.log("Doctor Disabled ");
       getAppointments();
-  
-    })
+    });
   };
   const enableDoctor = async (id) => {
     const prod = doc(db, "appointments", id);
-    await updateDoc(prod, { status: true }).then(()=>{
+    await updateDoc(prod, { status: true }).then(() => {
       console.log("Doctor Enables ");
       getAppointments();
-  
-    })
+    });
   };
 
   const getSpecificAppointments = async () => {
     const q = query(
-      appointmentsRef,
-      where(("doctor.email", "==", user?.email))
+      appointmentsRef
+      // where(("doctor.email", "==", "ammarzahid335@gmail.com"))
     );
     await getDocs(q)
       .then((res) => {
@@ -80,7 +88,7 @@ export default function Dashboard() {
           <h2 className="text-lg leading-6 font-medium text-gray-900">
             Overview
           </h2>
-          <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-2 grid grid-cols-1 gap-5 lg:grid-cols-2">
             {/* Card */}
             {/* cars 1 */}
             <div className="bg-white overflow-hidden shadow rounded-lg">
@@ -89,7 +97,7 @@ export default function Dashboard() {
                   <div className="ml-5 w-0 flex-1">
                     <dl>
                       <dt className="text-sm font-medium text-gray-500 truncate">
-                        "Todays Appointments"
+                        "All Appointments"
                       </dt>
                       <dd>
                         <div className="text-lg font-medium text-gray-900">
@@ -98,16 +106,6 @@ export default function Dashboard() {
                       </dd>
                     </dl>
                   </div>
-                </div>
-              </div>
-              <div className="bg-gray-50 px-5 py-3">
-                <div className="text-sm">
-                  <a
-                    href="/admin/orders"
-                    className="font-medium text-cyan-700 hover:text-cyan-900"
-                  >
-                    View all
-                  </a>
                 </div>
               </div>
             </div>
@@ -119,25 +117,16 @@ export default function Dashboard() {
                   <div className="ml-5 w-0 flex-1">
                     <dl>
                       <dt className="text-sm font-medium text-gray-500 truncate">
-                        "Total appointments"
+                        "Todays appointments"
                       </dt>
                       <dd>
                         <div className="text-lg font-medium text-gray-900">
                           {appointments.length}
                         </div>
+                        {/* <button onClick={()=>{console.log(appointments)}}>Click</button> */}
                       </dd>
                     </dl>
                   </div>
-                </div>
-              </div>
-              <div className="bg-gray-50 px-5 py-3">
-                <div className="text-sm">
-                  <a
-                    href="/admin/orders"
-                    className="font-medium text-cyan-700 hover:text-cyan-900"
-                  >
-                    View all
-                  </a>
                 </div>
               </div>
             </div>
