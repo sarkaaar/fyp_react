@@ -115,8 +115,6 @@ export default function Product() {
     })
     r = r/getcomments?.length;
     setTotalRating(r);
-    console.log(r);
-    console.log(totalRating);
   }
 
   useEffect(() => {
