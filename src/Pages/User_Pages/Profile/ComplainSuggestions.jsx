@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom"; 
 import { TextField, Button } from "@mui/material";
 import { TextareaAutosize } from "@mui/base";
 import { db } from "../../../firebase-config";
@@ -6,6 +7,8 @@ import { collection, doc, getDoc, addDoc } from "firebase/firestore";
 import UserLayout from "../../../layouts/UserLayout";
 import { onAuthStateChanged } from "firebase/auth";
 import {  auth } from "../../../firebase-config";
+import Modal from "@mui/material/Modal";
+import { Box,Typography } from "@mui/material";
 
 
 export default function ComplainSuggestions() {
@@ -15,7 +18,13 @@ export default function ComplainSuggestions() {
   const [loader, setLoader] = useState(false);
   const [complain, setComplain] = useState([]);
   const complainRef = collection(db, "complain");
-
+  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  
+  const handleClose = () => {
+    setOpen(false);
+    navigate("/profile");
+  };
   const addComplain = async () => {
     const newObj = {
       subject: subj,
@@ -25,15 +34,16 @@ export default function ComplainSuggestions() {
     setLoader(true);
     await addDoc(complainRef, newObj)
       .then(() => {
+        setOpen(true);
+     
         console.log("Add To Complain Sucessfully");
-        // getComplain();
-        // setAddStatus(false);
-        setLoader(false);
+        
+         
       })
 
       .catch((err) => {
         console.log(err);
-        // setAddStatus(false);
+       
       });
   };
 
@@ -89,7 +99,10 @@ export default function ComplainSuggestions() {
               fullWidth
               variant="contained"
               className="mt-6 mb-12"
-              onClick={addComplain}
+              onClick={() => {addComplain();
+                setOpen(true); }
+              
+              }
 
               // className="mt-6 mb-12"
             >
@@ -98,6 +111,31 @@ export default function ComplainSuggestions() {
           </div>
         </div>
       </div>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Complain added Sucessfully
+          </Typography>
+          <Button onClick={handleClose}> Close</Button>
+        </Box>
+      </Modal>
     </UserLayout>
   );
 }
