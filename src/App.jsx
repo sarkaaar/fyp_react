@@ -48,6 +48,7 @@ import DoctorSignIn from "./Pages/Doctor_Pages/Doctor_SignIn";
 import DocViewAppointments from "./Pages/Doctor_Pages/DocViewAppointments";
 import Live from "./Pages/Doctor_Pages/Live/Live";
 import NotAuthenticated from "./Pages/NotAuthenticated";
+import Users from "./Pages/Admin_Pages/Users";
 
 import NoPermission from "./Pages/Admin_Pages/NoPermission";
 import ComplainSuggestions from "./Pages/User_Pages/Profile/ComplainSuggestions";
@@ -111,6 +112,7 @@ function App() {
         <Route exact path="/admin/viewDoctor" element={<ViewDoctors />} />
         <Route exact path="/admin/viewAllProducts" element={<ProductsList />} />
         <Route exact path="/admin/reports" element={<Reports />} />
+        <Route exact path="/admin/users/info" element={<Users />} />
         <Route
           exact
           path="/admin/productReturn"

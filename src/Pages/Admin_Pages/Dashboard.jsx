@@ -12,17 +12,15 @@ import { Button } from "@mui/material";
 import { db } from "../../firebase-config";
 import FirebaseDataTable from "../../components/FirebaseDataTable";
 
-// import AdminLayout from "../../layouts/AdminLayout";
-
-const statusStyles = {
-  success: "bg-green-100 text-green-800",
-  processing: "bg-yellow-100 text-yellow-800",
-  failed: "bg-gray-100 text-gray-800",
-};
-
 export default function Dashboard() {
+  const appointmentsRef = collection(db, "appointments");
+  const [appointments, setAppointments] = useState([]);
+
   const [products, setProducts] = useState([]);
   const ordersRef = collection(db, "checkout");
+
+  const productsCollection = collection(db, "products");
+  const [allProducts, setAllProducts] = useState([]);
 
   const getProducts = async () => {
     const data = await getDocs(ordersRef);
@@ -32,7 +30,26 @@ export default function Dashboard() {
 
   useEffect(() => {
     getProducts();
+    getAppointments();
+    getAllProducts();
   }, []);
+
+  const getAppointments = async () => {
+    await getDocs(appointmentsRef)
+      .then((res) => {
+        setAppointments(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const getAllProducts = async () => {
+    const data = await getDocs(productsCollection).then((res) => {
+      setAllProducts(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    });
+  };
 
   const handleCompleted = async (id) => {
     const prod = doc(db, "checkout", id);
@@ -57,7 +74,6 @@ export default function Dashboard() {
           <div className="bg-white overflow-hidden shadow rounded-lg">
             <div className="p-5">
               <div className="flex items-center">
-                
                 <div className="ml-5 w-0 flex-1">
                   <dl>
                     <dt className="text-sm font-medium text-gray-500 truncate">
@@ -88,15 +104,14 @@ export default function Dashboard() {
           <div className="bg-white overflow-hidden shadow rounded-lg">
             <div className="p-5">
               <div className="flex items-center">
-                
                 <div className="ml-5 w-0 flex-1">
                   <dl>
                     <dt className="text-sm font-medium text-gray-500 truncate">
-                      "Completed Orders"
+                      "Total appointments"
                     </dt>
                     <dd>
                       <div className="text-lg font-medium text-gray-900">
-                        {products.length}
+                        {appointments.length}
                       </div>
                     </dd>
                   </dl>
@@ -119,15 +134,14 @@ export default function Dashboard() {
           <div className="bg-white overflow-hidden shadow rounded-lg">
             <div className="p-5">
               <div className="flex items-center">
-                
                 <div className="ml-5 w-0 flex-1">
                   <dl>
                     <dt className="text-sm font-medium text-gray-500 truncate">
-                      "Not Completed"
+                      "All Products"
                     </dt>
                     <dd>
                       <div className="text-lg font-medium text-gray-900">
-                        {products.length}
+                        {allProducts.length}
                       </div>
                     </dd>
                   </dl>
@@ -137,7 +151,7 @@ export default function Dashboard() {
             <div className="bg-gray-50 px-5 py-3">
               <div className="text-sm">
                 <a
-                  href="/admin/orders"
+                  href="/admin/inventory"
                   className="font-medium text-cyan-700 hover:text-cyan-900"
                 >
                   View all
