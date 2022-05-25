@@ -41,7 +41,7 @@ export default function ReturnedProducts() {
         columns={[
           { key: "productName", name: "Name" },
           { key: "orderNo", name: "Order#" },
-          { key: "date", name: "Return Date", render: (r) => r.date.toDate().toDateString() },
+          // { key: "date", name: "Return Date", render: (r) => r.date.toDate().toDateString() },
           { key: "issue", name: "Issue" },
           {key:"productID",name:"Product Id"}
 

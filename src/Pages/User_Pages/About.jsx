@@ -17,7 +17,7 @@ export default function About() {
                 0334044482
               </span>
             </h1>
-            <p className="pb-20 text-xl font-extrabold text-gray-900 sm:mx-auto sm:mt-5 sm:max-w-xl sm:text-lg md:mt-5 md:text-xl lg:mx-0">
+            <p className="pb-40 text-xl font-extrabold text-gray-900 sm:mx-auto sm:mt-5 sm:max-w-xl sm:text-lg md:mt-5 md:text-xl lg:mx-0">
               Or At:
               <a href="https://mail.google.com/mail/" className="block pl-4 text-green-600 xl:inline underline">
                 {" "}
