@@ -98,7 +98,7 @@ export default function Cart() {
                   <div className="w-20 h-20 border-t-4 border-b-4 border-blue-900 rounded-full animate-spin" />
                 </div>
               ) : products.length === 0 ? (
-                <div className="font-bold text-center">
+                <div className="font-bold text-center p-56">
                   {" "}
                   The cart is empty!{" "}
                 </div>
