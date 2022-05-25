@@ -227,9 +227,6 @@ export default function Product() {
                 <Rating
                   value={totalRating}
                   readOnly
-                  // onChange={(e, newVal) => {
-                  //   setRating(newVal);
-                  // }}
                 />
               </div>
               <p className="leading-relaxed">{prod?.description}</p>
@@ -434,16 +431,3 @@ export default function Product() {
     </UseMainLayout>
   );
 }
-
-// {prod &&
-//   Object.keys(prod.variants).map((key) => {
-//     let variant = prod?.variants[key];
-//     return (
-//       <div key={key}>
-//         <h1 className="bg-gray-200 w-fit m-2 p-2 rounded-md">
-//           {variant[0]}
-//         </h1>
-//         {/* <h1>{variant[1]}</h1> */}
-//       </div>
-//     );
-//   })}

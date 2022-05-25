@@ -17,12 +17,8 @@ import {
 } from "@heroicons/react/outline";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { collection, getDocs, query, where } from "firebase/firestore";
-import { IconButton } from "@mui/material";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { auth, db } from "../firebase-config";
 import GrayLogo from "../assets/images/gray_logo.png";
-// import { signOut } from "firebase/auth";
-// import { auth } from "../firebase-config";
 import useUserRole from "../hooks/useUserRole";
 
 const navigation = [
