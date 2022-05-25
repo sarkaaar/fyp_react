@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <div className="z-10 border-gray-800">
+    <div className="z-10 border-gray-800 pt-8">
       <div className="flex justify-around bg-gray-900 p-12">
         <div>
           <NavLink
@@ -43,22 +43,22 @@ export default function Footer() {
         </div>
         <div>
           <h1 className="p-2 text-lg font-bold text-white">Social</h1>
-          <a href="/#">
+          <a href="https://www.facebook.com/" target="_blank">
             <h2 className="p-2 text-lg text-white">
               <FacebookIcon /> FaceBook
             </h2>
           </a>
-          <a href="/#">
+          <a href="https://www.instagram.com/" target="_blank">
             <h2 className="p-2 text-lg text-white">
               <InstagramIcon /> Instagram
             </h2>
           </a>
-          <a href="/#">
+          <a href="https://twitter.com/" target="_blank">
             <h2 className="p-2 text-lg text-white">
               <TwitterIcon /> Twitter
             </h2>
           </a>
-          <a href="/#">
+          <a href="https://youtube.com" target="_blank">
             <h2 className="p-2 text-lg text-white">
               <YouTubeIcon /> Youtube
             </h2>

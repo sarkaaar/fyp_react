@@ -147,7 +147,7 @@ export default function AdminLayout({ children }) {
                             isActive
                               ? "bg-gray-900 text-white"
                               : "text-gray-300 hover:text-white hover:bg-gray-700",
-                            "group flex items-center px-2 py-2 text-base font-medium rounded-md"
+                            
                           )
                         }
                         aria-current={item.current ? "page" : undefined}
