@@ -43,7 +43,7 @@ export default function ViewDoctors() {
             {doctors.map((item, key) => (
               <DoctorCard obj={item} />
             ))}
-          </ul>
+          </ul> 
         </div>
       </div>
       <Footer />

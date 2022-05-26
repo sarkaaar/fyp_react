@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom"; 
+import {  useNavigate } from "react-router-dom"; 
 import { TextField, Button } from "@mui/material";
 import { TextareaAutosize } from "@mui/base";
 import { db } from "../../../firebase-config";
@@ -16,7 +16,7 @@ export default function ComplainSuggestions() {
   const [subj, setSubj] = useState("");
   const [user, setUser] = useState("");
   const [loader, setLoader] = useState(false);
-  const [complain, setComplain] = useState([]);
+
   const complainRef = collection(db, "complain");
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
@@ -52,7 +52,7 @@ export default function ComplainSuggestions() {
       setUser(currentUser);
     });
   }, [user]);
-
+  
   return (
     <UserLayout>
       <div className="flex " />
