@@ -62,7 +62,7 @@ export default function HomePage() {
               {categories?.map((item) => (
                 <div className=" w-fit m-auto">
                   <h1 className="text-3xl py-4 font-extrabold">{item?.name}</h1>
-                  <div className="   grid gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 ">
+                  <div className="grid gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 ">
                     {product?.map((product) => (
                       <>
                         {item?.name === product?.category ? (
