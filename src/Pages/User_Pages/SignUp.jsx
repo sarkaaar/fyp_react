@@ -5,6 +5,9 @@ import {
   onAuthStateChanged,
   signOut,
   createUserWithEmailAndPassword,
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
 } from "firebase/auth";
 import { Button, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +16,32 @@ import { auth, db } from "../../firebase-config";
 import Header from "./Components/Header";
 
 export default function SignUp() {
+  const provider = new GoogleAuthProvider();
+
+  const auth = getAuth();
+  const loginGoogle = async () => {
+    await signInWithPopup(auth, provider)
+      .then((result) => {
+        console.log(result);
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        // ...
+      })
+      .catch((error) => {
+        console.log(error);
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
+  };
   const navigate = useNavigate();
 
   const [user, setUser] = useState();
@@ -75,8 +104,8 @@ export default function SignUp() {
   return (
     <>
       {/* <Header /> */}
-      <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-md w-full space-y-8 p-10 bg-white">
+      <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-md space-y-8 bg-white p-10">
           <div>
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
               Create an Account
@@ -89,7 +118,7 @@ export default function SignUp() {
             }}
           >
             <input type="hidden" name="remember" defaultValue="true" />
-            <div className="rounded-md shadow-sm -space-y-px">
+            <div className="-space-y-px rounded-md shadow-sm">
               <TextField
                 style={{ paddingBottom: "15px" }}
                 fullWidth
@@ -113,14 +142,12 @@ export default function SignUp() {
                 onChange={(e) => {
                   setEmail(e.target.value);
                 }}
-                
               />
               <TextField
                 style={{ paddingBottom: "15px" }}
                 fullWidth
                 required
                 label="Phone Number"
-                
                 type="text"
                 value={phone}
                 helperText="Type 11 digit numbers Only "
@@ -129,7 +156,7 @@ export default function SignUp() {
                 }}
               />
               {errorMessage !== "" ? (
-                <h1 className="text-red-600 font-bold mb-2">{errorMessage}</h1>
+                <h1 className="mb-2 font-bold text-red-600">{errorMessage}</h1>
               ) : (
                 <></>
               )}
@@ -159,33 +186,17 @@ export default function SignUp() {
                 {confirmPassword === password ? (
                   <h1> </h1>
                 ) : (
-                  <h1 className="text-red-700 font-semibold">
+                  <h1 className="font-semibold text-red-700">
                     Password doesn't Match
                   </h1>
                 )}
               </div>
             </div>
-            {/* <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                />
-                <label
-                  htmlFor="Policy"
-                  className="ml-2 block text-sm text-gray-900"
-                >
-                  I agree to all terms and conditions of the policy.
-                </label>
-              </div>
-            </div> */}
+
             <div>
               <button
-                // type="submit"
                 onClick={signUp}
-                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
                 Sign Up
               </button>
@@ -200,13 +211,16 @@ export default function SignUp() {
               </a>
             </div>
             <hr />
-            {/* <div className="">
-              <h2 className="w-6 m-auto">Or</h2>
-              <button className="mt-4 py-2 px-4 w-full text-white bg-red-600 hover:bg-red-700 focus:ring-red-500 rounded-md">
-                Sign Up with <GoogleIcon />
-              </button>
-            </div> */}
           </form>
+          <div className="">
+            <h2 className="m-auto w-6">Or</h2>
+            <button
+              onClick={loginGoogle}
+              className="mt-4 w-full rounded-md bg-red-600 py-2 px-4 text-white hover:bg-red-700 focus:ring-red-500"
+            >
+              Sign Up with <GoogleIcon />
+            </button>
+          </div>
         </div>
       </div>
       {/* <div>
@@ -214,7 +228,7 @@ export default function SignUp() {
         <h1>{user?.email}</h1>
 
       </div> */}
-        {/* <Button onClick={logout}>Logout</Button> */}
-        </>
+      {/* <Button onClick={logout}>Logout</Button> */}
+    </>
   );
 }
