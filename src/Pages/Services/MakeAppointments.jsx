@@ -111,7 +111,7 @@ export default function MakeAppointments() {
 
   return (
     <UseMainLayout>
-      <h1 className="flex justify-center text-3xl font-bold m-6">
+      <h1 className="m-6 flex justify-center text-3xl font-bold">
         You are making an appointment with &nbsp;
         <span className="text-violet-800">
           {" "}
@@ -145,18 +145,20 @@ export default function MakeAppointments() {
               setTime(e.target.value);
             }}
           >
-            {timeSlots.map((item) => (
-              <MenuItem value={item}>{item}</MenuItem>
-            ))}
+            {timeSlots
+              .filter((e) => !booked.find((i) => i.time == e))
+              .map((item) => (
+                <MenuItem value={item}>{item}</MenuItem>
+              ))}
           </Select>
         </FormControl>
         <Button fullWidth variant="outlined" onClick={makeAppointment}>
           Submit
         </Button>
       </div>
-      {booked.map((item, key) => (
+      {/* {booked.map((item, key) => (
         <h1>{item?.time}</h1>
-      ))}
+      ))} */}
 
       <Modal
         open={open}

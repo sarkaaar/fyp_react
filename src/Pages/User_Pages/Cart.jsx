@@ -1,5 +1,4 @@
 import React from "react";
-
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -14,11 +13,47 @@ import {
 import { onAuthStateChanged } from "firebase/auth";
 import Footer from "./Components/Footer";
 import { db } from "../../firebase-config";
-// import { Button } from "@mui/material";
+import { Button } from "@mui/material";
 import { auth } from "../../firebase-config";
 import UseMainLayout from "../../layouts/UserMainLayout";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import { MinusIcon, PlusIcon } from "@heroicons/react/outline";
 
 export default function Cart() {
+
+  const navigate = useNavigate();
+  const [user, setUser] = useState();
+  const [total, setTotal] = useState(0);
+  const [products, setProducts] = useState([]);
+  const [loader, setLoader] = useState(false);
+  const [qty, setQty] = useState(1);
+
+  const cartCollection = collection(db, "cart");
+
+  const incrementCounter = () => {
+    if (qty === products.variants[0][1]) {
+    } else {
+      setQty(qty + 1);
+    }
+  }
+  
+  const decrementCounter = () => {
+    if (qty <= 1) {
+    } else {
+      setQty(qty - 1);
+    }
+  };
+
+  const getCartItems = async () => {
+    const q = await query(cartCollection, where("user", "==", user?.email));
+    const queryResults = await getDocs(q);
+    setProducts(
+      queryResults.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+    );
+    setLoader(false);
+    console.log(products);
+  };
 
   const deleteProduct = async (id) => {
     const prod = doc(db, "cart", id);
@@ -31,24 +66,6 @@ export default function Cart() {
       .catch((e) => {
         console.log(e);
       });
-  };
-
-  const navigate = useNavigate();
-  const [user, setUser] = useState();
-  const [total, setTotal] = useState(0);
-  const [products, setProducts] = useState([]);
-  const [loader, setLoader] = useState(false);
-
-  const cartCollection = collection(db, "cart");
-
-  const getCartItems = async () => {
-    const q = await query(cartCollection, where("user", "==", user?.email));
-    const queryResults = await getDocs(q);
-    setProducts(
-      queryResults.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-    );
-    setLoader(false);
-    console.log(products);
   };
 
   const checkout = async () => {
@@ -82,21 +99,21 @@ export default function Cart() {
           {user ? (
             <>
               {loader ? (
-                <div className="grid place-items-center h-screen">
-                  <div className="w-20 h-20 border-t-4 border-b-4 border-blue-900 rounded-full animate-spin" />
+                <div className="grid h-screen place-items-center">
+                  <div className="h-20 w-20 animate-spin rounded-full border-t-4 border-b-4 border-blue-900" />
                 </div>
               ) : products.length === 0 ? (
-                <div className="font-bold text-center p-56">
+                <div className="p-56 text-center font-bold">
                   {" "}
                   The cart is empty!{" "}
                 </div>
               ) : (
-                <div className="p-4 justify-around">
-                  <h1 className="text-4xl mt-4 font-bold lg:flex lg:justify-center">
+                <div className="justify-around p-4">
+                  <h1 className="mt-4 text-4xl font-bold lg:flex lg:justify-center">
                     Cart
                   </h1>
                   <div className="lg:flex lg:justify-center">
-                    <div className="mt-8 lg:w-1/2  bg-white p-2">
+                    <div className="mt-8 bg-white  p-2 lg:w-1/2">
                       <div className="flow-root">
                         <ul
                           role="list"
@@ -133,6 +150,17 @@ export default function Cart() {
                                   <p className="text-gray-500">
                                     Qty {product?.quantity}
                                   </p>
+                                  <div className="flex items-end justify-between w-36 h-8 rounded border border-solid border-gray-400">
+                                    <MinusIcon 
+                                      className="w-4 h-5 border border-solid border-gray-100"
+                                      onClick={decrementCounter}/>
+                                    <div className="h-6 w-10 px-4 border border-solid border-gray-100 text-base">
+                                        {qty}
+                                    </div>
+                                    <PlusIcon 
+                                      className="w-4 h-5 border border-solid border-gray-100"
+                                      onClick={incrementCounter}/>
+                                  </div>
 
                                   <div className="flex">
                                     <button

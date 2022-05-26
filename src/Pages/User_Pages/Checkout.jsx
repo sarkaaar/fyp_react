@@ -61,7 +61,7 @@ export default function Checkout() {
 
   useEffect(() => {
     getTotal();
-  }, []);
+  }, [products]);
 
   const getTotal = () => {
     let num = 0;
@@ -77,7 +77,6 @@ export default function Checkout() {
       queryResults.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
     );
     console.log(products);
-    getTotal();
   };
 
   useEffect(() => {
@@ -85,8 +84,8 @@ export default function Checkout() {
       setUser(currentUser);
     });
     getCartItems();
-    getTotal();
   }, [user]);
+
 
   const checkoutRef = collection(db, "checkout");
 
@@ -272,7 +271,6 @@ export default function Checkout() {
               fullWidth
               variant="outlined"
               style={{ height: "50px" }}
-              // onClick={check}
               onClick={checkout}
             >
               Confirm Order

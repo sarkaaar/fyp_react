@@ -2,35 +2,19 @@ import GoogleIcon from "@mui/icons-material/Google";
 import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
-  GoogleAuthProvider,
   getAuth,
-  signInWithRedirect,
+  signInWithPopup,
+  GoogleAuthProvider,
 } from "firebase/auth";
 import { TextField } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { auth } from "../../firebase-config";
-import { GoogleLogin, GoogleLogout } from "react-google-login";
-import { gapi } from "gapi-script";
-
-const client_id =
-  "572694052327-ei53un0bp26h2cuunimgvmnk8lurvd1a.apps.googleusercontent.com";
 
 export default function SignIn() {
-  const navigate = useNavigate();
   const provider = new GoogleAuthProvider();
 
-  const googleAuth = () => {
-    const auth = getAuth();
-    signInWithRedirect(auth, provider);
-  };
-
-  useEffect(() => {
-    function start() {
-      gapi.client.init({ clientId: client_id, scope: "" });
-    }
-  }, []);
-  // const googleLogin()=()=>{}
+  const navigate = useNavigate();
 
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
@@ -59,9 +43,36 @@ export default function SignIn() {
       });
   };
 
+  // login with google function
+
+  const auth = getAuth();
+  const loginGoogle = async () => {
+    await signInWithPopup(auth, provider)
+      .then((result) => {
+        console.log(result);
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        // ...
+      })
+      .catch((error) => {
+        console.log(error);
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
+  };
+
   return (
-    <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8 p-10 bg-white">
+    <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-md space-y-8 bg-white p-10">
         <div className="">
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Sign in to your account
@@ -74,7 +85,7 @@ export default function SignIn() {
           }}
         >
           <input type="hidden" name="remember" defaultValue="true" />
-          <div className="rounded-md shadow-sm -space-y-px">
+          <div className="-space-y-px rounded-md shadow-sm">
             <TextField
               style={{ paddingBottom: "15px" }}
               label="Email"
@@ -98,7 +109,7 @@ export default function SignIn() {
               type="password"
             />
             {errorMessage !== "" ? (
-              <h1 className="text-red-600 font-bold ">{errorMessage}</h1>
+              <h1 className="font-bold text-red-600 ">{errorMessage}</h1>
             ) : (
               <div />
             )}
@@ -106,7 +117,7 @@ export default function SignIn() {
 
           <button
             type="button"
-            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             onClick={() => {
               login();
             }}
@@ -126,35 +137,14 @@ export default function SignIn() {
           <hr />
         </form>
         <div className="">
-          <h2 className="w-6 m-auto">Or</h2>
-          {/* <button
+          <h2 className="m-auto w-6">Or</h2>
+          <button
             type="button"
-            onClick={googleAuth}
-            className="mt-4 py-2 px-4 w-full text-white bg-red-600 hover:bg-red-700 focus:ring-red-500 rounded-md"
+            onClick={loginGoogle}
+            className="mt-4 w-full rounded-md bg-red-600 py-2 px-4 text-white hover:bg-red-700 focus:ring-red-500"
           >
             Sign in with <GoogleIcon />
-          </button> */}
-          <GoogleLogin
-            clientId={client_id}
-            className="w-full"
-            buttonText="Login using Google"
-            onSucess={() => {
-              console.log("login sucess");
-            }}
-            onFailure={() => {
-              console.log("login failed");
-            }}
-            cookiePolicy={"single-host-origin"}
-            isSignedIn={true}
-          />
-
-          {/* <GoogleLogout
-            clientId={client_id}
-            buttonText={"Logout"}
-            onLogoutSuccess={() => {
-              console.log("Logout Success");
-            }}
-          /> */}
+          </button>
         </div>
       </div>
     </div>

@@ -90,7 +90,11 @@ export default function Products() {
                   style={{ width: '60px', height: '30px' }}
                 />
               </div>
+<<<<<<< HEAD
                <div className="text-gray-700 block px-4 py-2 text-sm">
+=======
+              <div className="text-gray-700 block px-4 py-2 text-sm">
+>>>>>>> refs/remotes/origin/main
                 <label htmlFor="customRange2" className="form-label">
                   Select Range
                 </label>
@@ -107,7 +111,11 @@ export default function Products() {
 
                   <p>100</p>
                 </div>
+<<<<<<< HEAD
               </div> 
+=======
+              </div>
+>>>>>>> refs/remotes/origin/main
             </div> */}
           </div>
 
