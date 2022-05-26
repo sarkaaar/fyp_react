@@ -6,13 +6,14 @@ import { db, auth } from "../../../firebase-config";
 
 import FirebaseDataTable from "../../../components/FirebaseDataTable";
 import UserLayout from "../../../layouts/UserLayout";
+import DataTable from "../../../components/DataTable";
 
 export default function PRoductReturns() {
   const returnRef = collection(db, "productReturn");
 
   const [user, setUser] = useState();
   const [returns, setreturns] = useState([]);
-  
+
   const getReturnedItems = async () => {
     const q = await query(returnRef, where("user", "==", user?.email));
     const queryResults = await getDocs(q);
@@ -30,8 +31,9 @@ export default function PRoductReturns() {
     <UserLayout>
       <h1 className="text-2xl p-2 px-8">Returned Products</h1>
 
-      <FirebaseDataTable
-        query={collection(db, "productReturn")}
+      <DataTable
+        // query={collection(db, "productReturn")}
+        data={returns}
         columns={[
           { key: "productID", name: "Product ID" },
           { key: "productName", name: "Name" },

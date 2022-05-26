@@ -12,6 +12,7 @@ export default function AddDoctor() {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [dob, setDOB] = useState("");
   const [cnic, setCNIC] = useState("");
   const [phone, setPhone] = useState("");
@@ -28,6 +29,7 @@ export default function AddDoctor() {
     const newDoctor = {
       name,
       email,
+      password,
       dob,
       cnic,
       phone,
@@ -42,25 +44,26 @@ export default function AddDoctor() {
       status: false,
     };
     // -------------------------------------------------------
-    const days = {
-      monday: true,
-      tuesday: true,
-      wednesday: true,
-      thursday: true,
-      friday: true,
-      saturday: true,
-      sunday: true,
-    };
+    // const days = {
+    //   monday: true,
+    //   tuesday: true,
+    //   wednesday: true,
+    //   thursday: true,
+    //   friday: true,
+    //   saturday: true,
+    //   sunday: true,
+    // };
     await addDoc(doctorsCollection, newDoctor).then(async (res) => {
       console.log(res);
-      await addDoc(availabilityRef, { doc_id: res.id, days }).then((res) => {
-        console.log(res);
-        console.log("added");
-        // await addDoc(availabilityRef, { doc_id: res.id, days })
-      });
+      console.log("Doctor Added Sucessfully");
+      // await addDoc(availabilityRef, { doc_id: res.id, days }).then((res) => {
+      //   console.log(res);
+      //   console.log("added");
+      //   // await addDoc(availabilityRef, { doc_id: res.id, days })
+      // });
     });
 
-    console.log("Doctor Added");
+    // console.log("Doctor Added");
   };
   // -------------------------------------------------------
 
@@ -86,15 +89,27 @@ export default function AddDoctor() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                   />
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    label="Email"
-                    autoFocus
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
+                  <div className="border-box">
+                    <TextField
+                      margin="normal"
+                      required
+                      fullWidth
+                      label="Email"
+                      autoFocus
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <TextField
+                      margin="normal"
+                      required
+                      fullWidth
+                      label="Password"
+                      autoFocus
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      type="password"
+                    />
+                  </div>
                   <TextField
                     margin="normal"
                     required

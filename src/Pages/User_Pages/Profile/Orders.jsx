@@ -4,6 +4,7 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { db, auth } from "../../../firebase-config";
 import FirebaseDataTable from "../../../components/FirebaseDataTable";
+import DataTable from "../../../components/DataTable";
 import UserLayout from "../../../layouts/UserLayout";
 
 export default function Cart() {
@@ -13,7 +14,10 @@ export default function Cart() {
   const ordersRef = collection(db, "checkout");
 
   const getOrders = async () => {
-    const q = await query(ordersRef, where("authUserEamil", "==", user?.email));
+    const q = query(
+      collection(db, "checkout"),
+      where("authUserEamil", "==", user?.email)
+    );
     await getDocs(q)
       .then((res) => {
         setProducts(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
@@ -32,17 +36,17 @@ export default function Cart() {
     getOrders();
   }, [user]);
 
-  // const delay = () => {
-  //   setTimeout(() => {
-  //     <div>user is not signed in</div>;
-  //   }, 5000);
-  // };
-
   return (
     <UserLayout>
       <h1 className="text-2xl p-2 px-8">Orders</h1>
-      <FirebaseDataTable
-        query={collection(db, "checkout")}
+      <DataTable
+        data={products}
+        loading={!products}
+        // query={
+        //   (collection(db, "checkout"),
+        //   where("authUserEamil", "==", user?.email))
+        // }
+        // query={collection(db, "checkout")}
         columns={[
           { key: "id", name: "Order" },
           { key: "email", name: "Email" },
@@ -51,8 +55,8 @@ export default function Cart() {
             name: "Name",
             render: (row) => (
               <div className="flex flex-col">
-               <p> {row.fName}</p>
-                <p> {row.lName}</p> 
+                <p> {row.fName}</p>
+                <p> {row.lName}</p>
               </div>
             ),
           },

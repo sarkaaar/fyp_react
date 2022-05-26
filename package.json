@@ -32,6 +32,7 @@
     "react-awesome-mega-menu": "^1.0.3",
     "react-dom": "^17.0.2",
     "react-google-login": "^5.2.2",
+    "react-material-ui-carousel": "^3.3.3",
     "react-router-dom": "^6.2.0",
     "react-scripts": "^5.0.0",
     "react-web-vector-icons": "^1.0.2",

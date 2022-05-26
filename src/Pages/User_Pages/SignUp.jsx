@@ -66,20 +66,20 @@ export default function SignUp() {
   }, [user]);
 
   const signUp = async () => {
-    const _user = {
-      email,
-      phone,
-      password,
-      role: "user",
-      name,
-    };
-
     if (password !== confirmPassword) {
       setErrorMessage("Passwords do not match");
     } else {
       await createUserWithEmailAndPassword(auth, email, password)
-        .then(async () => {
-          console.log("user added to authentication");
+        .then(async (res) => {
+          console.log(res.user.uid);
+          const _user = {
+            email,
+            phone,
+            password,
+            role: "user",
+            name,
+            uid: res.user.uid,
+          };
           await addDoc(usersCollection, _user)
             .then((res) => {
               console.log(res);
