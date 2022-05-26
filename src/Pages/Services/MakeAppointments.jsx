@@ -65,6 +65,7 @@ export default function MakeAppointments() {
       where("date", "==", date)
     );
     await getDocs(q).then((res) => {
+      // setBooked(res.docs.map((doc) => ({ ...doc.data().time })));
       setBooked(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       console.log("booked slots are");
       console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
@@ -118,6 +119,7 @@ export default function MakeAppointments() {
           {doctor?.name}
         </span>
       </h1>
+      <button onClick={() => {console.log(booked)}}>check</button>
 
       <div style={{ width: "300px", margin: "auto" }}>
         <TextField

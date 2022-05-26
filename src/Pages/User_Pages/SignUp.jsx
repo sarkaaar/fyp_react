@@ -37,20 +37,20 @@ export default function SignUp() {
   }, [user]);
 
   const signUp = async () => {
-    const _user = {
-      email,
-      phone,
-      password,
-      role: "user",
-      name,
-    };
-
     if (password !== confirmPassword) {
       setErrorMessage("Passwords do not match");
     } else {
       await createUserWithEmailAndPassword(auth, email, password)
-        .then(async () => {
-          console.log("user added to authentication");
+        .then(async (res) => {
+          console.log(res.user.uid);
+          const _user = {
+            email,
+            phone,
+            password,
+            role: "user",
+            name,
+            uid: res.user.uid,
+          };
           await addDoc(usersCollection, _user)
             .then((res) => {
               console.log(res);
@@ -113,14 +113,12 @@ export default function SignUp() {
                 onChange={(e) => {
                   setEmail(e.target.value);
                 }}
-                
               />
               <TextField
                 style={{ paddingBottom: "15px" }}
                 fullWidth
                 required
                 label="Phone Number"
-                
                 type="text"
                 value={phone}
                 helperText="Type 11 digit numbers Only "
@@ -214,7 +212,7 @@ export default function SignUp() {
         <h1>{user?.email}</h1>
 
       </div> */}
-        {/* <Button onClick={logout}>Logout</Button> */}
-        </>
+      {/* <Button onClick={logout}>Logout</Button> */}
+    </>
   );
 }
