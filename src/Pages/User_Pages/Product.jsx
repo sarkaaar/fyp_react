@@ -3,10 +3,6 @@ import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Box, Button, Typography, Modal, Paper } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
-// import Box from "@mui/material/Box";
-// import Button from "@mui/material/Button";
-// import Typography from "@mui/material/Typography";
-// import Modal from "@mui/material/Modal";
 import UseMainLayout from "../../layouts/UserMainLayout";
 import Home from "@mui/icons-material/Home";
 
@@ -87,6 +83,7 @@ export default function Product() {
       rating,
       prod_id: prod?.id,
       user: user?.email,
+      time:new Date()
     };
 
     user ? await addDoc(reviewsRef, newComment) : setOpen(true);

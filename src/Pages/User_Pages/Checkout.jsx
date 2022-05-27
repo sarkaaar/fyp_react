@@ -24,6 +24,12 @@ import { auth, db } from "../../firebase-config";
 import UseMainLayout from "../../layouts/UserMainLayout";
 
 export default function Checkout() {
+  const navigate = useNavigate();
+  const [user, setUser] = useState();
+  const [total, setTotal] = useState(0);
+  const [products, setProducts] = useState([]);
+  const [product, setProduct] = useState([]);
+
   const [email, setEmail] = useState();
   const [fName, setFName] = useState();
   const [lName, setLName] = useState();
@@ -35,20 +41,32 @@ export default function Checkout() {
   const [NOC, setNOC] = useState();
   const [expiry, setExpiry] = useState();
   const [cvv, setCVV] = useState();
+  const [todayDate, setTodayDate] = useState();
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const navigate = useNavigate();
-  const [user, setUser] = useState();
-  const [total, setTotal] = useState(0);
-  const [products, setProducts] = useState([]);
-  const [product, setProduct] = useState([]);
-
   const cartCollection = collection(db, "cart");
 
+  const today = () => {
+    const date = new Date();
+    const day =
+      String(date.getDate()).length === 1
+        ? "0" + String(date.getDate())
+        : date.getDate();
+
+    const month =
+      String(date.getMonth()).length === 1
+        ? "0" + String(date.getMonth())
+        : date.getMonth();
+    const year = date.getFullYear();
+    setTodayDate(year + "-" + month + "-" + day);
+    console.log(year + "-" + month + "-" + day);
+  };
+
   useEffect(() => {
+    today();
     getTotal();
   }, [products]);
 
@@ -235,16 +253,32 @@ export default function Checkout() {
               }}
             />
             <div className="flex gap-4">
-              <TextField
+              {/* <TextField
                 label="Expiry"
                 fullWidth
                 required
                 type="date"
                 value={expiry}
+                max={todayDate}
                 onChange={(e) => {
                   setExpiry(e.target.value);
                 }}
-              />
+              /> */}
+              <div>
+                {/* <label for="datemin">Enter a date after 2000-01-01:</label> */}
+                <input
+                  className="border-box"
+                  type="date"
+                  placeholder="Expiry"
+                  id="datemin"
+                  name="datemin"
+                  value={expiry}
+                  max={todayDate}
+                  onChange={(e) => {
+                    setExpiry(e.target.value);
+                  }}
+                />
+              </div>
               <TextField
                 label="CVV"
                 fullWidth
