@@ -8,7 +8,7 @@ import Carousel from "react-material-ui-carousel";
 // import Typography from "@mui/material/Typography";
 // import Modal from "@mui/material/Modal";
 import UseMainLayout from "../../layouts/UserMainLayout";
-import Home from '@mui/icons-material/Home';
+import Home from "@mui/icons-material/Home";
 
 import {
   collection,
@@ -16,6 +16,7 @@ import {
   getDoc,
   doc,
   deleteDoc,
+  updateDoc,
   query,
   where,
   getDocs,
@@ -29,17 +30,6 @@ import { db, auth } from "../../firebase-config";
 import Footer from "./Components/Footer";
 
 export default function Product() {
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 400,
-    bgcolor: "background.paper",
-    border: "2px solid #000",
-    boxShadow: 24,
-    p: 4,
-  };
   const { id } = useParams();
   const cartRef = collection(db, "cart");
   const reviewsRef = collection(db, "reviews");
@@ -167,14 +157,14 @@ export default function Product() {
       });
   };
 
-  const cartCollection = collection(db, "cart");
-  const getCartItems = async () => {
-    const q = await query(cartCollection, where("user", "==", user?.email));
-    await getDocs(q).then((res) => {
-      setProducts(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-      console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    });
-  };
+  // const cartCollection = collection(db, "cart");
+  // const getCartItems = async () => {
+  //   const q = await query(cartCollection, where("user", "==", user?.email));
+  //   await getDocs(q).then((res) => {
+  //     setProducts(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  //     console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  //   });
+  // };
 
   const addToCart = async () => {
     setAddStatus(true);
@@ -182,16 +172,42 @@ export default function Product() {
       user: user?.email,
       quantity: qty,
       product: prod,
+      p_id: prod?.id,
     };
 
-    user
-      ? await addDoc(cartRef, newProduct).then(() => {
-          setAddStatus(false);
-          navigate("/cart");
-        })
-      : setOpen(true);
-    console.log("Product Added Sucessfully");
-    getCartItems();
+    await getDocs(
+      query(cartRef, where("user", "==", user?.email), where("p_id", "==", id))
+    ).then(async (res) => {
+      const data = res.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      console.log("data =", data);
+      console.log("item already in cart");
+
+      data.length != 0
+        ? await updateDoc(doc(db, "cart", data[0].id), {
+            quantity: data[0].quantity + qty,
+          })
+            .then((res) => {
+              console.log("value updated");
+              console.log(res);
+              setAddStatus(false);
+            })
+            .catch((e) => {
+              console.log(e);
+            })
+        : await addDoc(cartRef, newProduct)
+            .then((res) => {
+              setAddStatus(false);
+              console.log("new cart item created");
+              // navigate("/cart");
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+    });
+    //   :setOpen(true);
   };
 
   const getFav = async () => {
@@ -204,7 +220,7 @@ export default function Product() {
     await getDocs(q)
       .then((res) => {
         setFavourite(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-        console.log(res);
+        // console.log(res);
       })
       .catch((e) => {
         console.log(e);
@@ -222,19 +238,18 @@ export default function Product() {
               <div className="w-full lg:w-1/2 flex flex-row justify-end">
                 <Carousel
                   activeIndicatorIconButtonProps={{
-                      style: {
-                          color: 'blue' // 2
-                      }
+                    style: {
+                      color: "blue", // 2
+                    },
                   }}
                   indicatorContainerProps={{
-                      style: {
-                          display: 'flex',
-                          textAlign: 'center',
-                          height: '80%',
-                          justifyContent: 'center',
-                          alignItems: 'end',
-                      }
-              
+                    style: {
+                      display: "flex",
+                      textAlign: "center",
+                      height: "80%",
+                      justifyContent: "center",
+                      alignItems: "end",
+                    },
                   }}
                   navButtonsAlwaysInvisible={true}
                   className=" h-full w-full"
@@ -449,7 +464,19 @@ export default function Product() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Warning
           </Typography>

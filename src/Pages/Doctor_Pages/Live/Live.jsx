@@ -87,11 +87,7 @@ function Videos({ mode, callId, setPage }) {
 
     if (mode === "create") {
       const callDoc = doc(collection(db, "calls"));
-      // const productsCollection = collection(db, "products");
-
       const offerCandidates = collection(callDoc, "offerCandidates");
-      // const offerCandidates = callDoc.collection("offerCandidates");
-
       const answerCandidates = collection(callDoc, "answerCandidates");
 
       setRoomId(callDoc.id);

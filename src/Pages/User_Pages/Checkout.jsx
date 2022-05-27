@@ -47,6 +47,7 @@ export default function Checkout(data) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+<<<<<<< HEAD
   const style = {
     position: "absolute",
     top: "50%",
@@ -58,6 +59,13 @@ export default function Checkout(data) {
     boxShadow: 24,
     p: 4,
   };
+=======
+  const navigate = useNavigate();
+  const [user, setUser] = useState();
+  const [total, setTotal] = useState(0);
+  const [products, setProducts] = useState([]);
+  const [product, setProduct] = useState([]);
+>>>>>>> c1e637e9862a32b25eea284fea28aa43c0cd2f59
 
   const cartCollection = collection(db, "cart");
 
@@ -92,6 +100,7 @@ export default function Checkout(data) {
     getUserInfo();
   }, [user]);
 
+<<<<<<< HEAD
   const getUserInfo = async () => {
     if (user) {
       const q = query(usersRef, where("email", "==", user?.email));
@@ -109,6 +118,8 @@ export default function Checkout(data) {
     }
   };
 
+=======
+>>>>>>> c1e637e9862a32b25eea284fea28aa43c0cd2f59
   const checkoutRef = collection(db, "checkout");
 
   const checkout = async () => {
@@ -125,6 +136,7 @@ export default function Checkout(data) {
       NOC,
       expiry,
       cvv,
+      total,
       cart: products,
     };
 
@@ -283,6 +295,7 @@ export default function Checkout(data) {
             </div>
 
             <Button
+              type="submit"
               fullWidth
               variant="outlined"
               style={{ height: "50px" }}
@@ -336,7 +349,19 @@ export default function Checkout(data) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
           <Typography
             id="modal-modal-title"
             variant="h6"

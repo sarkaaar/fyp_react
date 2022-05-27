@@ -3,12 +3,14 @@ import { Button, TextField } from "@mui/material";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import { useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
-import { db } from "../../firebase-config";
+import { db, auth } from "../../firebase-config";
 import AdminLayout from "../../layouts/AdminLayout";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export default function AddDoctor() {
   const doctorsCollection = collection(db, "doctors");
-  const availabilityRef = collection(db, "available_days");
+  const usersCollection = collection(db, "users");
+  // const availabilityRef = collection(db, "available_days");
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -56,6 +58,26 @@ export default function AddDoctor() {
     await addDoc(doctorsCollection, newDoctor).then(async (res) => {
       console.log(res);
       console.log("Doctor Added Sucessfully");
+      await createUserWithEmailAndPassword(auth, email, password).then(
+        async (res) => {
+          console.log(res.user.uid);
+          const _user = {
+            email,
+            password,
+            role: "doctor",
+            name,
+            uid: res.user.uid,
+          };
+          await addDoc(usersCollection, _user)
+            .then((res) => {
+              console.log(res);
+              navigate("/");
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      );
       // await addDoc(availabilityRef, { doc_id: res.id, days }).then((res) => {
       //   console.log(res);
       //   console.log("added");
@@ -89,27 +111,26 @@ export default function AddDoctor() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                   />
-                  <div className="border-box">
-                    <TextField
-                      margin="normal"
-                      required
-                      fullWidth
-                      label="Email"
-                      autoFocus
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <TextField
-                      margin="normal"
-                      required
-                      fullWidth
-                      label="Password"
-                      autoFocus
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      type="password"
-                    />
-                  </div>
+
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    label="Email"
+                    autoFocus
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    label="Password"
+                    autoFocus
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    type="password"
+                  />
                   <TextField
                     margin="normal"
                     required

@@ -46,7 +46,7 @@ export default function Cart() {
   };
 
   const getCartItems = async () => {
-    const q = await query(cartCollection, where("user", "==", user?.email));
+    const q = query(cartCollection, where("user", "==", user?.email));
     const queryResults = await getDocs(q);
     setProducts(
       queryResults.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
@@ -150,7 +150,7 @@ export default function Cart() {
                                   <p className="text-gray-500">
                                     Qty {product?.quantity}
                                   </p>
-                                  <div className="flex items-end justify-between w-36 h-8 rounded border border-solid border-gray-400">
+                                  {/* <div className="flex items-end justify-between w-36 h-8 rounded border border-solid border-gray-400">
                                     <MinusIcon 
                                       className="w-4 h-5 border border-solid border-gray-100"
                                       onClick={decrementCounter}/>
@@ -160,7 +160,7 @@ export default function Cart() {
                                     <PlusIcon 
                                       className="w-4 h-5 border border-solid border-gray-100"
                                       onClick={incrementCounter}/>
-                                  </div>
+                                  </div> */}
 
                                   <div className="">
                                     <button

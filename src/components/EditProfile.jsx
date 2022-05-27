@@ -47,7 +47,11 @@ export default function EditProfile({ data, modalState }) {
   const [profile, setProfile] = useState();
 
   const getProfile = async () => {
+<<<<<<< HEAD
     const q = await query(profileRef, where("authUserEamil", "==", user?.email));
+=======
+    const q = query(ordersRef, where("authUserEamil", "==", user?.email));
+>>>>>>> c1e637e9862a32b25eea284fea28aa43c0cd2f59
     await getDocs(q)
       .then((res) => {
         setProfile(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
