@@ -23,17 +23,16 @@ import Footer from "./Components/Footer";
 import { auth, db } from "../../firebase-config";
 import UseMainLayout from "../../layouts/UserMainLayout";
 
-export default function Checkout(data) {
+export default function Checkout() {
   const navigate = useNavigate();
-  const [queryUser, setQueryUser] = useState();
   const [user, setUser] = useState();
   const [total, setTotal] = useState(0);
   const [products, setProducts] = useState([]);
   const [product, setProduct] = useState([]);
+  const [queryUser, setQueryUser] = useState([]);
 
   const [email, setEmail] = useState();
   const [fName, setFName] = useState();
-  const [lName, setLName] = useState();
   const [address, setAddress] = useState();
   const [city, setCity] = useState();
   const [postal, setPostal] = useState();
@@ -42,34 +41,32 @@ export default function Checkout(data) {
   const [NOC, setNOC] = useState();
   const [expiry, setExpiry] = useState();
   const [cvv, setCVV] = useState();
+  const [todayDate, setTodayDate] = useState();
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-<<<<<<< HEAD
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 400,
-    bgcolor: "background.paper",
-    border: "2px solid #000",
-    boxShadow: 24,
-    p: 4,
-  };
-=======
-  const navigate = useNavigate();
-  const [user, setUser] = useState();
-  const [total, setTotal] = useState(0);
-  const [products, setProducts] = useState([]);
-  const [product, setProduct] = useState([]);
->>>>>>> c1e637e9862a32b25eea284fea28aa43c0cd2f59
-
   const cartCollection = collection(db, "cart");
 
+  const today = () => {
+    const date = new Date();
+    const day =
+      String(date.getDate()).length === 1
+        ? "0" + String(date.getDate())
+        : date.getDate();
+
+    const month =
+      String(date.getMonth()).length === 1
+        ? "0" + String(date.getMonth())
+        : date.getMonth();
+    const year = date.getFullYear();
+    setTodayDate(year + "-" + month + "-" + day);
+    console.log(year + "-" + month + "-" + day);
+  };
+
   useEffect(() => {
+    today();
     getTotal();
   }, [products]);
 
@@ -80,7 +77,6 @@ export default function Checkout(data) {
     });
     setTotal(num);
   };
-
   const getCartItems = async () => {
     const q = await query(cartCollection, where("user", "==", user?.email));
     const queryResults = await getDocs(q);
@@ -90,36 +86,15 @@ export default function Checkout(data) {
     console.log(products);
   };
 
-  const usersRef = collection(db, "users");
-
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
+    getCartItems();
 
     getUserInfo();
   }, [user]);
 
-<<<<<<< HEAD
-  const getUserInfo = async () => {
-    if (user) {
-      const q = query(usersRef, where("email", "==", user?.email));
-      await getDocs(q)
-        .then((res) => {
-          const data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-          setQueryUser(data[0]);
-          setEmail(data[0].email);
-          console.log(data[0].email);
-          // console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  };
-
-=======
->>>>>>> c1e637e9862a32b25eea284fea28aa43c0cd2f59
   const checkoutRef = collection(db, "checkout");
 
   const checkout = async () => {
@@ -127,7 +102,7 @@ export default function Checkout(data) {
       authUserEamil: user?.email,
       email,
       fName,
-      lName,
+      
       address,
       city,
       postal,
@@ -153,12 +128,7 @@ export default function Checkout(data) {
             await getDoc(doc(db, "products", item?.id)).then(async (res) => {
               setProduct({ id: res.id, ...res.data() });
               console.log({ id: res.id, ...res.data() });
-              // const subCat_doc = doc(db, "products", item?.id);
-
-              // const udatedProduct = {product.variants[0]:(variants[0]-item.qty)}
-              // await updateDoc(doc(db, "products", id), variants[0]);
             });
-            // for inventory update getDoc(id).then(qty-update karni hay)
           });
           getCartItems();
 
@@ -171,6 +141,24 @@ export default function Checkout(data) {
         console.log(e);
       });
     console.log("Checkout Successfull");
+  };
+  const usersRef = collection(db, "users");
+
+  const getUserInfo = async () => {
+    if (user) {
+      const q = query(usersRef, where("email", "==", user?.email));
+      await getDocs(q)
+        .then((res) => {
+          const data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+          setQueryUser(data[0]);
+          setEmail(data[0]?.email);
+
+          console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   return (
@@ -192,11 +180,13 @@ export default function Checkout(data) {
             <h1 className="text-2xl font-bold">Contact Information</h1>
             <TextField
               label="Email Address"
+              InputLabelProps={{
+                shrink: true,
+              }}
               fullWidth
               required
               type="email"
               value={email}
-              InputLabelProps={{ shrink: true }}
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
@@ -272,17 +262,32 @@ export default function Checkout(data) {
               }}
             />
             <div className="flex gap-4">
-              <TextField
+              {/* <TextField
                 label="Expiry"
-                InputLabelProps={{ shrink: true }}
                 fullWidth
                 required
                 type="date"
                 value={expiry}
+                max={todayDate}
                 onChange={(e) => {
                   setExpiry(e.target.value);
                 }}
-              />
+              /> */}
+              <div>
+                {/* <label for="datemin">Enter a date after 2000-01-01:</label> */}
+                <input
+                  className="border-box"
+                  type="date"
+                  placeholder="Expiry"
+                  id="datemin"
+                  name="datemin"
+                  value={expiry}
+                  max={todayDate}
+                  onChange={(e) => {
+                    setExpiry(e.target.value);
+                  }}
+                />
+              </div>
               <TextField
                 label="CVV"
                 fullWidth

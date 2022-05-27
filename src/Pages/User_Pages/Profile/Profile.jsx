@@ -15,7 +15,8 @@ import {
 import { onAuthStateChanged } from "firebase/auth";
 import Modal from "@mui/material/Modal";
 import UserLayout from "../../../layouts/UserLayout";
-import EditProfile from "../../../components/EditProfile.jsx";
+import EditProfile from "../../../components/EditProfile";
+import { Button } from "@mui/material";
 export default function Profile() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   // const [editOpen, setEditOpen] = useState(false);
@@ -23,6 +24,9 @@ export default function Profile() {
   const [queryUser, setQueryUser] = useState([]);
   const [user, setUser] = useState();
   const [editOpen, setEditOpen] = useState(false);
+  const handleClose = () => {
+    setEditOpen(false);
+  };
 
   const usersRef = collection(db, "users");
 
@@ -39,7 +43,7 @@ export default function Profile() {
       const q = query(usersRef, where("email", "==", user?.email));
       await getDocs(q)
         .then((res) => {
-          const data =res.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+          const data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
           setQueryUser(data[0]);
           console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
         })
@@ -135,7 +139,6 @@ export default function Profile() {
                           }}
                           type="submit"
                           className="inline-flex justify-center rounded-md border border-transparent bg-gray-800 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
-                        
                         >
                           Edit Profile
                         </button>
@@ -149,8 +152,9 @@ export default function Profile() {
           </div>
         </div>
       </div>
+
       <Modal
-   sx={{mb:70 ,ml: 'auto', mr: 'auto'}}
+        sx={{ mb: 70, ml: "auto", mr: "auto" }}
         open={editOpen}
         onClose={() => {
           setEditOpen(false);
@@ -160,6 +164,14 @@ export default function Profile() {
         aria-describedby="modal-modal-description"
       >
         <div className="border-box absolute inset-1/2 h-fit w-96 bg-white p-4 drop-shadow-2xl">
+          <Button
+            onClick={() => {
+              setEditOpen(false);
+            }}
+            sx={{size:"3xl", mb:3}}
+          >
+            X
+          </Button>
           <EditProfile data={queryUser} />
         </div>
       </Modal>
