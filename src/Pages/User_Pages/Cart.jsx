@@ -46,7 +46,7 @@ export default function Cart() {
   };
 
   const getCartItems = async () => {
-    const q = await query(cartCollection, where("user", "==", user?.email));
+    const q = query(cartCollection, where("user", "==", user?.email));
     const queryResults = await getDocs(q);
     setProducts(
       queryResults.docs.map((doc) => ({ ...doc.data(), id: doc.id }))

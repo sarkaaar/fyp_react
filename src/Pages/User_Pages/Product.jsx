@@ -8,11 +8,8 @@ import Carousel from "react-material-ui-carousel";
 // import Typography from "@mui/material/Typography";
 // import Modal from "@mui/material/Modal";
 import UseMainLayout from "../../layouts/UserMainLayout";
-<<<<<<< HEAD
-=======
-import Home from '@mui/icons-material/Home';
+import Home from "@mui/icons-material/Home";
 
->>>>>>> refs/remotes/origin/main
 import {
   collection,
   addDoc,
@@ -236,38 +233,23 @@ export default function Product() {
           <h1 className="ml-24 mb-4 text-xl font-semibold">
             {prod?.category} {"->"} {prod?.subCategory}
           </h1>
-<<<<<<< HEAD
-
-          <div className="lg:w-4/5 mx-auto flex flex-wrap">
-            <img
-              alt="ecommerce"
-              className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"
-              src={prod?.image ? prod?.image[0] : Placeholder}
-            />
-            <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
-              <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
-                {prod?.name}
-              </h1>
-              <div className="flex mb-4">
-=======
           <div className="mx-auto flex flex-wrap lg:w-4/5">
             {prod?.image ? (
               <div className="w-full lg:w-1/2 flex flex-row justify-end">
                 <Carousel
                   activeIndicatorIconButtonProps={{
-                      style: {
-                          color: 'blue' // 2
-                      }
+                    style: {
+                      color: "blue", // 2
+                    },
                   }}
                   indicatorContainerProps={{
-                      style: {
-                          display: 'flex',
-                          textAlign: 'center',
-                          height: '80%',
-                          justifyContent: 'center',
-                          alignItems: 'end',
-                      }
-              
+                    style: {
+                      display: "flex",
+                      textAlign: "center",
+                      height: "80%",
+                      justifyContent: "center",
+                      alignItems: "end",
+                    },
                   }}
                   navButtonsAlwaysInvisible={true}
                   className=" h-full w-full"
@@ -295,7 +277,6 @@ export default function Product() {
                 {prod?.name}
               </h1>
               <div className="mb-4 flex">
->>>>>>> refs/remotes/origin/main
                 <Rating value={totalRating} readOnly />
               </div>
               <p className="leading-relaxed">{prod?.description}</p>
