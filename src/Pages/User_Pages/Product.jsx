@@ -1,12 +1,18 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import Placeholder from "../../assets/images/placeholder_products.jpg";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
+import { Box, Button, Typography, Modal, Paper } from "@mui/material";
+import Carousel from "react-material-ui-carousel";
+// import Box from "@mui/material/Box";
+// import Button from "@mui/material/Button";
+// import Typography from "@mui/material/Typography";
+// import Modal from "@mui/material/Modal";
 import UseMainLayout from "../../layouts/UserMainLayout";
+<<<<<<< HEAD
+=======
+import Home from '@mui/icons-material/Home';
+
+>>>>>>> refs/remotes/origin/main
 import {
   collection,
   addDoc,
@@ -46,8 +52,6 @@ export default function Product() {
   const [products, setProducts] = useState([]);
   const [addStatus, setAddStatus] = useState(false);
   const [totalRating, setTotalRating] = useState(0);
-
-  const [response, setResponse] = useState();
 
   const incrementCounter = () => {
     if (qty === prod.variants[0][1]) {
@@ -89,7 +93,7 @@ export default function Product() {
     };
 
     user ? await addDoc(reviewsRef, newComment) : setOpen(true);
-    console.log("Comment Added Sucessfully");
+    // console.log("Comment Added Sucessfully");
     getComment();
   };
 
@@ -99,7 +103,6 @@ export default function Product() {
     await getDocs(q)
       .then((res) => {
         setgetComments(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-        console.log(res);
       })
       .catch((e) => {
         console.log(e);
@@ -109,7 +112,6 @@ export default function Product() {
   function calRating() {
     let r = 0;
     getcomments?.map((item) => {
-      // console.log(item.rating);
       r += item.rating;
     });
     r = r / getcomments?.length;
@@ -229,11 +231,12 @@ export default function Product() {
   };
   return (
     <UseMainLayout>
-      <section className="text-gray-700 body-font overflow-hidden bg-white">
-        <div className="container p-4 mx-auto">
+      <section className="body-font overflow-hidden bg-white text-gray-700">
+        <div className="container mx-auto p-4">
           <h1 className="ml-24 mb-4 text-xl font-semibold">
             {prod?.category} {"->"} {prod?.subCategory}
           </h1>
+<<<<<<< HEAD
 
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
             <img
@@ -246,14 +249,61 @@ export default function Product() {
                 {prod?.name}
               </h1>
               <div className="flex mb-4">
+=======
+          <div className="mx-auto flex flex-wrap lg:w-4/5">
+            {prod?.image ? (
+              <div className="w-full lg:w-1/2 flex flex-row justify-end">
+                <Carousel
+                  activeIndicatorIconButtonProps={{
+                      style: {
+                          color: 'blue' // 2
+                      }
+                  }}
+                  indicatorContainerProps={{
+                      style: {
+                          display: 'flex',
+                          textAlign: 'center',
+                          height: '80%',
+                          justifyContent: 'center',
+                          alignItems: 'end',
+                      }
+              
+                  }}
+                  navButtonsAlwaysInvisible={true}
+                  className=" h-full w-full"
+                >
+                  {prod?.image.map((item) => (
+                    <img
+                      className="rounded border border-gray-200 object-cover object-center lg:w-1/2 "
+                      src={item}
+                    />
+                  ))}
+                </Carousel>
+              </div>
+            ) : (
+              //   <img
+              //   alt={prod?.description}
+              //   className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"
+              //   src={prod.image[0]}
+              // />
+              <div className="flex h-full w-full items-center justify-center rounded border border-gray-200 object-cover object-center lg:w-1/2">
+                <div className="h-40 w-40 animate-spin rounded-full border-t-4 border-b-4 border-blue-900" />
+              </div>
+            )}
+            <div className="mt-6 w-full lg:mt-0 lg:w-1/2 lg:py-6 lg:pl-10">
+              <h1 className="title-font mb-1 text-3xl font-medium text-gray-900">
+                {prod?.name}
+              </h1>
+              <div className="mb-4 flex">
+>>>>>>> refs/remotes/origin/main
                 <Rating value={totalRating} readOnly />
               </div>
               <p className="leading-relaxed">{prod?.description}</p>
-              <div className="flex justify-between mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
-                <div className="flex ml-6 items-center">
+              <div className="mt-6 mb-5 flex items-center justify-between border-b-2 border-gray-200 pb-5">
+                <div className="ml-6 flex items-center">
                   <span className="mr-3">Variant</span>
                   <div className="relative">
-                    <select className="rounded border appearance-none border-gray-400 py-2 focus:outline-none focus:border-red-500 text-base pl-3 pr-10">
+                    <select className="appearance-none rounded border border-gray-400 py-2 pl-3 pr-10 text-base focus:border-red-500 focus:outline-none">
                       {prod &&
                         Object.keys(prod.variants).map((key) => {
                           const variant = prod?.variants[key];
@@ -263,22 +313,22 @@ export default function Product() {
                   </div>
                 </div>
                 {/* Quantity Picker */}
-                <div className="flex m-4 border-box">
+                <div className="border-box m-4 flex">
                   <Button
-                    className=" w-16 h-12"
+                    className=" h-12 w-16"
                     style={{ border: "2px solid gray" }}
                     onClick={decrementCounter}
                   >
                     <RemoveIcon />
                   </Button>
                   <div
-                    className="w-20 h-12"
+                    className="h-12 w-20"
                     style={{ border: "2px solid gray", padding: 5 }}
                   >
                     <span className="p-2 px-6 text-2xl">{qty}</span>
                   </div>
                   <Button
-                    className="w-16 h-12 m-2"
+                    className="m-2 h-12 w-16"
                     style={{ border: "2px solid gray" }}
                     onClick={incrementCounter}
                   >
@@ -287,27 +337,27 @@ export default function Product() {
                 </div>
               </div>
               <div className="flex justify-between">
-                <span className="title-font font-medium text-2xl text-gray-900">
+                <span className="title-font text-2xl font-medium text-gray-900">
                   UNIT= Rs.{prod?.salePrice}
                 </span>
-                <span className=" font-medium text-xl text-gray-900">
+                <span className=" text-xl font-medium text-gray-900">
                   x{qty}
                 </span>
 
-                <span className="title-font font-medium text-2xl text-gray-900">
+                <span className="title-font text-2xl font-medium text-gray-900">
                   Rs. {qty * prod?.salePrice}
                 </span>
               </div>
-              <div className="flex mt-4">
+              <div className="mt-4 flex">
                 {addStatus ? (
                   <button
                     type="button"
-                    className=" w-11/12 h-12 bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    className=" flex h-12 w-11/12 items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     disabled
                   >
                     <svg
                       role="status"
-                      className="mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                      className="mr-2 h-8 w-8 animate-spin fill-blue-600 text-gray-200 dark:text-gray-600"
                       viewBox="0 0 100 101"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
@@ -328,14 +378,14 @@ export default function Product() {
                     onClick={() => {
                       addToCart();
                     }}
-                    className=" w-11/12 h-12 bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    className=" flex h-12 w-11/12 items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                   >
                     Add to Cart
                   </button>
                 )}
                 {loader ? (
-                  <div className=" w-1/12 h-12 rounded-md bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
-                    <div className="w-4 h-4 border-t-4 border-b-4 border-blue-900 rounded-full animate-spin" />
+                  <div className=" ml-4 inline-flex h-12 w-1/12 items-center justify-center rounded-md border-0 bg-gray-200 p-0 text-gray-500">
+                    <div className="h-4 w-4 animate-spin rounded-full border-t-4 border-b-4 border-blue-900" />
                   </div>
                 ) : (
                   <>
@@ -344,14 +394,14 @@ export default function Product() {
                         onClick={() => {
                           removeFavourites(favourite[0]?.id);
                         }}
-                        className=" w-1/12 h-12 rounded-md bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4"
+                        className=" ml-4 inline-flex h-12 w-1/12 items-center justify-center rounded-md border-0 bg-gray-200 p-0 text-gray-500"
                       >
                         <svg
                           fill="red"
                           strokeLinecap="round"
                           strokeLinejoin="round"
                           strokeWidth="2"
-                          className="w-5 h-5"
+                          className="h-5 w-5"
                           viewBox="0 0 24 24"
                         >
                           <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
@@ -362,14 +412,14 @@ export default function Product() {
                         onClick={() => {
                           addToFavourites();
                         }}
-                        className=" w-1/12 h-12 rounded-md bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4"
+                        className=" ml-4 inline-flex h-12 w-1/12 items-center justify-center rounded-md border-0 bg-gray-200 p-0 text-gray-500"
                       >
                         <svg
                           fill="currentColor"
                           strokeLinecap="round"
                           strokeLinejoin="round"
                           strokeWidth="2"
-                          className="w-5 h-5"
+                          className="h-5 w-5"
                           viewBox="0 0 24 24"
                         >
                           <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
@@ -380,7 +430,7 @@ export default function Product() {
                 )}
               </div>
             </div>
-            <div className="p-4 shadow-md w-full">
+            <div className="w-full p-4 shadow-md">
               <div className="flex justify-between p-2">
                 <h3 className="text-gray-600">Write a Review</h3>
                 <Rating
@@ -391,7 +441,7 @@ export default function Product() {
                 />
               </div>
               <textarea
-                className="w-full p-2 mb-2 form-control block border border-solid border-gray-300"
+                className="form-control mb-2 block w-full border border-solid border-gray-300 p-2"
                 rows="3"
                 value={comments}
                 onChange={(e) => {
@@ -411,7 +461,7 @@ export default function Product() {
               <div>
                 {getcomments?.map((item, key) => (
                   <>
-                    <div className="flex justify-between mt-2">
+                    <div className="mt-2 flex justify-between">
                       <h1>{item?.user}</h1>
                       <Rating readOnly value={item?.rating} />
                     </div>

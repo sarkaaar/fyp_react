@@ -38,7 +38,7 @@ export default function UserMainLayout({ children, props }) {
     getCartItems();
     getDBUser();
 
-    dbUser?.role === "admin"
+    dbUser.role === "admin"
       ? setProfileURL("/admin/profile")
       : setProfileURL("/profile");
   }, [user]);

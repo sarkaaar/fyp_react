@@ -40,17 +40,6 @@ export default function Checkout() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 400,
-    bgcolor: "background.paper",
-    border: "2px solid #000",
-    boxShadow: 24,
-    p: 4,
-  };
   const navigate = useNavigate();
   const [user, setUser] = useState();
   const [total, setTotal] = useState(0);
@@ -86,7 +75,6 @@ export default function Checkout() {
     getCartItems();
   }, [user]);
 
-
   const checkoutRef = collection(db, "checkout");
 
   const checkout = async () => {
@@ -103,6 +91,7 @@ export default function Checkout() {
       NOC,
       expiry,
       cvv,
+      total,
       cart: products,
     };
 
@@ -115,7 +104,7 @@ export default function Checkout() {
 
           await deleteDoc(prod).then(async () => {
             console.log("Product Sucessfully Deleted");
-            
+
             await getDoc(doc(db, "products", item?.id)).then(async (res) => {
               setProduct({ id: res.id, ...res.data() });
               console.log({ id: res.id, ...res.data() });
@@ -268,6 +257,7 @@ export default function Checkout() {
             </div>
 
             <Button
+              type="submit"
               fullWidth
               variant="outlined"
               style={{ height: "50px" }}
@@ -321,7 +311,19 @@ export default function Checkout() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
           <Typography
             id="modal-modal-title"
             variant="h6"

@@ -150,7 +150,7 @@ export default function Cart() {
                                   <p className="text-gray-500">
                                     Qty {product?.quantity}
                                   </p>
-                                  <div className="flex items-end justify-between w-36 h-8 rounded border border-solid border-gray-400">
+                                  {/* <div className="flex items-end justify-between w-36 h-8 rounded border border-solid border-gray-400">
                                     <MinusIcon 
                                       className="w-4 h-5 border border-solid border-gray-100"
                                       onClick={decrementCounter}/>
@@ -160,9 +160,9 @@ export default function Cart() {
                                     <PlusIcon 
                                       className="w-4 h-5 border border-solid border-gray-100"
                                       onClick={incrementCounter}/>
-                                  </div>
+                                  </div> */}
 
-                                  <div className="flex">
+                                  <div className="">
                                     <button
                                       type="button"
                                       className="font-medium text-indigo-600 hover:text-indigo-500"
