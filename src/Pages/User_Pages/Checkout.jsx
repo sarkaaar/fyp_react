@@ -32,7 +32,7 @@ export default function Checkout() {
   const [queryUser, setQueryUser] = useState([]);
 
   const [email, setEmail] = useState();
-  const [fName, setFName] = useState();
+  const [name, setName] = useState();
   const [address, setAddress] = useState();
   const [city, setCity] = useState();
   const [postal, setPostal] = useState();
@@ -101,7 +101,7 @@ export default function Checkout() {
     const newItem = {
       authUserEamil: user?.email,
       email,
-      fName,
+      Name,
       
       address,
       city,
@@ -152,6 +152,8 @@ export default function Checkout() {
           const data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
           setQueryUser(data[0]);
           setEmail(data[0]?.email);
+          setPhone(data[0]?.phone);
+          setName(data[0]?.name);
 
           console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
         })
@@ -195,17 +197,23 @@ export default function Checkout() {
             <h1 className="text-2xl font-bold">Shipping Information</h1>
             <div className="flex gap-4">
               <TextField
-                label="First Name"
+                label="Name"
+                InputLabelProps={{
+                  shrink: true,
+                }}
                 fullWidth
                 required
-                value={fName}
+                value={name}
                 onChange={(e) => {
-                  setFName(e.target.value);
+                  setName(e.target.value);
                 }}
               />
             </div>
             <TextField
               label="Address"
+              InputLabelProps={{
+                shrink: true,
+              }}
               fullWidth
               required
               value={address}
@@ -216,6 +224,9 @@ export default function Checkout() {
 
             <TextField
               label="City"
+              InputLabelProps={{
+                shrink: true,
+              }}
               fullWidth
               required
               value={city}
@@ -225,6 +236,9 @@ export default function Checkout() {
             />
             <TextField
               label="Postal Code"
+              InputLabelProps={{
+                shrink: true,
+              }}
               fullWidth
               required
               value={postal}
@@ -234,6 +248,9 @@ export default function Checkout() {
             />
             <TextField
               label="Phone"
+              InputLabelProps={{
+                shrink: true,
+              }}
               fullWidth
               required
               value={phone}
