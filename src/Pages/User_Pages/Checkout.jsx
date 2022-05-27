@@ -23,7 +23,14 @@ import Footer from "./Components/Footer";
 import { auth, db } from "../../firebase-config";
 import UseMainLayout from "../../layouts/UserMainLayout";
 
-export default function Checkout() {
+export default function Checkout(data) {
+  const navigate = useNavigate();
+  const [queryUser, setQueryUser] = useState();
+  const [user, setUser] = useState();
+  const [total, setTotal] = useState(0);
+  const [products, setProducts] = useState([]);
+  const [product, setProduct] = useState([]);
+
   const [email, setEmail] = useState();
   const [fName, setFName] = useState();
   const [lName, setLName] = useState();
@@ -51,11 +58,6 @@ export default function Checkout() {
     boxShadow: 24,
     p: 4,
   };
-  const navigate = useNavigate();
-  const [user, setUser] = useState();
-  const [total, setTotal] = useState(0);
-  const [products, setProducts] = useState([]);
-  const [product, setProduct] = useState([]);
 
   const cartCollection = collection(db, "cart");
 
@@ -70,6 +72,7 @@ export default function Checkout() {
     });
     setTotal(num);
   };
+
   const getCartItems = async () => {
     const q = await query(cartCollection, where("user", "==", user?.email));
     const queryResults = await getDocs(q);
@@ -79,13 +82,32 @@ export default function Checkout() {
     console.log(products);
   };
 
+  const usersRef = collection(db, "users");
+
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
-    getCartItems();
+
+    getUserInfo();
   }, [user]);
 
+  const getUserInfo = async () => {
+    if (user) {
+      const q = query(usersRef, where("email", "==", user?.email));
+      await getDocs(q)
+        .then((res) => {
+          const data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+          setQueryUser(data[0]);
+          setEmail(data[0].email);
+          console.log(data[0].email);
+          // console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
 
   const checkoutRef = collection(db, "checkout");
 
@@ -115,7 +137,7 @@ export default function Checkout() {
 
           await deleteDoc(prod).then(async () => {
             console.log("Product Sucessfully Deleted");
-            
+
             await getDoc(doc(db, "products", item?.id)).then(async (res) => {
               setProduct({ id: res.id, ...res.data() });
               console.log({ id: res.id, ...res.data() });
@@ -141,8 +163,8 @@ export default function Checkout() {
 
   return (
     <UseMainLayout>
-      <div className="min-h-full flex gap-4 items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-xl">
+      <div className="flex min-h-full items-center justify-center gap-4 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-md space-y-8 rounded-xl bg-white p-10">
           <div>
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
               Checkout
@@ -162,6 +184,7 @@ export default function Checkout() {
               required
               type="email"
               value={email}
+              InputLabelProps={{ shrink: true }}
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
@@ -176,15 +199,6 @@ export default function Checkout() {
                 value={fName}
                 onChange={(e) => {
                   setFName(e.target.value);
-                }}
-              />
-              <TextField
-                label="Last Name"
-                fullWidth
-                required
-                value={lName}
-                onChange={(e) => {
-                  setLName(e.target.value);
                 }}
               />
             </div>
@@ -248,6 +262,7 @@ export default function Checkout() {
             <div className="flex gap-4">
               <TextField
                 label="Expiry"
+                InputLabelProps={{ shrink: true }}
                 fullWidth
                 required
                 type="date"
@@ -280,23 +295,23 @@ export default function Checkout() {
           </form>
         </div>
 
-        <div className="w-96 m-2 p-2">
+        <div className="m-2 w-96 p-2">
           <div>
             <h1 className=" text-3xl font-bold">In The Cart</h1>
             {products.length === 0 && (
-              <div className="grid place-items-center h-screen">
-                <div className="w-20 h-20 border-t-4 border-b-4 border-blue-900 rounded-full animate-spin" />
+              <div className="grid h-screen place-items-center">
+                <div className="h-20 w-20 animate-spin rounded-full border-t-4 border-b-4 border-blue-900" />
               </div>
             )}
             <div>
               {products.map((item, key) => (
-                <div key={key} className=" flex justify-between w-96">
-                  <h1 className="text-xl m-2">
+                <div key={key} className=" flex w-96 justify-between">
+                  <h1 className="m-2 text-xl">
                     {item?.product?.name.split(0, 20)}
                   </h1>
-                  <h1 className="text-xl m-2">{item?.quantity}</h1>
-                  <h1 className="text-xl m-2">{item?.product?.salePrice}</h1>
-                  <h1 className="text-xl m-2">
+                  <h1 className="m-2 text-xl">{item?.quantity}</h1>
+                  <h1 className="m-2 text-xl">{item?.product?.salePrice}</h1>
+                  <h1 className="m-2 text-xl">
                     {parseInt(item?.product?.salePrice) *
                       parseInt(item?.quantity)}
                   </h1>

@@ -5,7 +5,10 @@ import maps from "../../assets/images/maps.jpg";
 import mAppointments from "../../assets/images/makeappointments.png";
 import UseMainLayout from "../../layouts/UserMainLayout";
 
+
+
 export default function Services() {
+  
   return (
     <UseMainLayout>
       <div className="relative pt-36 px-auto bg-white overflow-hidden">
@@ -111,7 +114,9 @@ export default function Services() {
             </div>
           </div>
         </a>
+
       </div>
+
 
       <Footer />
     </UseMainLayout>
