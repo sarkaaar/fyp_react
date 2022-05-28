@@ -1,80 +1,125 @@
-import * as React from 'react';
-import { useState, useEffect } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import Button from '@material-ui/core/Button';
-import MediaCard from './Components/MediaCard';
-import { db } from '../../firebase-config';
-import Footer from './Components/Footer';
+import * as React from "react";
+import { useState, useEffect } from "react";
+import {
+  collection,
+  getDocs,
+  query,
+  limit,
+  startAfter,
+  orderBy,
+} from "firebase/firestore";
+
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import Button from "@material-ui/core/Button";
+import MediaCard from "./Components/MediaCard";
+import { db } from "../../firebase-config";
+import Footer from "./Components/Footer";
 import UseMainLayout from "../../layouts/UserMainLayout";
 
 export default function Products() {
   //  Get Categories Names
-  const [value, setValue] = useState([10, 50]);
   const [categories, setCategories] = useState();
-  const [currentCategory, setCurrentCategory] = useState('');
+  const [currentCategory, setCurrentCategory] = useState("");
 
   const [products, setProducts] = useState([]);
+  const [paginateProducts, setPaginateProducts] = useState([]);
+  const [lastDoc, setLastDoc] = useState();
+  const [moreProductLoader, setMoreProductLoader] = useState(false);
+  const [isEmpty, setIsEmpty] = useState(false);
   const [loader, setLoader] = useState(false);
-
-  const productsCollection = collection(db, 'products');
-
-  const categoriesCollection = collection(db, 'categories');
+  const productsCollection = collection(db, "products");
+  const categoriesCollection = collection(db, "categories");
 
   useEffect(() => {
-    // Get Products
-    const getProducts = async () => {
-      const data = await getDocs(productsCollection);
-      setProducts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-      setLoader(false);
-      console.log(products);
-    };
-    // Get All Categories
-    const getCategories = async () => {
-      const data = await getDocs(categoriesCollection);
-      setCategories(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-      setLoader(false);
-    };
-
     // Function Calls
     setLoader(true);
     getProducts();
     getCategories();
+    pagination();
   }, []);
+
+  const getProducts = async () => {
+    const data = await getDocs(productsCollection);
+    setProducts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    setLoader(false);
+  };
+
+  const getCategories = async () => {
+    const data = await getDocs(categoriesCollection);
+    setCategories(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    setLoader(false);
+  };
+
+  const pagination = async () => {
+    const first = query(
+      collection(db, "products"),
+      limit(6),
+      orderBy("costPrice", "asc")
+    );
+    const documentSnapshots = await getDocs(first).then((doc) => {
+      const pageData = doc.docs.map((prods) => prods.data());
+      const lastVisible = doc.docs[doc.docs.length - 1];
+
+      setPaginateProducts(pageData);
+      setLastDoc(lastVisible);
+    });
+  };
+
+  const fetchMore = () => {
+    setMoreProductLoader(true);
+    const next = query(
+      collection(db, "products"),
+      limit(6),
+      orderBy("costPrice", "asc"),
+      startAfter(lastDoc)
+    );
+    const documentSnapshots2 = getDocs(next).then((doc) => {
+      const isCollectionEmpty = doc.size === 0;
+      if (!isCollectionEmpty) {
+        setMoreProductLoader(false);
+        const pageData = doc.docs.map((prods) => prods.data());
+        const lastVisible = doc.docs[doc.docs.length - 1];
+
+        setPaginateProducts((paginateProducts) => [
+          ...paginateProducts,
+          ...pageData,
+        ]);
+        setLastDoc(lastVisible);
+        setMoreProductLoader(false);
+      } else {
+        setIsEmpty(true);
+        setMoreProductLoader(false);
+      }
+    });
+  };
 
   return (
     <UseMainLayout>
-    <div>
-      <div className="pt-32">
-
-        <h1 className="bg-slate-100 pl-96 flex">
-          Categories
-          {' '}
-          <ArrowForwardIcon />
-          {' '}
-          {currentCategory}
-        </h1>
-        <div className=" flex bg-slate-100">
-          <div className="w-96 p-16 text-black ">
-            <div className="flex flex-col items-start mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ">
-              <h1 className="w-full text-left text-gray-700 block font-bold px-4 py-2 text-lg">
-                Categories
-              </h1>
-              {categories?.map((item, key) => (
-                <Button
-                  className="text-black hover:font-bold px-4 py-2 w-full"
-                  onClick={() => {
-                    setCurrentCategory(item.name);
-                  }}
-                > <span className='w-full text-left'>
-                  {item?.name}
-                </span>
-                  
-                </Button>
-              ))}
-            </div>
-            {/* Price component */}
-            {/* <div className=" mt-2 w-56 rounded-md shadow-lg bg-white ring-1">
+      <div>
+        <div className="pt-32">
+          <h1 className="flex bg-slate-100 pl-96">
+            Categories <ArrowForwardIcon /> {currentCategory}
+          </h1>
+          <div className=" flex bg-slate-100">
+            <div className="w-96 p-16 text-black ">
+              <div className="mt-2 flex w-56 flex-col items-start rounded-md bg-white shadow-lg ring-1 ">
+                <h1 className="block w-full px-4 py-2 text-left text-lg font-bold text-gray-700">
+                  Categories
+                </h1>
+                {categories?.map((item, key) => (
+                  <Button
+                    className="w-full px-4 py-2 text-black hover:font-bold"
+                    onClick={() => {
+                      setCurrentCategory(item.name);
+                    }}
+                  >
+                    {" "}
+                    <span className="w-full text-left">{item?.name}</span>
+                  </Button>
+                ))}
+              </div>
+              {/* Price component */}
+              {/* <div className=" mt-2 w-56 rounded-md shadow-lg bg-white ring-1">
               <p className="text-gray-700 block font-bold px-4 py-2 text-lg">
                 Price
               </p>
@@ -109,50 +154,65 @@ export default function Products() {
                 </div>
               </div>
             </div> */}
-          </div>
-
-          <hr />
-
-          {loader ? (
-            <div className="w-full">
-              <div className="flex justify-center items-center h-full">
-                <div className="w-20 h-20 border-t-4 border-b-4 border-blue-900 rounded-full animate-spin" />
-              </div>
             </div>
-          ) : products.length === 0 ? (
-            <div>No products available!</div>
-          ) : currentCategory !== '' ? (
-            <div className="xl:flex">
-              <div className="grid  lg:grid-cols-2 xl:grid-cols-3 xl:gap-6 2xl:grid-cols-4">
-                {products.map((item) => (
-                  <>
-                    {currentCategory === item?.category ? (
+
+            <hr />
+
+            {loader ? (
+              <div className="w-full">
+                <div className="flex h-full items-center justify-center">
+                  <div className="h-20 w-20 animate-spin rounded-full border-t-4 border-b-4 border-blue-900" />
+                </div>
+              </div>
+            ) : products.length === 0 ? (
+              <div>No products available!</div>
+            ) : currentCategory !== "" ? (
+              <div className="xl:flex">
+                <div className="grid  lg:grid-cols-2 xl:grid-cols-3 xl:gap-6 2xl:grid-cols-4">
+                  {paginateProducts.map((item) => (
+                    <>
+                      {currentCategory === item?.category ? (
+                        <MediaCard obj={item} />
+                      ) : (
+                        <></>
+                      )}
+                    </>
+                  ))}
+                </div>
+                <div className="h-full w-96" />
+              </div>
+            ) : (
+              <div className="xl:flex">
+                <div className="grid lg:grid-cols-2 xl:grid-cols-3 xl:gap-6 2xl:grid-cols-4">
+                  {paginateProducts.map((item) => (
+                    <div className="p-2">
                       <MediaCard obj={item} />
-                    ) : (
-                      <></>
-                    )}
-                  </>
-                ))}
+                    </div>
+                  ))}
+                </div>
+                <div className="h-full w-96" />
               </div>
-              <div className="w-96 h-full" />
+            )}
+          </div>
+          <div className="h-8" />
+          {loader ? (
+            ""
+          ) : moreProductLoader ? (
+            <div className="w-full">
+              <div className="flex h-full items-center justify-center">
+                <div className="h-20 w-20 animate-spin rounded-full border-t-4 border-b-4 border-blue-900" />
+              </div>
             </div>
+          ) : isEmpty ? (
+            <div className="flex justify-center">No more products available!</div>
           ) : (
-            <div className="xl:flex">
-              <div className="grid  lg:grid-cols-2 xl:grid-cols-3 xl:gap-6 2xl:grid-cols-4">
-                {products.map((item) => (
-                  <div className="p-2">
-                    <MediaCard obj={item} />
-                  </div>
-                ))}
-              </div>
-              <div className="w-96 h-full" />
+            <div className="flex justify-center">
+              <button onClick={fetchMore}>Show More</button>
             </div>
           )}
+          <Footer />
         </div>
-        <div className="h-8" />
-        <Footer />
       </div>
-    </div>
     </UseMainLayout>
   );
 }
