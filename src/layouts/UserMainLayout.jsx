@@ -1,4 +1,3 @@
-import { MenuAlt1Icon } from "@heroicons/react/outline";
 import { Fragment, useState, useEffect } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { SearchIcon } from "@heroicons/react/solid";
@@ -18,40 +17,32 @@ import { auth, db } from "../firebase-config";
 export default function UserMainLayout({ children, props }) {
   const [products, setProducts] = useState([]);
   const [user, setUser] = useState({});
-  const [dbUser, setDBUser] = useState({});
-  const [profileURL, setProfileURL] = useState("");
+  const [userProfile, setUserProfile] = useState();
   const navigate = useNavigate();
   const cartCollection = collection(db, "cart");
 
-  const getCartItems = async () => {
-    const q = await query(cartCollection, where("user", "==", user?.email));
+  const getCartItems = async (user) => {
+    const q = await query(cartCollection, where("user", "==", user.email));
     await getDocs(q).then((res) => {
       setProducts(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-      // console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
   };
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
-    getCartItems();
-    getDBUser();
-
-
-    dbUser?.role === "admin"
-      ? setProfileURL("/admin/profile"):
-       setProfileURL("/profile");
-   
-  }, [user]);
-
-
-  const getDBUser = async () => {
-    const q = query(collection(db, "users"), where("email", "==", user?.email));
-    await getDocs(q).then((record) => {
-      setDBUser(record.docs[0].data());
-    });
+  const getDBUser = async (user) => {
+    const q = query(collection(db, "users"), where("email", "==", user.email));
+    const record = await getDocs(q);
+    setUserProfile(record.docs[0].data());
   };
+
+  useEffect(() => onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      return;
+    }
+    setUser(user);
+
+    getCartItems(user);
+    getDBUser(user)
+  }), []);
 
   const logout = async () => {
     await signOut(auth);
@@ -138,7 +129,7 @@ export default function UserMainLayout({ children, props }) {
                           )
                         }
                       >
-                        About 
+                        About
                       </NavLink>
                     </div>
                   </div>
@@ -181,12 +172,9 @@ export default function UserMainLayout({ children, props }) {
                   <div className="flex items-center">
                     {user ? (
                       <>
-                        <button
-                          type="button"
+                        <NavLink
                           className="flex flex-shrink-0 flex-row rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                          onClick={() => {
-                            navigate("/cart");
-                          }}
+                          to="/cart"
                         >
                           <span className="sr-only">View cart</span>
                           <ShoppingCartIcon
@@ -200,12 +188,12 @@ export default function UserMainLayout({ children, props }) {
                               {products.length}
                             </span>
                           )}
-                        </button>
+                        </NavLink>
 
                         <Menu as="div" className="relative ml-4 flex-shrink-0">
                           <div>
                             <NavLink
-                              to={profileURL}
+                              to={userProfile?.role === "admin" ? "/admin/profile" : "/profile"}
                               className={({ isActive }) =>
                                 c(
                                   isActive
@@ -318,7 +306,7 @@ export default function UserMainLayout({ children, props }) {
                     <div className="mt-3 space-y-1 px-2">
                       <Disclosure.Button
                         as="a"
-                        href={profileURL}
+                        href={userProfile?.role === "admin" ? "/admin/profile" : "/profile"}
                         className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                       >
                         Your Profile

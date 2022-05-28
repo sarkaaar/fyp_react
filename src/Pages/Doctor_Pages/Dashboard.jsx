@@ -41,17 +41,17 @@ export default function Dashboard() {
       });
   };
 
-  const disableDoctor = async (id) => {
+  const disable = async (id) => {
     const prod = doc(db, "appointments", id);
     await updateDoc(prod, { status: false }).then(() => {
-      console.log("Doctor Disabled ");
+      console.log("Not Completed ");
       getAppointments();
     });
   };
   const enableDoctor = async (id) => {
     const prod = doc(db, "appointments", id);
     await updateDoc(prod, { status: true }).then(() => {
-      console.log("Doctor Enables ");
+      console.log("Completed ");
       getAppointments();
     });
   };
@@ -138,13 +138,12 @@ export default function Dashboard() {
         </h2>
       </div>
 
-      {/* Activity list (smallest breakpoint only) */}
       <div className="flex justify-center">
         <div className="max-w-6xl ">
           <FirebaseDataTable
             query={collection(db, "appointments")}
             columns={[
-              // { key: "id", name: "Order" },
+          
               { key: "user", name: "User" },
               {
                 key: "time",
@@ -153,6 +152,9 @@ export default function Dashboard() {
               {
                 key: "date",
                 name: "Date",
+                render: (row) => (
+                  <div>{row.date.toDate().toDateString()}</div>
+                ),
               },
               {
                 key: "status",

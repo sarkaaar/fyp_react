@@ -14,8 +14,7 @@ import { Button, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { collection, addDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase-config";
-import Header from "./Components/Header";
-// import { getAuth, sendEmailVerification } from "firebase/auth";
+// import Header from "./Components/Header";
 
 export default function SignUp() {
   const [user, setUser] = useState();
@@ -58,6 +57,7 @@ export default function SignUp() {
     } else {
       await createUserWithEmailAndPassword(auth, email, password)
         .then(async (res) => {
+          sendEmailVerification(res.user);
           console.log(res.user.uid);
           const _user = {
             email,
@@ -84,17 +84,11 @@ export default function SignUp() {
     }
   };
 
-  // email verification
-  const verifyEmail = async () => {};
-  // -----------------------------------------------------------------------------------------------------
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      if (currentUser) navigate("/");
     });
-
-    if (user) {
-      navigate("/");
-    }
   }, [user]);
 
   return (
@@ -121,10 +115,10 @@ export default function SignUp() {
                 label="Name"
                 type="text"
                 value={name}
-                error={nameError}
+                // error={nameError}
                 helperText="Only characters allowed"
                 onChange={(e) => {
-                  setName(e.target.value);
+                  setName(e.target.value.replace(/\d+/g, ''));
                 }}
               />
               <TextField
@@ -146,6 +140,7 @@ export default function SignUp() {
                 type="text"
                 value={phone}
                 helperText="Type 11 digit numbers Only "
+                inputProps={{ pattern: "\\d{11}", title: "Please enter correct phone number" }}
                 onChange={(e) => {
                   setPhone(e.target.value);
                 }}

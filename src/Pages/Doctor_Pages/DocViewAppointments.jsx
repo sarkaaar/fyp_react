@@ -24,36 +24,20 @@ export default function DocViewAppointments() {
   };
 
   const getAppointments = async () => {
+    const weekStart = new Date();
+    const weekEnd = new Date();
+    weekStart.setDate(weekStart.getDate() - weekStart.getDay());
+    weekEnd.setDate(weekEnd.getDate() - weekEnd.getDay() + 7);
+    
     const q = query(
       appointmentsRef,
-      where("doctor.email", "==", "ammarzahid335@gmail.com")
-      // where("date", "==", date)
+      where("doctor.email", "==", "ammarzahid335@gmail.com"),
+      where("date", ">", weekStart),
+      where("date", "<", weekEnd),
     );
     await getDocs(q)
       .then((res) => {
-        const data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-        // ------------------------------------------------------------------------------------------------------
-        const day = ((new Date().getDay() + 6) % 7) + 1;
-
-        var curr = new Date(); // get current date
-        var first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
-        var last = first + 6; // last day is the first day + 6
-
-        
-        var firstday = new Date(curr.setDate(first)).toUTCString();
-        var lastday = new Date(curr.setDate(last)).toUTCString();
-
-        console.log(firstday)
-        console.log(lastday)
-
-        // firstday;
-        // ("Sun, 06 Mar 2011 12:25:40 GMT");
-        // lastday;
-        // ("Sat, 12 Mar 2011 12:25:40 GMT");
-        // ------------------------------------------------------------------------------------------------------
-
         setAppointments(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-        // console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       })
       .catch((err) => {
         console.log(err);
@@ -75,11 +59,6 @@ export default function DocViewAppointments() {
   const container = useRef(null);
   const containerNav = useRef(null);
   const containerOffset = useRef(null);
-
-  appointments.map((item) => {
-    // console.log(new Date(item.date).getDay());
-    // console.log(`" ${item.date} " ${new Date(item.date)} ${item.id}`);
-  });
 
   const getMonthYear = () => {
     var months = [

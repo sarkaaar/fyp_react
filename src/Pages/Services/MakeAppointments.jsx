@@ -56,8 +56,8 @@ export default function MakeAppointments() {
   const [doctor, setDoctor] = useState();
   const [user, setUser] = useState({});
   const [booked, setBooked] = useState([]);
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState();
+  const [date, setDate] = useState(new Date());
+  const [time, setTime] = useState('');
   const [todayDate, setTodayDate] = useState();
   const [error, setError] = useState("");
 
@@ -68,10 +68,7 @@ export default function MakeAppointments() {
       where("date", "==", date)
     );
     await getDocs(q).then((res) => {
-      // setBooked(res.docs.map((doc) => ({ ...doc.data().time })));
       setBooked(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-      console.log("booked slots are");
-      console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
   };
 
@@ -88,7 +85,6 @@ export default function MakeAppointments() {
         : date.getMonth();
     const year = date.getFullYear();
     setTodayDate(year + "-" + month + "-" + day);
-    console.log(year + "-" + month + "-" + day);
   };
 
   const makeAppointment = async () => {
@@ -121,7 +117,6 @@ export default function MakeAppointments() {
         : date.getMonth();
     const year = date.getFullYear();
     setTodayDate(year + "-" + month + "-" + day);
-    console.log(year + "-" + month + "-" + day);
     const getDoctor = async () => {
       await getDoc(doc(db, `doctors/${id}`)).then((res) => {
         setDoctor({ id: res.id, ...res.data() });
@@ -132,9 +127,12 @@ export default function MakeAppointments() {
   }, [false]);
 
   useEffect(() => {
+    if (!doctor || !date) {
+      return;
+    }
     today();
     getAppointments();
-  }, [date, time]);
+  }, [date, time, doctor]);
 
   const [open, setOpen] = useState(false);
   const handleClose = () => {
@@ -174,12 +172,12 @@ export default function MakeAppointments() {
             placeholder="Date"
             id="datemin"
             name="datemin"
-            value={date}
+            value={date.toISOString().split('T')[0]}
             onChange={(e) => {
-              const day = new Date(e.target.value).getDay();
+              const day = e.target.valueAsDate.getDay();
               if (day !== 0 && day !== 6) {
                 setError("");
-                setDate(e.target.value);
+                setDate(e.target.valueAsDate);
                 getAppointments();
               } else setError("Weekends Cannot be Selected");
             }}
@@ -202,7 +200,7 @@ export default function MakeAppointments() {
             {timeSlots
               .filter((e) => !booked.find((i) => i.time == e))
               .map((item) => (
-                <MenuItem value={item}>{item}</MenuItem>
+                <MenuItem key={item} value={item}>{item}</MenuItem>
               ))}
           </Select>
         </FormControl>
