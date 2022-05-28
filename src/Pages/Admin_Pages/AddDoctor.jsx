@@ -136,6 +136,7 @@ export default function AddDoctor() {
                     required
                     fullWidth
                     label="DOB"
+                    InputLabelProps={{shrink : true}}
                     type="date"
                     value={dob}
                     onChange={(e) => setDOB(e.target.value)}
