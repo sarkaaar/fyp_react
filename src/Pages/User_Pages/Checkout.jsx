@@ -14,7 +14,6 @@ import {
 import { onAuthStateChanged } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
-// import * as React from 'react';
 import Box from "@mui/material/Box";
 // import Button from '@mui/material/Button';
 import Typography from "@mui/material/Typography";
@@ -330,7 +329,79 @@ export default function Checkout() {
           </form>
         </div>
 
-        <div className="m-2 w-96 p-2">
+        <div className="justify-around p-4">
+          <h1 className="mt-4 text-2xl font-bold lg:flex lg:justify-center">
+            In the Cart
+          </h1>
+          { products.length > 0 ? (
+          <div className="lg:flex lg:justify-center">
+            <div className="mt-8 bg-white  p-2 lg:w-1/2">
+              <div className="flow-root">
+                <ul role="list" className="-my-6 divide-y divide-gray-200">
+                  {products.map((product) => (
+                    <li key={product?.id} className="flex py-6">
+                      <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                        <img
+                          src={product?.product?.image[0]}
+                          className="h-full w-full object-cover object-center"
+                        />
+                      </div>
+
+                      <div className="ml-4 flex flex-1 flex-col">
+                        <div>
+                          <div className="flex justify-between text-base font-medium text-gray-900">
+                            <h3>{product?.product?.name}</h3>
+                            <p className="ml-4">
+                              Total:{" "}
+                              {product?.product?.salePrice * product?.quantity}
+                            </p>
+                          </div>
+                          <p className="ml-4">
+                            {product?.product?.salePrice}
+                            /piece
+                          </p>
+                          <p className="mt-1 text-sm text-gray-500">
+                            {product?.color}
+                          </p>
+                        </div>
+                        <div className="flex flex-1 items-end justify-between text-sm">
+                          <p className="text-gray-500">
+                            Qty {product?.quantity}
+                          </p>
+                          {/* <div className="flex items-end justify-between w-36 h-8 rounded border border-solid border-gray-400">
+                                    <MinusIcon 
+                                      className="w-4 h-5 border border-solid border-gray-100"
+                                      onClick={decrementCounter}/>
+                                    <div className="h-6 w-10 px-4 border border-solid border-gray-100 text-base">
+                                        {qty}
+                                    </div>
+                                    <PlusIcon 
+                                      className="w-4 h-5 border border-solid border-gray-100"
+                                      onClick={incrementCounter}/>
+                                  </div> */}
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+          ) : (
+            <div>Cart is empty</div>
+          )
+          }
+          <div className="lg:flex lg:justify-center">
+            <div className="border-t border-gray-200 py-6 px-4 sm:px-6 lg:w-1/2">
+              <div className="flex justify-between text-base font-medium text-gray-900">
+                <p>Subtotal</p>
+                <p>{total}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* <div className="m-2 w-96 p-2">
           <div>
             <h1 className=" text-3xl font-bold">In The Cart</h1>
             {products.length === 0 && (
@@ -361,7 +432,7 @@ export default function Checkout() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <Footer />

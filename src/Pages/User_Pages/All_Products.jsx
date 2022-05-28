@@ -57,10 +57,11 @@ export default function Products() {
       orderBy("costPrice", "asc")
     );
     const documentSnapshots = await getDocs(first).then((doc) => {
-      const pageData = doc.docs.map((prods) => prods.data());
+      const pageData = doc.docs.map((prods) => ({...prods.data(), id: prods.id}));
       const lastVisible = doc.docs[doc.docs.length - 1];
 
       setPaginateProducts(pageData);
+      console.log(paginateProducts);
       setLastDoc(lastVisible);
     });
   };
@@ -77,7 +78,7 @@ export default function Products() {
       const isCollectionEmpty = doc.size === 0;
       if (!isCollectionEmpty) {
         setMoreProductLoader(false);
-        const pageData = doc.docs.map((prods) => prods.data());
+        const pageData = doc.docs.map((prods) => ({...prods.data(), id: prods.id}));
         const lastVisible = doc.docs[doc.docs.length - 1];
 
         setPaginateProducts((paginateProducts) => [
@@ -173,7 +174,7 @@ export default function Products() {
                   {paginateProducts.map((item, index) => (
                     <>
                       {currentCategory === item?.category ? (
-                        <MediaCard key={index} obj={item} />
+                        <MediaCard obj={item} />
                       ) : (
                         <></>
                       )}
@@ -187,6 +188,7 @@ export default function Products() {
                 <div className="grid lg:grid-cols-2 xl:grid-cols-3 xl:gap-6 2xl:grid-cols-4">
                   {paginateProducts.map((item) => (
                     <div className="p-2">
+                      {console.log(item)}
                       <MediaCard obj={item} />
                     </div>
                   ))}

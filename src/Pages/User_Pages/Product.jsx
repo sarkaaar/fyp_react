@@ -5,7 +5,6 @@ import { Box, Button, Typography, Modal, Paper } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
 import UseMainLayout from "../../layouts/UserMainLayout";
 
-
 import {
   collection,
   addDoc,
@@ -42,7 +41,7 @@ export default function Product() {
   const [favourite, setFavourite] = useState("");
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
-const [stock, setStock] = useState(0);
+  const [stock, setStock] = useState(0);
   const [addStatus, setAddStatus] = useState(false);
   const [totalRating, setTotalRating] = useState(0);
 
