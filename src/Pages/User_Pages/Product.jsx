@@ -4,7 +4,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { Box, Button, Typography, Modal, Paper } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
 import UseMainLayout from "../../layouts/UserMainLayout";
-import Home from "@mui/icons-material/Home";
+
 
 import {
   collection,
@@ -42,7 +42,7 @@ export default function Product() {
   const [favourite, setFavourite] = useState("");
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
-  const [products, setProducts] = useState([]);
+const [stock, setStock] = useState(0);
   const [addStatus, setAddStatus] = useState(false);
   const [totalRating, setTotalRating] = useState(0);
 
@@ -278,7 +278,15 @@ export default function Product() {
               </div>
               <p className="leading-relaxed">{prod?.description}</p>
               <div className="mt-6 mb-5 flex items-center justify-between border-b-2 border-gray-200 pb-5">
-                <div className="ml-6 flex items-center">
+              <div className="ml-6 flex items-center">
+              <div
+                    className="h-12 w-20"
+                    style={{ border: "2px solid gray", padding: 5 }}
+                  >
+                    <span className="p-2 px-6 text-2xl">{qty}</span>
+                  </div>
+                  </div>
+                {/* <div className="ml-6 flex items-center">
                   <span className="mr-3">Variant</span>
                   <div className="relative">
                     <select className="appearance-none rounded border border-gray-400 py-2 pl-3 pr-10 text-base focus:border-red-500 focus:outline-none">
@@ -289,7 +297,7 @@ export default function Product() {
                         })}
                     </select>
                   </div>
-                </div>
+                </div> */}
                 {/* Quantity Picker */}
                 <div className="border-box m-4 flex">
                   <Button

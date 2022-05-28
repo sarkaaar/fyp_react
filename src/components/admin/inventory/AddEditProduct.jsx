@@ -32,13 +32,14 @@ export default function AddEditProduct({ data }) {
   const [name, setName] = useState(data?.name);
   const [costPrice, setCostPrice] = useState(data?.costPrice);
   const [salePrice, setSalePrice] = useState(data?.salePrice);
-  const [variants, setVariants] = useState(
-    Object.values(data?.variants ?? {}).length
-      ? Object.values(data?.variants)
-      : [["", 0]]
-  );
+  // const [variants, setVariants] = useState(
+  //   Object.values(data?.variants ?? {}).length
+  //     ? Object.values(data?.variants)
+  //     : [["", 0]]
+  // );
+  const [stock, setStock] = useState(data?.stock);
   const [category, setCategory] = useState(data?.category);
-  const [subCategory, setSubCategory] = useState(data?.subCategory);
+  // const [subCategory, setSubCategory] = useState(data?.subCategory);
   const [description, setDescription] = useState(data?.description);
   const [image, setImage] = useState(data?.image);
   const [urls, setUrls] = useState(data?.urls);
@@ -46,15 +47,16 @@ export default function AddEditProduct({ data }) {
 
   // Add Products
   const addProduct = async () => {
-    const x = variants.reduce((acc, val, i) => ({ ...acc, [i]: val }), {});
+    //const x = variants.reduce((acc, val, i) => ({ ...acc, [i]: val }), {});
 
     const newProduct = {
       name,
       costPrice,
       salePrice,
-      variants: x,
+      stock,
+      //variants: x,
       category,
-      subCategory,
+      // subCategory,
       description,
       image: urls || "No Image Found",
     };
@@ -113,27 +115,29 @@ export default function AddEditProduct({ data }) {
     getSubCategories();
   }, []);
 
-  const removeVariant = (i) => {
-    variants.splice(i, 1);
-    setVariants([...variants]);
-  };
-
-  const updateVariant = (v, i) => {
-    const tempVariants = [...variants];
-    tempVariants[i] = v;
-    setVariants(tempVariants);
+  // const removeVariant = (i) => {
+  //   variants.splice(i, 1);
+  //   setVariants([...variants]);
+  // };
+  
+//check
+  const updateStock = () => {
+    const tempStock = stock;
+    
+    setStock();
   };
 
   const updateProduct = async (id) => {
-    const x = variants.reduce((acc, val, i) => ({ ...acc, [i]: val }), {});
+    // const x = variants.reduce((acc, val, i) => ({ ...acc, [i]: val }), {});
 
     const newProduct = {
       name,
       costPrice,
       salePrice,
-      variants: x,
+      stock,
+      // variants: x,
       category,
-      subCategory,
+      // subCategory,
       description,
       image: urls || "No Image Found",
     };
@@ -144,6 +148,7 @@ export default function AddEditProduct({ data }) {
 
   return (
     <div className="border-box absolute inset-1/2 h-fit w-96 -translate-x-1/2 -translate-y-1/2 bg-white p-4 drop-shadow-2xl">
+      <h1> Product</h1>
       <TextField
         margin="normal"
         required
@@ -177,6 +182,16 @@ export default function AddEditProduct({ data }) {
         </div>
       </div>
 
+      <TextField
+        margin="normal"
+        required
+        fullWidth
+        type="number"
+        label="Stock"
+        onChange={(e) => updateStock(e.target.value)}
+        value={stock}
+      />
+      {/* 
       {variants?.map(([variant, quantity], i) => (
         <div key={i} className="flex items-center gap-4">
           <TextField
@@ -210,25 +225,25 @@ export default function AddEditProduct({ data }) {
         onClick={() => setVariants([...variants, ["", 0]])}
       >
         Add variant
-      </Button>
-      <div className="flex gap-4 ">
-        <div className="w-96">
-          <FormControl fullWidth style={{ margin: "10px 0" }}>
-            <InputLabel id="demo-simple-select-label">Category</InputLabel>
-            <Select
-              value={category}
-              label="category"
-              onChange={(e) => {
-                setCategory(e.target.value);
-              }}
-            >
-              {cat.map((item) => (
-                <MenuItem value={item}>{item}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </div>
-        <div className="w-96">
+      </Button> */}
+
+      <div>
+        <FormControl fullWidth style={{ margin: "10px 0" }}>
+          <InputLabel id="demo-simple-select-label">Category</InputLabel>
+          <Select
+            value={category}
+            label="category"
+            onChange={(e) => {
+              setCategory(e.target.value);
+            }}
+          >
+            {cat.map((item) => (
+              <MenuItem value={item}>{item}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </div>
+      {/* <div className="w-96">
           <FormControl fullWidth style={{ margin: "10px 0" }}>
             <InputLabel id="demo-simple-select-label">Sub-Category</InputLabel>
             <Select
@@ -243,8 +258,8 @@ export default function AddEditProduct({ data }) {
               ))}
             </Select>
           </FormControl>
-        </div>
-      </div>
+        </div> */}
+
       <TextareaAutosize
         minRows={5}
         placeholder="  Description*"
@@ -279,7 +294,7 @@ export default function AddEditProduct({ data }) {
         type="submit"
         fullWidth
         variant="contained"
-        className="mt-6 mb-12"
+        className="mt-6 mb-16"
         onClick={addProduct}
         // className="mt-6 mb-12"
       >
