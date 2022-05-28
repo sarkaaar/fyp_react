@@ -168,7 +168,7 @@ export default function AddCategory() {
         </div>
       </div>
       <hr />
-      <div className="flex  w-fit">
+      <div className="flex justify-center">
         <div className="m-4 bg-white p-4">
           <h1 className="p-4 text-4xl">Parent Categories</h1>
           <hr />

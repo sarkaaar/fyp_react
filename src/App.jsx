@@ -29,7 +29,7 @@ import Services from "./Pages/Services/Services";
 import Dashboard from "./Pages/Admin_Pages/Dashboard";
 import NewDashBoard from "./Pages/Admin_Pages/NewDashBoard";
 import AddDoctor from "./Pages/Admin_Pages/AddDoctor";
-import AddProducts from "./Pages/Admin_Pages/ProductsAdd";
+
 import Inventory from "./Pages/Admin_Pages/Inventory";
 import AdminOrders from "./Pages/Admin_Pages/AdminOrders";
 import ViewDoctors from "./Pages/Admin_Pages/ViewDoctors";
@@ -105,7 +105,6 @@ function App() {
         <Route exact path="/admin/newdashboard" element={<NewDashBoard />} />
         <Route exact path="/admin/profile" element={<AdminProfile />} />
         <Route exact path="/admin/addDoctor" element={<AddDoctor />} />
-        <Route exact path="/admin/addProducts" element={<AddProducts />} />
         <Route exact path="/admin/inventory" element={<Inventory />} />
         <Route exact path="/admin/orders" element={<AdminOrders />} />
         <Route exact path="/admin/viewDoctor" element={<ViewDoctors />} />
