@@ -24,18 +24,10 @@ import {
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "../firebase-config";
 
-export default function EditProfile({ data, modalState }) {
-  
+export default function EditProfile({ data }) {
   const usersCollection = collection(db, "users");
 
-  useEffect(() => {
-    getProfile();
-
-    () =>
-      onAuthStateChanged(auth, (user) => {
-        setUser(user);
-      });
-  }, []);
+  
 
   const [user, setUser] = useState();
   const [id, setID] = useState(data?.id);
@@ -43,20 +35,17 @@ export default function EditProfile({ data, modalState }) {
   const [email, setEmail] = useState(data?.email);
   const [phone, setPhone] = useState(data?.phone);
   const [password, setPassword] = useState(data?.password);
+  const [open, setOpen] = useState(false);
   // const [phone,setPhone]
   const [profile, setProfile] = useState();
 
-  const getProfile = async () => {
-    const q = query(ordersRef, where("authUserEamil", "==", user?.email));
-    await getDocs(q)
-      .then((res) => {
-        setProfile(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-        console.log(profile);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+  const handleClose = () => {
+    setOpen(false);
   };
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
   const updateProfile = async (id) => {
     const newProfile = {
       name,
@@ -64,7 +53,7 @@ export default function EditProfile({ data, modalState }) {
     };
     const profile = doc(db, "users", id);
     await updateDoc(profile, newProfile);
-    modalState(false);
+
     console.log("Profile Updated");
   };
 
@@ -83,15 +72,7 @@ export default function EditProfile({ data, modalState }) {
           </p>
         </div>
 
-        {/* <PersonIcon
-          style={{
-            width: "172",
-            height: "172",
-            borderRadius: "50%",
-            color: "gray",
-            border: "1px solid gray",
-          }}
-        /> */}
+      
       </div>
 
       <div className="mt-6 flex flex-col gap-4">
@@ -137,6 +118,7 @@ export default function EditProfile({ data, modalState }) {
         <button
           onClick={() => {
             updateProfile(id);
+            handleClose();
           }}
         >
           Edit Profile

@@ -38,10 +38,13 @@ export default function UserMainLayout({ children, props }) {
     getCartItems();
     getDBUser();
 
-    dbUser.role === "admin"
-      ? setProfileURL("/admin/profile")
-      : setProfileURL("/profile");
+
+    dbUser?.role === "admin"
+      ? setProfileURL("/admin/profile"):
+       setProfileURL("/profile");
+   
   }, [user]);
+
 
   const getDBUser = async () => {
     const q = query(collection(db, "users"), where("email", "==", user?.email));

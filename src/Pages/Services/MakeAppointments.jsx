@@ -178,6 +178,9 @@ export default function MakeAppointments() {
           id="datemin"
           name="datemin"
           value={date}
+          isValidDate={(current) => {
+            current.day() !== 0 && current.day() !== 6;
+          }}
           onChange={(e) => {
             setDate(e.target.value);
             getAppointments();

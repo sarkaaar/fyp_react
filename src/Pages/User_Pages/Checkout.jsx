@@ -29,10 +29,10 @@ export default function Checkout() {
   const [total, setTotal] = useState(0);
   const [products, setProducts] = useState([]);
   const [product, setProduct] = useState([]);
+  const [queryUser, setQueryUser] = useState([]);
 
   const [email, setEmail] = useState();
-  const [fName, setFName] = useState();
-  const [lName, setLName] = useState();
+  const [name, setName] = useState();
   const [address, setAddress] = useState();
   const [city, setCity] = useState();
   const [postal, setPostal] = useState();
@@ -91,6 +91,8 @@ export default function Checkout() {
       setUser(currentUser);
     });
     getCartItems();
+
+    getUserInfo();
   }, [user]);
 
   const checkoutRef = collection(db, "checkout");
@@ -99,8 +101,8 @@ export default function Checkout() {
     const newItem = {
       authUserEamil: user?.email,
       email,
-      fName,
-      lName,
+      Name,
+
       address,
       city,
       postal,
@@ -126,12 +128,7 @@ export default function Checkout() {
             await getDoc(doc(db, "products", item?.id)).then(async (res) => {
               setProduct({ id: res.id, ...res.data() });
               console.log({ id: res.id, ...res.data() });
-              // const subCat_doc = doc(db, "products", item?.id);
-
-              // const udatedProduct = {product.variants[0]:(variants[0]-item.qty)}
-              // await updateDoc(doc(db, "products", id), variants[0]);
             });
-            // for inventory update getDoc(id).then(qty-update karni hay)
           });
           getCartItems();
 
@@ -145,11 +142,31 @@ export default function Checkout() {
       });
     console.log("Checkout Successfull");
   };
+  const usersRef = collection(db, "users");
+
+  const getUserInfo = async () => {
+    if (user) {
+      const q = query(usersRef, where("email", "==", user?.email));
+      await getDocs(q)
+        .then((res) => {
+          const data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+          setQueryUser(data[0]);
+          setEmail(data[0]?.email);
+          setPhone(data[0]?.phone);
+          setName(data[0]?.name);
+
+          console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
 
   return (
     <UseMainLayout>
-      <div className="min-h-full flex gap-4 items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-xl">
+      <div className="flex min-h-full items-center justify-center gap-4 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-md space-y-8 rounded-xl bg-white p-10">
           <div>
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
               Checkout
@@ -165,6 +182,9 @@ export default function Checkout() {
             <h1 className="text-2xl font-bold">Contact Information</h1>
             <TextField
               label="Email Address"
+              InputLabelProps={{
+                shrink: true,
+              }}
               fullWidth
               required
               type="email"
@@ -177,26 +197,23 @@ export default function Checkout() {
             <h1 className="text-2xl font-bold">Shipping Information</h1>
             <div className="flex gap-4">
               <TextField
-                label="First Name"
-                fullWidth
-                required
-                value={fName}
-                onChange={(e) => {
-                  setFName(e.target.value);
+                label="Name"
+                InputLabelProps={{
+                  shrink: true,
                 }}
-              />
-              <TextField
-                label="Last Name"
                 fullWidth
                 required
-                value={lName}
+                value={name}
                 onChange={(e) => {
-                  setLName(e.target.value);
+                  setName(e.target.value);
                 }}
               />
             </div>
             <TextField
               label="Address"
+              InputLabelProps={{
+                shrink: true,
+              }}
               fullWidth
               required
               value={address}
@@ -207,6 +224,9 @@ export default function Checkout() {
 
             <TextField
               label="City"
+              InputLabelProps={{
+                shrink: true,
+              }}
               fullWidth
               required
               value={city}
@@ -216,6 +236,9 @@ export default function Checkout() {
             />
             <TextField
               label="Postal Code"
+              InputLabelProps={{
+                shrink: true,
+              }}
               fullWidth
               required
               value={postal}
@@ -225,6 +248,9 @@ export default function Checkout() {
             />
             <TextField
               label="Phone"
+              InputLabelProps={{
+                shrink: true,
+              }}
               fullWidth
               required
               value={phone}
@@ -264,21 +290,21 @@ export default function Checkout() {
                   setExpiry(e.target.value);
                 }}
               /> */}
-
-              {/* <label for="datemin">Enter a date after 2000-01-01:</label> */}
-              <input
-                className="border-box"
-                type="date"
-                placeholder="Expiry"
-                id="datemin"
-                name="datemin"
-                value={expiry}
-                max={todayDate}
-                onChange={(e) => {
-                  setExpiry(e.target.value);
-                }}
-              />
-
+              <div>
+                {/* <label for="datemin">Enter a date after 2000-01-01:</label> */}
+                <input
+                  className="border-box"
+                  type="date"
+                  placeholder="Expiry"
+                  id="datemin"
+                  name="datemin"
+                  value={expiry}
+                  min={todayDate}
+                  onChange={(e) => {
+                    setExpiry(e.target.value);
+                  }}
+                />
+              </div>
               <TextField
                 label="CVV"
                 fullWidth
@@ -304,23 +330,23 @@ export default function Checkout() {
           </form>
         </div>
 
-        <div className="w-96 m-2 p-2">
+        <div className="m-2 w-96 p-2">
           <div>
             <h1 className=" text-3xl font-bold">In The Cart</h1>
             {products.length === 0 && (
-              <div className="grid place-items-center h-screen">
-                <div className="w-20 h-20 border-t-4 border-b-4 border-blue-900 rounded-full animate-spin" />
+              <div className="grid h-screen place-items-center">
+                <div className="h-20 w-20 animate-spin rounded-full border-t-4 border-b-4 border-blue-900" />
               </div>
             )}
             <div>
               {products.map((item, key) => (
-                <div key={key} className=" flex justify-between w-96">
-                  <h1 className="text-xl m-2">
+                <div key={key} className=" flex w-96 justify-between">
+                  <h1 className="m-2 text-xl">
                     {item?.product?.name.split(0, 20)}
                   </h1>
-                  <h1 className="text-xl m-2">{item?.quantity}</h1>
-                  <h1 className="text-xl m-2">{item?.product?.salePrice}</h1>
-                  <h1 className="text-xl m-2">
+                  <h1 className="m-2 text-xl">{item?.quantity}</h1>
+                  <h1 className="m-2 text-xl">{item?.product?.salePrice}</h1>
+                  <h1 className="m-2 text-xl">
                     {parseInt(item?.product?.salePrice) *
                       parseInt(item?.quantity)}
                   </h1>
