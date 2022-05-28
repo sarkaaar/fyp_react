@@ -82,7 +82,7 @@ export default function MakeAppointments() {
 
     const month =
       String(date.getMonth()).length === 1
-        ? "0" + String(date.getMonth())
+        ? "0" + String(date.getMonth() + 1)
         : date.getMonth();
     const year = date.getFullYear();
     setTodayDate(year + "-" + month + "-" + day);
@@ -183,7 +183,7 @@ export default function MakeAppointments() {
             getAppointments();
           }}
           min={todayDate}
-          />
+        />
         <FormControl fullWidth style={{ margin: "10px 0" }}>
           <InputLabel id="demo-simple-select-label">Time Slot</InputLabel>
           <Select
@@ -206,9 +206,6 @@ export default function MakeAppointments() {
           Submit
         </Button>
       </div>
-      {/* {booked.map((item, key) => (
-        <h1>{item?.time}</h1>
-      ))} */}
 
       <Modal
         open={open}

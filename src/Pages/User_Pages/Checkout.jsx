@@ -264,21 +264,21 @@ export default function Checkout() {
                   setExpiry(e.target.value);
                 }}
               /> */}
-              <div>
-                {/* <label for="datemin">Enter a date after 2000-01-01:</label> */}
-                <input
-                  className="border-box"
-                  type="date"
-                  placeholder="Expiry"
-                  id="datemin"
-                  name="datemin"
-                  value={expiry}
-                  max={todayDate}
-                  onChange={(e) => {
-                    setExpiry(e.target.value);
-                  }}
-                />
-              </div>
+
+              {/* <label for="datemin">Enter a date after 2000-01-01:</label> */}
+              <input
+                className="border-box"
+                type="date"
+                placeholder="Expiry"
+                id="datemin"
+                name="datemin"
+                value={expiry}
+                max={todayDate}
+                onChange={(e) => {
+                  setExpiry(e.target.value);
+                }}
+              />
+
               <TextField
                 label="CVV"
                 fullWidth
