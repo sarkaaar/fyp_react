@@ -25,6 +25,7 @@ import Modal from "@mui/material/Modal";
 import { db, auth } from "../../firebase-config";
 import UseMainLayout from "../../layouts/UserMainLayout";
 
+
 export default function MakeAppointments() {
   const appointmentsRef = collection(db, "appointments");
   const { id } = useParams();
@@ -58,6 +59,7 @@ export default function MakeAppointments() {
   const [date, setDate] = useState("");
   const [time, setTime] = useState();
   const [todayDate, setTodayDate] = useState();
+  const [error, setError] = useState("");
 
   const getAppointments = async () => {
     const q = query(
@@ -142,7 +144,7 @@ export default function MakeAppointments() {
 
   return (
     <UseMainLayout>
-      <h1 className="m-6 flex justify-center text-3xl font-bold">
+      <h1 className="mt-20 flex justify-center text-3xl font-bold">
         You are making an appointment with &nbsp;
         <span className="text-violet-800">
           {" "}
@@ -150,15 +152,8 @@ export default function MakeAppointments() {
           {doctor?.name}
         </span>
       </h1>
-      {/* <button
-        onClick={() => {
-          console.log(booked);
-        }}
-      >
-        check
-      </button> */}
 
-      <div style={{ width: "300px", margin: "auto" }}>
+      <div className="w-96 m-auto p-4 mt-8 rounded-lg bg-white">
         {/* <TextField
           margin="normal"
           required
@@ -171,22 +166,28 @@ export default function MakeAppointments() {
           }}
           id="date"
         /> */}
-        <input
-          className="border-box w-full border-2 border-black"
-          type="date"
-          placeholder="Expiry"
-          id="datemin"
-          name="datemin"
-          value={date}
-          isValidDate={(current) => {
-            current.day() !== 0 && current.day() !== 6;
-          }}
-          onChange={(e) => {
-            setDate(e.target.value);
-            getAppointments();
-          }}
-          min={todayDate}
-        />
+        <div className="border border-gray-500 h-12">
+          <input
+            // className=" ring-gray-500 focus:border-blue-500 block w-full p-2.5 "
+            className="w-full"
+            type="date"
+            placeholder="Date"
+            id="datemin"
+            name="datemin"
+            value={date}
+            onChange={(e) => {
+              const day = new Date(e.target.value).getDay();
+              if (day !== 0 && day !== 6) {
+                setError("");
+                setDate(e.target.value);
+                getAppointments();
+              } else setError("Weekends Cannot be Selected");
+            }}
+            min={todayDate}
+          />
+        </div>
+        <h1 className="text-red-600">{error}</h1>
+
         <FormControl fullWidth style={{ margin: "10px 0" }}>
           <InputLabel id="demo-simple-select-label">Time Slot</InputLabel>
           <Select

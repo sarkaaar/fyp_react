@@ -30,6 +30,7 @@
     "google-maps-react": "^2.0.6",
     "react": "^17.0.2",
     "react-awesome-mega-menu": "^1.0.3",
+    "react-datetime": "^3.1.1",
     "react-dom": "^17.0.2",
     "react-google-login": "^5.2.2",
     "react-material-ui-carousel": "^3.3.3",
