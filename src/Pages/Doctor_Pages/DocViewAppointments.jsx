@@ -1,9 +1,9 @@
 import * as React from "react";
 import { useState, useEffect, useMemo, useRef } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
-
 import { db } from "../../firebase-config";
 import DoctorLayout from "../../layouts/DoctorLayout";
+import { Link } from "react-router-dom";
 
 const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 // sm:col-start-5 sm:col-start-1 sm:col-start-2 sm:col-start-3 sm:col-start-4 sm:col-start-6 sm:col-start-7
@@ -11,6 +11,7 @@ const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 export default function DocViewAppointments() {
   const appointmentsRef = collection(db, "appointments");
   const [appointments, setAppointments] = useState([]);
+  const [monthYaer, setMonthYear] = useState([]);
 
   const getVerticalPosition = (time) => {
     const [startTime, endTime] = time.split("-");
@@ -30,8 +31,29 @@ export default function DocViewAppointments() {
     );
     await getDocs(q)
       .then((res) => {
+        const data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+        // ------------------------------------------------------------------------------------------------------
+        const day = ((new Date().getDay() + 6) % 7) + 1;
+
+        var curr = new Date(); // get current date
+        var first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
+        var last = first + 6; // last day is the first day + 6
+
+        
+        var firstday = new Date(curr.setDate(first)).toUTCString();
+        var lastday = new Date(curr.setDate(last)).toUTCString();
+
+        console.log(firstday)
+        console.log(lastday)
+
+        // firstday;
+        // ("Sun, 06 Mar 2011 12:25:40 GMT");
+        // lastday;
+        // ("Sat, 12 Mar 2011 12:25:40 GMT");
+        // ------------------------------------------------------------------------------------------------------
+
         setAppointments(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-        console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        // console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       })
       .catch((err) => {
         console.log(err);
@@ -40,6 +62,7 @@ export default function DocViewAppointments() {
 
   useEffect(() => {
     getAppointments();
+    getMonthYear();
   }, []);
 
   const weekDates = useMemo(() => {
@@ -54,16 +77,35 @@ export default function DocViewAppointments() {
   const containerOffset = useRef(null);
 
   appointments.map((item) => {
-    console.log(new Date(item.date).getDay());
-    console.log(`" ${item.date} " ${new Date(item.date)} ${item.id}`);
+    // console.log(new Date(item.date).getDay());
+    // console.log(`" ${item.date} " ${new Date(item.date)} ${item.id}`);
   });
 
+  const getMonthYear = () => {
+    var months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    var date = new Date();
+
+    setMonthYear(months[date.getMonth()] + " " + date.getFullYear());
+  };
   return (
     <DoctorLayout>
       <div className="flex h-full flex-col">
         <header className="relative z-40 flex flex-none items-center justify-between border-b border-gray-200 py-4 px-6">
           <h1 className="text-lg font-semibold text-gray-900">
-            <time dateTime="2022-01">January 2022</time>
+            <time dateTime="2022-01">{monthYaer}</time>
           </h1>
           <div className="flex items-center" />
         </header>
@@ -215,13 +257,13 @@ export default function DocViewAppointments() {
                       } sm:flex`}
                       style={{ gridRow: getVerticalPosition(item.time) }}
                     >
-                      <a
-                        href="/"
+                      <Link
+                        to={`/doctor/meeting/${item.id}`}
                         className="group absolute inset-1 flex flex-col overflow-y-auto rounded-lg bg-gray-100 p-2 text-xs leading-5 hover:bg-gray-200"
                       >
                         <p>{item.user}</p>
                         <p>{item.time}</p>
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ol>
