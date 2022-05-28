@@ -25,6 +25,7 @@ import Modal from "@mui/material/Modal";
 import { db, auth } from "../../firebase-config";
 import UseMainLayout from "../../layouts/UserMainLayout";
 
+
 export default function MakeAppointments() {
   const appointmentsRef = collection(db, "appointments");
   const { id } = useParams();
@@ -57,6 +58,8 @@ export default function MakeAppointments() {
   const [booked, setBooked] = useState([]);
   const [date, setDate] = useState("");
   const [time, setTime] = useState();
+  const [todayDate, setTodayDate] = useState();
+  const [error, setError] = useState("");
 
   const getAppointments = async () => {
     const q = query(
@@ -70,6 +73,22 @@ export default function MakeAppointments() {
       console.log("booked slots are");
       console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
+  };
+
+  const today = () => {
+    const date = new Date();
+    const day =
+      String(date.getDate()).length === 1
+        ? "0" + String(date.getDate())
+        : date.getDate();
+
+    const month =
+      String(date.getMonth()).length === 1
+        ? "0" + String(date.getMonth() + 1)
+        : date.getMonth();
+    const year = date.getFullYear();
+    setTodayDate(year + "-" + month + "-" + day);
+    console.log(year + "-" + month + "-" + day);
   };
 
   const makeAppointment = async () => {
@@ -90,6 +109,19 @@ export default function MakeAppointments() {
       setUser(currentUser);
     });
 
+    const date = new Date();
+    const day =
+      String(date.getDate()).length === 1
+        ? "0" + String(date.getDate())
+        : date.getDate();
+
+    const month =
+      String(date.getMonth()).length === 1
+        ? "0" + String(date.getMonth())
+        : date.getMonth();
+    const year = date.getFullYear();
+    setTodayDate(year + "-" + month + "-" + day);
+    console.log(year + "-" + month + "-" + day);
     const getDoctor = async () => {
       await getDoc(doc(db, `doctors/${id}`)).then((res) => {
         setDoctor({ id: res.id, ...res.data() });
@@ -100,6 +132,7 @@ export default function MakeAppointments() {
   }, [false]);
 
   useEffect(() => {
+    today();
     getAppointments();
   }, [date, time]);
 
@@ -111,7 +144,7 @@ export default function MakeAppointments() {
 
   return (
     <UseMainLayout>
-      <h1 className="m-6 flex justify-center text-3xl font-bold">
+      <h1 className="mt-20 flex justify-center text-3xl font-bold">
         You are making an appointment with &nbsp;
         <span className="text-violet-800">
           {" "}
@@ -119,10 +152,9 @@ export default function MakeAppointments() {
           {doctor?.name}
         </span>
       </h1>
-      <button onClick={() => {console.log(booked)}}>check</button>
 
-      <div style={{ width: "300px", margin: "auto" }}>
-        <TextField
+      <div className="w-96 m-auto p-4 mt-8 rounded-lg bg-white">
+        {/* <TextField
           margin="normal"
           required
           fullWidth
@@ -133,7 +165,29 @@ export default function MakeAppointments() {
             getAppointments();
           }}
           id="date"
-        />
+        /> */}
+        <div className="border border-gray-500 h-12">
+          <input
+            // className=" ring-gray-500 focus:border-blue-500 block w-full p-2.5 "
+            className="w-full"
+            type="date"
+            placeholder="Date"
+            id="datemin"
+            name="datemin"
+            value={date}
+            onChange={(e) => {
+              const day = new Date(e.target.value).getDay();
+              if (day !== 0 && day !== 6) {
+                setError("");
+                setDate(e.target.value);
+                getAppointments();
+              } else setError("Weekends Cannot be Selected");
+            }}
+            min={todayDate}
+          />
+        </div>
+        <h1 className="text-red-600">{error}</h1>
+
         <FormControl fullWidth style={{ margin: "10px 0" }}>
           <InputLabel id="demo-simple-select-label">Time Slot</InputLabel>
           <Select
@@ -156,9 +210,6 @@ export default function MakeAppointments() {
           Submit
         </Button>
       </div>
-      {/* {booked.map((item, key) => (
-        <h1>{item?.time}</h1>
-      ))} */}
 
       <Modal
         open={open}

@@ -42,6 +42,7 @@ import Complaints from "./Pages/Admin_Pages/Complaints";
 
 // Doctors Pages
 import DoctorDashboard from "./Pages/Doctor_Pages/Dashboard";
+import NewDoctor from "./Pages/Doctor_Pages/NewDoctor";
 import Meeting from "./Pages/Doctor_Pages/Meeting";
 import DocViewAppointments from "./Pages/Doctor_Pages/DocViewAppointments";
 import Live from "./Pages/Doctor_Pages/Live/Live";
@@ -73,7 +74,7 @@ function App() {
         <Route exact path="/cart" element={<Cart />} />
         <Route exact path="/maps" element={<Maps />} />
         <Route exact path="/about" element={<About />} />
-       
+
         <Route exact path="/chatbot" element={<Chatbot />} />
         <Route exact path="/returnProduct" element={<ProductReturnForm />} />
         <Route exact path="/profile" element={<Profile />} />
@@ -129,6 +130,11 @@ function App() {
           exact
           path="/doctor/viewAppointments"
           element={<DocViewAppointments />}
+        />
+        <Route
+          exact
+          path="/doctor/new"
+          element={<NewDoctor />}
         />
         <Route exact path="/*" element={<PageNotFound />} />
       </Routes>

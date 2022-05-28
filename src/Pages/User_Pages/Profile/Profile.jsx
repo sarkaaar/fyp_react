@@ -3,7 +3,6 @@ import { TextField } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import { useState, useEffect } from "react";
 import { auth, db } from "../../../firebase-config";
-// import EditProfile from "../../../components/EditProfile ";
 import {
   collection,
   getDocs,

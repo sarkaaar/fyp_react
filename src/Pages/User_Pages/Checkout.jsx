@@ -102,7 +102,7 @@ export default function Checkout() {
       authUserEamil: user?.email,
       email,
       Name,
-      
+
       address,
       city,
       postal,
@@ -299,7 +299,7 @@ export default function Checkout() {
                   id="datemin"
                   name="datemin"
                   value={expiry}
-                  max={todayDate}
+                  min={todayDate}
                   onChange={(e) => {
                     setExpiry(e.target.value);
                   }}

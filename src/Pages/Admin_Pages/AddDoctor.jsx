@@ -5,7 +5,7 @@ import { useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { db, auth } from "../../firebase-config";
 import AdminLayout from "../../layouts/AdminLayout";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+// import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export default function AddDoctor() {
   const doctorsCollection = collection(db, "doctors");
@@ -58,26 +58,26 @@ export default function AddDoctor() {
     await addDoc(doctorsCollection, newDoctor).then(async (res) => {
       console.log(res);
       console.log("Doctor Added Sucessfully");
-      await createUserWithEmailAndPassword(auth, email, password).then(
-        async (res) => {
-          console.log(res.user.uid);
-          const _user = {
-            email,
-            password,
-            role: "doctor",
-            name,
-            uid: res.user.uid,
-          };
-          await addDoc(usersCollection, _user)
-            .then((res) => {
-              console.log(res);
-              navigate("/");
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        }
-      );
+      // await createUserWithEmailAndPassword(auth, email, password).then(
+      //   async (res) => {
+      //     console.log(res.user.uid);
+      //     const _user = {
+      //       email,
+      //       password,
+      //       role: "doctor",
+      //       name,
+      //       uid: res.user.uid,
+      //     };
+      //     await addDoc(usersCollection, _user)
+      //       .then((res) => {
+      //         console.log(res);
+      //         navigate("/");
+      //       })
+      //       .catch((err) => {
+      //         console.log(err);
+      //       });
+      //   }
+      // );
       // await addDoc(availabilityRef, { doc_id: res.id, days }).then((res) => {
       //   console.log(res);
       //   console.log("added");
