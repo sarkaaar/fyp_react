@@ -96,18 +96,19 @@ export default function Products() {
   return (
     <UseMainLayout>
       <div>
-        <div className="pt-32">
-          <h1 className="flex bg-slate-100 pl-96">
+        <div className="pt-20">
+          <h1 className="flex bg-slate-100 pl-96 font-bold">
             Categories <ArrowForwardIcon /> {currentCategory}
           </h1>
           <div className=" flex bg-slate-100">
             <div className="w-96 p-16 text-black ">
-              <div className="mt-2 flex w-56 flex-col items-start rounded-md bg-white shadow-lg ring-1 ">
+              <div className="flex w-56 flex-col items-start rounded-md bg-white shadow-lg ring-1 ">
                 <h1 className="block w-full px-4 py-2 text-left text-lg font-bold text-gray-700">
                   Categories
                 </h1>
-                {categories?.map((item, key) => (
+                {categories?.map((item, index) => (
                   <Button
+                    key={index}
                     className="w-full px-4 py-2 text-black hover:font-bold"
                     onClick={() => {
                       setCurrentCategory(item.name);
@@ -169,10 +170,10 @@ export default function Products() {
             ) : currentCategory !== "" ? (
               <div className="xl:flex">
                 <div className="grid  lg:grid-cols-2 xl:grid-cols-3 xl:gap-6 2xl:grid-cols-4">
-                  {paginateProducts.map((item) => (
+                  {paginateProducts.map((item, index) => (
                     <>
                       {currentCategory === item?.category ? (
-                        <MediaCard obj={item} />
+                        <MediaCard key={index} obj={item} />
                       ) : (
                         <></>
                       )}
@@ -196,7 +197,7 @@ export default function Products() {
           </div>
           <div className="h-8" />
           {loader ? (
-            ""
+            <></>
           ) : moreProductLoader ? (
             <div className="w-full">
               <div className="flex h-full items-center justify-center">
@@ -204,7 +205,9 @@ export default function Products() {
               </div>
             </div>
           ) : isEmpty ? (
-            <div className="flex justify-center">No more products available!</div>
+            <div className="flex justify-center">
+              No more products available!
+            </div>
           ) : (
             <div className="flex justify-center">
               <button onClick={fetchMore}>Show More</button>

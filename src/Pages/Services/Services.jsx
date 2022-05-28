@@ -4,7 +4,7 @@ import doctor from "../../assets/images/doctor.png";
 import maps from "../../assets/images/maps.jpg";
 import mAppointments from "../../assets/images/makeappointments.png";
 import UseMainLayout from "../../layouts/UserMainLayout";
-
+import ServicesPagePic from "../../assets/images/services_page.png";
 
 
 export default function Services() {
@@ -43,7 +43,7 @@ export default function Services() {
         <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
           <img
             className="pl-36 h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full z-0"
-            src="https://w0.peakpx.com/wallpaper/863/1023/HD-wallpaper-how-we-feel-today-doctor-caine-funny-white-creative-puppy-dog-animal.jpg"
+            src={ServicesPagePic}
             alt="banner"
           />
         </div>
@@ -56,7 +56,7 @@ export default function Services() {
       </p>
       <div className="w-3/4 md:w-1/2  h-px bg-black m-auto mb-3" />
 
-      <div className="max-w-md mx-auto m-5 bg-white rounded-xl shadow-lg overflow-hidden md:max-w-2xl">
+      <div className="max-w-md mx-auto m-5 bg-white rounded-xl shadow-lg overflow-hidden md:max-w-2xl 2xl:max-w-4xl">
         <a href="viewDoctors">
           <div className="md:grid md:grid-cols-4">
             <img
@@ -76,7 +76,7 @@ export default function Services() {
         </a>
       </div>
 
-      <div className="max-w-md mx-auto m-5 bg-white rounded-xl shadow-lg overflow-hidden md:max-w-2xl">
+      <div className="max-w-md mx-auto m-5 bg-white rounded-xl shadow-lg overflow-hidden md:max-w-2xl 2xl:max-w-4xl">
         <a href="maps">
           <div className="md:grid md:grid-cols-4">
             <div className="p-8 hover:bg-gray-200 w-400 md:col-span-3">
@@ -96,7 +96,7 @@ export default function Services() {
         </a>
       </div>
 
-      <div className="max-w-md mx-auto m-5 bg-white rounded-xl shadow-lg overflow-hidden md:max-w-2xl">
+      <div className="max-w-md mx-auto m-5 bg-white rounded-xl shadow-lg overflow-hidden md:max-w-2xl 2xl:max-w-4xl">
         <a href="viewAppointments">
           <div className="md:grid md:grid-cols-4">
             <img

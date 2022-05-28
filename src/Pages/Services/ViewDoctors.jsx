@@ -19,7 +19,6 @@ export default function ViewDoctors() {
 
     await getDocs(q).then((res) => {
       setDoctor(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-      console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
   };
 
@@ -29,21 +28,23 @@ export default function ViewDoctors() {
 
   return (
     <UseMainLayout>
-      <div className="pt-32">
+      <div className="pt-8">
         {doctors.length === 0 && (
           <div className="grid place-items-center h-screen">
             <div className="w-20 h-20 border-t-4 border-b-4 border-green-900 rounded-full animate-spin" />
           </div>
         )}
-        <div className=" flex gap-4 flex-col px-[30rem] py-[4rem] justify-self-auto">
-          <ul
-            role="list"
-            className="space-y-12 lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8 lg:gap-y-12 lg:space-y-0"
+        <div className="flex justify-center items-center w-full sm:flex-row">
+          <div
+            //role="list"
+            className="flex flex-wrap shrink-0 justify-center items-center w-full"
+            //className="lg:grid lg:grid-cols-3 lg:gap-4 auto-cols-auto lg:w-full lg:mx-4 md:grid md:grid-cols-2 md:gap-2 md:w-full md:mx-4"
           >
-            {doctors.map((item, key) => (
-              <DoctorCard obj={item} />
+            
+            {doctors.map((item, index) => (
+              <DoctorCard key={index} obj={item} />
             ))}
-          </ul> 
+          </div>
         </div>
       </div>
       <Footer />
