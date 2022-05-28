@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import PageNotFound from "./Pages/PageNotFound";
 // User Pages
 import SignIn from "./Pages/User_Pages/SignIn";
+import ForgetPassword from "./Pages/User_Pages/ForgetPassword";
 import SignUp from "./Pages/User_Pages/SignUp";
 import CheckoutContent from "./Pages/User_Pages/Checkout";
 import HomePage from "./Pages/User_Pages/HomePage";
@@ -66,6 +67,7 @@ function App() {
           element={<ComplainSuggestions />}
         />
         <Route exact path="/sign_in" element={<SignIn />} />
+        <Route exact path="/forget-password" element={<ForgetPassword />} />
         <Route exact path="/sign_up" element={<SignUp />} />
         <Route exact path="/checkout" element={<CheckoutContent />} />
         <Route exact path="/products" element={<Products />} />
@@ -94,13 +96,11 @@ function App() {
           path="/appointments/new/:id"
           element={<MakeAppointments />}
         />
-        {/* <Route exact path="/makeAppointments/:id" element={<MakeAppointments />}/> */}
         <Route exact path="/viewAppointments" element={<ViewAppointments />} />
         <Route exact path="/viewDoctors" element={<ViewDoctorsUser />} />
         <Route exact path="/services" element={<Services />} />
 
         {/* Admin Panel */}
-        {/* <Route exact path="/admin/sign_in" element={<AdminSignIn />} /> */}
         <Route exact path="/admin/dashboard" element={<Dashboard />} />
         <Route exact path="/admin/newdashboard" element={<NewDashBoard />} />
         <Route exact path="/admin/profile" element={<AdminProfile />} />

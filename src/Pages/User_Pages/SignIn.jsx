@@ -134,6 +134,14 @@ export default function SignIn() {
               Sign Up
             </Link>
           </div>
+          <div className="flex space-x-2 justify-end">
+            <Link
+              to="/forget-password"
+              className="font-medium  text-indigo-600 hover:text-indigo-500"
+            >
+              Forgot Password ?
+            </Link>
+          </div>
           <hr />
         </form>
         <div className="">

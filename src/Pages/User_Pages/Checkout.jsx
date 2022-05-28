@@ -102,7 +102,6 @@ export default function Checkout() {
       authUserEamil: user?.email,
       email,
       Name,
-
       address,
       city,
       postal,
