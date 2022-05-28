@@ -8,42 +8,16 @@ import {
   getAuth,
   signInWithPopup,
   GoogleAuthProvider,
+  sendEmailVerification,
 } from "firebase/auth";
 import { Button, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { collection, addDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase-config";
 import Header from "./Components/Header";
+// import { getAuth, sendEmailVerification } from "firebase/auth";
 
 export default function SignUp() {
-  const provider = new GoogleAuthProvider();
-
-  const auth = getAuth();
-  const loginGoogle = async () => {
-    await signInWithPopup(auth, provider)
-      .then((result) => {
-        console.log(result);
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        // The signed-in user info.
-        const user = result.user;
-        // ...
-      })
-      .catch((error) => {
-        console.log(error);
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
-      });
-  };
-  const navigate = useNavigate();
-
   const [user, setUser] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -53,17 +27,30 @@ export default function SignUp() {
   const [errorMessage, setErrorMessage] = useState("");
   const [nameError, setNameError] = useState(false);
 
+  const navigate = useNavigate();
+
   const usersCollection = collection(db, "users");
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
+  // Auth
+  const auth_ = getAuth();
+  const provider = new GoogleAuthProvider();
 
-    if (user) {
-      navigate("/");
-    }
-  }, [user]);
+  // login with google
+
+  const loginGoogle = async () => {
+    await signInWithPopup(auth_, provider)
+      .then((result) => {
+        console.log(result);
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        const user = result.user;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  //  sign up with email and password
 
   const signUp = async () => {
     if (password !== confirmPassword) {
@@ -97,13 +84,21 @@ export default function SignUp() {
     }
   };
 
-  // const logout = async () => {
-  //   await signOut(auth);
-  // };
+  // email verification
+  const verifyEmail = async () => {};
+  // -----------------------------------------------------------------------------------------------------
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+
+    if (user) {
+      navigate("/");
+    }
+  }, [user]);
 
   return (
     <>
-      {/* <Header /> */}
       <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8 bg-white p-10">
           <div>
@@ -223,12 +218,6 @@ export default function SignUp() {
           </div>
         </div>
       </div>
-      {/* <div>
-        <h1>Current User Signed In</h1>
-        <h1>{user?.email}</h1>
-
-      </div> */}
-      {/* <Button onClick={logout}>Logout</Button> */}
     </>
   );
 }

@@ -1,19 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { auth, db } from "../../firebase-config";
-import {
-  collection,
-  getDocs,
-  updateDoc,
-  doc,
-  query,
-  where,
-  addDoc,
-} from "firebase/firestore";
+import { collection, getDocs, query, where, addDoc } from "firebase/firestore";
 import * as React from "react";
-import GoogleIcon from "@mui/icons-material/Google";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Button, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import Modal from "@mui/material/Modal";
 
 export default function NewDoctor() {
   const [email, setEmail] = useState();
@@ -23,6 +15,11 @@ export default function NewDoctor() {
   const usersRef = collection(db, "users");
   const doctorsRef = collection(db, "doctors");
 
+  const navigate = useNavigate();
+
+  const [open, setOpen] = useState(false);
+  const [noUserOpen, setNoUserOpen] = useState(false);
+
   const createDoctor = async () => {
     //   1- Fetch for the record in Doctor's Table
     const q = query(doctorsRef, where("email", "==", email));
@@ -30,11 +27,11 @@ export default function NewDoctor() {
       .then(async (res) => {
         const data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
         console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-        // setQueryUser(data[0]);
+
         // 2- if the user is found in table then with go for authentication
         if (data.length != 0)
-          await createUserWithEmailAndPassword(auth, email, password).then(
-            async (res) => {
+          await createUserWithEmailAndPassword(auth, email, password)
+            .then(async (res) => {
               console.log(res.user.uid);
               const _user = {
                 email,
@@ -42,22 +39,33 @@ export default function NewDoctor() {
                 role: "doctor",
                 uid: res.user.uid,
               };
+
               //   3- if the use is authenticated with the given email then the record will be made in the users table
               await addDoc(usersRef, _user)
                 .then((res) => {
                   console.log(res);
-                  navigate("/");
+                  navigate("/doctor/dashboard");
                 })
                 .catch((err) => {
                   console.log(err);
                 });
-            }
-          );
-        else console.log("doctor was not found");
+            })
+            .catch((err) => {
+              if (err.code === "auth/email-already-in-use") {
+                setOpen(true);
+                //   setDupWarning(
+                // "The Email Address You Entered Already Exists As a User Profile Also"
+                //   );
+              }
+            });
+        else {
+          setNoUserOpen(true);
+          console.log("doctor was not found");
+        }
         console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.code);
       });
   };
 
@@ -104,6 +112,53 @@ export default function NewDoctor() {
           </Button>
         </form>
       </div>
+      <Modal
+        sx={{ mb: 70, ml: "auto", mr: "auto" }}
+        open={open}
+        onClose={() => setOpen(false)}
+      >
+        <div className="border-box absolute inset-1/2 h-fit w-96 bg-white p-4 drop-shadow-2xl">
+          <h1 className="text-2xl font-bold">Email Alreaddy Exists</h1>
+          <h1 className="text-xl">
+            The Email Address You Entered Already Exists As a User Profile .
+          </h1>
+          <h1 className="text-xl">
+            You can Still Sign In With Your Email and Password to the Doctor
+            Profile
+          </h1>
+          <Button
+            onClick={() => {
+              navigate("/sign_in");
+            }}
+          >
+            Sign In
+          </Button>
+        </div>
+      </Modal>
+
+      <Modal
+        sx={{ mb: 70, ml: "auto", mr: "auto" }}
+        open={noUserOpen}
+        onClose={() => setNoUserOpen(false)}
+      >
+        <div className="border-box absolute inset-1/2 h-fit w-96 bg-white p-4 drop-shadow-2xl">
+          <h1 className="text-2xl font-bold">Email Alreaddy Exists</h1>
+          <h1 className="text-xl">
+            The Email Address You Entered Already Exists As a User Profile .
+          </h1>
+          <h1 className="text-xl">
+            You can Still Sign In With Your Email and Password to the Doctor
+            Profile
+          </h1>
+          <Button
+            onClick={() => {
+              navigate("/sign_in");
+            }}
+          >
+            Sign In
+          </Button>
+        </div>
+      </Modal>
     </div>
   );
 }

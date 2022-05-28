@@ -27,7 +27,7 @@ export default function AdminProfile() {
       const q = query(usersRef, where("email", "==", user?.email));
       await getDocs(q)
         .then((res) => {
-          const data =res.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+          const data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
           setQueryUser(data[0]);
           console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
         })
@@ -144,8 +144,6 @@ export default function AdminProfile() {
             setEditOpen(false);
             setSelectedProduct(undefined);
           }}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
         >
           <div className="border-box absolute inset-1/2 h-fit w-96 bg-white p-4 drop-shadow-2xl">
             <EditProfile data={queryUser} />
