@@ -1,9 +1,26 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 
-export default function MediaCard(obj) {
+import {
+  collection,
+  getDocs,
+  doc,
+  deleteDoc,
+  query,
+  where,
+} from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
+import MediaCard from "../Components/MediaCard";
+import { db, auth } from "../../../firebase-config";
+import { Button } from "@mui/material";
+
+export default function FavouritesCard(obj) {
+  const favouritesRef = collection(db, "favourites");
+
+ 
+  
   return (
-    <div className="bg-white hover:drop-shadow-2xl  xl:h-72 xl:w-56 2xl:h-96 2xl:w-64">
+    <div className="h-80 w-56  bg-white hover:drop-shadow-2xl ">
       <Link to={`/product/${obj.obj.id}`}>
         <img
           src={
@@ -16,7 +33,7 @@ export default function MediaCard(obj) {
             )
           }
           alt="img"
-          className="w-full xl:h-44 2xl:h-52"
+          className="w-full xl:h-44 "
         />
 
         <div style={{ padding: "6px" }}>
@@ -31,9 +48,8 @@ export default function MediaCard(obj) {
             Rs. {obj.obj.salePrice ? obj.obj.salePrice : "N/A"}
           </h2>
         </div>
-        
-
       </Link>
+      
     </div>
   );
 }

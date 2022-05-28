@@ -17,7 +17,6 @@ import ProductReturns from "./Pages/User_Pages/Profile/ProductReturns";
 import Favourites from "./Pages/User_Pages/Profile/Favourites";
 import Slots from "./Pages/Doctor_Pages/Slots";
 import About from "./Pages/User_Pages/About";
-// import Favourites from "./Pages/User_Pages/Components/viewFavourites/Favourites";
 
 // Clinical Pages
 import MakeAppointments from "./Pages/Services/MakeAppointments";
@@ -27,7 +26,6 @@ import Maps from "./Pages/Services/Maps";
 import Services from "./Pages/Services/Services";
 
 // Admin Pages
-// import AdminSignIn from './Pages/Admin_Pages/Admin_SignIn';
 import Dashboard from "./Pages/Admin_Pages/Dashboard";
 import NewDashBoard from "./Pages/Admin_Pages/NewDashBoard";
 import AddDoctor from "./Pages/Admin_Pages/AddDoctor";
@@ -45,6 +43,7 @@ import Complaints from "./Pages/Admin_Pages/Complaints";
 // Doctors Pages
 import DoctorDashboard from "./Pages/Doctor_Pages/Dashboard";
 import NewDoctor from "./Pages/Doctor_Pages/NewDoctor";
+import Meeting from "./Pages/Doctor_Pages/Meeting";
 import DocViewAppointments from "./Pages/Doctor_Pages/DocViewAppointments";
 import Live from "./Pages/Doctor_Pages/Live/Live";
 import NotAuthenticated from "./Pages/NotAuthenticated";
@@ -125,6 +124,7 @@ function App() {
         <Route exact path="/doctor/dashboard" element={<DoctorDashboard />} />
         {/* <Route exact path="/doctor/sign_in" element={<DoctorSignIn />} /> */}
         <Route exact path="/doctor/slots" element={<Slots />} />
+        <Route exact path="/doctor/meeting/:id" element={<Meeting />} />
         <Route exact path="/live" element={<Live />} />
         <Route
           exact

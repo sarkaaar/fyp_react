@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import PersonIcon from "@mui/icons-material/Person";
 import { Button, TextField } from "@mui/material";
@@ -148,7 +149,7 @@ export default function AdminProfile() {
           <div className="border-box absolute inset-1/2 h-fit w-96 bg-white p-4 drop-shadow-2xl">
             <EditProfile data={queryUser} />
           </div>
-        </Modal>{" "}
+        </Modal>
       </AdminLayout>
     </>
   );
