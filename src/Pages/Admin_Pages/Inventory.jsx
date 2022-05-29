@@ -39,20 +39,20 @@ export default function Inventory() {
             { key: "costPrice", name: "Cost Price" },
             { key: "description", name: "Description" },
             { key: "stock", name: "Stock" },
-            {
-              key: "variants",
-              name: "Variants",
-              render: (row) => (
-                <div className="flex flex-col">
-                  {Object.entries(row.variants).map(([k, v]) => (
-                    <div key={k} className="flex justify-between">
-                      <div>{v[0]}</div>
-                      <div className="text-right">{v[1]}</div>
-                    </div>
-                  ))}
-                </div>
-              ),
-            },
+            // {
+            //   key: "variants",
+            //   name: "Variants",
+            //   render: (row) => (
+            //     <div className="flex flex-col">
+            //       {Object.entries(row.variants).map(([k, v]) => (
+            //         <div key={k} className="flex justify-between">
+            //           <div>{v[0]}</div>
+            //           <div className="text-right">{v[1]}</div>
+            //         </div>
+            //       ))}
+            //     </div>
+            //   ),
+            // },
           ]}
           actions={[
             {

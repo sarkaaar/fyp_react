@@ -25,8 +25,8 @@ export default function AddEditProduct({ data }) {
   const categoriesCollection = collection(db, "categories");
 
   // Get Sub-Categories Names
-  const [subCat, setSubCat] = useState([]);
-  const subCatRef = collection(db, "sub-categories");
+  // const [subCat, setSubCat] = useState([]);
+  // const subCatRef = collection(db, "sub-categories");
   const productsCollection = collection(db, "products");
   const [id, setID] = useState(data?.id);
   const [name, setName] = useState(data?.name);
@@ -37,7 +37,8 @@ export default function AddEditProduct({ data }) {
   //     ? Object.values(data?.variants)
   //     : [["", 0]]
   // );
-  const [stock, setStock] = useState(data?.stock || 0);
+  const z = data?.stock || 0;
+  const [stock, setStock] = useState(data?.stock);
   const [category, setCategory] = useState(data?.category);
   // const [subCategory, setSubCategory] = useState(data?.subCategory);
   const [description, setDescription] = useState(data?.description);
@@ -98,21 +99,21 @@ export default function AddEditProduct({ data }) {
   };
 
   // Search Sub-Categories
-  const getSubCategories = async () => {
-    await getDocs(subCatRef)
-      .then((res) => {
-        // eslint-disable-next-line no-underscore-dangle
-        setSubCat(res.docs.map((d) => d.data().sub_));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const getSubCategories = async () => {
+  //   await getDocs(subCatRef)
+  //     .then((res) => {
+  //       // eslint-disable-next-line no-underscore-dangle
+  //       setSubCat(res.docs.map((d) => d.data().sub_));
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   useEffect(() => {
     // Function Calls
     getCategories();
-    getSubCategories();
+    // getSubCategories();
   }, []);
 
   // const removeVariant = (i) => {
@@ -185,7 +186,7 @@ export default function AddEditProduct({ data }) {
         fullWidth
         type="number"
         label="Stock"
-        onChange={(e) => updateStock(e.target.value)}
+        onChange={(e) => setStock(e.target.value)}
         value={stock}
       />
       {/* 

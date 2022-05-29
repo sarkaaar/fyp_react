@@ -5,6 +5,8 @@ export default function Chatbot() {
   const [question, setQuestion] = useState([]);
   const [answer, setAnswer] = useState([]);
 
+  const [chat, setChat] = useState({});
+
   const trigger = [
     // 0
     ["hi", "hey", "hello"],
@@ -59,9 +61,12 @@ export default function Chatbot() {
     for (let x = 0; x < triggerArray.length; x += 1) {
       for (let y = 0; y < replyArray.length; y += 1) {
         if (triggerArray[x][y] === text) {
-          setAnswer(
-            replyArray[x][Math.floor(Math.random() * replyArray[x].length)],
-          );
+          return replyArray[x][
+            Math.floor(Math.random() * replyArray[x].length)
+          ];
+          // setAnswer(
+          //   replyArray[x][Math.floor(Math.random() * replyArray[x].length)]
+          // );
         }
       }
     }
@@ -83,13 +88,15 @@ export default function Chatbot() {
     console.log("question = ", text);
 
     if (compare(trigger, reply, text)) {
-      console.log("compare =", answer);
+      let x = compare(trigger, reply, text);
+      setChat([{ question: text, reply: x }]);
+      console.log(chat);
     } else if (text.match(/robot/gi)) {
-      setAnswer(robot[Math.floor(Math.random() * robot.length)]);
-      console.log("robot =", answer);
+      console.log(robot[Math.floor(Math.random() * 2)]);
+      // console.log("robot =", answer);
     } else {
-      setAnswer(alternative[Math.floor(Math.random() * alternative.length)]);
-      console.log("alternative = ", answer);
+      console.log(alternative[Math.floor(Math.random() * alternative.length)]);
+      // console.log("alternative = ", answer);
     }
   }
 

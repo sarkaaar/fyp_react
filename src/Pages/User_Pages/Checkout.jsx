@@ -10,6 +10,7 @@ import {
   where,
   doc,
   getDoc,
+  updateDoc,
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
@@ -100,7 +101,7 @@ export default function Checkout() {
     const newItem = {
       authUserEamil: user?.email,
       email,
-      Name,
+      name,
       address,
       city,
       postal,
@@ -112,33 +113,28 @@ export default function Checkout() {
       total,
       cart: products,
     };
-
-    await addDoc(checkoutRef, newItem)
-      .then((e) => {
-        console.log(e);
-        console.log("sucessfully Checkout");
-        products.map(async (item) => {
-          const prod = doc(db, "cart", item?.id);
-
-          await deleteDoc(prod).then(async () => {
-            console.log("Product Sucessfully Deleted");
-
-            await getDoc(doc(db, "products", item?.id)).then(async (res) => {
-              setProduct({ id: res.id, ...res.data() });
-              console.log({ id: res.id, ...res.data() });
-            });
+    console.log(newItem);
+    await addDoc(checkoutRef, newItem).then((e) => {
+      // console.log(e);
+      console.log("sucessfully Checkout");
+      products.map(async (item) => {
+        const prod = doc(db, "products", item?.product.id);
+        await updateDoc(prod, {
+          stock: item?.product.stock - item?.quantity,
+        }).then(async (res) => {
+          const prodDel = doc(db, "cart", item?.id);
+          await deleteDoc(prodDel).then(() => {
+            console.log("product deleted from chekout");
           });
-          getCartItems();
-
-          console.log(products);
-          getTotal();
-          setOpen(true);
         });
-      })
-      .catch((e) => {
-        console.log(e);
       });
-    console.log("Checkout Successfull");
+      // });
+      getCartItems();
+
+      console.log(products);
+      getTotal();
+      setOpen(true);
+    });
   };
   const usersRef = collection(db, "users");
 
@@ -332,42 +328,43 @@ export default function Checkout() {
           <h1 className="mt-4 text-2xl font-bold lg:flex lg:justify-center">
             In the Cart
           </h1>
-          { products.length > 0 ? (
-          <div className="lg:flex lg:justify-center">
-            <div className="mt-8 bg-white  p-2 lg:w-1/2">
-              <div className="flow-root">
-                <ul role="list" className="-my-6 divide-y divide-gray-200">
-                  {products.map((product) => (
-                    <li key={product?.id} className="flex py-6">
-                      <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                        <img
-                          src={product?.product?.image[0]}
-                          className="h-full w-full object-cover object-center"
-                        />
-                      </div>
+          {products.length > 0 ? (
+            <div className="lg:flex lg:justify-center">
+              <div className="mt-8 bg-white  p-2 lg:w-1/2">
+                <div className="flow-root">
+                  <ul role="list" className="-my-6 divide-y divide-gray-200">
+                    {products.map((product) => (
+                      <li key={product?.id} className="flex py-6">
+                        <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                          <img
+                            src={product?.product?.image[0]}
+                            className="h-full w-full object-cover object-center"
+                          />
+                        </div>
 
-                      <div className="ml-4 flex flex-1 flex-col">
-                        <div>
-                          <div className="flex justify-between text-base font-medium text-gray-900">
-                            <h3>{product?.product?.name}</h3>
+                        <div className="ml-4 flex flex-1 flex-col">
+                          <div>
+                            <div className="flex justify-between text-base font-medium text-gray-900">
+                              <h3>{product?.product?.name}</h3>
+                              <p className="ml-4">
+                                Total:{" "}
+                                {product?.product?.salePrice *
+                                  product?.quantity}
+                              </p>
+                            </div>
                             <p className="ml-4">
-                              Total:{" "}
-                              {product?.product?.salePrice * product?.quantity}
+                              {product?.product?.salePrice}
+                              /piece
+                            </p>
+                            <p className="mt-1 text-sm text-gray-500">
+                              {product?.color}
                             </p>
                           </div>
-                          <p className="ml-4">
-                            {product?.product?.salePrice}
-                            /piece
-                          </p>
-                          <p className="mt-1 text-sm text-gray-500">
-                            {product?.color}
-                          </p>
-                        </div>
-                        <div className="flex flex-1 items-end justify-between text-sm">
-                          <p className="text-gray-500">
-                            Qty {product?.quantity}
-                          </p>
-                          {/* <div className="flex items-end justify-between w-36 h-8 rounded border border-solid border-gray-400">
+                          <div className="flex flex-1 items-end justify-between text-sm">
+                            <p className="text-gray-500">
+                              Qty {product?.quantity}
+                            </p>
+                            {/* <div className="flex items-end justify-between w-36 h-8 rounded border border-solid border-gray-400">
                                     <MinusIcon 
                                       className="w-4 h-5 border border-solid border-gray-100"
                                       onClick={decrementCounter}/>
@@ -378,18 +375,17 @@ export default function Checkout() {
                                       className="w-4 h-5 border border-solid border-gray-100"
                                       onClick={incrementCounter}/>
                                   </div> */}
+                          </div>
                         </div>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
           ) : (
             <div>Cart is empty</div>
-          )
-          }
+          )}
           <div className="lg:flex lg:justify-center">
             <div className="border-t border-gray-200 py-6 px-4 sm:px-6 lg:w-1/2">
               <div className="flex justify-between text-base font-medium text-gray-900">

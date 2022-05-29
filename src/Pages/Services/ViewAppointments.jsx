@@ -20,7 +20,7 @@ import UseMainLayout from "../../layouts/UserMainLayout";
 export default function ViewAppointments() {
   const navigate = useNavigate();
 
-  const [addStatus, setAddStatus] = useState(false);
+  // const [addStatus, setAddStatus] = useState(false);
   const [appointments, setAppointments] = useState([]);
 
   const appointmentsRef = collection(db, "appointments");
@@ -33,7 +33,7 @@ export default function ViewAppointments() {
     console.log("Appointment Canceled ", id);
     getAppointments();
   };
-  const getAppointments = async () => {
+  const getAppointments = async (user) => {
     const q = await query(appointmentsRef, where("user", "==", user?.email));
     const queryResults = await getDocs(q);
 
@@ -48,10 +48,11 @@ export default function ViewAppointments() {
     setLoader(true);
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      getAppointments(currentUser);
     });
 
-    getAppointments();
-  }, [user]);
+    
+  }, []);
 
   return (
     <UseMainLayout>
@@ -105,7 +106,7 @@ export default function ViewAppointments() {
                       </div>
                       <div className="w-1/2">
                         <h1 className="text-xl font-bold text-red-600 flex justify-end">
-                          Date : {item?.date}
+                          Date : {new Date(item?.date.seconds*1000).toDateString()}
                         </h1>
                         <h1 className="text-xl font-bold text-red-600 flex justify-end">
                           Time : {item?.time}

@@ -12,7 +12,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { auth, db } from "../../firebase-config";
 import FirebaseDataTable from "../../components/FirebaseDataTable";
-import Button from "@material-ui/core/Button"
+import Button from "@material-ui/core/Button";
 import AdminLayout from "../../layouts/AdminLayout";
 
 export default function ViewDoctor() {
@@ -103,7 +103,6 @@ export default function ViewDoctor() {
         columns={[
           { key: "name", name: "Name" },
           { key: "clinicAddress", name: "Address" },
-          // { key: "date", name: "Return Date", render: (r) => r.date.toDate().toDateString() },
           { key: "clinicPhone", name: "Clinic Phone" },
           { key: "fees", name: "Fee " },
           { key: "email", name: "Email" },
@@ -123,7 +122,7 @@ export default function ViewDoctor() {
                   </Button>
                 ) : (
                   <Button
-                  style={{ color: "green" }}
+                    style={{ color: "green" }}
                     onClick={() => {
                       enableDoctor(row.id);
                     }}
