@@ -39,7 +39,7 @@ export default function AddDoctor() {
       description,
       latitude,
       longitude,
-      status: false,
+      status: true,
     };
     await addDoc(doctorsCollection, newDoctor).then(async (res) => {
       console.log(res);
