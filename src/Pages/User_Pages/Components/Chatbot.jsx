@@ -5,7 +5,7 @@ export default function Chatbot() {
   const [question, setQuestion] = useState([]);
   const [answer, setAnswer] = useState([]);
 
-  const [chat, setChat] = useState({});
+  const [chat, setChat] = useState([]);
 
   const trigger = [
     // 0
@@ -89,19 +89,21 @@ export default function Chatbot() {
 
     if (compare(trigger, reply, text)) {
       let x = compare(trigger, reply, text);
-      setChat([{ question: text, reply: x }]);
+      setChat([...chat,{question: text, reply: x}]);
+  
+
       console.log(chat);
     } else if (text.match(/robot/gi)) {
       console.log(robot[Math.floor(Math.random() * 2)]);
       // console.log("robot =", answer);
     } else {
-      console.log(alternative[Math.floor(Math.random() * alternative.length)]);
+      // console.log(alternative[Math.floor(Math.random() * alternative.length)]);
       // console.log("alternative = ", answer);
     }
   }
 
   return (
-    <div className=" flex justify-end allign-end bg-white">
+    <div className=" flex justify-end w-fit bg-white">
       <div className="w-96 border rounded">
         <div>
           <div className="w-full">
@@ -113,6 +115,21 @@ export default function Chatbot() {
             </div>
             <div className="relative w-full p-6 overflow-y-auto h-[25rem]">
               <ul className="space-y-2">
+                {chat.map((item) => {
+                  <>
+                    <li className="flex justify-end">
+                      <div className="relative max-w-xl px-4 py-2 text-gray-700 bg-gray-100 rounded shadow">
+                        <span className="block">{item?.quention}</span>
+                      </div>
+                    </li>
+
+                    <li className="flex justify-start">
+                      <div className="relative max-w-xl px-4 py-2 text-gray-700 rounded shadow">
+                        <span className="block">{item?.reply}</span>
+                      </div>
+                    </li>
+                  </>;
+                })}
                 <li className="flex justify-start">
                   <div className="relative max-w-xl px-4 py-2 text-gray-700 rounded shadow">
                     <span className="block">Hi</span>
