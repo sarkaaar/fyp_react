@@ -1,25 +1,30 @@
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import PageNotFound from "./Pages/PageNotFound";
+
+// Auth
+import SignIn from "./Pages/Auth/SignIn";
+import ForgetPassword from "./Pages/Auth/ForgetPassword";
+import SignUp from "./Pages/Auth/SignUp";
+
 // User Pages
-import SignIn from "./Pages/User_Pages/SignIn";
-import ForgetPassword from "./Pages/User_Pages/ForgetPassword";
-import SignUp from "./Pages/User_Pages/SignUp";
-import CheckoutContent from "./Pages/User_Pages/Checkout";
 import HomePage from "./Pages/User_Pages/HomePage";
+import Checkout from "./Pages/User_Pages/Checkout";
 import Products from "./Pages/User_Pages/All_Products";
 import Cart from "./Pages/User_Pages/Cart";
 import Chatbot from "./Pages/User_Pages/Components/Chatbot";
+// User Prile Pages
 import ProductReturnForm from "./Pages/User_Pages/Profile/ProductReturnForm";
 import Product from "./Pages/User_Pages/Product";
 import Profile from "./Pages/User_Pages/Profile/Profile";
 import Orders from "./Pages/User_Pages/Profile/Orders";
 import ProductReturns from "./Pages/User_Pages/Profile/ProductReturns";
 import Favourites from "./Pages/User_Pages/Profile/Favourites";
-import Slots from "./Pages/Doctor_Pages/Slots";
+
 import About from "./Pages/User_Pages/About";
 
-// Clinical Pages
+// import Slots from "./Pages/Doctor_Pages/Slots";
+// Services Pages
 import MakeAppointments from "./Pages/Services/MakeAppointments";
 import ViewAppointments from "./Pages/Services/ViewAppointments";
 import ViewDoctorsUser from "./Pages/Services/ViewDoctors";
@@ -30,7 +35,6 @@ import Services from "./Pages/Services/Services";
 import Dashboard from "./Pages/Admin_Pages/Dashboard";
 import NewDashBoard from "./Pages/Admin_Pages/NewDashBoard";
 import AddDoctor from "./Pages/Admin_Pages/AddDoctor";
-
 import Inventory from "./Pages/Admin_Pages/Inventory";
 import AdminOrders from "./Pages/Admin_Pages/AdminOrders";
 import ViewDoctors from "./Pages/Admin_Pages/ViewDoctors";
@@ -69,7 +73,7 @@ function App() {
         <Route exact path="/sign_in" element={<SignIn />} />
         <Route exact path="/forget-password" element={<ForgetPassword />} />
         <Route exact path="/sign_up" element={<SignUp />} />
-        <Route exact path="/checkout" element={<CheckoutContent />} />
+        <Route exact path="/checkout" element={<Checkout />} />
         <Route exact path="/products" element={<Products />} />
         <Route exact path="/product/:id" element={<Product />} />
         <Route exact path="/NotAuthorised" element={<NotAuthenticated />} />
@@ -122,7 +126,7 @@ function App() {
         {/* Doctors Panel */}
         <Route exact path="/doctor/dashboard" element={<DoctorDashboard />} />
         {/* <Route exact path="/doctor/sign_in" element={<DoctorSignIn />} /> */}
-        <Route exact path="/doctor/slots" element={<Slots />} />
+        {/* <Route exact path="/doctor/slots" element={<Slots />} /> */}
         <Route exact path="/doctor/meeting/:id" element={<Meeting />} />
         <Route exact path="/live" element={<Live />} />
         <Route
