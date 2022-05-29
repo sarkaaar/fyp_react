@@ -36,7 +36,7 @@ export default function Orders() {
   return (
     <>
       <AdminLayout>
-        <h1 className="m-8 text-2xl font-bold">Orders -{">"}</h1>
+        <h1 className="m-8 text-2xl font-bold">Orders </h1>
         <FirebaseDataTable
           query={collection(db, "checkout")}
           columns={[

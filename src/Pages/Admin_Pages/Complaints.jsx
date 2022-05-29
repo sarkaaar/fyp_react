@@ -7,9 +7,10 @@ export default function Complaints() {
   return (
     <>
       <AdminLayout>
-        <div className="flex justify-between">
-          <h1 className="mb-4 text-left text-2xl font-bold">Complaints</h1>
+        <div >
+          <h1 className="mb-4 mx-6 text-left text-2xl font-bold">Complaints</h1>
           <FirebaseDataTable
+            className="w-full m-auto"
             query={collection(db, "complain")}
             columns={[
               { key: "user", name: "User" },

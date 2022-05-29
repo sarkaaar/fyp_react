@@ -10,7 +10,7 @@ export default function MediaCard(obj) {
             obj.obj.image ? (
               obj.obj.image
             ) : (
-              <div className="flex h-full w-full items-center justify-center rounded border border-gray-200 object-cover object-center lg:w-1/2">
+               <div className="flex h-full w-full items-center justify-center rounded border border-gray-200 object-cover object-center lg:w-1/2">
                 <div className="h-40 w-40 animate-spin rounded-full border-t-4 border-b-4 border-blue-900" />
               </div>
             )
