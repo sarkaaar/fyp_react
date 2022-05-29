@@ -64,9 +64,6 @@ export default function Chatbot() {
           return replyArray[x][
             Math.floor(Math.random() * replyArray[x].length)
           ];
-          // setAnswer(
-          //   replyArray[x][Math.floor(Math.random() * replyArray[x].length)]
-          // );
         }
       }
     }
@@ -85,25 +82,21 @@ export default function Chatbot() {
       .replace(/please /g, "")
       .replace(/ please/g, "");
 
-    console.log("question = ", text);
+    let answer;
 
     if (compare(trigger, reply, text)) {
-      let x = compare(trigger, reply, text);
-      setChat([...chat,{question: text, reply: x}]);
-  
-
-      console.log(chat);
+      answer = compare(trigger, reply, text);
     } else if (text.match(/robot/gi)) {
-      console.log(robot[Math.floor(Math.random() * 2)]);
-      // console.log("robot =", answer);
+      answer = robot[Math.floor(Math.random() * 2)];
     } else {
-      // console.log(alternative[Math.floor(Math.random() * alternative.length)]);
-      // console.log("alternative = ", answer);
+      answer = alternative[Math.floor(Math.random() * alternative.length)];
     }
+
+    setChat([...chat, { text, from: "user" }, { text: answer, from: "bot" }]);
   }
 
   return (
-    <div className=" flex justify-end w-fit bg-white">
+    <div className=" flex justify-end allign-end bg-white">
       <div className="w-96 border rounded">
         <div>
           <div className="w-full">
@@ -115,39 +108,21 @@ export default function Chatbot() {
             </div>
             <div className="relative w-full p-6 overflow-y-auto h-[25rem]">
               <ul className="space-y-2">
-                {chat.map((item) => {
-                  <>
-                    <li className="flex justify-end">
-                      <div className="relative max-w-xl px-4 py-2 text-gray-700 bg-gray-100 rounded shadow">
-                        <span className="block">{item?.quention}</span>
-                      </div>
-                    </li>
-
-                    <li className="flex justify-start">
+                {chat.map((msg, i) =>
+                  msg.from === "bot" ? (
+                    <li key={i} className="flex justify-start">
                       <div className="relative max-w-xl px-4 py-2 text-gray-700 rounded shadow">
-                        <span className="block">{item?.reply}</span>
+                        <span className="block">{msg.text}</span>
                       </div>
                     </li>
-                  </>;
-                })}
-                <li className="flex justify-start">
-                  <div className="relative max-w-xl px-4 py-2 text-gray-700 rounded shadow">
-                    <span className="block">Hi</span>
-                  </div>
-                </li>
-                <li className="flex justify-end">
-                  <div className="relative max-w-xl px-4 py-2 text-gray-700 bg-gray-100 rounded shadow">
-                    <span className="block">Hiiii</span>
-                  </div>
-                </li>
-
-                <li className="flex justify-start">
-                  <div className="relative max-w-xl px-4 py-2 text-gray-700 rounded shadow">
-                    <span className="block">
-                      Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    </span>
-                  </div>
-                </li>
+                  ) : (
+                    <li key={i} className="flex justify-end">
+                      <div className="relative max-w-xl px-4 py-2 text-gray-700 bg-gray-100 rounded shadow">
+                        <span className="block">{msg.text}</span>
+                      </div>
+                    </li>
+                  )
+                )}
               </ul>
             </div>
 
