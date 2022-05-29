@@ -19,6 +19,9 @@ import {
 } from "@heroicons/react/outline";
 import useUserRole from "../hooks/useUserRole";
 import GrayLogo from "../assets/images/gray_logo.png";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase-config";
+import { act } from "@testing-library/react";
 const navigation = [
   {
     name: "Home",
@@ -67,9 +70,12 @@ const navigation = [
   },
 ];
 
+const logout = async () => {
+  await signOut(auth);
+};
 const secondaryNavigation = [
   { name: "Profile", href: "/admin/profile", icon: QuestionMarkCircleIcon },
-  { name: "Logout", href: "/admin/sign_in", icon: CogIcon },
+  { name: "Logout", href: "/sign_in", icon: CogIcon},
 ];
 
 export default function AdminLayout({ children }) {
@@ -178,6 +184,7 @@ export default function AdminLayout({ children }) {
                         <NavLink
                           key={item.name}
                           to={item.href}
+                          onClick={logout}
                           className="group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-300 hover:text-white hover:bg-gray-700"
                         >
                           <item.icon

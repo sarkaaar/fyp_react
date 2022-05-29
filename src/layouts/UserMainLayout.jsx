@@ -1,4 +1,5 @@
 import { Fragment, useState, useEffect } from "react";
+import fuse from "fuse.js";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { SearchIcon } from "@heroicons/react/solid";
 import {
@@ -14,7 +15,9 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { auth, db } from "../firebase-config";
 
+
 export default function UserMainLayout({ children, props }) {
+// const [search, setSearch] = useState("");
   const [products, setProducts] = useState([]);
   const [user, setUser] = useState({});
   const [userProfile, setUserProfile] = useState();
@@ -27,12 +30,46 @@ export default function UserMainLayout({ children, props }) {
       setProducts(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
   };
-
+// const productsRef = collection(db, "products");
   const getDBUser = async (user) => {
     const q = query(collection(db, "users"), where("email", "==", user.email));
     const record = await getDocs(q);
     setUserProfile(record.docs[0].data());
   };
+// const onSearch = async (currentTarget) => {
+//   setSearch(currentTarget.value);
+// }
+// const results = fuse.search(search);
+
+  // const searchProduct = async ()=>{ 
+  // const options = {
+  //   // isCaseSensitive: false,
+  //   // includeScore: false,
+  //   // shouldSort: true,
+  //   // includeMatches: false,  
+  //   // findAllMatches: false,
+  //   // minMatchCharLength: 1,
+  //   // location: 0,
+  //   // threshold: 0.6,
+  //   // distance: 100,
+  //   // useExtendedSearch: false,
+  //   // ignoreLocation: false,
+  //   // ignoreFieldNorm: false,
+  //   // fieldNormWeight: 1,
+  //   keys: [
+  //     "name",
+  //     "description",
+  //   ]
+  // };
+  
+  // const fuse = new Fuse(productsRef, options);
+  
+  // // Change the pattern
+  // const pattern = ""
+  
+  // return fuse.search(pattern)
+  // }
+
 
   useEffect(() => onAuthStateChanged(auth, (user) => {
     if (!user) {
@@ -42,6 +79,7 @@ export default function UserMainLayout({ children, props }) {
 
     getCartItems(user);
     getDBUser(user)
+    // searchProduct();
   }), []);
 
   const logout = async () => {
@@ -139,6 +177,7 @@ export default function UserMainLayout({ children, props }) {
                     <label htmlFor="search" className="sr-only">
                       Search
                     </label>
+
                     <div className="relative pt-12">
                       <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                         <SearchIcon
@@ -153,7 +192,11 @@ export default function UserMainLayout({ children, props }) {
                         placeholder="Search"
                         type="search"
                         autoComplete="off"
+                        // value={search}
+                        // onChange={onSearch}
+                        
                       />
+                      
                     </div>
                   </div>
                 </div>
@@ -344,6 +387,9 @@ export default function UserMainLayout({ children, props }) {
       <main className="flex-1">
         <div className="">{children}</div>
       </main>
+
+      
     </div>
+
   );
 }
