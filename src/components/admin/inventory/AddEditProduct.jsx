@@ -37,7 +37,7 @@ export default function AddEditProduct({ data }) {
   //     ? Object.values(data?.variants)
   //     : [["", 0]]
   // );
-  const [stock, setStock] = useState(data?.stock);
+  const [stock, setStock] = useState(data?.stock || 0);
   const [category, setCategory] = useState(data?.category);
   // const [subCategory, setSubCategory] = useState(data?.subCategory);
   const [description, setDescription] = useState(data?.description);
@@ -119,27 +119,25 @@ export default function AddEditProduct({ data }) {
   //   variants.splice(i, 1);
   //   setVariants([...variants]);
   // };
-  
+
   const updateStock = () => {
     const tempStock = stock;
-    
+
     setStock();
   };
 
   const updateProduct = async (id) => {
-    // const x = variants.reduce((acc, val, i) => ({ ...acc, [i]: val }), {});
-
     const newProduct = {
       name,
       costPrice,
       salePrice,
       stock,
-      // variants: x,
       category,
-      // subCategory,
+
       description,
-      image: urls || "No Image Found",
+      // image: urls || "No Image Found",
     };
+    console.log(newProduct);
     const prod = doc(db, "products", id);
     await updateDoc(prod, newProduct);
     console.log("Product Updated");
@@ -237,7 +235,9 @@ export default function AddEditProduct({ data }) {
             }}
           >
             {cat.map((item) => (
-              <MenuItem className="flex flex-row" value={item}>{item}</MenuItem>
+              <MenuItem className="flex flex-row" value={item}>
+                {item}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>
@@ -289,28 +289,30 @@ export default function AddEditProduct({ data }) {
         {progress}
       </h3>
       <hr className="mt-6" />
-      <Button
-        type="submit"
-        fullWidth
-        variant="contained"
-        className="mt-6 mb-16"
-        onClick={addProduct}
-        // className="mt-6 mb-12"
-      >
-        Add Product
-      </Button>
-
-      <Button
-        type="submit"
-        fullWidth
-        variant="contained"
-        className="mt-6 mb-12"
-        onClick={() => {
-          updateProduct(id);
-        }}
-      >
-        Update Product
-      </Button>
+      {data ? (
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          className="mt-6 mb-12"
+          onClick={() => {
+            updateProduct(id);
+          }}
+        >
+          Update Product
+        </Button>
+      ) : (
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          className="mt-6 mb-16"
+          onClick={addProduct}
+          // className="mt-6 mb-12"
+        >
+          Add Product
+        </Button>
+      )}
     </div>
   );
 }

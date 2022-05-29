@@ -101,10 +101,10 @@ export default function ViewDoctor() {
       <FirebaseDataTable
         query={collection(db, "doctors")}
         columns={[
-          { key: "clinicName", name: "Name" },
+          { key: "name", name: "Name" },
           { key: "clinicAddress", name: "Address" },
           // { key: "date", name: "Return Date", render: (r) => r.date.toDate().toDateString() },
-          { key: "clinicPhone", name: "Phone# " },
+          { key: "clinicPhone", name: "Clinic Phone" },
           { key: "fees", name: "Fee " },
           { key: "email", name: "Email" },
           {

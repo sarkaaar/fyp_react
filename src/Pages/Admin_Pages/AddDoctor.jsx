@@ -56,7 +56,12 @@ export default function AddDoctor() {
           <div className=" flex justify-center  ">
             {/* <div className="flex w-96 flex-col gap-4 "> */}
             <div className=" w-max bg-white p-4 ">
-              <form>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  console.log("refresh prevented");
+                }}
+              >
                 <h1 className="flex justify-center px-10 text-4xl">
                   Add a New Doctor
                 </h1>
