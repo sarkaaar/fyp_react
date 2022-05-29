@@ -1,12 +1,11 @@
-import { Fragment, useState, useEffect } from "react";
-import fuse from "fuse.js";
+import { useState, useEffect, useRef } from "react";
+import Fuse from "fuse.js";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { SearchIcon } from "@heroicons/react/solid";
 import {
-  BellIcon,
   MenuIcon,
   XIcon,
-  ShoppingCartIcon,
+  ShoppingCartIcon
 } from "@heroicons/react/outline";
 import GrayLogo from "../assets/images/gray_logo.png";
 import c from "classnames";
@@ -17,69 +16,56 @@ import { auth, db } from "../firebase-config";
 
 
 export default function UserMainLayout({ children, props }) {
-// const [search, setSearch] = useState("");
+  const [cartItems, setCartItems] = useState([]);
   const [products, setProducts] = useState([]);
   const [user, setUser] = useState({});
   const [userProfile, setUserProfile] = useState();
+  const [searchResults, setSearchResults] = useState([]);
+  const fuseRef = useRef(null);
   const navigate = useNavigate();
   const cartCollection = collection(db, "cart");
 
   const getCartItems = async (user) => {
     const q = await query(cartCollection, where("user", "==", user.email));
     await getDocs(q).then((res) => {
+      setCartItems(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    });
+  };
+
+  const getProducts = async () => {
+    await getDocs(collection(db, "products")).then((res) => {
       setProducts(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
   };
-// const productsRef = collection(db, "products");
+
   const getDBUser = async (user) => {
     const q = query(collection(db, "users"), where("email", "==", user.email));
     const record = await getDocs(q);
     setUserProfile(record.docs[0].data());
   };
-// const onSearch = async (currentTarget) => {
-//   setSearch(currentTarget.value);
-// }
-// const results = fuse.search(search);
 
-  // const searchProduct = async ()=>{ 
-  // const options = {
-  //   // isCaseSensitive: false,
-  //   // includeScore: false,
-  //   // shouldSort: true,
-  //   // includeMatches: false,  
-  //   // findAllMatches: false,
-  //   // minMatchCharLength: 1,
-  //   // location: 0,
-  //   // threshold: 0.6,
-  //   // distance: 100,
-  //   // useExtendedSearch: false,
-  //   // ignoreLocation: false,
-  //   // ignoreFieldNorm: false,
-  //   // fieldNormWeight: 1,
-  //   keys: [
-  //     "name",
-  //     "description",
-  //   ]
-  // };
-  
-  // const fuse = new Fuse(productsRef, options);
-  
-  // // Change the pattern
-  // const pattern = ""
-  
-  // return fuse.search(pattern)
-  // }
+  useEffect(() => {
+    console.log(searchResults);
+  }, [searchResults]);
 
+  useEffect(() => {
+    if (!products) return;
+
+    fuseRef.current = new Fuse(products, {
+      threshold: 0.3,
+      keys: ["name", "description"]
+    });
+  }, [products]);
 
   useEffect(() => onAuthStateChanged(auth, (user) => {
+    getProducts();
     if (!user) {
       return;
     }
     setUser(user);
 
     getCartItems(user);
-    getDBUser(user)
-    // searchProduct();
+    getDBUser(user);
   }), []);
 
   const logout = async () => {
@@ -192,17 +178,19 @@ export default function UserMainLayout({ children, props }) {
                         placeholder="Search"
                         type="search"
                         autoComplete="off"
-                        // value={search}
-                        // onChange={onSearch}
-                        
+                        onChange={(e) => {
+                          if (!fuseRef.current) return;
+                          setSearchResults(fuseRef.current.search(e.target.value));
+                        }}
                       />
-                      
+
                     </div>
                   </div>
                 </div>
                 <div className="flex lg:hidden">
                   {/* Mobile menu button */}
-                  <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                  <Disclosure.Button
+                    className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                     <span className="sr-only">Open main menu</span>
                     {open ? (
                       <XIcon className="block h-6 w-6" aria-hidden="true" />
@@ -224,11 +212,11 @@ export default function UserMainLayout({ children, props }) {
                             className="h-6 w-6 text-gray-300"
                             aria-hidden="true"
                           />
-                          {products.length === 0 ? (
+                          {cartItems.length === 0 ? (
                             <span className="hidden" />
                           ) : (
                             <span className="rounded-full bg-indigo-600 p-1 text-sm text-white">
-                              {products.length}
+                              {cartItems.length}
                             </span>
                           )}
                         </NavLink>
@@ -331,11 +319,11 @@ export default function UserMainLayout({ children, props }) {
                             className="h-6 w-6 text-gray-300"
                             aria-hidden="true"
                           />
-                          {products.length === 0 ? (
+                          {cartItems.length === 0 ? (
                             <span className="hidden" />
                           ) : (
                             <span className="rounded-full bg-indigo-600 p-1 text-sm text-white">
-                              {products.length}
+                              {cartItems.length}
                             </span>
                           )}
                         </button>
@@ -385,10 +373,16 @@ export default function UserMainLayout({ children, props }) {
         )}
       </Disclosure>
       <main className="flex-1">
-        <div className="">{children}</div>
+        {searchResults.length ? (
+          <ul>
+            {searchResults.map((prod) => (
+              <li key={prod.item.id}>{prod.item.name} ({prod.item.salePrice})</li>
+            ))}
+          </ul>
+        ) : <div className="">{children}</div>}
       </main>
 
-      
+
     </div>
 
   );
