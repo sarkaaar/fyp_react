@@ -5,7 +5,7 @@ export default function Chatbot() {
   const [question, setQuestion] = useState([]);
   const [answer, setAnswer] = useState([]);
 
-  const [chat, setChat] = useState({});
+  const [chat, setChat] = useState([]);
 
   const trigger = [
     // 0
@@ -64,9 +64,6 @@ export default function Chatbot() {
           return replyArray[x][
             Math.floor(Math.random() * replyArray[x].length)
           ];
-          // setAnswer(
-          //   replyArray[x][Math.floor(Math.random() * replyArray[x].length)]
-          // );
         }
       }
     }
@@ -85,19 +82,17 @@ export default function Chatbot() {
       .replace(/please /g, "")
       .replace(/ please/g, "");
 
-    console.log("question = ", text);
+    let answer;
 
     if (compare(trigger, reply, text)) {
-      let x = compare(trigger, reply, text);
-      setChat([{ question: text, reply: x }]);
-      console.log(chat);
+      answer = compare(trigger, reply, text);
     } else if (text.match(/robot/gi)) {
-      console.log(robot[Math.floor(Math.random() * 2)]);
-      // console.log("robot =", answer);
+      answer = robot[Math.floor(Math.random() * 2)];
     } else {
-      console.log(alternative[Math.floor(Math.random() * alternative.length)]);
-      // console.log("alternative = ", answer);
+      answer = alternative[Math.floor(Math.random() * alternative.length)];
     }
+
+    setChat([...chat, { text, from: 'user' },  { text: answer, from: 'bot' }]);
   }
 
   return (
@@ -113,24 +108,21 @@ export default function Chatbot() {
             </div>
             <div className="relative w-full p-6 overflow-y-auto h-[25rem]">
               <ul className="space-y-2">
-                <li className="flex justify-start">
-                  <div className="relative max-w-xl px-4 py-2 text-gray-700 rounded shadow">
-                    <span className="block">Hi</span>
-                  </div>
-                </li>
-                <li className="flex justify-end">
-                  <div className="relative max-w-xl px-4 py-2 text-gray-700 bg-gray-100 rounded shadow">
-                    <span className="block">Hiiii</span>
-                  </div>
-                </li>
-
-                <li className="flex justify-start">
-                  <div className="relative max-w-xl px-4 py-2 text-gray-700 rounded shadow">
-                    <span className="block">
-                      Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    </span>
-                  </div>
-                </li>
+                {chat.map((msg, i) => (
+                  msg.from === 'bot' ? (
+                    <li key={i} className="flex justify-start">
+                      <div className="relative max-w-xl px-4 py-2 text-gray-700 rounded shadow">
+                        <span className="block">{msg.text}</span>
+                      </div>
+                    </li>
+                  ) : (
+                    <li key={i} className="flex justify-end">
+                      <div className="relative max-w-xl px-4 py-2 text-gray-700 bg-gray-100 rounded shadow">
+                        <span className="block">{msg.text}</span>
+                      </div>
+                    </li>
+                  )
+                ))}
               </ul>
             </div>
 
