@@ -82,7 +82,7 @@ export default function Product() {
       rating,
       prod_id: prod?.id,
       user: user?.email,
-      time:new Date()
+      time: new Date(),
     };
 
     user ? await addDoc(reviewsRef, newComment) : setOpen(true);
@@ -231,8 +231,13 @@ export default function Product() {
           </h1>
           <div className="mx-auto flex flex-wrap lg:w-4/5">
             {prod?.image ? (
-              <div className="w-full lg:w-1/2 flex flex-row justify-end">
-                <Carousel
+              <div className="flex w-full flex-row justify-end lg:w-1/2">
+                <img
+                  alt={prod?.description}
+                  className="w-full rounded border border-gray-200 object-cover object-center lg:w-2/3 lg:mr-16"
+                  src={prod.image[0]}
+                />
+                {/* <Carousel
                   activeIndicatorIconButtonProps={{
                     style: {
                       color: "blue", // 2
@@ -256,14 +261,9 @@ export default function Product() {
                       src={item}
                     />
                   ))}
-                </Carousel>
+                </Carousel> */}
               </div>
             ) : (
-              //   <img
-              //   alt={prod?.description}
-              //   className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"
-              //   src={prod.image[0]}
-              // />
               <div className="flex h-full w-full items-center justify-center rounded border border-gray-200 object-cover object-center lg:w-1/2">
                 <div className="h-40 w-40 animate-spin rounded-full border-t-4 border-b-4 border-blue-900" />
               </div>
@@ -277,14 +277,14 @@ export default function Product() {
               </div>
               <p className="leading-relaxed">{prod?.description}</p>
               <div className="mt-6 mb-5 flex items-center justify-between border-b-2 border-gray-200 pb-5">
-              <div className="ml-6 flex items-center">
-              <div
+                <div className="ml-6 flex items-center">
+                  <div
                     className="h-12 w-20"
                     style={{ border: "2px solid gray", padding: 5 }}
                   >
                     <span className="p-2 px-6 text-2xl">{qty}</span>
                   </div>
-                  </div>
+                </div>
                 {/* <div className="ml-6 flex items-center">
                   <span className="mr-3">Variant</span>
                   <div className="relative">
