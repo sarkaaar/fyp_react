@@ -38,6 +38,7 @@ export default function Inventory() {
             { key: "salePrice", name: "Sale Price" },
             { key: "costPrice", name: "Cost Price" },
             { key: "description", name: "Description" },
+            { key: "stock", name: "Stock" },
             {
               key: "variants",
               name: "Variants",
