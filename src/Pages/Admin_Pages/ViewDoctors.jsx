@@ -114,22 +114,21 @@ export default function ViewDoctor() {
               <div className="flex flex-col">
                 {row.status ? (
                   <Button
-                    style={{ color: "green" }}
+                    style={{ color: "red" }}
                     onClick={() => {
                       disableDoctor(row.id);
                     }}
                   >
-                    Enabled
+                    Disabled
                   </Button>
                 ) : (
                   <Button
-                  style={{ color: "red" }}
-
+                  style={{ color: "green" }}
                     onClick={() => {
                       enableDoctor(row.id);
                     }}
                   >
-                    Disabled
+                    Enabled
                   </Button>
                 )}
               </div>
