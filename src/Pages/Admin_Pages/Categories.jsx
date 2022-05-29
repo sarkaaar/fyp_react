@@ -95,7 +95,12 @@ export default function AddCategory() {
         <div className="flex w-96 flex-col gap-4 ">
           <div className=" w-96 bg-white p-4 ">
             <h1 className="flex justify-center text-3xl">Add Category</h1>
-            <div>
+            <form
+              className="mt-8 space-y-6"
+              onSubmit={(e) => {
+                e.preventDefault();
+              }}
+            >
               <TextField
                 margin="normal"
                 required
@@ -117,7 +122,7 @@ export default function AddCategory() {
               >
                 Add Category
               </Button>
-            </div>
+            </form>
           </div>
           <hr />
           {/* <div className="m-auto w-96 bg-white p-4 ">

@@ -120,7 +120,6 @@ export default function AddEditProduct({ data }) {
   //   setVariants([...variants]);
   // };
   
-//check
   const updateStock = () => {
     const tempStock = stock;
     
@@ -238,7 +237,7 @@ export default function AddEditProduct({ data }) {
             }}
           >
             {cat.map((item) => (
-              <MenuItem value={item}>{item}</MenuItem>
+              <MenuItem className="flex flex-row" value={item}>{item}</MenuItem>
             ))}
           </Select>
         </FormControl>

@@ -79,7 +79,7 @@ export default function Inventory() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <div className="absolute inset-1/2 w-96 h-fit border-box bg-white drop-shadow-2xl p-4">
+        <div className="absolute inset-1/2 w-96 h-auto border-box bg-white drop-shadow-2xl p-4">
           <AddEditProduct data={selectedProduct} />
         </div>
       </Modal>
