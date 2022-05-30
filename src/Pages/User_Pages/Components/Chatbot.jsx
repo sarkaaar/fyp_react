@@ -29,9 +29,15 @@ export default function Chatbot() {
     // 7
     ["bye", "good bye", "goodbye"],
     // 8
-    ["Does your clinic provide grooming services?", "Do you provide grooming services?"],
+    ["does your clinic provide grooming services?", "do you provide grooming services?", "grooming services", "grooming"],
     // 9
-    ["Does your clinic provide vaccination services?", "Do you provide vaccination services?"],
+    ["does your clinic provide vaccination services?", "do you provide vaccination services?", "vaccination services","vaccination"],
+    // 10
+    ["does your clinic provide pet boarding services?", "do you provide pet boarding services?", "pet boarding services", "pet boarding"],
+    // 11
+    ["does your clinic provide spay/neuter services?", "do you provide spay/neuter services?", "spay/neuter services", "spay/neuter"],
+    // 12
+    ["My pet vomited today. What should I do?", "My pet vomited. What should I do?","vomiting", "vomiting today"],
   ];
 
   const reply = [
@@ -59,6 +65,13 @@ export default function Chatbot() {
     ["Yes, we provide grooming services", "Yes, we do"],
     // 9
     ["Yes, we provide vaccination services", "Yes, we do"],
+    // 10
+    ["No, we do not provide pet boarding services", "No, we do not"],
+    // 11
+    ["Yes, we provide spay/neuter services", "Yes, we do"],
+    // 12
+    ["Please check your pet's health", "Please check your pet's health","If your pet is lethargic, not as active or perky as usual, disinterested in eating, not drinking normally, vomiting blood, got into the trash or may have eaten a foreign object or unusual food, you should withhold its food and call for an appointment.  We will get your pet in for an exam and possible x-rays or blood work.  If your pet does not show any of the above symptoms after vomiting, still keep it under observation to see if it vomits again.  Remove it’s food for 12 hours and make sure that water is always available.  If no more vomiting occurs after 12 hours has gone by, feed it two parts cooked whole rice and 1 part boiled chicken or lean hamburger for a day or two.  If vomiting continues for more than 24 hours or occurs more than once in 24 hours, withhold food and make an appointment for an exam, x-rays and/or blood work."],
+
   ];
 
   const alternative = [
