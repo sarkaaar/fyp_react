@@ -2,13 +2,22 @@ import * as React from "react";
 import { Button, TextField } from "@mui/material";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import { useState } from "react";
-import { collection, addDoc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  doc,
+  query,
+  where,
+} from "firebase/firestore";
 import { db, auth } from "../../firebase-config";
 import AdminLayout from "../../layouts/AdminLayout";
+import { useNavigate } from "react-router-dom";
+import Modal from "@mui/material/Modal";
 
 export default function AddDoctor() {
-  const doctorsCollection = collection(db, "doctors");
-  const usersCollection = collection(db, "users");
+  const doctorsRef = collection(db, "doctors");
+  // const usersCollection = collection(db, "users");
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -23,6 +32,9 @@ export default function AddDoctor() {
   const [description, setDescription] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
+
+  const [open, setOpen] = useState(false);
+  const [noUserOpen, setNoUserOpen] = useState(false);
 
   const addDoctor = async () => {
     const newDoctor = {
@@ -41,9 +53,19 @@ export default function AddDoctor() {
       longitude,
       status: true,
     };
-    await addDoc(doctorsCollection, newDoctor).then(async (res) => {
-      console.log(res);
-      console.log("Doctor Added Sucessfully");
+    //   1- Fetch for the record in Doctor's Table
+
+    const q = query(doctorsRef, where("email", "==", email));
+    await getDocs(q).then(async (res) => {
+      const data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+
+      // 2- if the user is found in table then with go for authentication
+      if (data.length == 0)
+        await addDoc(doctorsRef, newDoctor).then(async (res) => {
+          console.log(res);
+          console.log("Doctor Added Sucessfully");
+        });
+      else setNoUserOpen(true);
     });
   };
   // -------------------------------------------------------
@@ -210,6 +232,22 @@ export default function AddDoctor() {
           </div>
         </div>
       </div>
+      <Modal
+        sx={{ mb: 70, ml: "auto", mr: "auto" }}
+        open={noUserOpen}
+        onClose={() => setNoUserOpen(false)}
+      >
+        <div className="border-box absolute inset-1/2 h-fit w-96 bg-white p-4 drop-shadow-2xl">
+          <h1 className="text-2xl font-bold">Email Alreaddy Exists</h1>
+          <h1 className="text-xl">
+            The Email Address You Entered Already Exists.
+          </h1>
+          {/* <h1 className="text-xl">
+            You can Still Sign In With Your Email and Password to the Doctor
+            Profile
+          </h1> */}
+        </div>
+      </Modal>
     </AdminLayout>
   );
 }

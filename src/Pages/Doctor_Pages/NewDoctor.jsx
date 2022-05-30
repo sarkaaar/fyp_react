@@ -33,29 +33,10 @@ export default function NewDoctor() {
           await createUserWithEmailAndPassword(auth, email, password)
             .then(async (res) => {
               console.log(res.user.uid);
-              const _user = {
-                email,
-                password,
-                role: "doctor",
-                uid: res.user.uid,
-              };
-
-              //   3- if the use is authenticated with the given email then the record will be made in the users table
-              await addDoc(usersRef, _user)
-                .then((res) => {
-                  console.log(res);
-                  navigate("/doctor/dashboard");
-                })
-                .catch((err) => {
-                  console.log(err);
-                });
             })
             .catch((err) => {
               if (err.code === "auth/email-already-in-use") {
                 setOpen(true);
-                //   setDupWarning(
-                // "The Email Address You Entered Already Exists As a User Profile Also"
-                //   );
               }
             });
         else {

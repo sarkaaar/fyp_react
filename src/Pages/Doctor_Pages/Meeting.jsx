@@ -10,15 +10,18 @@ import {
   updateDoc,
   getDocs,
   deleteDoc,
+  where,
+  query,
 } from "firebase/firestore";
 import CallIcon from "@mui/icons-material/Call";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { Button } from "@material-ui/core";
-// import "./App.css";
 import "./Live/index.css";
-import { db } from "../../firebase-config";
 import { useParams } from "react-router-dom";
+import { onAuthStateChanged } from "firebase/auth";
+import { db, auth } from "../../firebase-config";
+import { useNavigate } from "react-router-dom";
 
 const servers = {
   iceServers: [
@@ -104,7 +107,7 @@ function Videos({ mode, callId, setPage }) {
 
       setRoomId(callDoc.id);
       // console.log()
-      console.log(callDoc.id)
+      console.log(callDoc.id);
       uploadLink(callDoc.id);
 
       pc.onicecandidate = (event) => {
@@ -316,6 +319,31 @@ function MainScreen({ setPage }) {
 export default function Meeting() {
   const [currentPage, setCurrentPage] = useState("home");
   const [joinCode, setJoinCode] = useState("");
+
+  const [user, setUser] = useState();
+  const navigate = useNavigate();
+
+  useEffect(
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        getUser(user);
+        return;
+      }
+    }),
+    [user]
+  );
+
+  const getUser = async (user) => {
+    const q = query(
+      collection(db, "doctors"),
+      where("email", "==", user?.email)
+    );
+    getDocs(q).then((record) => {
+      const data = record.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+
+      if (data.length == 0) navigate("/");
+    });
+  };
 
   return (
     <div className="app">

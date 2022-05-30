@@ -278,12 +278,12 @@ export default function Product() {
               <p className="leading-relaxed">{prod?.description}</p>
               <div className="mt-6 mb-5 flex items-center justify-between border-b-2 border-gray-200 pb-5">
                 <div className="ml-6 flex items-center">
-                  <div
+                  {/* <div
                     className="h-12 w-20"
                     style={{ border: "2px solid gray", padding: 5 }}
                   >
                     <span className="p-2 px-6 text-2xl">{qty}</span>
-                  </div>
+                  </div> */}
                 </div>
                 {/* <div className="ml-6 flex items-center">
                   <span className="mr-3">Variant</span>

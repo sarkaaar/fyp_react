@@ -11,17 +11,40 @@ import {
 import { Button } from "@mui/material";
 import { onAuthStateChanged } from "firebase/auth";
 import { db, auth } from "../../firebase-config";
-// import Header from "./doctor_components/Header";
 import FirebaseDataTable from "../../components/FirebaseDataTable";
 import DoctorLayout from "../../layouts/DoctorLayout";
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
   const appointmentsRef = collection(db, "appointments");
   const [appointments, setAppointments] = useState([]);
   const [specificAppointments, setSpecificAppointments] = useState([]);
-  const [user, setUser] = useState();
   const d = new Date();
   const date = d.toDateString();
+  const [user, setUser] = useState();
+  const navigate = useNavigate();
+
+  useEffect(
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        getUser(user);
+        return;
+      }
+    }),
+    [user]
+  );
+
+  const getUser = async (user) => {
+    const q = query(
+      collection(db, "doctors"),
+      where("email", "==", user?.email)
+    );
+    getDocs(q).then((record) => {
+      const data = record.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+
+      if (data.length == 0) navigate("/");
+    });
+  };
 
   const getAppointments = async () => {
     const q = query(
@@ -143,7 +166,6 @@ export default function Dashboard() {
           <FirebaseDataTable
             query={collection(db, "appointments")}
             columns={[
-          
               { key: "user", name: "User" },
               {
                 key: "time",
@@ -152,9 +174,7 @@ export default function Dashboard() {
               {
                 key: "date",
                 name: "Date",
-                render: (row) => (
-                  <div>{row.date.toDate().toDateString()}</div>
-                ),
+                render: (row) => <div>{row.date.toDate().toDateString()}</div>,
               },
               {
                 key: "status",

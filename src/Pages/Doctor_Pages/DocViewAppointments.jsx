@@ -1,9 +1,22 @@
 import * as React from "react";
 import { useState, useEffect, useMemo, useRef } from "react";
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { db } from "../../firebase-config";
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 import DoctorLayout from "../../layouts/DoctorLayout";
 import { Link } from "react-router-dom";
+
+
+// import {} from "firebase/firestore";
+import { Button } from "@mui/material";
+import { onAuthStateChanged } from "firebase/auth";
+import { db, auth } from "../../firebase-config";
+import { useNavigate } from "react-router-dom";
 
 const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 // sm:col-start-5 sm:col-start-1 sm:col-start-2 sm:col-start-3 sm:col-start-4 sm:col-start-6 sm:col-start-7
@@ -12,6 +25,31 @@ export default function DocViewAppointments() {
   const appointmentsRef = collection(db, "appointments");
   const [appointments, setAppointments] = useState([]);
   const [monthYaer, setMonthYear] = useState([]);
+
+  const [user, setUser] = useState();
+  const navigate = useNavigate();
+
+  useEffect(
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        getUser(user);
+        return;
+      }
+    }),
+    [user]
+  );
+
+  const getUser = async (user) => {
+    const q = query(
+      collection(db, "doctors"),
+      where("email", "==", user?.email)
+    );
+    getDocs(q).then((record) => {
+      const data = record.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+
+      if (data.length == 0) navigate("/");
+    });
+  };
 
   const getVerticalPosition = (time) => {
     const [startTime, endTime] = time.split("-");
@@ -28,12 +66,12 @@ export default function DocViewAppointments() {
     const weekEnd = new Date();
     weekStart.setDate(weekStart.getDate() - weekStart.getDay());
     weekEnd.setDate(weekEnd.getDate() - weekEnd.getDay() + 7);
-    
+
     const q = query(
       appointmentsRef,
       where("doctor.email", "==", "ammarzahid335@gmail.com"),
       where("date", ">", weekStart),
-      where("date", "<", weekEnd),
+      where("date", "<", weekEnd)
     );
     await getDocs(q)
       .then((res) => {
