@@ -12,6 +12,7 @@ export default function DocViewAppointments() {
   const appointmentsRef = collection(db, "appointments");
   const [appointments, setAppointments] = useState([]);
   const [monthYear, setMonthYear] = useState([]);
+  const [user, setUser] = useState();
 
   const getVerticalPosition = (time) => {
     const [startTime, endTime] = time.split("-");
