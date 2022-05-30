@@ -24,6 +24,10 @@ export default function Chatbot() {
     ["thanks", "thank you"],
     // 7
     ["bye", "good bye", "goodbye"],
+    // 8
+    ["Does your clinic provide grooming services?", "Do you provide grooming services?"],
+    // 9
+    ["Does your clinic provide vaccination services?", "Do you provide vaccination services?"],
   ];
 
   const reply = [
@@ -47,6 +51,10 @@ export default function Chatbot() {
     ["You're welcome", "No problem"],
     // 7
     ["Goodbye", "See you later"],
+    // 8
+    ["Yes, we provide grooming services", "Yes, we do"],
+    // 9
+    ["Yes, we provide vaccination services", "Yes, we do"],
   ];
 
   const alternative = [
