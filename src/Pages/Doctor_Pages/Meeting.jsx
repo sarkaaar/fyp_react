@@ -18,7 +18,6 @@ import { Button } from "@material-ui/core";
 // import "./App.css";
 import "./Live/index.css";
 import { db } from "../../firebase-config";
-// import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 const servers = {
@@ -105,7 +104,7 @@ function Videos({ mode, callId, setPage }) {
 
       setRoomId(callDoc.id);
       // console.log()
-
+      console.log(callDoc.id)
       uploadLink(callDoc.id);
 
       pc.onicecandidate = (event) => {
@@ -306,27 +305,8 @@ function MainScreen({ setPage }) {
                 setPage("create");
               }}
             >
-              Click Me
+              Start a new meeting
             </button>
-            <div>
-              {appointment?.status ? (
-                <button
-                  onClick={() => {
-                    setPage("create");
-                  }}
-                >
-                  Click Me
-                </button>
-              ) : (
-                <button
-                  onClick={() => {
-                    setPage("create");
-                  }}
-                >
-                  Click Me
-                </button>
-              )}
-            </div>
           </div>
         </div>
       </div>

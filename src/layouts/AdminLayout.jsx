@@ -22,6 +22,8 @@ import GrayLogo from "../assets/images/gray_logo.png";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase-config";
 import { act } from "@testing-library/react";
+import Button from '@mui/material/Button';
+
 const navigation = [
   {
     name: "Home",
@@ -71,12 +73,14 @@ const navigation = [
 ];
 
 const logout = async () => {
-  await signOut(auth);
+  await signOut(auth).then((e) => {
+    navigate("/");
+  });
 };
-const secondaryNavigation = [
-  { name: "Profile", href: "/admin/profile", icon: QuestionMarkCircleIcon },
-  { name: "Logout", href: "/sign_in", icon: CogIcon},
-];
+// const secondaryNavigation = [
+//   { name: "Profile", href: "/admin/profile", icon: QuestionMarkCircleIcon },
+//   { name: "Logout", href: "/sign_in", icon: CogIcon },
+// ];
 
 export default function AdminLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -144,10 +148,7 @@ export default function AdminLayout({ children }) {
                   </div>
                 </Transition.Child>
                 <div className="flex-shrink-0 flex items-center px-4">
-                  <img
-                    className="h-8 w-auto"
-                    src={GrayLogo}
-                  />
+                  <img className="h-8 w-auto" src={GrayLogo} />
                 </div>
                 <p className="px-2 text-lg text-white font-bold">Pet Planet</p>
 
@@ -165,7 +166,7 @@ export default function AdminLayout({ children }) {
                             isActive
                               ? "bg-gray-900 text-white"
                               : "text-gray-300 hover:text-white hover:bg-gray-700",
-                            "group flex items-center px-2 py-2 text-base font-medium rounded-md",
+                            "group flex items-center px-2 py-2 text-base font-medium rounded-md"
                           )
                         }
                         aria-current={item.current ? "page" : undefined}
@@ -180,20 +181,28 @@ export default function AdminLayout({ children }) {
                   </div>
                   <div className="mt-6 pt-6">
                     <div className="px-2 space-y-1">
-                      {secondaryNavigation.map((item) => (
-                        <NavLink
-                          key={item.name}
-                          to={item.href}
-                          onClick={logout}
-                          className="group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-300 hover:text-white hover:bg-gray-700"
-                        >
-                          <item.icon
-                            className="mr-4 h-6 w-6 text-gray-400"
-                            aria-hidden="true"
-                          />
-                          {item.name}
-                        </NavLink>
-                      ))}
+                      <NavLink
+                        to="/admin/profile"
+                        // onClick={logout}
+                        className="group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-300 hover:text-white hover:bg-gray-700"
+                      >
+                        <QuestionMarkCircleIcon
+                          className="mr-4 h-6 w-6 text-gray-400"
+                          aria-hidden="true"
+                        />
+                        Profile
+                      </NavLink>
+                      <Button
+                        // to="/admin/profile"
+                        onClick={logout}
+                        className="group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-300 hover:text-white hover:bg-gray-700"
+                      >
+                        <CogIcon
+                          className="mr-4 h-6 w-6 text-gray-400"
+                          aria-hidden="true"
+                        />
+                        Logout
+                      </Button>
                     </div>
                   </div>
                 </nav>
@@ -211,10 +220,7 @@ export default function AdminLayout({ children }) {
         {/* Sidebar component, swap this element with another sidebar if you like */}
         <div className="flex flex-col flex-grow bg-gray-800 pt-5 pb-4 overflow-y-auto">
           <div className="flex items-center flex-shrink-0 px-4">
-            <img
-              className="h-8 w-auto"
-              src={GrayLogo}
-            />
+            <img className="h-8 w-auto" src={GrayLogo} />
             <p className="px-2 text-lg text-white font-bold">Pet Planet</p>
           </div>
           <nav
@@ -246,7 +252,7 @@ export default function AdminLayout({ children }) {
             </div>
             <div className="mt-6 pt-6">
               <div className="px-2 space-y-1">
-                {secondaryNavigation.map((item) => (
+                {/* {secondaryNavigation.map((item) => (
                   <NavLink
                     key={item.name}
                     to={item.href}
@@ -258,7 +264,29 @@ export default function AdminLayout({ children }) {
                     />
                     {item.name}
                   </NavLink>
-                ))}
+                ))} */}
+                <NavLink
+                  to="/admin/profile"
+                  // onClick={logout}
+                  className="group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-300 hover:text-white hover:bg-gray-700"
+                >
+                  <QuestionMarkCircleIcon
+                    className="mr-4 h-6 w-6 text-gray-400"
+                    aria-hidden="true"
+                  />
+                  Profile
+                </NavLink>
+                <Button
+                  // to="/admin/profile"
+                  onClick={logout}
+                  className="group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-300 hover:text-white hover:bg-gray-700"
+                >
+                  <CogIcon
+                    className="mr-4 h-6 w-6 text-gray-400"
+                    aria-hidden="true"
+                  />
+                  Logout
+                </Button>
               </div>
             </div>
           </nav>

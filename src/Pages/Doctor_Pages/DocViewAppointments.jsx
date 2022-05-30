@@ -232,7 +232,7 @@ export default function DocViewAppointments() {
                     <li
                       key={item.id}
                       className={`relative mt-px hidden sm:col-start-${
-                        ((new Date(item.date).getDay() + 6) % 7) + 1
+                        ((item.date.toDate().getDay() + 6) % 7) + 1
                       } sm:flex`}
                       style={{ gridRow: getVerticalPosition(item.time) }}
                     >
