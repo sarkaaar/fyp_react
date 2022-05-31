@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { Box, Button, Typography, Modal, Paper } from "@mui/material";
+import { Box, Button, Typography, Modal, TextField } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
 import UseMainLayout from "../../layouts/UserMainLayout";
 
@@ -15,6 +15,9 @@ import {
   query,
   where,
   getDocs,
+  limit,
+  orderBy,
+  startAfter,
 } from "firebase/firestore";
 
 import { onAuthStateChanged } from "firebase/auth";
@@ -36,14 +39,17 @@ export default function Product() {
   const [qty, setQty] = useState(1);
   const [user, setUser] = useState({});
   const [rating, setRating] = useState(1);
-  const [comments, setComments] = useState("");
-  const [getcomments, setgetComments] = useState([]);
+  const [comments, setComments] = useState();
+  const [getComments, setGetComments] = useState([]);
+  const [lastComment, setLastComment] = useState();
   const [favourite, setFavourite] = useState("");
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
   const [stock, setStock] = useState(0);
   const [addStatus, setAddStatus] = useState(false);
   const [totalRating, setTotalRating] = useState(0);
+  const [moreCommentLoader, setMoreCommentLoader] = useState(false);
+  const [isEmpty, setIsEmpty] = useState(false);
 
   const incrementCounter = () => {
     if (qty === prod.variants[0][1]) {
@@ -65,10 +71,6 @@ export default function Product() {
     });
     const getProduct = async () => {
       const x = await getDoc(doc(db, `products/${id}`));
-      console.log({
-        id: x.id,
-        ...x.data(),
-      });
       setProduct({ id: x.id, ...x.data() });
     };
     getComment();
@@ -86,34 +88,74 @@ export default function Product() {
     };
 
     user ? await addDoc(reviewsRef, newComment) : setOpen(true);
-    // console.log("Comment Added Sucessfully");
     getComment();
   };
 
   const getComment = async () => {
-    const q = query(reviewsRef, where("prod_id", "==", id));
+    const firstComments = query(
+      reviewsRef,
+      limit(5),
+      where("prod_id", "==", id),
+      orderBy("time", "desc")
+    );
 
-    await getDocs(q)
-      .then((res) => {
-        setgetComments(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    await getDocs(firstComments)
+      .then((doc) => {
+        const commentData = doc.docs.map((com) => ({
+          ...com.data(),
+          id: com.id,
+        }));
+        const lastVisible = doc.docs[doc.docs.length - 1];
+
+        setGetComments(commentData);
+        setLastComment(lastVisible);
       })
-      .catch((e) => {
-        console.log(e);
+      .catch((err) => {
+        console.log(err);
       });
+  };
+
+  const fetchMoreComments = async () => {
+    setMoreCommentLoader(true);
+    const nextComments = query(
+      reviewsRef,
+      limit(5),
+      where("prod_id", "==", id),
+      orderBy("time", "desc"),
+      startAfter(lastComment)
+    );
+    await getDocs(nextComments).then((doc) => {
+      const isCollectionEmpty = doc.size === 0;
+      if (!isCollectionEmpty) {
+        setMoreCommentLoader(false);
+        const commentData = doc.docs.map((com) => ({
+          ...com.data(),
+          id: com.id,
+        }));
+        const lastVisible = doc.docs[doc.docs.length - 1];
+
+        setGetComments((getComments) => [...getComments, ...commentData]);
+        setLastComment(lastVisible);
+        setMoreCommentLoader(false);
+      } else {
+        setIsEmpty(true);
+        setMoreCommentLoader(false);
+      }
+    });
   };
 
   function calRating() {
     let r = 0;
-    getcomments?.map((item) => {
+    getComments?.map((item) => {
       r += item.rating;
     });
-    r = r / getcomments?.length;
+    r = r / getComments?.length;
     setTotalRating(r);
   }
 
   useEffect(() => {
     calRating();
-  }, [getcomments]);
+  }, [getComments]);
 
   const addToFavourites = async () => {
     const newObj = {
@@ -153,15 +195,6 @@ export default function Product() {
       });
   };
 
-  // const cartCollection = collection(db, "cart");
-  // const getCartItems = async () => {
-  //   const q = await query(cartCollection, where("user", "==", user?.email));
-  //   await getDocs(q).then((res) => {
-  //     setProducts(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-  //     console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-  //   });
-  // };
-
   const addToCart = async () => {
     setAddStatus(true);
     const newProduct = {
@@ -178,7 +211,6 @@ export default function Product() {
         ...doc.data(),
         id: doc.id,
       }));
-      console.log("data =", data);
       console.log("item already in cart");
 
       data.length != 0
@@ -187,7 +219,6 @@ export default function Product() {
           })
             .then((res) => {
               console.log("value updated");
-              console.log(res);
               setAddStatus(false);
             })
             .catch((e) => {
@@ -222,6 +253,34 @@ export default function Product() {
         console.log(e);
       });
   };
+
+  const timeConverter = (timeStamp) => {
+    let a = new Date(timeStamp);
+    let months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    let year = a.getFullYear();
+    let month = months[a.getMonth()];
+    let date = a.getDate();
+    let hour = a.getHours();
+    let min = a.getMinutes();
+    let sec = a.getSeconds();
+    let time =
+      date + " " + month + " " + year + " " + hour + ":" + min + ":" + sec;
+    return time;
+  };
+
   return (
     <UseMainLayout>
       <section className="body-font overflow-hidden bg-white text-gray-700">
@@ -234,7 +293,7 @@ export default function Product() {
               <div className="flex w-full flex-row justify-end lg:w-1/2">
                 <img
                   alt={prod?.description}
-                  className="w-full rounded border border-gray-200 object-cover object-center lg:w-2/3 lg:mr-16"
+                  className="w-full rounded border border-gray-200 object-cover object-center lg:mr-16 lg:w-2/3"
                   src={prod.image[0]}
                 />
                 {/* <Carousel
@@ -277,26 +336,7 @@ export default function Product() {
               </div>
               <p className="leading-relaxed">{prod?.description}</p>
               <div className="mt-6 mb-5 flex items-center justify-between border-b-2 border-gray-200 pb-5">
-                <div className="ml-6 flex items-center">
-                  {/* <div
-                    className="h-12 w-20"
-                    style={{ border: "2px solid gray", padding: 5 }}
-                  >
-                    <span className="p-2 px-6 text-2xl">{qty}</span>
-                  </div> */}
-                </div>
-                {/* <div className="ml-6 flex items-center">
-                  <span className="mr-3">Variant</span>
-                  <div className="relative">
-                    <select className="appearance-none rounded border border-gray-400 py-2 pl-3 pr-10 text-base focus:border-red-500 focus:outline-none">
-                      {prod &&
-                        Object.keys(prod.variants).map((key) => {
-                          const variant = prod?.variants[key];
-                          return <option key={key}>{variant[0]}</option>;
-                        })}
-                    </select>
-                  </div>
-                </div> */}
+                <div className="ml-6 flex items-center"></div>
                 {/* Quantity Picker */}
                 <div className="border-box m-4 flex">
                   <Button
@@ -425,15 +465,31 @@ export default function Product() {
                   }}
                 />
               </div>
-              <textarea
-                className="form-control mb-2 block w-full border border-solid border-gray-300 p-2"
-                rows="3"
-                value={comments}
-                onChange={(e) => {
-                  setComments(e.target.value);
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
                 }}
-              />
-              <div className="flex justify-end">
+              >
+                <TextField
+                  fullWidth
+                  variant="filled"
+                  type="text"
+                  autoComplete="off"
+                  onChange={(e) => {
+                    setComments(e.target.value);
+                  }}
+                />
+                {/* <textarea
+                  className="form-control mb-2 block w-full border border-solid border-gray-300 p-2"
+                  rows="3"
+                  required
+                  value={comments}
+                  onChange={(e) => {
+                    setComments(e.target.value);
+                  }}
+                /> */}
+              </form>
+              <div className="mt-2 flex justify-end">
                 <Button
                   onClick={() => {
                     addComment();
@@ -444,16 +500,45 @@ export default function Product() {
                 </Button>
               </div>
               <div>
-                {getcomments?.map((item, key) => (
-                  <>
-                    <div className="mt-2 flex justify-between">
-                      <h1>{item?.user}</h1>
-                      <Rating readOnly value={item?.rating} />
+                <>
+                  {getComments?.map((item, key) => (
+                    <>
+                      <hr className="mt-2" />
+                      <div className="mt-2 flex justify-between">
+                        <h1 className="font-bold">{item?.user}</h1>
+                        <Rating readOnly value={item?.rating} />
+                      </div>
+                      <div className="flex justify-between">
+                        <p className="mt-2">{item?.comment}</p>
+                        <div className="flex items-end ml-2 text-sm">{timeConverter(item?.time.seconds * 1000)}</div>
+                      </div>
+                      <hr className="mt-2 mb-2" />
+                    </>
+                  ))}
+                </>
+                {moreCommentLoader ? (
+                  <div className="w-full">
+                    <div className="flex h-full items-center justify-center">
+                      <div className="h-20 w-20 animate-spin rounded-full border-t-4 border-b-4 border-blue-900" />
                     </div>
-                    <h1>{item?.comment}</h1>
-                    <hr className="mt-2 mb-2" />
-                  </>
-                ))}
+                  </div>
+                ) : isEmpty ? (
+                  <div className="flex justify-center">
+                    No more comments available!
+                  </div>
+                ) : (
+                  <div className="flex justify-center">
+                    <Button
+                      onClick={() => {
+                        fetchMoreComments();
+                      }}
+                      variant="outlined"
+                      color="success"
+                    >
+                      Load More Comments
+                    </Button>
+                  </div>
+                )}
               </div>
             </div>
           </div>
