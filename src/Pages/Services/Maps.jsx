@@ -1,93 +1,119 @@
-// import * as React from "react";
-import React, { Component } from "react";
+import { useState, useEffect } from "react";
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from "google-maps-react";
 import UseMainLayout from "../../layouts/UserMainLayout";
+import { useLocation } from "react-router-dom";
 
-const mapStyles = {
-  position: "relative",
-  width: "100%",
-  height: "100%",
-};
+// export class MapContainer extends Component {
+//   componentDidMount() {
+//     let latitude = localStorage.getItem("latitude");
+//     let longitude = localStorage.getItem("longitude");
+//     let clinicName = localStorage.getItem("clinicName");
+//     let clinicAddress = localStorage.getItem("clinicAddress");
+//     this.setState({
+//       location: { latitude, longitude, clinicName, clinicAddress },
+//     });
+//   }
+//   componentWillUnmount() {
+//     localStorage.clear();
+//   }
 
-export class MapContainer extends Component {
-  state = {
-    showingInfoWindow: false,
-    activeMarker: {},
-    selectedPlace: {},
+function Maps(props) {
+  const location = useLocation();
+  const [showingInfoWindow, setShowingInfoWindow] = useState(false);
+  const [activeMarker, setActiveMarker] = useState({});
+  const [selectedPlace, setSelectedPlace] = useState();
+  const [singleLocationData, setSingleLocationData] = useState();
+
+  const onMarkerClick = (props, marker) => {
+    setActiveMarker(marker);
+    setSelectedPlace(props.title);
+    setShowingInfoWindow(true);
   };
 
-  onMarkerClick = (props, marker, e) =>
-    this.setState({
-      selectedPlace: props,
-      activeMarker: marker,
-      showingInfoWindow: true,
-    });
-
-  onMapClicked = (props) => {
-    if (this.state.showingInfoWindow) {
-      this.setState({
-        showingInfoWindow: false,
-        activeMarker: null,
-      });
+  const onMapClicked = () => {
+    if (showingInfoWindow) {
+      setShowingInfoWindow(false);
+      setActiveMarker({});
     }
   };
 
-  render() {
-    return (
-      <UseMainLayout>
-        <div>
-          <Map
-            google={this.props.google}
-            onClick={this.onMapClicked}
-            zoom={12}
-            style={mapStyles}
-            initialCenter={{
-              lat: 31.45631,
-              lng: 74.32669,
-            }}
-            onReady={(mapProps, map) => this._mapLoaded(mapProps, map)}
-          >
-            <Marker
-              title="General Veterinary Hospital Lahore, Pakistan"
-              name="General Veterinary Hospital Lahore, Pakistan"
-              position={{ lat: 31.55792, lng: 74.41614 }}
-              onClick={this.onMarkerClick}
-            />
-            <Marker
-              title="Pets and Vets Clinic"
-              name="Pets and Vets Clinic"
-              position={{ lat: 31.48277, lng: 74.39716 }}
-              onClick={this.onMarkerClick}
-            />
-            <Marker
-              title="KM Pets Hospital MuslimTown"
-              name="KM Pets Hospital MuslimTown"
-              position={{ lat: 31.51734, lng: 74.32079 }}
-              onClick={this.onMarkerClick}
-            />
-            <Marker
-              title="Asim Pets Clinic (Defence)"
-              name="Asim Pets Clinic (Defence)"
-              position={{ lat: 31.47152, lng: 74.38868 }}
-              onClick={this.onMarkerClick}
-            />
+  useEffect(() => {
+    setSingleLocationData(location?.state);
+  }, [location]);
 
-            <InfoWindow
-              marker={this.state.activeMarker}
-              visible={this.state.showingInfoWindow}
-            >
-              <div>
-                <h1>{this.state.selectedPlace.name}</h1>
-              </div>
-            </InfoWindow>
-          </Map>
-        </div>
-      </UseMainLayout>
-    );
-  }
+  return (
+    <UseMainLayout>
+      {singleLocationData ? (
+        <Map
+          className="relative h-full w-full"
+          google={props.google}
+          zoom={16}
+          center={{
+            lat: singleLocationData.latitude,
+            lng: singleLocationData.longitude,
+          }}
+          onClick={onMapClicked}
+        >
+          <Marker
+            title={singleLocationData.clinicName}
+            name={singleLocationData.clinicName}
+            position={{
+              lat: singleLocationData.latitude,
+              lng: singleLocationData.longitude,
+            }}
+            onClick={onMarkerClick}
+          />
+          <InfoWindow marker={activeMarker} visible={showingInfoWindow}>
+            <div>
+              <h1 className="font-bold" >{selectedPlace}</h1>
+            </div>
+          </InfoWindow>
+        </Map>
+      ) : (
+        <Map
+          className="relative h-full w-full"
+          google={props.google}
+          zoom={11}
+          initialCenter={{ lat: 31.45631, lng: 74.32669 }}
+          onClick={onMapClicked}
+        >
+          <Marker
+            title="General Veterinary Hospital Lahore, Pakistan"
+            name="General Veterinary Hospital Lahore, Pakistan"
+            position={{ lat: 31.55792, lng: 74.41614 }}
+            onClick={onMarkerClick}
+          />
+          <Marker
+            title="Pets and Vets Clinic"
+            name="Pets and Vets Clinic"
+            position={{ lat: 31.48277, lng: 74.39716 }}
+            onClick={onMarkerClick}
+          />
+          <Marker
+            title="KM Pets Hospital MuslimTown"
+            name="KM Pets Hospital MuslimTown"
+            position={{ lat: 31.51734, lng: 74.32079 }}
+            onClick={onMarkerClick}
+          />
+          <Marker
+            title="Asim Pets Clinic (Defence)"
+            name="Asim Pets Clinic (Defence)"
+            position={{ lat: 31.47152, lng: 74.38868 }}
+            onClick={onMarkerClick}
+          />
+
+          <InfoWindow marker={activeMarker} visible={showingInfoWindow}>
+            <div>
+              <h1 className="font-bold">{selectedPlace}</h1>
+            </div>
+          </InfoWindow>
+        </Map>
+      )}
+    </UseMainLayout>
+  );
 }
 
-function LoadingContainer(props) {
+function LoadingContainer() {
   return (
     <div className="grid h-screen place-items-center">
       <div className="h-20 w-20 animate-spin rounded-full border-t-4 border-b-4 border-green-900" />
@@ -98,4 +124,4 @@ function LoadingContainer(props) {
 export default GoogleApiWrapper({
   apiKey: "AIzaSyB3UIxXjy4PIW6ikhu5zTorpmgE_rN2hDk",
   LoadingContainer,
-})(MapContainer);
+})(Maps);
