@@ -2,8 +2,8 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Box, Button, Typography, Modal, TextField } from "@mui/material";
-import Carousel from "react-material-ui-carousel";
 import UseMainLayout from "../../layouts/UserMainLayout";
+import { useForm } from "react-hook-form";
 
 import {
   collection,
@@ -28,11 +28,16 @@ import { db, auth } from "../../firebase-config";
 import Footer from "./Components/Footer";
 
 export default function Product() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const { id } = useParams();
   const cartRef = collection(db, "cart");
   const reviewsRef = collection(db, "reviews");
   const favouritesRef = collection(db, "favourites");
-  const navigate = useNavigate();
+  console.log(errors);
 
   const [loader, setLoader] = useState(false);
   const [prod, setProduct] = useState();
@@ -79,13 +84,13 @@ export default function Product() {
     getFav();
   }, [user]);
 
-  const addComment = async () => {
+  const addComment = async (data) => {
     const newComment = {
-      comment: comments,
-      rating,
+      comment: data.reviews,
       prod_id: prod?.id,
-      user: user?.email,
+      rating: rating,
       time: new Date(),
+      user: user?.email,
     };
 
     user ? await addDoc(reviewsRef, newComment) : setOpen(true);
@@ -289,16 +294,18 @@ export default function Product() {
           <h1 className="ml-24 mb-4 text-xl font-semibold">
             {prod?.category} {"->"} {prod?.subCategory}
           </h1>
-          <div className="mx-auto w-full flex flex-wrap lg:w-4/5">
+          <div className="mx-auto flex w-full flex-wrap">
             {prod?.image ? (
-              <div className="flex flex-wrap justify-between shrink grow-0 flex-row md:flex-row">
-                <img
-                  alt={prod?.description}
-                  className="w-full rounded border border-gray-200 object-contain lg:h-4/5 lg:w-1/2"
-                  src={prod.image[0]}
-                />
-                <div className="mt-6 w-full lg:mt-0 lg:w-1/2 lg:py-6 lg:pl-10">
-                  <h1 className="title-font mb-1 text-3xl font-medium text-gray-900">
+              <div className="flex w-full grow-0 flex-row flex-wrap justify-center md:flex-row">
+                <div className="flex w-1/2 items-center justify-center">
+                  <img
+                    alt={prod?.description}
+                    className="w-full rounded border border-gray-200 object-contain sm:w-full md:w-3/4 lg:w-1/2 xl:w-1/2"
+                    src={prod.image[0]}
+                  />
+                </div>
+                <div className="mt-6 flex w-full shrink flex-col lg:mt-0 lg:w-1/2 lg:py-6 lg:pl-10">
+                  <h1 className="title-font mb-1 text-2xl font-medium text-gray-900">
                     {prod?.name}
                   </h1>
                   <div className="mb-4 flex">
@@ -307,17 +314,17 @@ export default function Product() {
                   <p className="leading-relaxed">{prod?.description}</p>
                   <div className="mt-6 mb-5 flex items-center justify-center border-b-2 border-gray-200 pb-5">
                     {/* Quantity Picker */}
-                    <div className="border-box m-4 flex bg-gradient-to-r from-violet-200 via-white to-violet-200 rounded">
+                    <div className="border-box m-4 flex rounded bg-gradient-to-r from-violet-200 via-white to-violet-200">
                       <button
                         className="bg-transparent active:bg-purple-200"
                         onClick={decrementCounter}
                       >
                         <RemoveIcon className="text-black" />
                       </button>
-                      <div
-                        className="w-20"                        
-                      >
-                        <span className="px-6 pt-3 text-xl inline-block align-middle">{qty}</span>
+                      <div className="w-20">
+                        <span className="inline-block px-6 pt-3 align-middle text-xl">
+                          {qty}
+                        </span>
                       </div>
                       <button
                         className="bg-transparent active:bg-purple-200"
@@ -343,7 +350,7 @@ export default function Product() {
                     {addStatus ? (
                       <button
                         type="button"
-                        className=" flex h-12 w-11/12 bg-gradient-to-r from-indigo-700 to-sky-500 items-center justify-center rounded-md border border-transparent py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        className=" flex h-12 w-11/12 items-center justify-center rounded-md border border-transparent bg-gradient-to-r from-indigo-700 to-sky-500 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                         disabled
                       >
                         <svg
@@ -369,7 +376,7 @@ export default function Product() {
                         onClick={() => {
                           addToCart();
                         }}
-                        className=" flex h-12 w-11/12 bg-gradient-to-r from-indigo-700 to-sky-500 items-center justify-center rounded-md border border-transparent py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        className=" flex h-12 w-11/12 items-center justify-center rounded-md border border-transparent bg-gradient-to-r from-indigo-700 to-sky-500 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                       >
                         Add to Cart
                       </button>
@@ -421,31 +428,6 @@ export default function Product() {
                     )}
                   </div>
                 </div>
-                {/* <Carousel
-                  activeIndicatorIconButtonProps={{
-                    style: {
-                      color: "blue", // 2
-                    },
-                  }}
-                  indicatorContainerProps={{
-                    style: {
-                      display: "flex",
-                      textAlign: "center",
-                      height: "80%",
-                      justifyContent: "center",
-                      alignItems: "end",
-                    },
-                  }}
-                  navButtonsAlwaysInvisible={true}
-                  className=" h-full w-full"
-                >
-                  {prod?.image.map((item) => (
-                    <img
-                      className="rounded border border-gray-200 object-cover object-center lg:w-1/2 "
-                      src={item}
-                    />
-                  ))}
-                </Carousel> */}
               </div>
             ) : (
               <div className="flex h-full w-full items-center justify-center rounded border border-gray-200 object-cover object-center lg:w-1/2">
@@ -453,7 +435,7 @@ export default function Product() {
               </div>
             )}
 
-            <div className="w-full p-4 shadow-md">
+            <div className="mt-4 w-full p-4 shadow-md">
               <div className="flex justify-between p-2">
                 <h3 className="text-gray-600">Write a Review</h3>
                 <Rating
@@ -464,41 +446,44 @@ export default function Product() {
                 />
               </div>
               <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                }}
+                className="flex flex-col"
+                onSubmit={handleSubmit((data) => {
+                  addComment(data);
+                })}
+                autoComplete="off"
               >
-                <TextField
+                <input
                   fullWidth
-                  variant="filled"
                   type="text"
-                  autoComplete="off"
-                  onChange={(e) => {
-                    setComments(e.target.value);
-                  }}
+                  {...register("reviews", {
+                    required:
+                      "Please write a review before clicking the button",
+                    minLength: {
+                      value: 10,
+                      message: "Minimum 10 characters required",
+                    },
+                  })}
+                  className="m-2 w-full rounded-md border border-solid border-gray-400 p-2"
                 />
-                {/* <textarea
-                  className="form-control mb-2 block w-full border border-solid border-gray-300 p-2"
-                  rows="3"
-                  required
-                  value={comments}
-                  onChange={(e) => {
-                    setComments(e.target.value);
-                  }}
-                /> */}
+                {errors.reviews && (
+                  <p className="px-2 text-base text-red-600">
+                    {errors.reviews.message}
+                  </p>
+                )}
+                <div className="mt-2 flex justify-end">
+                  <Button type="submit" variant="outlined">
+                    Add a Comment
+                  </Button>
+                </div>
               </form>
-              <div className="mt-2 flex justify-end">
-                <Button
-                  onClick={() => {
-                    addComment();
-                  }}
-                  variant="outlined"
-                >
-                  Add a Comment
-                </Button>
-              </div>
-              <div>
+
+              <hr className="m-2 border-b-2 border-gray-300" />
+
+              <div className="mt-8">
                 <>
+                  <h2 className="text-xl font-extrabold">
+                    Reviews and Feedback
+                  </h2>
                   {getComments?.map((item, key) => (
                     <>
                       <hr className="mt-2" />
@@ -508,7 +493,7 @@ export default function Product() {
                       </div>
                       <div className="flex justify-between">
                         <p className="mt-2 break-normal">{item?.comment}</p>
-                        <div className="ml-2 flex items-end text-sm shrink-0">
+                        <div className="ml-2 flex shrink-0 items-end text-sm">
                           {timeConverter(item?.time.seconds * 1000)}
                         </div>
                       </div>
