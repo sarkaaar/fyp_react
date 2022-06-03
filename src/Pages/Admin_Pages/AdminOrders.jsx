@@ -15,7 +15,7 @@ export default function Orders() {
   const getProducts = async () => {
     const data = await getDocs(ordersRef);
     setProducts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    console.log(products);
+    // console.log(products);
   };
 
   useEffect(() => {
@@ -43,57 +43,43 @@ export default function Orders() {
             { key: "id", name: "Order" },
             { key: "email", name: "Email" },
             {
-              key: "description",
+              key: "name",
               name: "Name",
               render: (row) => (
-                <div className="flex flex-col">
-                  <p> {row.fName}</p>
-                  <p> {row.lName}</p>
-                </div>
+                <>
+                  {row.fName}
+                  {row.lName}
+                </>
               ),
             },
             {
               key: "address",
               name: "Address",
               render: (row) => (
-                <div className="">
-                  <h1 className="w-48">{row.address}</h1>
-                  <h1>{row.city}</h1>
-                </div>
+                <>
+                  {row.address},{row.city}
+                </>
               ),
             },
             { key: "phone", name: "Phone" },
             {
-              key: "quantity",
-              name: "Product Qty",
-              render: (row) => (
-                <div className="flex flex-col">
-                  {row.cart.map((prod, key) => (
-                    <tr key={key}>
-                      <td className="w-4">{prod?.quantity}</td>{" "}
-                    </tr>
-                  ))}
-                </div>
-              ),
-            },
-            {
-              key: "description",
+              key: "products",
               name: "Products",
               render: (row) => (
-                <div className="flex flex-col">
+                <>
                   {row.cart.map((prod, key) => (
-                    <tr key={key}>
-                      <td className="w-12"> {prod?.product?.name}</td>
-                    </tr>
+                    <p className="flex flex-col" key={key}>
+                      {prod?.product?.name} * {prod?.product?.quantity} pcs
+                    </p>
                   ))}
-                </div>
+                </>
               ),
             },
             {
               key: "status",
               name: "Status",
               render: (row) => (
-                <div className="flex flex-col">
+                <>
                   {row.status ? (
                     <Button
                       style={{ color: "green" }}
@@ -113,7 +99,7 @@ export default function Orders() {
                       Not Completed
                     </Button>
                   )}
-                </div>
+                </>
               ),
             },
           ]}

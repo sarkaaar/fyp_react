@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
-import Header from './admin_components/Header';
-import Sidebar from './admin_components/Sidebar';
+// import Header from './admin_components/Header';
+// import Sidebar from './admin_components/Sidebar';
 import { db, auth } from '../../firebase-config';
 
 import FirebaseDataTable from "../../components/FirebaseDataTable";

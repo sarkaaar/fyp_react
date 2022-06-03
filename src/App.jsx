@@ -39,7 +39,7 @@ import Inventory from "./Pages/Admin_Pages/Inventory";
 import AdminOrders from "./Pages/Admin_Pages/AdminOrders";
 import ViewDoctors from "./Pages/Admin_Pages/ViewDoctors";
 import Categories from "./Pages/Admin_Pages/Categories";
-import ProductsList from "./Pages/Admin_Pages/ProductsList";
+// import ProductsList from "./Pages/Admin_Pages/ProductsList";
 import AdminProfile from "./Pages/Admin_Pages/AdminProfile";
 import ReturnedProducts from "./Pages/Admin_Pages/ReturnedProducts";
 import Reports from "./Pages/Admin_Pages/Reports";
@@ -112,7 +112,7 @@ function App() {
         <Route exact path="/admin/inventory" element={<Inventory />} />
         <Route exact path="/admin/orders" element={<AdminOrders />} />
         <Route exact path="/admin/viewDoctor" element={<ViewDoctors />} />
-        <Route exact path="/admin/viewAllProducts" element={<ProductsList />} />
+        {/* <Route exact path="/admin/viewAllProducts" element={<ProductsList />} /> */}
         <Route exact path="/admin/reports" element={<Reports />} />
         <Route exact path="/admin/users/info" element={<Users />} />
         <Route
