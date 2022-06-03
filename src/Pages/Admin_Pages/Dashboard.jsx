@@ -1,16 +1,10 @@
 /* eslint-disable jsx-a11y/no-redundant-roles */
-import { ScaleIcon } from "@heroicons/react/outline";
-import { CashIcon, ChevronRightIcon } from "@heroicons/react/solid";
-import AdminLayout from "../../layouts/AdminLayout";
-
 import * as React from "react";
 import { useState, useEffect } from "react";
-// import CheckIcon from "@mui/icons-material/Check";
 import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
-
-import { Button } from "@mui/material";
 import { db } from "../../firebase-config";
 import FirebaseDataTable from "../../components/FirebaseDataTable";
+import AdminLayout from "../../layouts/AdminLayout";
 
 export default function Dashboard() {
   const appointmentsRef = collection(db, "appointments");
@@ -25,20 +19,12 @@ export default function Dashboard() {
   const getProducts = async () => {
     const data = await getDocs(ordersRef);
     setProducts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    console.log(products);
   };
-
-  useEffect(() => {
-    getProducts();
-    getAppointments();
-    getAllProducts();
-  }, []);
 
   const getAppointments = async () => {
     await getDocs(appointmentsRef)
       .then((res) => {
         setAppointments(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-        console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       })
       .catch((err) => {
         console.log(err);
@@ -46,21 +32,16 @@ export default function Dashboard() {
   };
 
   const getAllProducts = async () => {
-    const data = await getDocs(productsCollection).then((res) => {
+    await getDocs(productsCollection).then((res) => {
       setAllProducts(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
   };
 
-  const handleCompleted = async (id) => {
-    const prod = doc(db, "checkout", id);
-    await updateDoc(prod, { status: true });
+  useEffect(() => {
     getProducts();
-  };
-  const handleNotCompleted = async (id) => {
-    const prod = doc(db, "checkout", id);
-    await updateDoc(prod, { status: false });
-    getProducts();
-  };
+    getAppointments();
+    getAllProducts();
+  }, []);
 
   return (
     <AdminLayout>
@@ -166,70 +147,53 @@ export default function Dashboard() {
         Recent activity
       </h2>
 
-      {/* Activity list (smallest breakpoint only) */}
       <FirebaseDataTable
         query={collection(db, "checkout")}
         columns={[
-          // { key: "id", name: "Order" },
           { key: "email", name: "Email" },
           {
-            key: "description",
+            key: "name",
             name: "Name",
             render: (row) => (
-              <div className="flex flex-col">
-                <p> {row.fName}</p>
-                <p> {row.lName}</p>
-              </div>
+              <>
+                {row.fName},{row.lName}
+              </>
             ),
           },
           {
             key: "address",
             name: "Address",
             render: (row) => (
-              <div className="">
-                <h1 className="w-48">{row.address}</h1>
-                <h1>{row.city}</h1>
-              </div>
+              <>
+                {row.address},{row.city}
+              </>
             ),
           },
           { key: "phone", name: "Phone" },
-          // {
-          //   key: "quantity",
-          //   name: "Product Qty",
-          //   render: (row) => (
-          //     <div className="flex flex-col">
-          //       {row.cart.map((prod, key) => (
-          //         <tr key={key}>
-          //           <td className="w-4">{prod?.quantity}</td>{" "}
-          //         </tr>
-          //       ))}
-          //     </div>
-          //   ),
-          // },
           {
-            key: "description",
+            key: "products",
             name: "Products",
             render: (row) => (
-              <div className="flex flex-col">
+              <>
                 {row.cart.map((prod, key) => (
-                  <tr key={key}>
-                    <td className="w-12"> {prod?.product?.name}</td>
-                  </tr>
+                  <p className="flex flex-col" key={key}>
+                    {prod?.product?.name} * {prod?.product?.quantity} pcs
+                  </p>
                 ))}
-              </div>
+              </>
             ),
           },
           {
             key: "status",
             name: "Status",
             render: (row) => (
-              <div className="flex flex-col">
+              <>
                 {row.status ? (
-                  <p className="bg-green-100 text-green-800">Completed</p>
+                  <p className="bg-green-100 text-green-800 p-2 rounded-xl text-center">Completed</p>
                 ) : (
-                  <p className="bg-yellow-100 text-yellow-800">Not Completed</p>
+                  <p className="bg-yellow-100 text-yellow-800 p-2 rounded-xl">Not Completed</p>
                 )}
-              </div>
+              </>
             ),
           },
         ]}

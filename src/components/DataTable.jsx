@@ -1,12 +1,11 @@
-import React, { Fragment } from 'react';
-import { Menu, Transition } from '@headlessui/react';
-import { DotsVerticalIcon } from '@heroicons/react/solid';
-import c from 'classnames';
+import React, { Fragment } from "react";
+import { Menu, Transition } from "@headlessui/react";
+import { DotsVerticalIcon } from "@heroicons/react/solid";
+import c from "classnames";
 
 const renderLoader = (columnCount) => (
   <tbody className="bg-white divide-y divide-gray-200 animate-pulse">
-    {
-    [1, 2, 3].map((i) => (
+    {[1, 2, 3].map((i) => (
       <tr key={i}>
         {[...Array(columnCount)].map((_, j) => (
           // eslint-disable-next-line react/no-array-index-key
@@ -15,14 +14,16 @@ const renderLoader = (columnCount) => (
           </td>
         ))}
       </tr>
-    ))
-  }
+    ))}
   </tbody>
 );
 
 const renderNoData = (columnCount) => (
   <tr className="bg-white">
-    <td colSpan={columnCount} className="px-6 py-4 whitespace-nowrap text-center text-gray-500 text-sm">
+    <td
+      colSpan={columnCount}
+      className="px-6 py-4 whitespace-nowrap text-center text-gray-500 text-sm"
+    >
       No data available
     </td>
   </tr>
@@ -41,10 +42,13 @@ function renderActions(actions, row) {
     return actions.map((action) => (
       <button
         key={action.label}
-        type="button" onClick={() => action.perform(row)}
+        type="button"
+        onClick={() => action.perform(row)}
         className={c(
-          action.danger ? 'text-red-600 hover:text-red-800' : 'text-indigo-600 hover:text-indigo-800',
-          'font-medium px-1',
+          action.danger
+            ? "text-red-600 hover:text-red-800"
+            : "text-indigo-600 hover:text-indigo-800",
+          "font-medium px-1"
         )}
       >
         {action.label}
@@ -56,16 +60,19 @@ function renderActions(actions, row) {
     <>
       <button
         key={actions[0].label}
-        type="button" onClick={() => actions[0].perform(row)}
-        className={actions[0].danger ? 'text-red-600 hover:text-red-800' : 'text-indigo-600 hover:text-indigo-800'}
+        type="button"
+        onClick={() => actions[0].perform(row)}
+        className={
+          actions[0].danger
+            ? "text-red-600 hover:text-red-800"
+            : "text-indigo-600 hover:text-indigo-800"
+        }
       >
         {actions[0].label}
       </button>
 
       <Menu as="div">
-        <Menu.Button
-          className="flex z-0 items-center text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500 rounded"
-        >
+        <Menu.Button className="flex z-0 items-center text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500 rounded">
           <span className="sr-only">More options</span>
           <DotsVerticalIcon className="h-5 w-5" aria-hidden="true" />
         </Menu.Button>
@@ -79,15 +86,17 @@ function renderActions(actions, row) {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items
-            className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-          >
+          <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
             <div className="py-1 z-10">
               {actions.slice(1).map((action) => (
                 <Menu.Item key={action.label}>
                   <button
-                    type="button" onClick={() => action.perform(row)}
-                    className={c(action.danger ? 'text-red-600' : 'text-gray-700', 'hover:bg-gray-100 block px-4 py-2 text-sm w-full text-left')}
+                    type="button"
+                    onClick={() => action.perform(row)}
+                    className={c(
+                      action.danger ? "text-red-600" : "text-gray-700",
+                      "hover:bg-gray-100 block px-4 py-2 text-sm w-full text-left"
+                    )}
                   >
                     {action.label}
                   </button>
@@ -107,7 +116,10 @@ function renderTableBody(data, columns, actions) {
     <tr key={i.toString()}>
       {columns.map((column) => (
         // eslint-disable-next-line react/no-array-index-key
-        <td key={`${i}-${column.key}`} className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+        <td
+          key={`${i}-${column.key}`}
+          className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+        >
           {renderCell(column, row)}
         </td>
       ))}
@@ -122,10 +134,8 @@ function renderTableBody(data, columns, actions) {
   ));
 }
 
-export default function DataTable({
-  columns, actions, loading, data,
-}) {
-  const columnCount = columns.length + ((actions && actions.length) ? 1 : 0);
+export default function DataTable({ columns, actions, loading, data }) {
+  const columnCount = columns.length + (actions && actions.length ? 1 : 0);
 
   return (
     <div className="flex flex-col">
@@ -137,28 +147,29 @@ export default function DataTable({
                 <tr>
                   {columns.map((column) => (
                     <th
-                      key={column.key} scope="col"
+                      key={column.key}
+                      scope="col"
                       className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
                       {column.name}
                     </th>
                   ))}
                   {actions && actions.length && (
-                  <th scope="col" className="relative px-6 py-3">
-                    <span className="sr-only" />
-                  </th>
+                    <th scope="col" className="relative px-6 py-3">
+                      <span className="sr-only" />
+                    </th>
                   )}
                 </tr>
               </thead>
-              {
-                loading ? renderLoader(columnCount) : (
-                  <tbody className="bg-white divide-y divide-gray-200">
-                    {data.length
-                      ? renderTableBody(data, columns, actions)
-                      : renderNoData(columnCount)}
-                  </tbody>
-                )
-              }
+              {loading ? (
+                renderLoader(columnCount)
+              ) : (
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {data.length
+                    ? renderTableBody(data, columns, actions)
+                    : renderNoData(columnCount)}
+                </tbody>
+              )}
             </table>
           </div>
         </div>

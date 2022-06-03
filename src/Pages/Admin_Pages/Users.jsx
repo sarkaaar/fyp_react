@@ -57,7 +57,7 @@ export default function ViewDoctor() {
 
   return (
     <AdminLayout>
-      <h1 className="text-3xl font-bold ml-8">List Of Users</h1>
+      <h1 className="text-lg ml-8">List Of Users</h1>
       <FirebaseDataTable
         query={collection(db, "users")}
         columns={[
