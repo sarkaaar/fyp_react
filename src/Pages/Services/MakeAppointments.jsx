@@ -28,7 +28,6 @@ import UseMainLayout from "../../layouts/UserMainLayout";
 export default function MakeAppointments() {
   const appointmentsRef = collection(db, "appointments");
   const { id } = useParams();
-
   const navigate = useNavigate();
   const timeSlots = [
     "09:00 AM  -  09:15 AM",

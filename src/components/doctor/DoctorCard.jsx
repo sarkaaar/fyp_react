@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import DoctorPic from "../../assets/images/doctor.png";
-import Maps from "../../Pages/Services/Maps";
 
 export default function DoctorCard(person) {
   useEffect(() => {
@@ -42,7 +41,7 @@ export default function DoctorCard(person) {
               longitude: person?.obj.longitude,
               clinicName: person?.obj.clinicName,
             }}
-            className="inline-flex transition duration-150 ease-in-out hover:scale-110 items-center rounded-lg shadow-indigo-600/50 shadow-lg bg-gradient-to-r from-indigo-600 to-blue-500 py-2 px-4 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:shadow-none"
+            className="inline-flex items-center rounded-lg bg-gradient-to-r from-indigo-600 to-blue-500 py-2 px-4 text-center text-sm font-medium text-white shadow-lg shadow-indigo-600/50 transition duration-150 ease-in-out hover:scale-110 hover:bg-blue-800 focus:shadow-none focus:outline-none"
           >
             View on Map
           </Link>
@@ -54,48 +53,12 @@ export default function DoctorCard(person) {
           </a> */}
           <a
             href={`/appointments/new/${person?.obj.id}`}
-            className="inline-flex transition duration-150 ease-in-out hover:scale-110 items-center rounded-lg shadow-gray-900/50 shadow-lg bg-gradient-to-r from-gray-400 to-gray-900 py-2 px-4 text-center text-sm font-medium text-white focus:outline-none focus:shadow-none"
+            className="inline-flex items-center rounded-lg bg-gradient-to-r from-gray-400 to-gray-900 py-2 px-4 text-center text-sm font-medium text-white shadow-lg shadow-gray-900/50 transition duration-150 ease-in-out hover:scale-110 focus:shadow-none focus:outline-none"
           >
             Book Appointment
           </a>
         </div>
       </div>
     </div>
-
-    // <div classNameName="bg-white">
-    //   <div classNameName="mx-auto py-12 px-4 max-w-7xl h-96 sm:px-6 lg:px-8 lg:py-24">
-    //     <div classNameName="space-y-12"></div>
-    //     <li key={person.name}>
-    //       <div classNameName="space-y-4 sm:grid sm:grid-cols-3 sm:gap-6 sm:space-y-0 lg:gap-8">
-    //         <div classNameName="h-0 aspect-w-3 aspect-h-2 sm:aspect-w-3 sm:aspect-h-4">
-    //           <img
-    //             classNameName="object-cover shadow-lg rounded-lg"
-    //             src={DoctorPic}
-    //             alt="image"
-    //           />
-    //         </div>
-    //         <div classNameName="sm:col-span-2">
-    //           <div classNameName="space-y-4">
-    //             <div classNameName="text-lg leading-6 font-medium space-y-1">
-    //               <h3>Dr. {" "}{person?.obj.name}</h3>
-    //               <p classNameName="text-indigo-600">{person?.obj.fees}</p>
-    //             </div>
-    //             <div classNameName="text-lg">
-    //               <p classNameName="text-gray-500">{person?.obj.clinicName}</p>
-    //               <p classNameName="text-gray-500">"{person?.obj.clinicAddress}"</p>
-    //               <p classNameName="text-gray-500 italic">
-    //                 {person?.obj.clinicPhone}
-    //               </p>
-    //               <Link to= {`/appointments/new/${person?.obj.id}`}>
-    //               <button classNameName="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Book Appointment</button>
-    //            </Link>
-    //             </div>
-    //           </div>
-    //         </div>
-    //       </div>
-    //       {/* <button onClick={()=>{console.log(person.obj.name)}}>click</button> */}
-    //     </li>
-    //   </div>
-    // </div>
   );
 }

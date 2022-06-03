@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   collection,
   getDocs,
@@ -21,14 +21,10 @@ import CallIcon from "@mui/icons-material/Call";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { Button } from "@material-ui/core";
-
 import { useParams } from "react-router-dom";
 
 function Lists({ setPage, joinCode, setJoinCode }) {
-  const navigate = useNavigate();
-
   const [appointments, setAppointments] = useState([]);
-
   const appointmentsRef = collection(db, "appointments");
   const [user, setUser] = useState();
   const [loader, setLoader] = useState(false);
@@ -38,6 +34,7 @@ function Lists({ setPage, joinCode, setJoinCode }) {
     await deleteDoc(appointment);
     getAppointments();
   };
+  
   const getAppointments = async (user) => {
     const q = await query(appointmentsRef, where("user", "==", user?.email));
     const queryResults = await getDocs(q);
@@ -167,92 +164,6 @@ function Lists({ setPage, joinCode, setJoinCode }) {
     </UseMainLayout>
   );
 }
-
-// function MainScreen({ setPage }) {
-//   const { id } = useParams();
-//   const [appointment, setAppointment] = useState();
-
-//   useEffect(() => {
-//     const getAppointment = async () => {
-//       const x = await getDoc(doc(db, `appointments/${id}`));
-//       console.log({
-//         id: x.id,
-//         ...x.data(),
-//       });
-//       setAppointment({ id: x.id, ...x.data() });
-//       console.log({ id: x.id, ...x.data() });
-//     };
-
-//     getAppointment();
-//   }, []);
-
-//   return (
-//     <DoctorLayout>
-//       <div>
-//         <div className="w-10/12 border-2 border-slate-800 m-auto mb-4 bg-white hover:drop-shadow-2xl p-4 rounded-lg">
-//           <h1 className="text-3xl font-bold">
-//             {" "}
-//             Dr.
-//             {appointment?.doctor?.name}
-//           </h1>
-//           <div className="flex">
-//             <div className="w-1/2">
-//               <h1 className="text-xl font-bold text-gray-600 ">
-//                 Clinic Name : {appointment?.doctor?.clinicName}
-//               </h1>
-//               <h1 className="text-xl font-bold text-gray-600 ">
-//                 Address : {appointment?.doctor?.clinicAddress}
-//               </h1>
-//               <h1 className="text-xl font-bold text-gray-600 ">
-//                 Phone # {appointment?.doctor?.clinicPhone}
-//               </h1>
-//             </div>
-//             <div className="w-1/2">
-//               <h1 className="text-xl font-bold text-red-600 flex justify-end">
-//                 Date :{" "}
-//                 {new Date(appointment?.date.seconds * 1000).toDateString()}
-//               </h1>
-//               <h1 className="text-xl font-bold text-red-600 flex justify-end">
-//                 Time : {appointment?.time}
-//               </h1>
-//               <h1 className="text-xl font-bold text-gray-800 flex justify-end">
-//                 User Email : {appointment?.user}
-//               </h1>
-//             </div>
-//           </div>
-//           <div className="w-fit m-auto pt-4">
-//             <button
-//               onClick={() => {
-//                 setPage("create");
-//               }}
-//             >
-//               Click Me
-//             </button>
-//             <div>
-//               {appointment?.status ? (
-//                 <button
-//                   onClick={() => {
-//                     setPage("create");
-//                   }}
-//                 >
-//                   Click Me
-//                 </button>
-//               ) : (
-//                 <button
-//                   onClick={() => {
-//                     setPage("create");
-//                   }}
-//                 >
-//                   Click Me
-//                 </button>
-//               )}
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </DoctorLayout>
-//   );
-// }
 
 const servers = {
   iceServers: [

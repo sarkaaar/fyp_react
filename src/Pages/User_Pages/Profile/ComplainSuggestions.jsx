@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
-import {  useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import { TextField, Button } from "@mui/material";
 import { TextareaAutosize } from "@mui/base";
 import { db } from "../../../firebase-config";
 import { collection, doc, getDoc, addDoc } from "firebase/firestore";
 import UserLayout from "../../../layouts/UserLayout";
 import { onAuthStateChanged } from "firebase/auth";
-import {  auth } from "../../../firebase-config";
+import { auth } from "../../../firebase-config";
 import Modal from "@mui/material/Modal";
-import { Box,Typography } from "@mui/material";
-
+import { Box, Typography } from "@mui/material";
 
 export default function ComplainSuggestions() {
   const [description, setDescription] = useState("");
@@ -20,7 +19,7 @@ export default function ComplainSuggestions() {
   const complainRef = collection(db, "complain");
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-  
+
   const handleClose = () => {
     setOpen(false);
     navigate("/profile");
@@ -35,15 +34,10 @@ export default function ComplainSuggestions() {
     await addDoc(complainRef, newObj)
       .then(() => {
         setOpen(true);
-     
         console.log("Add To Complain Sucessfully");
-        
-         
       })
-
       .catch((err) => {
         console.log(err);
-       
       });
   };
 
@@ -52,7 +46,7 @@ export default function ComplainSuggestions() {
       setUser(currentUser);
     });
   }, [user]);
-  
+
   return (
     <UserLayout>
       <div className="flex " />
@@ -84,18 +78,17 @@ export default function ComplainSuggestions() {
               fullWidth
               variant="contained"
               className="mt-6 mb-12"
-              onClick={() => {addComplain();
-                setOpen(true); }
-              
-              }
-
-              // className="mt-6 mb-12"
+              onClick={() => {
+                addComplain();
+                setOpen(true);
+              }}
             >
               Submit
             </Button>
           </div>
         </div>
       </div>
+      
       <Modal
         open={open}
         onClose={handleClose}

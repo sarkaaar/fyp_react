@@ -42,11 +42,6 @@ export default function Cart() {
       <DataTable
         data={products}
         loading={!products}
-        // query={
-        //   (collection(db, "checkout"),
-        //   where("authUserEamil", "==", user?.email))
-        // }
-        // query={collection(db, "checkout")}
         columns={[
           { key: "id", name: "Order" },
           { key: "email", name: "Email" },
