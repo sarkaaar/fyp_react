@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from "google-maps-react";
 import UseMainLayout from "../../layouts/UserMainLayout";
 import { useLocation } from "react-router-dom";
+import Icon from "../../assets/images/paws.png";
 
 // export class MapContainer extends Component {
 //   componentDidMount() {
@@ -62,10 +63,14 @@ function Maps(props) {
               lng: singleLocationData.longitude,
             }}
             onClick={onMarkerClick}
+            icon={{
+              url: Icon,              
+              scaledSize: new google.maps.Size(64,64),
+            }}
           />
           <InfoWindow marker={activeMarker} visible={showingInfoWindow}>
             <div>
-              <h1 className="font-bold" >{selectedPlace}</h1>
+              <h1 className="font-bold">{selectedPlace}</h1>
             </div>
           </InfoWindow>
         </Map>
@@ -73,7 +78,7 @@ function Maps(props) {
         <Map
           className="relative h-full w-full"
           google={props.google}
-          zoom={11}
+          zoom={11.5}
           initialCenter={{ lat: 31.45631, lng: 74.32669 }}
           onClick={onMapClicked}
         >
@@ -82,24 +87,40 @@ function Maps(props) {
             name="General Veterinary Hospital Lahore, Pakistan"
             position={{ lat: 31.55792, lng: 74.41614 }}
             onClick={onMarkerClick}
+            icon={{
+              url: Icon,              
+              scaledSize: new google.maps.Size(64,64),
+            }}
           />
           <Marker
             title="Pets and Vets Clinic"
             name="Pets and Vets Clinic"
             position={{ lat: 31.48277, lng: 74.39716 }}
             onClick={onMarkerClick}
+            icon={{
+              url: Icon,              
+              scaledSize: new google.maps.Size(64,64),
+            }}
           />
           <Marker
             title="KM Pets Hospital MuslimTown"
             name="KM Pets Hospital MuslimTown"
             position={{ lat: 31.51734, lng: 74.32079 }}
             onClick={onMarkerClick}
+            icon={{
+              url: Icon,              
+              scaledSize: new google.maps.Size(64,64),
+            }}
           />
           <Marker
             title="Asim Pets Clinic (Defence)"
             name="Asim Pets Clinic (Defence)"
             position={{ lat: 31.47152, lng: 74.38868 }}
             onClick={onMarkerClick}
+            icon={{
+              url: Icon,              
+              scaledSize: new google.maps.Size(64,64),
+            }}
           />
 
           <InfoWindow marker={activeMarker} visible={showingInfoWindow}>
