@@ -93,6 +93,7 @@ export default function Checkout() {
     getCartItems();
 
     getUserInfo();
+    getCheckoutInfo();
   }, [user]);
 
   const checkoutRef = collection(db, "checkout");
@@ -148,6 +149,28 @@ export default function Checkout() {
           setEmail(data[0]?.email);
           setPhone(data[0]?.phone);
           setName(data[0]?.name);
+
+          console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+  // const checkoutRef = collection(db, "checkout");
+  const getCheckoutInfo = async () => {
+    if (user) {
+      const q = query(checkoutRef, where("email", "==", user?.email));
+      await getDocs(q)
+        .then((res) => {
+          const data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+          // setQueryUser(data[0]);
+          // setEmail(data[0]?.email);
+          // setPhone(data[0]?.phone);
+          // setName(data[0]?.name);
+          setAddress(data[0]?.address);
+          setCity(data[0]?.city);
+          setPostal(data[0]?.postal);
 
           console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
         })
