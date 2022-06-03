@@ -4,7 +4,6 @@ import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import {
   Button,
   FormControl,
-  IconButton,
   InputLabel,
   MenuItem,
   Select,
@@ -24,40 +23,27 @@ export default function AddEditProduct({ data }) {
   const [cat, setCat] = useState([]);
   const categoriesCollection = collection(db, "categories");
 
-  // Get Sub-Categories Names
-  // const [subCat, setSubCat] = useState([]);
-  // const subCatRef = collection(db, "sub-categories");
   const productsCollection = collection(db, "products");
   const [id, setID] = useState(data?.id);
   const [name, setName] = useState(data?.name);
   const [costPrice, setCostPrice] = useState(data?.costPrice);
   const [salePrice, setSalePrice] = useState(data?.salePrice);
-  // const [variants, setVariants] = useState(
-  //   Object.values(data?.variants ?? {}).length
-  //     ? Object.values(data?.variants)
-  //     : [["", 0]]
-  // );
-  const z = data?.stock || 0;
+  // const z = data?.stock || 0;
   const [stock, setStock] = useState(data?.stock);
   const [category, setCategory] = useState(data?.category);
-  // const [subCategory, setSubCategory] = useState(data?.subCategory);
   const [description, setDescription] = useState(data?.description);
-  const [image, setImage] = useState(data?.image);
+  const [image, setImage] = useState();
   const [urls, setUrls] = useState(data?.urls);
   const [progress, setProgress] = useState();
 
-  // Add Products
   const addProduct = async () => {
-    //const x = variants.reduce((acc, val, i) => ({ ...acc, [i]: val }), {});
-
     const newProduct = {
       name,
       costPrice,
       salePrice,
       stock,
-      //variants: x,
       category,
-      // subCategory,
+
       description,
       image: urls || "No Image Found",
     };
@@ -65,11 +51,41 @@ export default function AddEditProduct({ data }) {
     await addDoc(productsCollection, newProduct);
   };
 
+  // const upload = () => {
+  //   console.log("upload images responded");
+  //   // console.log(image);
+  //   if (!image[0]) return;
+  //   const arr = [];
+
+  //   for (let i = 0; i < image.length; i += 1) {
+  //     console.log(image);
+
+  //   const storageRef = ref(storage, `products/${image[i].name}`);
+  //   const uploadTask = uploadBytesResumable(storageRef, image[i]);
+
+  //   uploadTask.on(
+  //     "state_changed",
+  //     (snapshot) => {
+  //       const prog = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+  //       setProgress(prog);
+  //     },
+  //     (error) => console.log(error),
+  //     () => {
+  //       getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+  //         console.log(url);
+  //         arr.push(url);
+  //         setUrls(arr);
+  //       });
+  //     }
+  //   );
+  //   }
+  // };
+
   const upload = () => {
     if (!image[0]) return;
     const arr = [];
-
-    for (let i = 0; i < image.length; i = +1) {
+    for (let i = 0; i < image.length; i += 1) {
       const storageRef = ref(storage, `products/${image[i].name}`);
       const uploadTask = uploadBytesResumable(storageRef, image[i]);
 
@@ -91,35 +107,16 @@ export default function AddEditProduct({ data }) {
       );
     }
   };
-  // Search Categories
+
   const getCategories = async () => {
     await getDocs(categoriesCollection).then((res) => {
       setCat(res.docs.map((d) => d.data().name));
     });
   };
 
-  // Search Sub-Categories
-  // const getSubCategories = async () => {
-  //   await getDocs(subCatRef)
-  //     .then((res) => {
-  //       // eslint-disable-next-line no-underscore-dangle
-  //       setSubCat(res.docs.map((d) => d.data().sub_));
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-
   useEffect(() => {
-    // Function Calls
     getCategories();
-    // getSubCategories();
   }, []);
-
-  // const removeVariant = (i) => {
-  //   variants.splice(i, 1);
-  //   setVariants([...variants]);
-  // };
 
   const updateStock = () => {
     const tempStock = stock;
@@ -134,9 +131,8 @@ export default function AddEditProduct({ data }) {
       salePrice,
       stock,
       category,
-
       description,
-      // image: urls || "No Image Found",
+      image: urls || "No Image Found",
     };
     console.log(newProduct);
     const prod = doc(db, "products", id);
@@ -243,22 +239,6 @@ export default function AddEditProduct({ data }) {
           </Select>
         </FormControl>
       </div>
-      {/* <div className="w-96">
-          <FormControl fullWidth style={{ margin: "10px 0" }}>
-            <InputLabel id="demo-simple-select-label">Sub-Category</InputLabel>
-            <Select
-              value={subCategory}
-              label="category"
-              onChange={(e) => {
-                setSubCategory(e.target.value);
-              }}
-            >
-              {subCat.map((item) => (
-                <MenuItem value={item}>{item}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </div> */}
 
       <TextareaAutosize
         minRows={5}
@@ -309,7 +289,6 @@ export default function AddEditProduct({ data }) {
           variant="contained"
           className="mt-6 mb-16"
           onClick={addProduct}
-          // className="mt-6 mb-12"
         >
           Add Product
         </Button>
