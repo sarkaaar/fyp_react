@@ -4,6 +4,8 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../firebase-config";
 import DoctorLayout from "../../layouts/DoctorLayout";
 import { Link } from "react-router-dom";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../firebase-config";
 
 const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 // sm:col-start-5 sm:col-start-1 sm:col-start-2 sm:col-start-3 sm:col-start-4 sm:col-start-6 sm:col-start-7
@@ -13,6 +15,13 @@ export default function DocViewAppointments() {
   const [appointments, setAppointments] = useState([]);
   const [monthYear, setMonthYear] = useState([]);
   const [user, setUser] = useState();
+
+  useEffect(
+    onAuthStateChanged(auth, (user) => {
+      setUuse(user);
+    }),
+    [user]
+  );
 
   const getVerticalPosition = (time) => {
     const [startTime, endTime] = time.split("-");
@@ -29,13 +38,13 @@ export default function DocViewAppointments() {
     const weekEnd = new Date();
     weekStart.setDate(weekStart.getDate() - weekStart.getDay());
     weekEnd.setDate(weekEnd.getDate() - weekEnd.getDay() + 7);
-    
+
     const q = query(
       appointmentsRef,
-      where("doctor.email", "==", "umairfarooq@gmail.com"),
-      // where("doctor.email", "==", "ammarzahid335@gmail.com"),
+      // where("doctor.email", "==", user?.email),
+      where("doctor.email", "==", "ammarzahid335@gmail.com"),
       where("date", ">", weekStart),
-      where("date", "<", weekEnd),
+      where("date", "<", weekEnd)
     );
     await getDocs(q)
       .then((res) => {

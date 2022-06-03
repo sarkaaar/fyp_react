@@ -13,7 +13,7 @@ import Checkout from "./Pages/User_Pages/Checkout";
 import Products from "./Pages/User_Pages/All_Products";
 import Cart from "./Pages/User_Pages/Cart";
 import Chatbot from "./Pages/User_Pages/Components/Chatbot";
-// User Prile Pages
+// User Profile Pages
 import ProductReturnForm from "./Pages/User_Pages/Profile/ProductReturnForm";
 import Product from "./Pages/User_Pages/Product";
 import Profile from "./Pages/User_Pages/Profile/Profile";
