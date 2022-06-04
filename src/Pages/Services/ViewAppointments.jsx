@@ -34,7 +34,7 @@ function Lists({ setPage, joinCode, setJoinCode }) {
     await deleteDoc(appointment);
     getAppointments();
   };
-  
+
   const getAppointments = async (user) => {
     const q = await query(appointmentsRef, where("user", "==", user?.email));
     const queryResults = await getDocs(q);
@@ -59,105 +59,121 @@ function Lists({ setPage, joinCode, setJoinCode }) {
   return (
     <UseMainLayout>
       <div className="min-h-screen">
-        <div className="flex justify-end">
-          <Link
-            className="m-4 p-4 w-fit font-black border-2  bg-indigo-600 hover:bg-indigo-400 text-3xl rounded-lg"
-            to="/viewDoctors"
-          >
-            Make A New Appointment
-          </Link>
-        </div>
-
         {user ? (
           <>
             {loader ? (
-              <div className="grid place-items-center h-screen">
-                <div className="w-20 h-20 border-t-4 border-b-4 border-green-900 rounded-full animate-spin" />
+              <div className="grid h-screen place-items-center">
+                <div className="h-20 w-20 animate-spin rounded-full border-t-4 border-b-4 border-green-900" />
               </div>
             ) : appointments.length === 0 ? (
               <div>
-                <div className="font-bold text-center ">
-                  <h1 className="text-2xl pt-1/2">
+                <div className="flex justify-end">
+                  <Link
+                    className="m-4 rounded-full bg-gradient-to-r from-indigo-500 to-sky-400 p-4 text-xl text-white shadow-lg shadow-blue-400/50 focus:shadow-none"
+                    to="/viewDoctors"
+                  >
+                    +
+                  </Link>
+                </div>
+                <div className="flex items-center justify-center text-center font-bold ">
+                  <h1 className="text-2xl">
                     Currently You Dont have any Appointmets.{" "}
                   </h1>
                 </div>
               </div>
             ) : (
               <div>
-                <h1 className="text-3xl font-bold flex justify-center">
+                <div className="flex justify-end">
+                  <Link
+                    className="m-4 rounded-full bg-gradient-to-r from-indigo-500 to-sky-400 p-4 text-xl text-white shadow-lg shadow-blue-400/50 focus:shadow-none"
+                    to="/viewDoctors"
+                  >
+                    +
+                  </Link>
+                </div>
+                <h1 className="m-2 flex justify-center text-center text-2xl font-bold">
                   You have the Following Appointments
                 </h1>
                 {appointments.map((item, key) => (
-                  <div className="w-10/12 border-2 border-slate-800 m-auto mb-4 bg-white hover:drop-shadow-2xl p-4 rounded-lg">
-                    <h1 className="text-3xl font-bold">
-                      {" "}
-                      Dr.
-                      {item?.doctor?.name}
-                    </h1>
-                    <div className="flex">
-                      <div className="w-1/2">
-                        <h1 className="text-xl font-bold text-gray-600 ">
+                  <div className="m-auto mb-4 w-10/12 bg-slate-200 p-4 hover:drop-shadow-xl">
+                    <div className="flex flex-row flex-wrap md:flex-nowrap lg:flex-nowrap xl:flex-nowrap w-full justify-center">
+                      <div className="w-full" >
+                        <h1 className="text-2xl font-bold">
+                          {" "}
+                          Dr. {item?.doctor?.name}
+                        </h1>
+                        <h1 className="text-xl text-gray-600 ">
                           Clinic Name : {item?.doctor?.clinicName}
                         </h1>
-                        <h1 className="text-xl font-bold text-gray-600 ">
+                        <h1 className="text-xl text-gray-600 ">
                           Address : {item?.doctor?.clinicAddress}
                         </h1>
-                        <h1 className="text-xl font-bold text-gray-600 ">
+                        <h1 className="text-xl text-gray-600 ">
                           Phone # {item?.doctor?.clinicPhone}
                         </h1>
-                      </div>
-                      <div className="w-1/2">
-                        <h1 className="text-xl font-bold text-red-600 flex justify-end">
-                          Date :{" "}
+                        <h1 className="text-xl text-red-600">
+                          Date:
                           {new Date(item?.date.seconds * 1000).toDateString()}
                         </h1>
-                        <h1 className="text-xl font-bold text-red-600 flex justify-end">
-                          Time : {item?.time}
+                        <h1 className="text-xl text-red-600">
+                          Time: {item?.time}
                         </h1>
                       </div>
+                      <div className="shrink flex justify-end">
+                        <div className="flex justify-center md:flex-col lg:flex-col">
+                          {item?.joinLink ? (
+                            <button
+                              onClick={() => {
+                                setJoinCode(item?.joinLink);
+                                setPage("join");
+                              }}
+                              className="mt-4 mx-2 w-28 rounded-none bg-neutral-400 text-white shadow-lg shadow-neutral-600/50 focus:shadow-none hover:drop-shadow-lg md:w-36 lg:w-44"
+                            >
+                              Join Meeting
+                            </button>
+                          ) : (
+                            // <Button
+                            //   color="error"
+                            //   variant="outlined"
+                            //   onClick={() => {
+                            //     setJoinCode(item?.joinLink);
+                            //     setPage("join");
+                            //   }}
+                            // >
+                            //   Join Meeting
+                            // </Button>
+                            <></>
+                          )}
+                          <button
+                            onClick={() => {
+                              cancelAppoitment(item.id);
+                            }}
+                            className="mt-4 mx-2 w-28 rounded-none border border-transparent bg-gradient-to-r from-red-700 to-rose-600 text-white shadow-lg shadow-red-600/50 focus:shadow-none hover:drop-shadow-lg md:w-36 lg:w-44"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
                     </div>
-                    <div className="w-fit m-auto pt-4">
-                      <Button
-                        color="error"
-                        variant="outlined"
-                        onClick={() => {
-                          cancelAppoitment(item?.id);
-                        }}
-                      >
-                        Cancel Appointment
-                      </Button>
-                    </div>
-                    {item?.joinLink ? (
-                      <Button
-                        color="error"
-                        variant="outlined"
-                        onClick={() => {
-                          setJoinCode(item?.joinLink);
-                          setPage("join");
-                        }}
-                      >
-                        Join Meeting
-                      </Button>
-                    ) : (
-                      <></>
-                    )}
                   </div>
                 ))}
               </div>
             )}
           </>
         ) : (
-          <div className="flex flex-col items-center">
-            <div className="text-3xl font-bold">You are not signed in.</div>
-            <div className="w-74 px-10 sm:w-100 flex justify-center">
-              <Link
-                className="w-full mx-4 text-center border-2 text-white bg-indigo-600 text-2xl rounded-lg"
-                to="/sign_in"
-              >
-                Sign In Now!
-              </Link>
+          <>
+            <div className="flex flex-col items-center">
+              <div className="text-3xl font-bold">You are not signed in.</div>
+              <div className="w-74 sm:w-100 flex justify-center px-10">
+                <Link
+                  className="mx-4 w-full rounded-lg border-2 bg-indigo-600 text-center text-2xl text-white"
+                  to="/sign_in"
+                >
+                  Sign In Now!
+                </Link>
+              </div>
             </div>
-          </div>
+          </>
         )}
       </div>
       <Footer />
@@ -357,7 +373,7 @@ function Videos({ mode, callId, setPage }) {
         <div className="modalContainer">
           <div className="modal">
             <h3>Turn on your camera and microphone and start the call</h3>
-            <div color="primary" className="flex gap-4 mt-8">
+            <div color="primary" className="mt-8 flex gap-4">
               <Button
                 type="button"
                 fullWidth
