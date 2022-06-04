@@ -3,6 +3,8 @@ import { Map, GoogleApiWrapper, Marker, InfoWindow } from "google-maps-react";
 import UseMainLayout from "../../layouts/UserMainLayout";
 import { useLocation } from "react-router-dom";
 import Icon from "../../assets/images/paws.png";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../../firebase-config";
 
 // export class MapContainer extends Component {
 //   componentDidMount() {
@@ -24,6 +26,23 @@ function Maps(props) {
   const [activeMarker, setActiveMarker] = useState({});
   const [selectedPlace, setSelectedPlace] = useState();
   const [singleLocationData, setSingleLocationData] = useState();
+  const [doctors, setDoctor] = useState();
+  const [loader, setLoader] = useState(false);
+  const doctorsCollection = collection(db, "doctors");
+
+  const getDoctor = async () => {
+    const q = query(doctorsCollection, where("status", "==", false));
+
+    await getDocs(q).then((res) => {
+      setDoctor(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      setLoader(false);
+    });
+  };
+
+  useEffect(() => {
+    setLoader(true);
+    getDoctor();
+  }, []);
 
   const onMarkerClick = (props, marker) => {
     setActiveMarker(marker);
@@ -64,8 +83,8 @@ function Maps(props) {
             }}
             onClick={onMarkerClick}
             icon={{
-              url: Icon,              
-              scaledSize: new google.maps.Size(64,64),
+              url: Icon,
+              scaledSize: new google.maps.Size(64, 64),
             }}
           />
           <InfoWindow marker={activeMarker} visible={showingInfoWindow}>
@@ -74,6 +93,10 @@ function Maps(props) {
             </div>
           </InfoWindow>
         </Map>
+      ) : loader ? (
+        <div className="grid h-screen place-items-center">
+          <div className="h-20 w-20 animate-spin rounded-full border-t-4 border-b-4 border-green-900" />
+        </div>
       ) : (
         <Map
           className="relative h-full w-full"
@@ -82,17 +105,20 @@ function Maps(props) {
           initialCenter={{ lat: 31.45631, lng: 74.32669 }}
           onClick={onMapClicked}
         >
-          <Marker
-            title="General Veterinary Hospital Lahore, Pakistan"
-            name="General Veterinary Hospital Lahore, Pakistan"
-            position={{ lat: 31.55792, lng: 74.41614 }}
-            onClick={onMarkerClick}
-            icon={{
-              url: Icon,              
-              scaledSize: new google.maps.Size(64,64),
-            }}
-          />
-          <Marker
+          {doctors?.map((doctor) => (
+            <Marker
+              title={doctor.clinicName}
+              name={doctor.clinicName}
+              position={{ lat: doctor.latitude, lng: doctor.longitude }}
+              onClick={onMarkerClick}
+              icon={{
+                url: Icon,
+                scaledSize: new google.maps.Size(64, 64),
+              }}
+            />
+          ))}
+
+          {/* <Marker
             title="Pets and Vets Clinic"
             name="Pets and Vets Clinic"
             position={{ lat: 31.48277, lng: 74.39716 }}
@@ -121,7 +147,7 @@ function Maps(props) {
               url: Icon,              
               scaledSize: new google.maps.Size(64,64),
             }}
-          />
+          /> */}
 
           <InfoWindow marker={activeMarker} visible={showingInfoWindow}>
             <div>
