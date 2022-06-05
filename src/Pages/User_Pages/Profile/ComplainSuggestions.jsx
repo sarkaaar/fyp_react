@@ -9,7 +9,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../../firebase-config";
 import Modal from "@mui/material/Modal";
 import { Box, Typography } from "@mui/material";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 export default function ComplainSuggestions() {
   const [user, setUser] = useState("");
