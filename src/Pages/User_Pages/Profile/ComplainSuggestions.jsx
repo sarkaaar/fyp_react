@@ -9,12 +9,16 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../../firebase-config";
 import Modal from "@mui/material/Modal";
 import { Box, Typography } from "@mui/material";
+import { useForm, Controller } from "react-hook-form";
 
 export default function ComplainSuggestions() {
-  const [description, setDescription] = useState("");
-  const [subj, setSubj] = useState("");
   const [user, setUser] = useState("");
   const [loader, setLoader] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const complainRef = collection(db, "complain");
   const [open, setOpen] = useState(false);
@@ -24,11 +28,12 @@ export default function ComplainSuggestions() {
     setOpen(false);
     navigate("/profile");
   };
-  const addComplain = async () => {
+  const addComplain = async (data) => {
     const newObj = {
-      subject: subj,
+      subject: data.subject,
       user: user?.email,
-      description,
+      description: data.description,
+      time: new Date(),
     };
     setLoader(true);
     await addDoc(complainRef, newObj)
@@ -50,45 +55,67 @@ export default function ComplainSuggestions() {
   return (
     <UserLayout>
       <div className="flex " />
-      <div className="  mt-6">
-        <div className="align-center  m-auto ">
+      <div className="mt-6">
+        <div className="align-center m-auto ">
           <h1 className="text-center text-3xl">Complaints and Suggestions</h1>
           <div className="w-full">
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              label="Subject"
+            <form
+              onSubmit={handleSubmit((data) => {
+                addComplain(data);
+              })}
               autoComplete="off"
-              value={subj}
-              onChange={(e) => setSubj(e.target.value)}
-            />
-
-            <TextareaAutosize
-              minRows={5}
-              required
-              placeholder="  Description*"
-              className="mt-8 w-full"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              className="mt-6 mb-12"
-              onClick={() => {
-                addComplain();
-                setOpen(true);
-              }}
             >
-              Submit
-            </Button>
+              <input
+                type="text"
+                fullWidth
+                className="mt-4 mb-2 h-16 w-full rounded-md border border-solid border-gray-400 p-2"
+                autoFocus
+                placeholder="Write Subject of Complain/Suggestion"
+                {...register("subject", {
+                  required:
+                    "Subject is required to submit a complain/suggestion",
+                  minLength: {
+                    value: 5,
+                    message: "Minimum 5 characters required",
+                  },
+                })}
+              />
+              {errors.subject && (
+                <p className="px-2 text-base text-red-600">
+                  {errors.subject.message}
+                </p>
+              )}
+
+              <textarea
+                rows="6"
+                className="mt-4 w-full rounded-md border border-solid border-gray-400 p-2"
+                placeholder="Description"
+                {...register("description", {
+                  required:
+                    "Description is required to submit a complain/suggestion",
+                  minLength: {
+                    value: 15,
+                    message: "Minimum 15 characters required",
+                  },
+                })}
+              />
+              {errors.description && (
+                <p className="px-2 text-base text-red-600">
+                  {errors.description.message}
+                </p>
+              )}
+
+              <button
+                type="submit"
+                className="mt-4 w-full rounded-md border border-transparent bg-gradient-to-r from-blue-700 to-sky-600 text-white shadow-lg shadow-blue-400/50 hover:drop-shadow-lg focus:shadow-none"
+              >
+                SUBMIT
+              </button>
+            </form>
           </div>
         </div>
       </div>
-      
+
       <Modal
         open={open}
         onClose={handleClose}

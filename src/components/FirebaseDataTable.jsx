@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { getDocs } from 'firebase/firestore';
-
 import DataTable from './DataTable';
 
 export default function FirebaseDataTable({ query, ...props }) {

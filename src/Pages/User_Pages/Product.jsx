@@ -37,7 +37,6 @@ export default function Product() {
   const cartRef = collection(db, "cart");
   const reviewsRef = collection(db, "reviews");
   const favouritesRef = collection(db, "favourites");
-  console.log(errors);
 
   const [loader, setLoader] = useState(false);
   const [prod, setProduct] = useState();
