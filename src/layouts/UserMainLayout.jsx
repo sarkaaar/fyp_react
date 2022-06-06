@@ -2,18 +2,24 @@ import { useState, useEffect, useRef } from "react";
 import Fuse from "fuse.js";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { SearchIcon } from "@heroicons/react/solid";
-import {
-  MenuIcon,
-  XIcon,
-  ShoppingCartIcon
-} from "@heroicons/react/outline";
 import GrayLogo from "../assets/images/gray_logo.png";
 import c from "classnames";
 import { NavLink, useNavigate } from "react-router-dom";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { auth, db } from "../firebase-config";
-
+import {
+  MenuIcon,
+  ShoppingCartIcon,
+  LogoutIcon,
+  HomeIcon,
+  XIcon,
+  InformationCircleIcon,
+  AdjustmentsIcon,
+  CalendarIcon,
+  MapIcon,
+  LoginIcon,
+} from "@heroicons/react/outline";
 
 export default function UserMainLayout({ children, props }) {
   const [cartItems, setCartItems] = useState([]);
@@ -53,20 +59,25 @@ export default function UserMainLayout({ children, props }) {
 
     fuseRef.current = new Fuse(products, {
       threshold: 0.3,
-      keys: ["name", "description"]
+      keys: ["name", "description"],
     });
   }, [products]);
 
-  useEffect(() => onAuthStateChanged(auth, (user) => {
-    getProducts();
-    if (!user) {
-      return;
-    }
-    setUser(user);
-
-    getCartItems(user);
-    getDBUser(user);
-  }), []);
+  useEffect(
+    () =>
+      onAuthStateChanged(auth, (user) => {
+        getProducts();
+        if (!user) {
+          setUser(null);
+          return;
+        }
+        setUser(user);
+        console.log("user logged in", user);
+        getCartItems(user);
+        getDBUser(user);
+      }),
+    []
+  );
 
   const logout = async () => {
     await signOut(auth);
@@ -180,17 +191,17 @@ export default function UserMainLayout({ children, props }) {
                         autoComplete="off"
                         onChange={(e) => {
                           if (!fuseRef.current) return;
-                          setSearchResults(fuseRef.current.search(e.target.value));
+                          setSearchResults(
+                            fuseRef.current.search(e.target.value)
+                          );
                         }}
                       />
-
                     </div>
                   </div>
                 </div>
                 <div className="flex lg:hidden">
                   {/* Mobile menu button */}
-                  <Disclosure.Button
-                    className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                  <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                     <span className="sr-only">Open main menu</span>
                     {open ? (
                       <XIcon className="block h-6 w-6" aria-hidden="true" />
@@ -224,7 +235,11 @@ export default function UserMainLayout({ children, props }) {
                         <Menu as="div" className="relative ml-4 flex-shrink-0">
                           <div>
                             <NavLink
-                              to={userProfile?.role === "admin" ? "/admin/profile" : "/profile"}
+                              to={
+                                userProfile?.role === "admin"
+                                  ? "/admin/profile"
+                                  : "/profile"
+                              }
                               className={({ isActive }) =>
                                 c(
                                   isActive
@@ -277,97 +292,182 @@ export default function UserMainLayout({ children, props }) {
             <Disclosure.Panel className="lg:hidden">
               <div className="space-y-1 px-2 pt-2 pb-3">
                 {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
-                <Disclosure.Button
-                  href="/"
-                  className="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
+                {/* <Disclosure.Button className="block w-full rounded-md px-3 py-2 text-left text-base font-medium text-white"> */}
+                <NavLink
+                  to="/"
+                  className={({ isActive }) =>
+                    c(
+                      isActive
+                        ? "w-full bg-gray-900 text-white"
+                        : "w-full text-gray-300 hover:bg-gray-700 hover:text-white",
+                      "flex h-14 w-full items-center rounded-md px-2 py-2 text-lg font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                    )
+                  }
                 >
+                  <HomeIcon
+                    className="mr-4 h-6 w-6 text-gray-400"
+                    aria-hidden="true"
+                  />
                   Home
-                </Disclosure.Button>
-                <Disclosure.Button
-                  href="/services"
-                  className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                </NavLink>
+                {/* </Disclosure.Button> */}
+                {/* <Disclosure.Button
+                  className="block w-full rounded-md px-3 py-2 text-left text-base font-medium text-white"
+                > */}
+                <NavLink
+                  to="/services"
+                  className={({ isActive }) =>
+                    c(
+                      isActive
+                        ? "w-full bg-gray-900 text-white"
+                        : "w-full text-gray-300 hover:bg-gray-700 hover:text-white",
+                      "flex h-14 w-full items-center rounded-md px-2 py-2 text-lg font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                    )
+                  }
                 >
+                  <AdjustmentsIcon
+                    className="mr-4 h-6 w-6 text-gray-400"
+                    aria-hidden="true"
+                  />
                   Services
-                </Disclosure.Button>
-                <Disclosure.Button
+                </NavLink>
+                {/* </Disclosure.Button> */}
+                {/* <Disclosure.Button
                   href="/viewAppointments"
-                  className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                  className="block w-full rounded-md px-3 py-2 text-left text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                > */}
+                <NavLink
+                  to="/viewAppointments"
+                  className={({ isActive }) =>
+                    c(
+                      isActive
+                        ? "w-full bg-gray-900 text-white"
+                        : "w-full text-gray-300 hover:bg-gray-700 hover:text-white",
+                      "flex h-14 w-full items-center rounded-md px-2 py-2 text-lg font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                    )
+                  }
                 >
+                  <CalendarIcon
+                    className="mr-4 h-6 w-6 text-gray-400"
+                    aria-hidden="true"
+                  />
                   Appointments
-                </Disclosure.Button>
-                <Disclosure.Button
+                </NavLink>
+                {/* </Disclosure.Button> */}
+                {/* <Disclosure.Button
                   href="/maps"
-                  className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                  className="block w-full rounded-md px-3 py-2 text-left text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                > */}
+                <NavLink
+                  to="/maps"
+                  className={({ isActive }) =>
+                    c(
+                      isActive
+                        ? "w-full bg-gray-900 text-white"
+                        : "w-full text-gray-300 hover:bg-gray-700 hover:text-white",
+                      "flex h-14 w-full items-center rounded-md px-2 py-2 text-lg font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                    )
+                  }
                 >
+                  <MapIcon
+                    className="mr-4 h-6 w-6 text-gray-400"
+                    aria-hidden="true"
+                  />
                   Maps
-                </Disclosure.Button>
+                </NavLink>
+                <hr />
+                {/* </Disclosure.Button> */}
+                {user ? (
+                  <>
+                    <NavLink
+                      to="/cart"
+                      className={({ isActive }) =>
+                        c(
+                          isActive
+                            ? "w-full bg-gray-900 text-white"
+                            : "w-full text-gray-300 hover:bg-gray-700 hover:text-white",
+                          "flex h-14 w-full items-center rounded-md px-2 py-2 text-lg font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                        )
+                      }
+                    >
+                      <ShoppingCartIcon
+                        className="mr-4 h-6 w-6 text-gray-400"
+                        aria-hidden="true"
+                      />
+                      Cart
+                      {cartItems.length === 0 ? (
+                        <span className="hidden" />
+                      ) : (
+                        <div className="ml-2 flex h-7 w-7 items-center justify-center rounded-full bg-indigo-600 text-sm text-white">
+                          {cartItems.length}
+                        </div>
+                        // <span className="rounded-full bg-indigo-600 h-6 w-6 text-center text-sm text-white">
+                        //   {cartItems.length}
+                        // </span>
+                      )}
+                    </NavLink>
+                    <NavLink
+                      to={
+                        userProfile?.role === "admin"
+                          ? "/admin/profile"
+                          : "/profile"
+                      }
+                      className={({ isActive }) =>
+                        c(
+                          isActive
+                            ? "w-full bg-gray-900 text-white"
+                            : "w-full text-gray-300 hover:bg-gray-700 hover:text-white",
+                          "flex h-14 w-full items-center rounded-md px-2 py-2 text-lg font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                        )
+                      }
+                    >
+                      <InformationCircleIcon
+                        className="mr-4 h-6 w-6 text-gray-400"
+                        aria-hidden="true"
+                      />
+                      Your Profile
+                    </NavLink>
+                    <NavLink
+                      to="/sign_in"
+                      onClick={logout}
+                      className={({ isActive }) =>
+                        c(
+                          isActive
+                            ? "w-full bg-gray-900 text-white"
+                            : "w-full text-gray-300 hover:bg-gray-700 hover:text-white",
+                          "flex h-14 w-full items-center rounded-md px-2 py-2 text-lg font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                        )
+                      }
+                    >
+                      <LogoutIcon
+                        className="mr-4 h-6 w-6 text-gray-400"
+                        aria-hidden="true"
+                      />
+                      Logout
+                    </NavLink>
+                  </>
+                ) : (
+                  <>
+                    <NavLink
+                      to="/sign_in"
+                      className={({ isActive }) =>
+                        c(
+                          isActive
+                            ? "w-full bg-gray-900 text-white"
+                            : "w-full text-gray-300 hover:bg-gray-700 hover:text-white",
+                          "flex h-14 w-full items-center rounded-md px-2 py-2 text-lg font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                        )
+                      }
+                    >
+                      <LoginIcon
+                        className="mr-4 h-6 w-6 text-gray-400"
+                        aria-hidden="true"
+                      />
+                      Login
+                    </NavLink>
+                  </>
+                )}
               </div>
-              {user ? (
-                <>
-                  <div className="border-t border-gray-700 pt-4 pb-3">
-                    <div className="flex items-center px-5">
-                      <div className="flex-shrink-0">
-                        <button
-                          type="button"
-                          className="flex flex-shrink-0 flex-row rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                          onClick={() => {
-                            navigate("/cart");
-                          }}
-                        >
-                          <span className="sr-only">View cart</span>
-                          <ShoppingCartIcon
-                            className="h-6 w-6 text-gray-300"
-                            aria-hidden="true"
-                          />
-                          {cartItems.length === 0 ? (
-                            <span className="hidden" />
-                          ) : (
-                            <span className="rounded-full bg-indigo-600 p-1 text-sm text-white">
-                              {cartItems.length}
-                            </span>
-                          )}
-                        </button>
-                      </div>
-                      <div className="ml-3">
-                        <div className="text-base font-medium text-white">
-                          Cart
-                        </div>
-                      </div>
-                    </div>
-                    <div className="mt-3 space-y-1 px-2">
-                      <Disclosure.Button
-                        as="a"
-                        href={userProfile?.role === "admin" ? "/admin/profile" : "/profile"}
-                        className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-                      >
-                        Your Profile
-                      </Disclosure.Button>
-                      <Disclosure.Button
-                        as="a"
-                        href="/sign_in"
-                        className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-                      >
-                        <div
-                          onClick={() => {
-                            logout();
-                          }}
-                        >
-                          Logout
-                        </div>
-                      </Disclosure.Button>
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <Disclosure.Button
-                    href="/sign_in"
-                    className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                  >
-                    Login
-                  </Disclosure.Button>
-                </>
-              )}
             </Disclosure.Panel>
           </>
         )}
@@ -376,14 +476,15 @@ export default function UserMainLayout({ children, props }) {
         {searchResults.length ? (
           <ul>
             {searchResults.map((prod) => (
-              <li key={prod.item.id}>{prod.item.name} ({prod.item.salePrice})</li>
+              <li key={prod.item.id}>
+                {prod.item.name} ({prod.item.salePrice})
+              </li>
             ))}
           </ul>
-        ) : <div className="">{children}</div>}
+        ) : (
+          <div className="">{children}</div>
+        )}
       </main>
-
-
     </div>
-
   );
 }
