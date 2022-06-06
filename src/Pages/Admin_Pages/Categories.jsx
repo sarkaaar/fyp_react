@@ -8,11 +8,25 @@ import {
   getDocs,
   deleteDoc,
   doc,
+  orderBy,
+  query,
 } from "firebase/firestore";
 import { db } from "../../firebase-config";
 import DataTable from "../../components/DataTable";
 import { useForm } from "react-hook-form";
-import { Backdrop, Box, Modal, Typography, Fade } from "@mui/material";
+import { Backdrop, Box, Modal, Fade } from "@mui/material";
+
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  borderRadius: "24px",
+  boxShadow: 24,
+  p: 4,
+};
 
 export default function AddCategory() {
   const [getCategory, setGetCategories] = useState([]);
@@ -21,9 +35,9 @@ export default function AddCategory() {
   const handleClose1 = () => setShowModal1(false);
   const [showModal2, setShowModal2] = useState(false);
   const handleClose2 = () => setShowModal2(false);
-  const [showModal3, setShowModal3] = useState(false);
-  const handleClose3 = () => setShowModal3(false);
   const [deleteId, setDeleteId] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [loader, setLoader] = useState(false);
   const {
     register,
     handleSubmit,
@@ -31,7 +45,8 @@ export default function AddCategory() {
   } = useForm();
 
   const getCategories = async () => {
-    await getDocs(categoryRef)
+    const categoryData = query(categoryRef, orderBy("time", "desc"));
+    await getDocs(categoryData)
       .then((res) => {
         setGetCategories(
           res.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
@@ -58,17 +73,25 @@ export default function AddCategory() {
   };
 
   const addCategory = async (data) => {
-    console.log(showModal1);
-    await addDoc(categoryRef, { name: data.category }).then(() => {
-      getCategories();
-    });
     setShowModal1(true);
+    setLoader(true);
+    await addDoc(categoryRef, { name: data.category, time: new Date() }).then(
+      () => {
+        getCategories();
+      }
+    );
+    setSuccessMessage("Category Added Successfully");
+    setLoader(false);
   };
 
   const deleteCategory = async (id) => {
+    setShowModal1(true);
+    setLoader(true);
     await deleteDoc(doc(db, "categories", id)).then(() => {
       getCategories();
-      setShowModal3(true);
+      setSuccessMessage("Category Deleted Successfully");
+      setDeleteId("");
+      setLoader(false);
     });
   };
   console.log(errors);
@@ -154,49 +177,47 @@ export default function AddCategory() {
         }}
       >
         <Fade in={showModal1}>
-          <Box
-            sx={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: 400,
-              bgcolor: "background.paper",
-              borderRadius: "24px",
-              boxShadow: 24,
-              p: 4,
-            }}
-          >
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
-              <svg
-                className="h-6 w-6 text-green-600"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M5 13l4 4L19 7"
-                ></path>
-              </svg>
-            </div>
-            <hr className="my-2 bg-black " />
-            <h1 className="mb-4 text-center text-lg font-bold">
-              Category Added Successfully
-            </h1>
-            <div className="flex items-center justify-center">
-              <button
-                className="h-12 w-1/3 bg-blue-600 shadow-md shadow-slate-400 hover:bg-blue-700 hover:drop-shadow-lg focus:shadow-none"
-                onClick={() => {
-                  setShowModal1(false);
-                }}
-              >
-                OK
-              </button>
-            </div>
+          <Box sx={modalStyle}>
+            {loader ? (
+              <div className="w-full">
+                <div className="flex h-full items-center justify-center">
+                  <div className="h-20 w-20 animate-spin rounded-full border-t-4 border-b-4 border-blue-900" />
+                </div>
+              </div>
+            ) : (
+              <>
+                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
+                  <svg
+                    className="h-6 w-6 text-green-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M5 13l4 4L19 7"
+                    ></path>
+                  </svg>
+                </div>
+                <hr className="my-2 bg-black " />
+                <h1 className="mb-4 text-center text-lg font-bold">
+                  {successMessage}
+                </h1>
+                <div className="flex items-center justify-center">
+                  <button
+                    className="h-12 w-1/3 bg-blue-600 shadow-md shadow-slate-400 hover:bg-blue-700 hover:drop-shadow-lg focus:shadow-none"
+                    onClick={() => {
+                      setShowModal1(false);
+                    }}
+                  >
+                    OK
+                  </button>
+                </div>
+              </>
+            )}
           </Box>
         </Fade>
       </Modal>
@@ -213,19 +234,7 @@ export default function AddCategory() {
         }}
       >
         <Fade in={showModal2}>
-          <Box
-            sx={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: 400,
-              bgcolor: "background.paper",
-              borderRadius: "24px",
-              boxShadow: 24,
-              p: 4,
-            }}
-          >
+          <Box sx={modalStyle}>
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-yellow-100">
               <svg
                 className="h-8 w-8 text-yellow-600"
@@ -263,65 +272,6 @@ export default function AddCategory() {
                 }}
               >
                 Cancel
-              </button>
-            </div>
-          </Box>
-        </Fade>
-      </Modal>
-
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={showModal3}
-        onClose={handleClose3}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
-        <Fade in={showModal3}>
-          <Box
-            sx={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: 400,
-              bgcolor: "background.paper",
-              borderRadius: "24px",
-              boxShadow: 24,
-              p: 4,
-            }}
-          >
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
-              <svg
-                className="h-6 w-6 text-green-600"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M5 13l4 4L19 7"
-                ></path>
-              </svg>
-            </div>
-            <hr className="my-2 bg-black " />
-            <h1 className="mb-4 text-center text-lg font-bold">
-              Category Deleted Successfully
-            </h1>
-            <div className="flex items-center justify-center">
-              <button
-                className="h-12 w-1/3 bg-blue-600 shadow-md shadow-slate-400 hover:bg-blue-700 hover:drop-shadow-lg focus:shadow-none"
-                onClick={() => {
-                  setShowModal3(false);
-                }}
-              >
-                OK
               </button>
             </div>
           </Box>
