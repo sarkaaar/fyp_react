@@ -48,7 +48,11 @@ export default function Product() {
   const [lastComment, setLastComment] = useState();
   const [favourite, setFavourite] = useState("");
   const [open, setOpen] = React.useState(false);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    setLoader(false);
+    setAddStatus(false);
+  };
   const [stock, setStock] = useState(0);
   const [addStatus, setAddStatus] = useState(false);
   const [totalRating, setTotalRating] = useState(0);
@@ -209,37 +213,42 @@ export default function Product() {
       p_id: prod?.id,
     };
 
-    await getDocs(
-      query(cartRef, where("user", "==", user?.email), where("p_id", "==", id))
-    ).then(async (res) => {
-      const data = res.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      console.log("item already in cart");
+    user
+      ? await getDocs(
+          query(
+            cartRef,
+            where("user", "==", user?.email),
+            where("p_id", "==", id)
+          )
+        ).then(async (res) => {
+          const data = res.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id,
+          }));
+          console.log("item already in cart");
 
-      data.length != 0
-        ? await updateDoc(doc(db, "cart", data[0].id), {
-            quantity: data[0].quantity + qty,
-          })
-            .then((res) => {
-              console.log("value updated");
-              setAddStatus(false);
-            })
-            .catch((e) => {
-              console.log(e);
-            })
-        : await addDoc(cartRef, newProduct)
-            .then((res) => {
-              setAddStatus(false);
-              console.log("new cart item created");
-              // navigate("/cart");
-            })
-            .catch((e) => {
-              console.log(e);
-            });
-    });
-    //   :setOpen(true);
+          data.length != 0
+            ? await updateDoc(doc(db, "cart", data[0].id), {
+                quantity: data[0].quantity + qty,
+              })
+                .then((res) => {
+                  console.log("value updated");
+                  setAddStatus(false);
+                })
+                .catch((e) => {
+                  console.log(e);
+                })
+            : await addDoc(cartRef, newProduct)
+                .then((res) => {
+                  setAddStatus(false);
+                  console.log("new cart item created");
+                  // navigate("/cart");
+                })
+                .catch((e) => {
+                  console.log(e);
+                });
+        })
+      : setOpen(true);
   };
 
   const getFav = async () => {
