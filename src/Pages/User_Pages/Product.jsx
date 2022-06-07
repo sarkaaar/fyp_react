@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
-import { Box, Button, Typography, Modal, TextField } from "@mui/material";
+import { Link, useParams } from "react-router-dom";
+import { Box, Button, Typography, Modal, Backdrop, Fade } from "@mui/material";
 import UseMainLayout from "../../layouts/UserMainLayout";
 import { useForm } from "react-hook-form";
 
@@ -27,6 +27,18 @@ import { Rating } from "@mui/material";
 import { db, auth } from "../../firebase-config";
 import Footer from "./Components/Footer";
 
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  borderRadius: "24px",
+  boxShadow: 24,
+  p: 4,
+};
+
 export default function Product() {
   const {
     register,
@@ -43,17 +55,21 @@ export default function Product() {
   const [qty, setQty] = useState(1);
   const [user, setUser] = useState({});
   const [rating, setRating] = useState(1);
-  const [comments, setComments] = useState();
   const [getComments, setGetComments] = useState([]);
   const [lastComment, setLastComment] = useState();
   const [favourite, setFavourite] = useState("");
   const [open, setOpen] = React.useState(false);
+<<<<<<< HEAD
   const handleClose = () => {
     setOpen(false);
     setLoader(false);
     setAddStatus(false);
   };
   const [stock, setStock] = useState(0);
+=======
+  const [open2, setOpen2] = React.useState(false);
+  const handleClose = () => setOpen(false);
+>>>>>>> 8da1089d48811aadd561d67cf3d937486a50983b
   const [addStatus, setAddStatus] = useState(false);
   const [totalRating, setTotalRating] = useState(0);
   const [moreCommentLoader, setMoreCommentLoader] = useState(false);
@@ -80,7 +96,6 @@ export default function Product() {
     const getProduct = async () => {
       const x = await getDoc(doc(db, `products/${id}`));
       setProduct({ id: x.id, ...x.data() });
-      console.log(prod);
     };
     getComment();
     getProduct();
@@ -96,7 +111,8 @@ export default function Product() {
       user: user?.email,
     };
 
-    user ? await addDoc(reviewsRef, newComment) : setOpen(true);
+    user ? await addDoc(reviewsRef, newComment).then(setOpen2(true)) : setOpen(true);
+    
     getComment();
   };
 
@@ -460,8 +476,10 @@ export default function Product() {
                 })}
                 autoComplete="off"
               >
-                <input
+                <textarea
+                  rows="4"
                   fullWidth
+                  placeholder="Write a review"
                   type="text"
                   {...register("reviews", {
                     required:
@@ -479,9 +497,12 @@ export default function Product() {
                   </p>
                 )}
                 <div className="mt-2 flex justify-end">
-                  <Button type="submit" variant="outlined">
-                    Add a Comment
-                  </Button>
+                  <button
+                    type="submit"
+                    className="h-12 w-36 border border-solid border-blue-600 bg-blue-600 text-xs text-white shadow-lg shadow-slate-300 transition delay-100 duration-300 ease-in-out hover:bg-white hover:text-blue-700 hover:drop-shadow-lg focus:shadow-none active:scale-75"
+                  >
+                    COMMENT
+                  </button>
                 </div>
               </form>
 
@@ -545,30 +566,98 @@ export default function Product() {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
       >
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 400,
-            bgcolor: "background.paper",
-            border: "2px solid #000",
-            boxShadow: 24,
-            p: 4,
-          }}
-        >
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Warning
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Please login to Continue
-          </Typography>
-          <Link to="/sign_in" className="text-blue-600">
-            Sign in
-          </Link>
-        </Box>
+        <Fade in={open}>
+          <Box sx={modalStyle}>
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-yellow-100">
+              <svg
+                className="h-8 w-8 text-yellow-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                ></path>
+              </svg>
+            </div>
+            <hr className="my-2 bg-black " />
+            <h1 className="mb-2 text-center text-lg font-bold">Warning!</h1>
+            <h1 className="mb-4 text-center text-lg font-bold">
+              You are not logged in. Please login to continue.
+            </h1>
+            <div className="flex items-center justify-center">
+              <Link to="/sign_in"
+                className="h-12 w-1/3 rounded-md flex justify-center items-center text-white bg-blue-600 shadow-md shadow-slate-400 hover:bg-blue-700 hover:drop-shadow-lg focus:shadow-none"
+                onClick={() => {
+                  setOpen2(false);
+                }}
+              >
+                Sign In
+              </Link>
+            </div>
+          </Box>
+        </Fade>
+      </Modal>
+
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open2}
+        onClose={() => {
+          setOpen2(false);
+        }}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={open2}>
+          <Box sx={modalStyle}>
+            <>
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
+                <svg
+                  className="h-6 w-6 text-green-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+              </div>
+              <hr className="my-2 bg-black " />
+              <h1 className="mb-4 text-center text-lg font-bold">
+                Comment Added Successfully!
+              </h1>
+              <div className="flex items-center justify-center">
+                <button
+                  className="h-12 w-1/3 bg-blue-600 shadow-md shadow-slate-400 hover:bg-blue-700 hover:drop-shadow-lg focus:shadow-none"
+                  onClick={() => {
+                    setOpen2(false);
+                  }}
+                >
+                  OK
+                </button>
+              </div>
+            </>
+          </Box>
+        </Fade>
       </Modal>
     </UseMainLayout>
   );
