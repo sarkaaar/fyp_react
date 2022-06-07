@@ -59,17 +59,12 @@ export default function Product() {
   const [lastComment, setLastComment] = useState();
   const [favourite, setFavourite] = useState("");
   const [open, setOpen] = React.useState(false);
-<<<<<<< HEAD
   const handleClose = () => {
     setOpen(false);
     setLoader(false);
     setAddStatus(false);
   };
   const [stock, setStock] = useState(0);
-=======
-  const [open2, setOpen2] = React.useState(false);
-  const handleClose = () => setOpen(false);
->>>>>>> 8da1089d48811aadd561d67cf3d937486a50983b
   const [addStatus, setAddStatus] = useState(false);
   const [totalRating, setTotalRating] = useState(0);
   const [moreCommentLoader, setMoreCommentLoader] = useState(false);
