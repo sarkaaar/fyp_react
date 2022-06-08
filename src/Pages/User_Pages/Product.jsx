@@ -107,7 +107,6 @@ export default function Product() {
     };
 
     user ? await addDoc(reviewsRef, newComment).then(setOpen2(true)) : setOpen(true);
-    
     getComment();
   };
 
@@ -555,7 +554,6 @@ export default function Product() {
       </section>
 
       <Footer />
-
       <Modal
         open={open}
         onClose={handleClose}
@@ -594,7 +592,7 @@ export default function Product() {
               <Link to="/sign_in"
                 className="h-12 w-1/3 rounded-md flex justify-center items-center text-white bg-blue-600 shadow-md shadow-slate-400 hover:bg-blue-700 hover:drop-shadow-lg focus:shadow-none"
                 onClick={() => {
-                  setOpen2(false);
+                  setOpen(false);
                 }}
               >
                 Sign In
