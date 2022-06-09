@@ -106,7 +106,7 @@ export default function Product() {
       user: user?.email,
     };
 
-    user ? await addDoc(reviewsRef, newComment).then(setOpen2(true)) : setOpen(true);
+    user ? await addDoc(reviewsRef, newComment).then(setOpen(true)) : setOpen(true);
     getComment();
   };
 
@@ -605,9 +605,9 @@ export default function Product() {
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
-        open={open2}
+        open={open}
         onClose={() => {
-          setOpen2(false);
+          setOpen(false);
         }}
         closeAfterTransition
         BackdropComponent={Backdrop}
@@ -615,7 +615,7 @@ export default function Product() {
           timeout: 500,
         }}
       >
-        <Fade in={open2}>
+        <Fade in={open}>
           <Box sx={modalStyle}>
             <>
               <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
@@ -642,7 +642,7 @@ export default function Product() {
                 <button
                   className="h-12 w-1/3 bg-blue-600 shadow-md shadow-slate-400 hover:bg-blue-700 hover:drop-shadow-lg focus:shadow-none"
                   onClick={() => {
-                    setOpen2(false);
+                    setOpen(false);
                   }}
                 >
                   OK

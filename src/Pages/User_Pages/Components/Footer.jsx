@@ -37,7 +37,7 @@ export default function Footer() {
           <a href="/viewAppointments">
             <h2 className="p-2 text-lg text-white">Appointments</h2>
           </a>
-          <a href="/live">
+          <a href="/about">
             <h2 className="p-2 text-lg text-white">Online Check-Up</h2>
           </a>
         </div>
