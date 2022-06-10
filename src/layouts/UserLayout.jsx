@@ -8,12 +8,14 @@ import {
   CogIcon,
   CreditCardIcon,
   HomeIcon,
+  HeartIcon,
   MenuAlt1Icon,
   ScaleIcon,
   XIcon,
   RewindIcon,
   UserCircleIcon,
-  PhoneIcon
+  PhoneIcon,
+  LogoutIcon
 } from "@heroicons/react/outline";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { collection, getDocs, query, where } from "firebase/firestore";
@@ -25,7 +27,7 @@ const navigation = [
   {
     name: "Favourites",
     href: "/profile/favourites",
-    icon: HomeIcon,
+    icon: HeartIcon,
   },
   {
     name: "Returned Products",
@@ -53,8 +55,8 @@ const navigation = [
 
 const secondaryNavigation = [
   { name: "Profile", href: "/profile", icon: UserCircleIcon },
-  { name: "Home", href: "/", icon: RewindIcon },
-  { name: "Logout", href: "/sign_in", icon: CogIcon },
+  { name: "Home", href: "/", icon: HomeIcon },
+  { name: "Logout", href: "/sign_in", icon:  LogoutIcon },
 ];
 
 export default function AdminLayout({ children }) {
