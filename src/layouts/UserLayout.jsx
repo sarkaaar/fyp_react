@@ -5,14 +5,14 @@ import { NavLink, useNavigate } from "react-router-dom";
 import {
   BellIcon,
   ClockIcon,
-  CogIcon,
+
   CreditCardIcon,
   HomeIcon,
   HeartIcon,
   MenuAlt1Icon,
   ScaleIcon,
   XIcon,
-  RewindIcon,
+ 
   UserCircleIcon,
   PhoneIcon,
   LogoutIcon
