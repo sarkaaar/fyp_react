@@ -11,6 +11,7 @@ import Modal from "@mui/material/Modal";
 
 // import FirebaseDataTable from "../../../components/FirebaseDataTable";
 import UserLayout from "../../../layouts/UserLayout";
+import { useForm } from "react-hook-form";
 
 export default function ProductReturnForm() {
   const [orderNo, setOrderNo] = useState("");
@@ -22,6 +23,12 @@ export default function ProductReturnForm() {
   const [user, setUser] = useState();
   const [image, setImage] = useState();
   const [progress, setProgress] = useState();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  console.log(errors);
 
   const [modal, setModal] = useState(false);
 
@@ -65,13 +72,14 @@ export default function ProductReturnForm() {
     });
   }, [user]);
   // Add Products
-  const productReturn = async () => {
+  const productReturn = async (data) => {
+    console.log(data);
     const newProduct = {
-      orderNo,
-      productID,
-      productName,
-      issue,
-      description,
+      orderNo: data.orderNumber,
+      productID: data.productID,
+      productName: data.productName,
+      issue: data.issue,
+      description: data.description,
       images: urls,
       user: user?.email,
       date: new Date(),
@@ -83,14 +91,173 @@ export default function ProductReturnForm() {
   };
   return (
     <UserLayout>
-      <div className="flex justify-center ">
-        <div className=" flex flex-col justify-center p-8 bg-white rounded-lg">
-          <h1 className=" text-2xl font-bold flex justify-center">
+      <div className="flex w-full justify-center">
+        <div className=" flex flex-col justify-center rounded-lg bg-white p-2">
+          <h1 className=" flex justify-center text-2xl font-bold">
             Product Return Form
           </h1>
-          <div className="flex gap-4">
-            <div className="w-96">
-              <TextField
+          <div className="flex">
+            <div className="w-full">
+              <form
+                autoComplete="off"
+                onSubmit={handleSubmit((data) => {
+                  productReturn(data);
+                })}
+              >
+                <div className="flex flex-row">
+                  <div className="mx-4 flex w-1/2 flex-col">
+                    <input
+                      className="mt-4 mb-1 w-full rounded-md border border-solid border-gray-400 focus:border-blue-500"
+                      type="text"
+                      placeholder="Order#"
+                      {...register("orderNumber", {
+                        required: "Please enter the order number in the field.",
+                        maxLength: {
+                          value: 20,
+                          message:
+                            "Order number must not be more than 20 characters long.",
+                        },
+                        minLength: {
+                          value: 20,
+                          message:
+                            "Order number must not be less than 20 characters long.",
+                        },
+                        pattern: {
+                          value: /^[A-Za-z0-9 ]+$/,
+                          message:
+                            "Order number must contain both numbers and letters only.",
+                        },
+                      })}
+                    />
+                    {errors.orderNumber && (
+                      <p className="px-2 text-xs text-base text-red-600">
+                        {errors.orderNumber.message}
+                      </p>
+                    )}
+                    <input
+                      className="mt-6 mb-1 w-full rounded-md border border-solid border-gray-400 focus:border-blue-500"
+                      type="text"
+                      placeholder="Product ID"
+                      {...register("productID", {
+                        required: "Please enter the product ID in the field.",
+                        maxLength: {
+                          value: 20,
+                          message:
+                            "Product ID must not be more than 20 characters long.",
+                        },
+                        minLength: {
+                          value: 20,
+                          message:
+                            "Product ID must not be less than 20 characters long.",
+                        },
+                        pattern: {
+                          value: /^[A-Za-z0-9 ]+$/,
+                          message:
+                            "Product ID must contain both numbers and letters only.",
+                        },
+                      })}
+                    />
+                    {errors.productID && (
+                      <p className="px-2 text-sm text-red-600">
+                        {errors.productID.message}
+                      </p>
+                    )}
+                    <input
+                      className="mt-6 mb-1 w-full rounded-md border border-solid border-gray-400 focus:border-blue-500"
+                      type="text"
+                      placeholder="Product Name"
+                      {...register("productName", {
+                        required: "Please enter the product name in the field.",
+                        minLength: {
+                          value: 4,
+                          message:
+                            "Product name cannot be less than 4 letters long.",
+                        },
+                      })}
+                    />
+                    {errors.productName && (
+                      <p className="px-2 text-sm text-red-600">
+                        {errors.productName.message}
+                      </p>
+                    )}
+                    <input
+                      className="w-full mt-6 mb-1 rounded-md border border-solid border-gray-400 focus:border-blue-500"
+                      type="text"
+                      placeholder="Issue Subject"
+                      {...register("issue", {
+                        required:
+                          "Please enter the issue subject in the field.",
+                        minLength: {
+                          value: 3,
+                          message: "Please enter issue subject properly.",
+                        },
+                      })}
+                    />
+                    {errors.issue && (
+                      <p className="px-2 text-sm text-red-600">
+                        {errors.issue.message}
+                      </p>
+                    )}
+                  </div>
+                  <div className="flex w-1/2 flex-col px-2">
+                    <textarea
+                      rows={4}
+                      className="mt-4 w-full mb-1 rounded-md border border-solid border-gray-400 focus:border-blue-500"
+                      type="text"
+                      placeholder="Description"
+                      {...register("description", {
+                        required: "Please describe the issue with the product.",
+                        minLength: {
+                          value: 20,
+                          message:
+                            "Please describe the issue in detail.(Minimum 20 charactrs)",
+                        },
+                      })}
+                    />
+                    {errors.description && (
+                      <p className="px-2 text-sm text-red-600">
+                        {errors.description.message}
+                      </p>
+                    )}
+                    <p className="mt-4">
+                      Click on the &quot;Choose File&quot; button to upload a
+                      file:
+                    </p>
+
+                    <input
+                      type="file"
+                      className="mb-1"
+                      {...register("image", {
+                        required: "Please upload an image.",
+                      })}
+                      // onChange={(e) => {
+                      //   setImage(e.target.files);
+                      // }}
+                      multiple
+                    />
+                    {errors.image && (
+                      <p className="px-2 text-sm text-red-600">
+                        {errors.image.message}
+                      </p>
+                    )}
+                    <h3>
+                      Uploaded
+                      {progress}
+                    </h3>
+                    <button
+                      type="submit"
+                      className="w-full bg-blue-500"
+                      onClick={upload}
+                    >
+                      Upload Image
+                    </button>
+                    <button type="submit" className="w-full bg-blue-500">
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </form>
+              {/* <TextField
                 margin="normal"
                 required
                 fullWidth
@@ -130,7 +297,7 @@ export default function ProductReturnForm() {
                 onChange={(e) => setIssue(e.target.value)}
               />
             </div>
-            <div className="w-96 mt-4">
+            <div className="mt-4 w-96">
               <TextareaAutosize
                 minRows={4}
                 placeholder="  Description*"
@@ -173,7 +340,7 @@ export default function ProductReturnForm() {
                 >
                   Submit Form
                 </Button>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

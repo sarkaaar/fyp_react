@@ -107,10 +107,7 @@ export default function Product() {
       user: user?.email,
     };
 
-    user
-      ? await addDoc(reviewsRef, newComment).then(setOpen2(true))
-      : setOpen(true);
-
+    user ? await addDoc(reviewsRef, newComment).then(setOpen(true)) : setOpen(true);
     getComment();
   };
 
@@ -655,7 +652,6 @@ export default function Product() {
       </section>
 
       <Footer />
-
       <Modal
         open={open}
         onClose={handleClose}
