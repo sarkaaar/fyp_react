@@ -26,14 +26,6 @@ export default function AdminLayout({ children }) {
           >
             DASHBOARD
           </Link>
-          {/* <Link
-          to={`/doctor/slots`}
-          // activeClassName="active"
-          style={{ textDecoration: "none",  padding: "10px" }}
-        >
-          SLOTS
-        </Link> */}
-
           <Link
             to="/doctor/viewAppointments"
             style={{ textDecoration: "none", padding: "10px", color: "white" }}

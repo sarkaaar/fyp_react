@@ -23,7 +23,6 @@ import Favourites from "./Pages/User_Pages/Profile/Favourites";
 
 import About from "./Pages/User_Pages/About";
 
-// import Slots from "./Pages/Doctor_Pages/Slots";
 // Services Pages
 import MakeAppointments from "./Pages/Services/MakeAppointments";
 import ViewAppointments from "./Pages/Services/ViewAppointments";
@@ -39,7 +38,6 @@ import Inventory from "./Pages/Admin_Pages/Inventory";
 import AdminOrders from "./Pages/Admin_Pages/AdminOrders";
 import ViewDoctors from "./Pages/Admin_Pages/ViewDoctors";
 import Categories from "./Pages/Admin_Pages/Categories";
-// import ProductsList from "./Pages/Admin_Pages/ProductsList";
 import AdminProfile from "./Pages/Admin_Pages/AdminProfile";
 import ReturnedProducts from "./Pages/Admin_Pages/ReturnedProducts";
 import Reports from "./Pages/Admin_Pages/Reports";
@@ -51,8 +49,10 @@ import NewDoctor from "./Pages/Doctor_Pages/NewDoctor";
 import Meeting from "./Pages/Doctor_Pages/Meeting";
 import DocViewAppointments from "./Pages/Doctor_Pages/DocViewAppointments";
 import Live from "./Pages/Doctor_Pages/Live/Live";
-import NotAuthenticated from "./Pages/NotAuthenticated";
+// import NotAuthenticated from "./Pages/NotAuthenticated";
 import Users from "./Pages/Admin_Pages/Users";
+
+import CheckoutAppointment from "./Pages/Services/CheckoutAppointment";
 
 import NoPermission from "./Pages/Admin_Pages/NoPermission";
 import ComplainSuggestions from "./Pages/User_Pages/Profile/ComplainSuggestions";
@@ -74,9 +74,10 @@ function App() {
         <Route exact path="/forget-password" element={<ForgetPassword />} />
         <Route exact path="/sign_up" element={<SignUp />} />
         <Route exact path="/checkout" element={<Checkout />} />
+        <Route exact path="/appointment/checkout" element={<CheckoutAppointment />} />
         <Route exact path="/products" element={<Products />} />
         <Route exact path="/product/:id" element={<Product />} />
-        <Route exact path="/NotAuthorised" element={<NotAuthenticated />} />
+        {/* <Route exact path="/NotAuthorised" element={<NotAuthenticated />} /> */}
         <Route exact path="/cart" element={<Cart />} />
         <Route exact path="/maps" element={<Maps />} />
         <Route exact path="/about" element={<About />} />

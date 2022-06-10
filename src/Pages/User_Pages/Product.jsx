@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { Box, Button, Typography, Modal, Backdrop, Fade } from "@mui/material";
 import UseMainLayout from "../../layouts/UserMainLayout";
 import { useForm } from "react-hook-form";
+import Carousel from "./component/Carousel";
 
 import {
   collection,
@@ -106,8 +107,10 @@ export default function Product() {
       user: user?.email,
     };
 
-    user ? await addDoc(reviewsRef, newComment).then(setOpen2(true)) : setOpen(true);
-    
+    user
+      ? await addDoc(reviewsRef, newComment).then(setOpen2(true))
+      : setOpen(true);
+
     getComment();
   };
 
@@ -317,11 +320,108 @@ export default function Product() {
             {prod?.image ? (
               <div className="flex w-full grow-0 flex-row flex-wrap justify-center md:flex-row">
                 <div className="flex w-1/2 items-center justify-center">
-                  <img
+                  {/* <img
                     alt={prod?.description}
                     className="w-full rounded border border-gray-200 object-contain sm:w-full md:w-3/4 lg:w-1/2 xl:w-1/2"
                     src={prod.image[0]}
-                  />
+                  /> */}
+                  <div
+                    id="carouselExampleCaptions"
+                    class="carousel slide relative"
+                    data-bs-ride="carousel"
+                  >
+                    <div class="carousel-indicators absolute right-0 bottom-0 left-0 flex justify-center p-0 mb-4">
+                      <button
+                        type="button"
+                        data-bs-target="#carouselExampleCaptions"
+                        data-bs-slide-to="0"
+                        class="active"
+                        aria-current="true"
+                        aria-label="Slide 1"
+                      ></button>
+                      <button
+                        type="button"
+                        data-bs-target="#carouselExampleCaptions"
+                        data-bs-slide-to="1"
+                        aria-label="Slide 2"
+                      ></button>
+                      <button
+                        type="button"
+                        data-bs-target="#carouselExampleCaptions"
+                        data-bs-slide-to="2"
+                        aria-label="Slide 3"
+                      ></button>
+                    </div>
+                    <div class="carousel-inner relative w-full overflow-hidden">
+                      <div class="carousel-item active relative float-left w-full">
+                        <img
+                          src="https://mdbootstrap.com/img/Photos/Slides/img%20(15).jpg"
+                          class="block w-full"
+                          alt="..."
+                        />
+                        <div class="carousel-caption hidden md:block absolute text-center">
+                          <h5 class="text-xl">First slide label</h5>
+                          <p>
+                            Some representative placeholder content for the
+                            first slide.
+                          </p>
+                        </div>
+                      </div>
+                      <div class="carousel-item relative float-left w-full">
+                        <img
+                          src="https://mdbootstrap.com/img/Photos/Slides/img%20(22).jpg"
+                          class="block w-full"
+                          alt="..."
+                        />
+                        <div class="carousel-caption hidden md:block absolute text-center">
+                          <h5 class="text-xl">Second slide label</h5>
+                          <p>
+                            Some representative placeholder content for the
+                            second slide.
+                          </p>
+                        </div>
+                      </div>
+                      <div class="carousel-item relative float-left w-full">
+                        <img
+                          src="https://mdbootstrap.com/img/Photos/Slides/img%20(23).jpg"
+                          class="block w-full"
+                          alt="..."
+                        />
+                        <div class="carousel-caption hidden md:block absolute text-center">
+                          <h5 class="text-xl">Third slide label</h5>
+                          <p>
+                            Some representative placeholder content for the
+                            third slide.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <button
+                      class="carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0"
+                      type="button"
+                      data-bs-target="#carouselExampleCaptions"
+                      data-bs-slide="prev"
+                    >
+                      <span
+                        class="carousel-control-prev-icon inline-block bg-no-repeat"
+                        aria-hidden="true"
+                      ></span>
+                      <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button
+                      class="carousel-control-next absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0"
+                      type="button"
+                      data-bs-target="#carouselExampleCaptions"
+                      data-bs-slide="next"
+                    >
+                      <span
+                        class="carousel-control-next-icon inline-block bg-no-repeat"
+                        aria-hidden="true"
+                      ></span>
+                      <span class="visually-hidden">Next</span>
+                    </button>
+                  </div>
+                  {/* <Carousel obj={prod.image} /> */}
                 </div>
                 <div className="mt-6 flex w-full shrink flex-col lg:mt-0 lg:w-1/2 lg:py-6 lg:pl-10">
                   <h1 className="title-font mb-1 text-2xl font-medium text-gray-900">
@@ -591,10 +691,11 @@ export default function Product() {
               You are not logged in. Please login to continue.
             </h1>
             <div className="flex items-center justify-center">
-              <Link to="/sign_in"
+              <Link
+                to="/sign_in"
                 className="h-12 w-1/3 rounded-md flex justify-center items-center text-white bg-blue-600 shadow-md shadow-slate-400 hover:bg-blue-700 hover:drop-shadow-lg focus:shadow-none"
                 onClick={() => {
-                  setOpen2(false);
+                  setOpen(false);
                 }}
               >
                 Sign In
@@ -607,9 +708,9 @@ export default function Product() {
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
-        open={open2}
+        open={open}
         onClose={() => {
-          setOpen2(false);
+          setOpen(false);
         }}
         closeAfterTransition
         BackdropComponent={Backdrop}
@@ -617,7 +718,7 @@ export default function Product() {
           timeout: 500,
         }}
       >
-        <Fade in={open2}>
+        <Fade in={open}>
           <Box sx={modalStyle}>
             <>
               <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
@@ -644,7 +745,7 @@ export default function Product() {
                 <button
                   className="h-12 w-1/3 bg-blue-600 shadow-md shadow-slate-400 hover:bg-blue-700 hover:drop-shadow-lg focus:shadow-none"
                   onClick={() => {
-                    setOpen2(false);
+                    setOpen(false);
                   }}
                 >
                   OK

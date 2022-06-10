@@ -3,7 +3,7 @@ import { auth, db } from "../../firebase-config";
 import { collection, getDocs, query, where, addDoc } from "firebase/firestore";
 import * as React from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { Button, TextField } from "@mui/material";
+import { Button, Link, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Modal from "@mui/material/Modal";
 
@@ -17,8 +17,10 @@ export default function NewDoctor() {
 
   const navigate = useNavigate();
 
+  // Modals
   const [open, setOpen] = useState(false);
   const [noUserOpen, setNoUserOpen] = useState(false);
+  const [noDoctorModal, setNoDoctorModal] = useState(false);
 
   const createDoctor = async () => {
     //   1- Fetch for the record in Doctor's Table
@@ -26,21 +28,22 @@ export default function NewDoctor() {
     await getDocs(q)
       .then(async (res) => {
         const data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-        console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
 
         // 2- if the user is found in table then with go for authentication
         if (data.length != 0)
           await createUserWithEmailAndPassword(auth, email, password)
-            .then(async (res) => {
-              console.log(res.user.uid);
+            .then(async () => {
+              // console.log(res.user.uid);
+              setOpen(true);
             })
             .catch((err) => {
-              if (err.code === "auth/email-already-in-use") {
-                setOpen(true);
-              }
+              console.log(err.code);
+              // if (err.code === "auth/email-already-in-use") {
+              setNoUserOpen(true);
+              // }
             });
         else {
-          setNoUserOpen(true);
+          setNoDoctorModal(true);
           console.log("doctor was not found");
         }
         console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
@@ -93,10 +96,37 @@ export default function NewDoctor() {
           </Button>
         </form>
       </div>
+
+      {/* if doctor created his account sucessfully */}
+
       <Modal
         sx={{ mb: 70, ml: "auto", mr: "auto" }}
         open={open}
         onClose={() => setOpen(false)}
+      >
+        <div className="border-box absolute inset-1/2 h-fit w-96 bg-white p-4 drop-shadow-2xl">
+          <h1 className="text-2xl font-bold">Account Created Sucessfully</h1>
+          <h1 className="text-xl">The Account is created Sucessfully.</h1>
+
+          <h1 className="text-xl">Click Here to view your dashboard.</h1>
+          <div className="flex justify-end">
+            <Button
+              onClick={() => {
+                navigate("/doctor/dashboard");
+              }}
+            >
+              View Dashboard
+            </Button>
+          </div>
+        </div>
+      </Modal>
+
+      {/* if doctor is already logged in as a customer */}
+
+      <Modal
+        sx={{ mb: 70, ml: "auto", mr: "auto" }}
+        open={noUserOpen}
+        onClose={() => setNoUserOpen(false)}
       >
         <div className="border-box absolute inset-1/2 h-fit w-96 bg-white p-4 drop-shadow-2xl">
           <h1 className="text-2xl font-bold">Email Alreaddy Exists</h1>
@@ -117,20 +147,32 @@ export default function NewDoctor() {
         </div>
       </Modal>
 
+      {/* if he/she is not the doctor*/}
+
       <Modal
         sx={{ mb: 70, ml: "auto", mr: "auto" }}
-        open={noUserOpen}
-        onClose={() => setNoUserOpen(false)}
+        open={noDoctorModal}
+        onClose={() => setNoDoctorModal(false)}
       >
         <div className="border-box absolute inset-1/2 h-fit w-96 bg-white p-4 drop-shadow-2xl">
-          <h1 className="text-2xl font-bold">Email Alreaddy Exists</h1>
+          <h1 className="text-2xl font-bold">No Doctor Found</h1>
           <h1 className="text-xl">
-            The Email Address You Entered Already Exists As a User Profile .
+            The email you are trying is not registered as a doctor.
           </h1>
+
           <h1 className="text-xl">
-            You can Still Sign In With Your Email and Password to the Doctor
-            Profile
+            Please contact Admin if you are actually a Doctor.
           </h1>
+          <Button
+            onClick={() => {
+              navigate("/about");
+            }}
+          >
+            Contact Admin
+          </Button>
+
+          <h1 className="text-xl">Or Sign in if you are a user.</h1>
+
           <Button
             onClick={() => {
               navigate("/sign_in");

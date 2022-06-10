@@ -7,7 +7,9 @@ import { Button, TextField } from "@mui/material";
 import { useState, useEffect } from "react";
 import { db, auth, storage } from "../../../firebase-config";
 
-import FirebaseDataTable from "../../../components/FirebaseDataTable";
+import Modal from "@mui/material/Modal";
+
+// import FirebaseDataTable from "../../../components/FirebaseDataTable";
 import UserLayout from "../../../layouts/UserLayout";
 
 export default function ProductReturnForm() {
@@ -18,10 +20,10 @@ export default function ProductReturnForm() {
   const [description, setDescription] = useState("");
   const [urls, setUrls] = useState([]);
   const [user, setUser] = useState();
-
   const [image, setImage] = useState();
-
   const [progress, setProgress] = useState();
+
+  const [modal, setModal] = useState(false);
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
@@ -76,6 +78,7 @@ export default function ProductReturnForm() {
     };
     await addDoc(productReturnRef, newProduct).then(() => {
       console.log("product returned sucessfull");
+      setModal(true);
     });
   };
   return (
@@ -175,6 +178,28 @@ export default function ProductReturnForm() {
           </div>
         </div>
       </div>
+      {/* if doctor is already logged in as a customer */}
+
+      <Modal
+        sx={{ mb: 70, ml: "auto", mr: "auto" }}
+        open={modal}
+        onClose={() => setNoUserOpen(false)}
+      >
+        <div className="border-box absolute inset-1/2 h-fit w-96 bg-white p-4 drop-shadow-2xl">
+          <h1 className="text-2xl font-bold">Product Return Request</h1>
+          <h1 className="text-xl">
+            The Product Return Request is sucessfully sent
+          </h1>
+
+          <Button
+            onClick={() => {
+              navigate("/profile/ProductReturns");
+            }}
+          >
+            Close
+          </Button>
+        </div>
+      </Modal>
     </UserLayout>
   );
 }
