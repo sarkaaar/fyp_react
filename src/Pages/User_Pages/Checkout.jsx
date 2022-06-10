@@ -347,7 +347,7 @@ export default function Checkout() {
           </form>
         </div>
 
-        <div className="justify-around p-4">
+        <div className="justify-around">
           <h1 className="mt-4 text-2xl font-bold lg:flex lg:justify-center">
             In the Cart
           </h1>
