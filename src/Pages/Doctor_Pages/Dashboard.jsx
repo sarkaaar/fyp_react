@@ -51,6 +51,7 @@ export default function Dashboard() {
       appointmentsRef,
       where(
         // ("doctor.email", "==", "ammarzahid335@gmail.com"),
+        where("doctor.email", "==", user?.email),
         ("date", "==", date)
       )
     );

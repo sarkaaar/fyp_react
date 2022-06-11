@@ -41,8 +41,8 @@ export default function DocViewAppointments() {
 
     const q = query(
       appointmentsRef,
-      // where("doctor.email", "==", user?.email),
-      where("doctor.email", "==", "ammarzahid335@gmail.com"),
+      where("doctor.email", "==", user?.email),
+      // where("doctor.email", "==", "ammarzahid335@gmail.com"),
       where("date", ">", weekStart),
       where("date", "<", weekEnd)
     );

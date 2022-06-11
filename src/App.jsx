@@ -20,7 +20,6 @@ import Profile from "./Pages/User_Pages/Profile/Profile";
 import Orders from "./Pages/User_Pages/Profile/Orders";
 import ProductReturns from "./Pages/User_Pages/Profile/ProductReturns";
 import Favourites from "./Pages/User_Pages/Profile/Favourites";
-
 import About from "./Pages/User_Pages/About";
 
 // Services Pages
@@ -49,11 +48,8 @@ import NewDoctor from "./Pages/Doctor_Pages/NewDoctor";
 import Meeting from "./Pages/Doctor_Pages/Meeting";
 import DocViewAppointments from "./Pages/Doctor_Pages/DocViewAppointments";
 import Live from "./Pages/Doctor_Pages/Live/Live";
-// import NotAuthenticated from "./Pages/NotAuthenticated";
 import Users from "./Pages/Admin_Pages/Users";
-
 import CheckoutAppointment from "./Pages/Services/CheckoutAppointment";
-
 import NoPermission from "./Pages/Admin_Pages/NoPermission";
 import ComplainSuggestions from "./Pages/User_Pages/Profile/ComplainSuggestions";
 
@@ -74,14 +70,16 @@ function App() {
         <Route exact path="/forget-password" element={<ForgetPassword />} />
         <Route exact path="/sign_up" element={<SignUp />} />
         <Route exact path="/checkout" element={<Checkout />} />
-        <Route exact path="/appointment/checkout" element={<CheckoutAppointment />} />
+        <Route
+          exact
+          path="/appointment/checkout"
+          element={<CheckoutAppointment />}
+        />
         <Route exact path="/products" element={<Products />} />
         <Route exact path="/product/:id" element={<Product />} />
-        {/* <Route exact path="/NotAuthorised" element={<NotAuthenticated />} /> */}
         <Route exact path="/cart" element={<Cart />} />
         <Route exact path="/maps" element={<Maps />} />
         <Route exact path="/about" element={<About />} />
-
         <Route exact path="/chatbot" element={<Chatbot />} />
         <Route exact path="/returnProduct" element={<ProductReturnForm />} />
         <Route exact path="/profile" element={<Profile />} />
@@ -113,7 +111,6 @@ function App() {
         <Route exact path="/admin/inventory" element={<Inventory />} />
         <Route exact path="/admin/orders" element={<AdminOrders />} />
         <Route exact path="/admin/viewDoctor" element={<ViewDoctors />} />
-        {/* <Route exact path="/admin/viewAllProducts" element={<ProductsList />} /> */}
         <Route exact path="/admin/reports" element={<Reports />} />
         <Route exact path="/admin/users/info" element={<Users />} />
         <Route
@@ -124,22 +121,16 @@ function App() {
         <Route exact path="/admin/categories" element={<Categories />} />
         <Route exact path="/admin/complaints" element={<Complaints />} />
 
-        {/* Doctors Panel */}
+        {/* Doctor Panel */}
         <Route exact path="/doctor/dashboard" element={<DoctorDashboard />} />
-        {/* <Route exact path="/doctor/sign_in" element={<DoctorSignIn />} /> */}
-        {/* <Route exact path="/doctor/slots" element={<Slots />} /> */}
         <Route exact path="/doctor/meeting/:id" element={<Meeting />} />
         <Route exact path="/live" element={<Live />} />
         <Route
           exact
-          path="/doctor/viewAppointments"
+          path="/doctor/appointments/view"
           element={<DocViewAppointments />}
         />
-        <Route
-          exact
-          path="/doctor/new"
-          element={<NewDoctor />}
-        />
+        <Route exact path="/doctor/new" element={<NewDoctor />} />
         <Route exact path="/*" element={<PageNotFound />} />
       </Routes>
     </Router>

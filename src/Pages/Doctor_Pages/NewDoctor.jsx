@@ -33,14 +33,11 @@ export default function NewDoctor() {
         if (data.length != 0)
           await createUserWithEmailAndPassword(auth, email, password)
             .then(async () => {
-              // console.log(res.user.uid);
               setOpen(true);
             })
             .catch((err) => {
               console.log(err.code);
-              // if (err.code === "auth/email-already-in-use") {
               setNoUserOpen(true);
-              // }
             });
         else {
           setNoDoctorModal(true);
