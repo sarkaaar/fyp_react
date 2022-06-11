@@ -78,7 +78,7 @@ export default function Checkout() {
     setTotal(num);
   };
   const getCartItems = async () => {
-    const q = await query(cartCollection, where("user", "==", user?.email));
+    const q = query(cartCollection, where("user", "==", user?.email));
     const queryResults = await getDocs(q);
     setProducts(
       queryResults.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
@@ -113,6 +113,7 @@ export default function Checkout() {
       cvv,
       total,
       cart: products,
+      time: new Date(),
     };
     console.log(newItem);
     await addDoc(checkoutRef, newItem).then((e) => {
@@ -347,7 +348,7 @@ export default function Checkout() {
           </form>
         </div>
 
-        <div className="justify-around p-4">
+        <div className="justify-around">
           <h1 className="mt-4 text-2xl font-bold lg:flex lg:justify-center">
             In the Cart
           </h1>

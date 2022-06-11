@@ -103,7 +103,7 @@ export default function Cart() {
                   <div className="h-20 w-20 animate-spin rounded-full border-t-4 border-b-4 border-blue-900" />
                 </div>
               ) : products.length === 0 ? (
-                <div className="p-56 text-center font-bold">
+                <div className="   p-72 text-center font-bold">
                   {" "}
                   The cart is empty!{" "}
                 </div>
@@ -114,7 +114,7 @@ export default function Cart() {
                   </h1>
                   <div className="lg:flex lg:justify-center">
                     <div className="mt-8 bg-white  p-2 lg:w-1/2">
-                      <div className="flow-root">
+                      <div className=" flow-root">
                         <ul
                           role="list"
                           className="-my-6 divide-y divide-gray-200"
@@ -190,7 +190,7 @@ export default function Cart() {
                       <p className="mt-0.5 text-sm text-gray-500">
                         Shipping and taxes calculated at checkout.
                       </p>
-                      <div className="mt-6">
+                      <div className="p-56 mt-6">
                         <Link
                           to="/checkout"
                           className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"

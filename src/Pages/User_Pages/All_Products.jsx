@@ -197,7 +197,7 @@ export default function Products() {
               </div>
             )}
           </div>
-          <div className="h-8" />
+          <div className="h-8 text-center p-56 " />
           {loader ? (
             <></>
           ) : moreProductLoader ? (
