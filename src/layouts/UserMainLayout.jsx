@@ -30,6 +30,7 @@ export default function UserMainLayout({ children, props }) {
   const fuseRef = useRef(null);
   const navigate = useNavigate();
   const cartCollection = collection(db, "cart");
+  const doctorsRef = collection(db, "doctors");
 
   const getCartItems = async (user) => {
     const q = await query(cartCollection, where("user", "==", user.email));
@@ -37,6 +38,37 @@ export default function UserMainLayout({ children, props }) {
       setCartItems(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
   };
+
+  // const showDoctorHeader = async () => {
+  //   //   1- Fetch for the record in Doctor's Table
+  //   const q = query(doctorsRef, where("email", "==", email));
+  //   await getDocs(q)
+  //     .then(async (res) => {
+  //       const data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+
+  //       // 2- if the user is found in table then with go for authentication
+  //       if (data.length != 0)
+  //         await createUserWithEmailAndPassword(auth, email, password)
+  //           .then(async () => {
+  //             // console.log(res.user.uid);
+  //             setOpen(true);
+  //           })
+  //           .catch((err) => {
+  //             console.log(err.code);
+  //             // if (err.code === "auth/email-already-in-use") {
+  //             setNoUserOpen(true);
+  //             // }
+  //           });
+  //       else {
+  //         setNoDoctorModal(true);
+  //         console.log("doctor was not found");
+  //       }
+  //       console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  //     })
+  //     .catch((err) => {
+  //       console.log(err.code);
+  //     });
+  // };
 
   const getProducts = async () => {
     await getDocs(collection(db, "products")).then((res) => {
@@ -250,6 +282,24 @@ export default function UserMainLayout({ children, props }) {
                               }
                             >
                               Your Profile
+                            </NavLink>
+                            <NavLink
+                             to="/doctor/dashboard"
+                             // to={
+                              //   userProfile?.role === "admin"
+                              //     ? "/admin/profile"
+                              //     : "/profile"
+                              // }
+                              className={({ isActive }) =>
+                                c(
+                                  isActive
+                                    ? "bg-gray-900 text-white"
+                                    : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                                  "rounded-md bg-gray-800 px-3 py-2 text-sm font-medium text-white"
+                                )
+                              }
+                            >
+                              Doctor View 
                             </NavLink>
                             <NavLink
                               to="/sign_in"
