@@ -1,5 +1,4 @@
 import * as React from "react";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import { collection, addDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { uploadBytesResumable, ref, getDownloadURL } from "firebase/storage";
@@ -8,6 +7,7 @@ import { useState, useEffect } from "react";
 import { db, auth, storage } from "../../../firebase-config";
 import UserLayout from "../../../layouts/UserLayout";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const modalStyle = {
   position: "absolute",
@@ -32,6 +32,7 @@ export default function ProductReturnForm() {
     formState: { errors },
   } = useForm();
   console.log(errors);
+  const navigate = useNavigate();
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
@@ -84,7 +85,7 @@ export default function ProductReturnForm() {
         description: data.description,
         images: arr,
         user: user?.email,
-        date: new Date(),
+        time: new Date(),
       };
       await addDoc(productReturnRef, newProduct).then(()=> {
         console.log("Product Returned successfull");
@@ -317,6 +318,7 @@ export default function ProductReturnForm() {
                     className="h-12 w-1/3 bg-blue-600 shadow-md shadow-slate-400 hover:bg-blue-700 hover:drop-shadow-lg focus:shadow-none"
                     onClick={() => {
                       setModal(false);
+                      navigate("/profile/ProductReturns");
                     }}
                   >
                     OK

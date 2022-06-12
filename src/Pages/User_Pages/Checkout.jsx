@@ -183,7 +183,7 @@ export default function Checkout() {
 
   return (
     <UseMainLayout>
-      <div className="flex min-h-full items-center justify-center gap-4 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="flex min-h-full justify-center gap-4 py-12 px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8 rounded-xl bg-white p-10">
           <div>
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
@@ -348,13 +348,13 @@ export default function Checkout() {
           </form>
         </div>
 
-        <div className="justify-around">
-          <h1 className="mt-4 text-2xl font-bold lg:flex lg:justify-center">
+        <div className="bg-white w-1/3">
+          <h1 className="mt-6 text-2xl font-bold lg:flex lg:justify-center">
             In the Cart
           </h1>
           {products.length > 0 ? (
             <div className="lg:flex lg:justify-center">
-              <div className="mt-8 bg-white  p-2 lg:w-1/2">
+              <div className="mt-8 bg-white p-2 rounded-md drop-shadow-xl">
                 <div className="flow-root">
                   <ul role="list" className="-my-6 divide-y divide-gray-200">
                     {products.map((product) => (

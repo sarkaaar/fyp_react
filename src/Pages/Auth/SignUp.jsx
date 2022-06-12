@@ -14,6 +14,8 @@ import { Button, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { collection, addDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase-config";
+import { ArrowSmLeftIcon } from "@heroicons/react/outline";
+
 // import Header from "./Components/Header";
 
 export default function SignUp() {
@@ -95,6 +97,9 @@ export default function SignUp() {
     <>
       <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8 bg-white p-10">
+        <button onClick={() => {navigate("/")}} className="group relative flex justify-start rounded-md border bg-indigo-100 border-transparent py-2 px-4 text-sm font-medium text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+          <ArrowSmLeftIcon className="h-5 w-5" /> Home Page
+        </button>
           <div>
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
               Create an Account

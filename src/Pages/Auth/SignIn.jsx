@@ -11,6 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { db, auth } from "../../firebase-config";
 import { collection, addDoc } from "firebase/firestore";
+import { ArrowSmLeftIcon } from "@heroicons/react/outline";
 
 export default function SignIn() {
   const provider = new GoogleAuthProvider();
@@ -92,6 +93,9 @@ export default function SignIn() {
   return (
     <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8 bg-white p-10">
+        <button onClick={() => {navigate("/")}} className="group relative flex justify-start rounded-md border bg-indigo-100 border-transparent py-2 px-4 text-sm font-medium text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+          <ArrowSmLeftIcon className="h-5 w-5" /> Home Page
+        </button>
         <div className="">
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Sign in to your account
@@ -148,17 +152,17 @@ export default function SignIn() {
             <p>New to Pet-Planet </p>
             <Link
               to="/sign_up"
-              className="font-medium  text-indigo-600 hover:text-indigo-500"
+              className="font-medium text-indigo-600 hover:text-indigo-500 hover:underline"
             >
               Sign Up
             </Link>
           </div>
-          <div className="flex space-x-2 justify-end">
+          <div className="flex justify-end space-x-2">
             <Link
               to="/forget-password"
-              className="font-medium  text-indigo-600 hover:text-indigo-500"
+              className="font-medium text-indigo-600 hover:text-indigo-500 hover:underline"
             >
-              Forgot Password ?
+              Forgot Password?
             </Link>
           </div>
           <hr />
