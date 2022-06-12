@@ -1,36 +1,38 @@
 import * as React from "react";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import { collection, addDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { uploadBytesResumable, ref, getDownloadURL } from "firebase/storage";
-import { Button, TextField } from "@mui/material";
+import { Modal, Fade, Box, Backdrop } from "@mui/material";
 import { useState, useEffect } from "react";
 import { db, auth, storage } from "../../../firebase-config";
-
-import Modal from "@mui/material/Modal";
-
-// import FirebaseDataTable from "../../../components/FirebaseDataTable";
 import UserLayout from "../../../layouts/UserLayout";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  borderRadius: "24px",
+  boxShadow: 24,
+  p: 4,
+};
 
 export default function ProductReturnForm() {
-  const [orderNo, setOrderNo] = useState("");
-  const [productID, setProductID] = useState("");
-  const [productName, setProductNme] = useState("");
-  const [issue, setIssue] = useState("");
-  const [description, setDescription] = useState("");
-  const [urls, setUrls] = useState([]);
   const [user, setUser] = useState();
-  const [image, setImage] = useState();
   const [progress, setProgress] = useState();
+  const [modal, setModal] = useState(false);
+  const [loader, setLoader] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   console.log(errors);
-
-  const [modal, setModal] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
@@ -38,32 +40,59 @@ export default function ProductReturnForm() {
     });
   }, [user]);
 
-  const upload = () => {
-    if (!image[0]) return;
-    const arr = [];
+  function uploadImages(images) {
+    setModal(true);
+    setLoader(true);
+    if (!images.image[0]) return false;
+    else {
+      const arr = [];
+      for (let i = 0; i < images.image.length; i += 1) {
+        const storageRef = ref(
+          storage,
+          `returnedProducts/${images.image[i].name}`
+        );
+        const uploadTask = uploadBytesResumable(storageRef, images.image[i]);
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            const prog =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 
-    for (let i = 0; i < image.length; i += 1) {
-      const storageRef = ref(storage, `returnedProducts/${image[i].name}`);
-      const uploadTask = uploadBytesResumable(storageRef, image[i]);
-
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const prog = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-
-          setProgress(prog);
-        },
-        (error) => console.log(error),
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-            console.log(url);
-            arr.push(url);
-            setUrls(arr);
-          });
-        }
-      );
+            setProgress(prog);
+          },
+          (error) => console.log(error),
+          () => {
+            getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+              arr.push(url);
+              // setUrls(arr);
+              console.log(arr);
+              addReturnedProduct(images, arr);
+            });
+          }
+        );
+      }
     }
-  };
+  }
+
+  async function addReturnedProduct(data, arr) {
+    // console.log("here", urls);
+    if (arr.length === data.image.length) {
+      const newProduct = {
+        orderNo: data.orderNumber,
+        productID: data.productID,
+        productName: data.productName,
+        issue: data.issue,
+        description: data.description,
+        images: arr,
+        user: user?.email,
+        time: new Date(),
+      };
+      await addDoc(productReturnRef, newProduct).then(()=> {
+        console.log("Product Returned successfull");
+        setLoader(false);
+      });
+    }
+  }
 
   const productReturnRef = collection(db, "productReturn");
   useEffect(() => {
@@ -71,24 +100,7 @@ export default function ProductReturnForm() {
       setUser(currentUser);
     });
   }, [user]);
-  // Add Products
-  const productReturn = async (data) => {
-    console.log(data);
-    const newProduct = {
-      orderNo: data.orderNumber,
-      productID: data.productID,
-      productName: data.productName,
-      issue: data.issue,
-      description: data.description,
-      images: urls,
-      user: user?.email,
-      date: new Date(),
-    };
-    await addDoc(productReturnRef, newProduct).then(() => {
-      console.log("product returned sucessfull");
-      setModal(true);
-    });
-  };
+
   return (
     <UserLayout>
       <div className="flex w-full justify-center">
@@ -101,7 +113,7 @@ export default function ProductReturnForm() {
               <form
                 autoComplete="off"
                 onSubmit={handleSubmit((data) => {
-                  productReturn(data);
+                  uploadImages(data);
                 })}
               >
                 <div className="flex flex-row">
@@ -181,7 +193,7 @@ export default function ProductReturnForm() {
                       </p>
                     )}
                     <input
-                      className="w-full mt-6 mb-1 rounded-md border border-solid border-gray-400 focus:border-blue-500"
+                      className="mt-6 mb-1 w-full rounded-md border border-solid border-gray-400 focus:border-blue-500"
                       type="text"
                       placeholder="Issue Subject"
                       {...register("issue", {
@@ -202,7 +214,7 @@ export default function ProductReturnForm() {
                   <div className="flex w-1/2 flex-col px-2">
                     <textarea
                       rows={4}
-                      className="mt-4 w-full mb-1 rounded-md border border-solid border-gray-400 focus:border-blue-500"
+                      className="mt-4 mb-1 w-full rounded-md border border-solid border-gray-400 focus:border-blue-500"
                       type="text"
                       placeholder="Description"
                       {...register("description", {
@@ -240,132 +252,82 @@ export default function ProductReturnForm() {
                         {errors.image.message}
                       </p>
                     )}
-                    <h3>
-                      Uploaded
-                      {progress}
-                    </h3>
-                    <button
-                      type="submit"
+                    {progress ? <h3>Uploaded: {progress}%</h3> : null}
+                    {/* <button
                       className="w-full bg-blue-500"
                       onClick={upload}
                     >
                       Upload Image
-                    </button>
-                    <button type="submit" className="w-full bg-blue-500">
+                    </button> */}
+                    <button
+                      type="submit"
+                      className="h-12 w-36 border border-solid border-blue-600 bg-blue-600 text-xs text-white shadow-lg shadow-slate-300 transition delay-100 duration-300 ease-in-out hover:bg-white hover:text-blue-700 hover:drop-shadow-lg focus:shadow-none active:scale-75"
+                    >
                       Submit
                     </button>
                   </div>
                 </div>
               </form>
-              {/* <TextField
-                margin="normal"
-                required
-                fullWidth
-                label="Order #"
-                autoFocus
-                value={orderNo}
-                onChange={(e) => {
-                  if (e.target.value.match(/^[A-Za-z0-9 ]+$/))
-                    setOrderNo(e.target.value);
-                }}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                label="Product ID"
-                type="text"
-                value={productID}
-                onChange={(e) => setProductID(e.target.value)}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                label="Product Name"
-                type="text"
-                value={productName}
-                onChange={(e) => setProductNme(e.target.value)}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                label="Issue"
-                type="text"
-                value={issue}
-                onChange={(e) => setIssue(e.target.value)}
-              />
-            </div>
-            <div className="mt-4 w-96">
-              <TextareaAutosize
-                minRows={4}
-                placeholder="  Description*"
-                value={description}
-                style={{ width: "384px", border: "1px solid gray" }}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-              <p>
-                Click on the &quot;Choose File&quot; button to upload a file:
-              </p>
-
-              <input
-                type="file"
-                className="mb-6"
-                onChange={(e) => {
-                  setImage(e.target.files);
-                }}
-                multiple
-              />
-              <h3>
-                Uploaded
-                {progress}
-              </h3>
-              <div className="flex flex-col gap-4">
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  className="mt-6 mb-12"
-                  onClick={upload}
-                >
-                  Images Upload
-                </Button>
-
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="outlined"
-                  onClick={productReturn}
-                >
-                  Submit Form
-                </Button>
-              </div> */}
             </div>
           </div>
         </div>
       </div>
-      {/* if doctor is already logged in as a customer */}
-
       <Modal
-        sx={{ mb: 70, ml: "auto", mr: "auto" }}
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
         open={modal}
-        onClose={() => setNoUserOpen(false)}
+        onClose={() => setModal(false)}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
       >
-        <div className="border-box absolute inset-1/2 h-fit w-96 bg-white p-4 drop-shadow-2xl">
-          <h1 className="text-2xl font-bold">Product Return Request</h1>
-          <h1 className="text-xl">
-            The Product Return Request is sucessfully sent
-          </h1>
-
-          <Button
-            onClick={() => {
-              navigate("/profile/ProductReturns");
-            }}
-          >
-            Close
-          </Button>
-        </div>
+        <Fade in={modal}>
+          <Box sx={modalStyle}>
+            {loader ? (
+              <div className="w-full">
+                <div className="flex h-full items-center justify-center">
+                  <div className="h-20 w-20 animate-spin rounded-full border-t-4 border-b-4 border-blue-900" />
+                </div>
+              </div>
+            ) : (
+              <>
+                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
+                  <svg
+                    className="h-6 w-6 text-green-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M5 13l4 4L19 7"
+                    ></path>
+                  </svg>
+                </div>
+                <hr className="my-2 bg-black " />
+                <h1 className="mb-4 text-center text-lg font-bold">
+                  Your application has been submitted successfully!
+                </h1>
+                <div className="flex items-center justify-center">
+                  <button
+                    className="h-12 w-1/3 bg-blue-600 shadow-md shadow-slate-400 hover:bg-blue-700 hover:drop-shadow-lg focus:shadow-none"
+                    onClick={() => {
+                      setModal(false);
+                      navigate("/profile/ProductReturns");
+                    }}
+                  >
+                    OK
+                  </button>
+                </div>
+              </>
+            )}
+          </Box>
+        </Fade>
       </Modal>
     </UserLayout>
   );

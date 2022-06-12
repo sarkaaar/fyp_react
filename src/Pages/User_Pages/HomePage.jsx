@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import MediaCard from "./Components/MediaCard";
 import Banner from "./Components/Banner";
@@ -6,19 +6,36 @@ import Footer from "./Components/Footer";
 import { db } from "../../firebase-config";
 import UseMainLayout from "../../layouts/UserMainLayout";
 
-export default function HomePage() {
-  const categoriesRef = collection(db, "categories");
-  const productsRef = collection(db, "products");
+import { motion } from "framer-motion";
 
+export default function HomePage() {
   const [product, setProduct] = useState();
   const [categories, setCategories] = useState();
   const [loader, setLoader] = useState(false);
+
+  const [width, setWidth] = useState(0);
+  const carousel = useRef();
+
+  // useEffect(() => {
+  //   console.log(carousel.current);
+  //   if (product) {
+  //     setWidth(carousel?.current?.scrollWidth - carousel?.current?.offsetWidth);
+  //     console.log(
+  //       carousel?.current?.scrollWidth - carousel?.current?.offsetWidth
+  //     );
+  //   }
+  // },[product]);
+
+  const categoriesRef = collection(db, "categories");
+  const productsRef = collection(db, "products");
 
   useEffect(() => {
     setLoader(true);
     const getProducts = async () => {
       await getDocs(productsRef)
         .then((res) => {
+          // setWidth(carousel?.current?.scrollWidth - carousel?.current?.offsetWidth);
+
           setProduct(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
           setLoader(false);
           console.log(res);
@@ -47,8 +64,6 @@ export default function HomePage() {
 
   return (
     <UseMainLayout>
-      {/* <div className="relative  overflow-hidden">
-         <div className="pt-24"> */}
       <Banner />
       <hr />
       {loader ? (
@@ -62,24 +77,39 @@ export default function HomePage() {
           {categories?.map((item) => (
             <div className=" m-auto w-fit">
               <h1 className="py-4 text-3xl font-extrabold">{item?.name}</h1>
-              <div className="grid gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 ">
-                {product?.map((product) => (
-                  <>
-                    {item?.name === product?.category ? (
-                      <MediaCard obj={product} />
-                    ) : (
-                      <></>
-                    )}
-                  </>
-                ))}
+              <div className="">
+                <motion.div
+                  ref={carousel}
+                  className="carousel"
+                  style={{
+                    cursor: "grab",
+                    // overflow: "hidden",
+                    // width:"100rem"
+                  }}
+                >
+                  <motion.div
+                    drag="x"
+                    whileDrag={"grabbing"}
+                    dragConstraints={{ right: 0, left: -width }}
+                    className="lg:w-[100rem] overflow-x-scroll flex gap-4"
+                  >
+                    {product?.map((product) => (
+                      <motion.div key={product} >
+                        {item?.name === product?.category ? (
+                          <MediaCard obj={product} />
+                        ) : (
+                          <div />
+                        )}
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                </motion.div>
               </div>
             </div>
           ))}
         </>
       )}
       <Footer />
-      {/* </div>
-      </div> */}
     </UseMainLayout>
   );
 }

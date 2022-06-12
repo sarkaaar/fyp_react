@@ -106,7 +106,6 @@ function Videos({ mode, callId, setPage }) {
       const answerCandidates = collection(callDoc, "answerCandidates");
 
       setRoomId(callDoc.id);
-      // console.log()
       console.log(callDoc.id);
       uploadLink(callDoc.id);
 
@@ -142,41 +141,43 @@ function Videos({ mode, callId, setPage }) {
           }
         });
       });
-    } else if (mode === "join") {
-      const callDoc = doc(db, "calls", callId);
-      const answerCandidates = collection(callDoc, "answerCandidates");
-      const offerCandidates = collection(callDoc, "offerCandidates");
+    } 
+    
+    // else if (mode === "join") {
+    //   const callDoc = doc(db, "calls", callId);
+    //   const answerCandidates = collection(callDoc, "answerCandidates");
+    //   const offerCandidates = collection(callDoc, "offerCandidates");
 
-      pc.onicecandidate = (event) => {
-        event.candidate && addDoc(answerCandidates, event.candidate.toJSON());
-      };
+    //   pc.onicecandidate = (event) => {
+    //     event.candidate && addDoc(answerCandidates, event.candidate.toJSON());
+    //   };
 
-      const callData = (await getDoc(callDoc)).data();
+    //   const callData = (await getDoc(callDoc)).data();
 
-      const offerDescription = callData.offer;
-      await pc.setRemoteDescription(
-        new RTCSessionDescription(offerDescription)
-      );
+    //   const offerDescription = callData.offer;
+    //   await pc.setRemoteDescription(
+    //     new RTCSessionDescription(offerDescription)
+    //   );
 
-      const answerDescription = await pc.createAnswer();
-      await pc.setLocalDescription(answerDescription);
+    //   const answerDescription = await pc.createAnswer();
+    //   await pc.setLocalDescription(answerDescription);
 
-      const answer = {
-        type: answerDescription.type,
-        sdp: answerDescription.sdp,
-      };
+    //   const answer = {
+    //     type: answerDescription.type,
+    //     sdp: answerDescription.sdp,
+    //   };
 
-      await updateDoc(callDoc, { answer });
+    //   await updateDoc(callDoc, { answer });
 
-      onSnapshot(offerCandidates, (snapshot) => {
-        snapshot.docChanges().forEach((change) => {
-          if (change.type === "added") {
-            const data = change.doc.data();
-            pc.addIceCandidate(new RTCIceCandidate(data));
-          }
-        });
-      });
-    }
+    //   onSnapshot(offerCandidates, (snapshot) => {
+    //     snapshot.docChanges().forEach((change) => {
+    //       if (change.type === "added") {
+    //         const data = change.doc.data();
+    //         pc.addIceCandidate(new RTCIceCandidate(data));
+    //       }
+    //     });
+    //   });
+    // }
 
     pc.onconnectionstatechange = () => {
       if (pc.connectionState === "disconnected") {

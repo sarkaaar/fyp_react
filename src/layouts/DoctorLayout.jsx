@@ -27,7 +27,7 @@ export default function AdminLayout({ children }) {
             DASHBOARD
           </Link>
           <Link
-            to="/doctor/viewAppointments"
+            to="/doctor/appointments/view"
             style={{ textDecoration: "none", padding: "10px", color: "white" }}
           >
             VIEW APPOINTMENTS

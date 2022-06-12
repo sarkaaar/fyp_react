@@ -13,12 +13,8 @@ import {
 import { onAuthStateChanged } from "firebase/auth";
 import Footer from "./Components/Footer";
 import { db } from "../../firebase-config";
-import { Button } from "@mui/material";
 import { auth } from "../../firebase-config";
 import UseMainLayout from "../../layouts/UserMainLayout";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
-import { MinusIcon, PlusIcon } from "@heroicons/react/outline";
 
 export default function Cart() {
 
@@ -30,20 +26,6 @@ export default function Cart() {
   const [qty, setQty] = useState(1);
 
   const cartCollection = collection(db, "cart");
-
-  const incrementCounter = () => {
-    if (qty === products.variants[0][1]) {
-    } else {
-      setQty(qty + 1);
-    }
-  }
-  
-  const decrementCounter = () => {
-    if (qty <= 1) {
-    } else {
-      setQty(qty - 1);
-    }
-  };
 
   const getCartItems = async () => {
     const q = query(cartCollection, where("user", "==", user?.email));
@@ -113,8 +95,8 @@ export default function Cart() {
                     Cart
                   </h1>
                   <div className="lg:flex lg:justify-center">
-                    <div className="mt-8 bg-white  p-2 lg:w-1/2">
-                      <div className=" flow-root">
+                    <div className="mt-8 bg-white p-2 lg:w-1/2 rounded-md transition duration-150 ease-in-out shadow hover:drop-shadow-xl">
+                      <div className="flow-root rounded-md">
                         <ul
                           role="list"
                           className="-my-6 divide-y divide-gray-200"
@@ -138,7 +120,8 @@ export default function Cart() {
                                         product?.quantity}
                                     </p>
                                   </div>
-                                  <p className="ml-4">
+                                  <p className="">
+                                    Rs.{" "}
                                     {product?.product?.salePrice}
                                     /piece
                                   </p>
@@ -165,7 +148,7 @@ export default function Cart() {
                                   <div className="">
                                     <button
                                       type="button"
-                                      className="font-medium text-indigo-600 hover:text-indigo-500"
+                                      className="px-4 text-sm rounded-md border bg-indigo-100 border-transparent font-medium text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:ring-offset-1"
                                       onClick={() => {
                                         deleteProduct(product?.id);
                                       }}
@@ -185,7 +168,7 @@ export default function Cart() {
                     <div className="border-t border-gray-200 py-6 px-4 sm:px-6 lg:w-1/2">
                       <div className="flex justify-between text-base font-medium text-gray-900">
                         <p>Subtotal</p>
-                        <p>{total}</p>
+                        <p>Rs.{" "}{total}</p>
                       </div>
                       <p className="mt-0.5 text-sm text-gray-500">
                         Shipping and taxes calculated at checkout.

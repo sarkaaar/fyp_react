@@ -1,24 +1,27 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, query, where, orderBy } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { db, auth } from "../../../firebase-config";
 
-import FirebaseDataTable from "../../../components/FirebaseDataTable";
 import UserLayout from "../../../layouts/UserLayout";
 import DataTable from "../../../components/DataTable";
 
-export default function PRoductReturns() {
+export default function ProductReturns() {
   const returnRef = collection(db, "productReturn");
 
   const [user, setUser] = useState();
-  const [returns, setreturns] = useState([]);
+  const [returns, setReturns] = useState([]);
 
   const getReturnedItems = async () => {
-    const q = await query(returnRef, where("user", "==", user?.email));
-    const queryResults = await getDocs(q);
-    setreturns(queryResults.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    console.log(returns);
+    const q = query(
+      returnRef, orderBy("time", "desc"),
+      where("user", "==", user?.email),
+    );
+    await getDocs(q).then((res) => {
+      setReturns(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      console.log(returns);
+    });
   };
 
   useEffect(() => {
@@ -29,7 +32,7 @@ export default function PRoductReturns() {
   }, [user]);
   return (
     <UserLayout>
-      <h1 className="text-2xl p-2 px-8">Returned Products</h1>
+      <h1 className="p-2 px-8 text-2xl">Returned Products</h1>
 
       <DataTable
         // query={collection(db, "productReturn")}
@@ -45,7 +48,7 @@ export default function PRoductReturns() {
             name: "Date",
             render: (row) => (
               <div className="flex flex-col">
-                {row.date?.toDate()?.toDateString()}
+                {row.time?.toDate()?.toDateString()}
               </div>
             ),
           },
