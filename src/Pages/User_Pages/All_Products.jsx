@@ -17,10 +17,9 @@ import Footer from "./Components/Footer";
 import UseMainLayout from "../../layouts/UserMainLayout";
 
 export default function Products() {
-  //  Get Categories Names
+
   const [categories, setCategories] = useState();
   const [currentCategory, setCurrentCategory] = useState("");
-
   const [products, setProducts] = useState([]);
   const [paginateProducts, setPaginateProducts] = useState([]);
   const [lastDoc, setLastDoc] = useState();
