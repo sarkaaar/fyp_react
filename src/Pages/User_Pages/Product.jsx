@@ -317,7 +317,7 @@ export default function Product() {
             {prod?.image ? (
               <div className="flex w-full grow-0 flex-row flex-wrap justify-center md:flex-row">
                 {/* Carousel here */}
-                <Carousel data={prod?.image}/>
+                <Carousel data={prod?.image} />
                 <div className="mt-6 flex w-96 shrink flex-col lg:mt-0 lg:w-1/2 lg:py-6 lg:pl-10 lg:flex lg:justify-between">
                   <h1 className="title-font mb-1 text-2xl font-medium text-gray-900">
                     {prod?.name}

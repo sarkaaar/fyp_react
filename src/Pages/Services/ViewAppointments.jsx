@@ -97,7 +97,7 @@ function Lists({ setPage, joinCode, setJoinCode }) {
                 {appointments.map((item, key) => (
                   <div className="m-auto mb-4 w-10/12 bg-slate-200 p-4 hover:drop-shadow-xl">
                     <div className="flex flex-row flex-wrap md:flex-nowrap lg:flex-nowrap xl:flex-nowrap w-full justify-center">
-                      <div className="w-full" >
+                      <div className="w-full">
                         <h1 className="text-2xl font-bold">
                           {" "}
                           Dr. {item?.doctor?.name}
@@ -132,16 +132,6 @@ function Lists({ setPage, joinCode, setJoinCode }) {
                               Join Meeting
                             </button>
                           ) : (
-                            // <Button
-                            //   color="error"
-                            //   variant="outlined"
-                            //   onClick={() => {
-                            //     setJoinCode(item?.joinLink);
-                            //     setPage("join");
-                            //   }}
-                            // >
-                            //   Join Meeting
-                            // </Button>
                             <></>
                           )}
                           <button
@@ -250,46 +240,6 @@ function Videos({ mode, callId, setPage }) {
 
     setWebcamActive(true);
 
-    // if (mode === "create") {
-    //   const callDoc = doc(collection(db, "calls"));
-    //   const offerCandidates = collection(callDoc, "offerCandidates");
-    //   const answerCandidates = collection(callDoc, "answerCandidates");
-
-    //   setRoomId(callDoc.id);
-
-    //   pc.onicecandidate = (event) => {
-    //     if (event.candidate) {
-    //       addDoc(offerCandidates, event.candidate.toJSON());
-    //     }
-    //   };
-
-    //   const offerDescription = await pc.createOffer();
-    //   await pc.setLocalDescription(offerDescription);
-
-    //   const offer = {
-    //     sdp: offerDescription.sdp,
-    //     type: offerDescription.type,
-    //   };
-
-    //   await setDoc(callDoc, { offer });
-
-    //   onSnapshot(callDoc, (snapshot) => {
-    //     const data = snapshot.data();
-    //     if (!pc.currentRemoteDescription && data?.answer) {
-    //       const answerDescription = new RTCSessionDescription(data.answer);
-    //       pc.setRemoteDescription(answerDescription);
-    //     }
-    //   });
-
-    //   onSnapshot(answerCandidates, (snapshot) => {
-    //     snapshot.docChanges().forEach((change) => {
-    //       if (change.type === "added") {
-    //         const candidate = new RTCIceCandidate(change.doc.data());
-    //         pc.addIceCandidate(candidate);
-    //       }
-    //     });
-    //   });
-    // } else
     if (mode === "join") {
       const callDoc = doc(db, "calls", callId);
       const answerCandidates = collection(callDoc, "answerCandidates");
