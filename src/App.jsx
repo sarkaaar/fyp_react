@@ -54,6 +54,8 @@ import CheckoutAppointment from "./Pages/Services/CheckoutAppointment";
 import NoPermission from "./Pages/Admin_Pages/NoPermission";
 import ComplainSuggestions from "./Pages/User_Pages/Profile/ComplainSuggestions";
 
+import DoctorProfile from "./Pages/Doctor_Pages/DoctorProfile";
+
 function App() {
   const [showScrollUp, setShowScrollUp] = useState(false);
 
@@ -147,7 +149,10 @@ function App() {
 
           {/* Doctor Panel */}
           <Route exact path="/doctor/dashboard" element={<DoctorDashboard />} />
+
           <Route exact path="/doctor/meeting/:id" element={<Meeting />} />
+
+   
           <Route exact path="/live" element={<Live />} />
           <Route
             exact
@@ -155,7 +160,10 @@ function App() {
             element={<DocViewAppointments />}
           />
           <Route exact path="/doctor/new" element={<NewDoctor />} />
+          <Route exact path="/doctor/profile" element={<DoctorProfile />} />
+
           <Route exact path="/*" element={<PageNotFound />} />
+
         </Routes>
       </Router>
       {showScrollUp && (

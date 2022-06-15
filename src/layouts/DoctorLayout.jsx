@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase-config";
 
@@ -14,7 +14,7 @@ export default function AdminLayout({ children }) {
   return (
     <div className="min-h-full">
       <div>
-        <div className="bg-gray-800 flex-1 flex justify-end">
+        <div className="flex flex-1 justify-end bg-gray-800">
           <Link
             to="/doctor/dashboard"
             style={{
@@ -32,14 +32,25 @@ export default function AdminLayout({ children }) {
           >
             VIEW APPOINTMENTS
           </Link>
-
+          <NavLink
+            to="/doctor/profile"
+            style={{ textDecoration: "none", padding: "10px", color: "white" }}
+          >
+            VIEW PROFILE
+          </NavLink>
+          <NavLink
+            to="/"
+            style={{ textDecoration: "none", padding: "10px", color: "white" }}
+          >
+            USER VIEW
+          </NavLink>
           <button type="button" onClick={logout} className="bg-gray-800">
             LOGOUT
           </button>
         </div>
       </div>
       <main className="flex-1 pb-8">
-        <div className=" mx-auto px-4 sm:px-6 lg:px-8 mt-8">{children}</div>
+        <div className=" mx-auto mt-8 px-4 sm:px-6 lg:px-8">{children}</div>
       </main>
     </div>
   );
