@@ -9,7 +9,7 @@ import {
   where,
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
-import MediaCard from "../Components/MediaCard";
+// import MediaCard from "../Components/MediaCard";
 import { db, auth } from "../../../firebase-config";
 import UserLayout from "../../../layouts/UserLayout";
 import FavouritesCard from "../Components/FavouritesCard";
@@ -17,6 +17,7 @@ import { Button } from "@mui/material";
 
 export default function Favourites() {
   const [user, setUser] = useState();
+  const [loader, setLoader] = useState(false);
   const [products, setProducts] = useState([]);
 
   const favouritesRef = collection(db, "favourites");
@@ -44,22 +45,39 @@ export default function Favourites() {
       setUser(currentUser);
       getFavouriteItems(currentUser);
     });
+    setLoader(true);
+    getFavouriteItems();
   }, [user]);
 
   return (
     <UserLayout>
-      <h1 className="m-4 text-2xl font-bold">Favourites </h1>
-
-      <div className=" ml-2 grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ">
-        {products.map((item) => (
-          <div className="flex flex-col">
-            <FavouritesCard obj={item?.product} key={item} />
-            <div className="mt-6 flex justify-center">
-              <Button onClick={() => DeleteFavourites(item?.id)}>Remove</Button>
-            </div>
+      {loader ? (
+        products.length === 0 ? (
+          <div className="   p-72 text-center font-bold">
+            {" "}
+            The Favourite is empty!{" "}
           </div>
-        ))}
-      </div>
+        ) : (
+          <>
+            {" "}
+            <h1 className="m-4 text-2xl font-bold">Favourites </h1>
+            <div className=" ml-2 grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ">
+              {products.map((item) => (
+                <div className="flex flex-col">
+                  <FavouritesCard obj={item?.product} key={item} />
+                  <div className="mt-6 flex justify-center">
+                    <Button onClick={() => DeleteFavourites(item?.id)}>
+                      Remove
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>{" "}
+          </>
+        )
+      ) : (
+        <div />
+      )}
     </UserLayout>
   );
 }
