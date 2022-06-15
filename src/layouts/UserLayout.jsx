@@ -56,7 +56,7 @@ const secondaryNavigation = [
   { name: "Logout", href: "/sign_in", icon: LogoutIcon },
 ];
 
-export default function AdminLayout({ children }) {
+export default function UserLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [docCount, setDocCount] = useState([]);
   // const [user, setUser] = useState();
@@ -72,7 +72,7 @@ export default function AdminLayout({ children }) {
     await getDocs(q)
       .then(async (res) => {
         setDocCount(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-        console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        // console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       })
       .catch((err) => {
         console.log(err);

@@ -9,18 +9,6 @@ import UserLayout from "../../../layouts/UserLayout";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-const modalStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  borderRadius: "24px",
-  boxShadow: 24,
-  p: 4,
-};
-
 export default function ProductReturnForm() {
   const [user, setUser] = useState();
   const [progress, setProgress] = useState();
@@ -65,7 +53,7 @@ export default function ProductReturnForm() {
             getDownloadURL(uploadTask.snapshot.ref).then((url) => {
               arr.push(url);
               // setUrls(arr);
-              console.log(arr);
+              // console.log(arr);
               addReturnedProduct(images, arr);
             });
           }
@@ -87,8 +75,8 @@ export default function ProductReturnForm() {
         user: user?.email,
         time: new Date(),
       };
-      await addDoc(productReturnRef, newProduct).then(()=> {
-        console.log("Product Returned successfull");
+      await addDoc(productReturnRef, newProduct).then(() => {
+        // console.log("Product Returned successfull");
         setLoader(false);
       });
     }
@@ -142,7 +130,7 @@ export default function ProductReturnForm() {
                       })}
                     />
                     {errors.orderNumber && (
-                      <p className="px-2 text-xs text-base text-red-600">
+                      <p className="px-2 text-base text-red-600">
                         {errors.orderNumber.message}
                       </p>
                     )}
@@ -284,7 +272,7 @@ export default function ProductReturnForm() {
         }}
       >
         <Fade in={modal}>
-          <Box sx={modalStyle}>
+          <div className="absolute top-1/2 left-1/2 w-[400px] bg-white rounded-lg shadow-lg p-4">
             {loader ? (
               <div className="w-full">
                 <div className="flex h-full items-center justify-center">
@@ -293,7 +281,10 @@ export default function ProductReturnForm() {
               </div>
             ) : (
               <>
-                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
+                <div
+                  style={{ transform: "translate(-50%, -50%)" }}
+                  className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100"
+                >
                   <svg
                     className="h-6 w-6 text-green-600"
                     fill="none"
@@ -326,7 +317,7 @@ export default function ProductReturnForm() {
                 </div>
               </>
             )}
-          </Box>
+          </div>
         </Fade>
       </Modal>
     </UserLayout>

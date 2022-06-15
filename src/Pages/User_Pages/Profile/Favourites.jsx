@@ -21,7 +21,7 @@ export default function Favourites() {
 
   const favouritesRef = collection(db, "favourites");
 
-  const getFavouriteItems = async () => {
+  const getFavouriteItems = async (user) => {
     const q = await query(favouritesRef, where("user", "==", user?.email));
     await getDocs(q)
       .then((res) => {
@@ -35,16 +35,15 @@ export default function Favourites() {
   const DeleteFavourites = async (id) => {
     const favr = doc(db, "favourites", id);
     await deleteDoc(favr);
-    console.log("Favourite deleted ", id);
+    // console.log("Favourite deleted ", id);
     getFavouriteItems();
   };
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      getFavouriteItems(currentUser);
     });
-
-    getFavouriteItems();
   }, [user]);
 
   return (

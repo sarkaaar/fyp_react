@@ -39,7 +39,7 @@ export default function ComplainSuggestions() {
     await addDoc(complainRef, newObj)
       .then(() => {
         setOpen(true);
-        console.log("Add To Complain Sucessfully");
+        // console.log("Add To Complain Sucessfully");
       })
       .catch((err) => {
         console.log(err);
@@ -67,7 +67,6 @@ export default function ComplainSuggestions() {
             >
               <input
                 type="text"
-                fullWidth
                 className="mt-4 mb-2 h-16 w-full rounded-md border border-solid border-gray-400 p-2"
                 autoFocus
                 placeholder="Write Subject of Complain/Suggestion"

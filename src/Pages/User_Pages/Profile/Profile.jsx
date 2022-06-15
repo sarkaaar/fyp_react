@@ -6,8 +6,8 @@ import { auth, db } from "../../../firebase-config";
 import {
   collection,
   getDocs,
-  updateDoc,
-  doc,
+  // updateDoc,
+  // doc,
   query,
   where,
 } from "firebase/firestore";
@@ -16,16 +16,15 @@ import Modal from "@mui/material/Modal";
 import UserLayout from "../../../layouts/UserLayout";
 import EditProfile from "../../../components/EditProfile";
 import { Button } from "@mui/material";
-export default function Profile() {
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  // const [editOpen, setEditOpen] = useState(false);
+import { updatePassword } from "firebase/auth";
 
+export default function Profile() {
   const [queryUser, setQueryUser] = useState([]);
   const [user, setUser] = useState();
+  const [password, setPassword] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
   const [editOpen, setEditOpen] = useState(false);
-  const handleClose = () => {
-    setEditOpen(false);
-  };
+  const [editPass, setEditPass] = useState(false);
 
   const usersRef = collection(db, "users");
 
@@ -39,7 +38,7 @@ export default function Profile() {
 
   const getUserInfo = async () => {
     if (user) {
-      const q = query(usersRef , where("email", "==", user?.email));
+      const q = query(usersRef, where("email", "==", user?.email));
       await getDocs(q)
         .then((res) => {
           const data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
@@ -51,6 +50,21 @@ export default function Profile() {
         });
     }
   };
+
+  const confPassword = async () => {
+    if (password === confirmPassword)
+      updatePassword(user, password)
+        .then((res) => {
+          console.log(res);
+          alert("Password update sucessfully");
+
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    else alert("Passwords do not match");
+  };
+
   return (
     <UserLayout>
       <div className="flex justify-center">
@@ -131,7 +145,7 @@ export default function Profile() {
                         </div>
                       </div>
                       {/* <EditProfile/> */}
-                      <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
+                      <div className="bg-gray-50 px-4 py-3 text-right flex gap-4 sm:px-6">
                         <button
                           onClick={() => {
                             setEditOpen(true);
@@ -139,7 +153,15 @@ export default function Profile() {
                           type="submit"
                           className="inline-flex justify-center rounded-md border border-transparent bg-gray-800 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
                         >
-                          Edit Profile
+                          Update Profile
+                        </button>
+                        <button
+                          onClick={() => {
+                            setEditPass(true);
+                          }}
+                          className="inline-flex justify-center rounded-md border border-transparent bg-gray-800 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
+                        >
+                          Update Password
                         </button>
                       </div>
                     </div>
@@ -152,26 +174,63 @@ export default function Profile() {
         </div>
       </div>
 
+      {/* update user info modal */}
       <Modal
         sx={{ mb: 70, ml: "auto", mr: "auto" }}
         open={editOpen}
         onClose={() => {
           setEditOpen(false);
-          setSelectedProduct(undefined);
         }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <div className="border-box absolute inset-1/2 h-fit w-96 bg-white p-4 drop-shadow-2xl">
+        <div className="border-box absolute inset-1/2 h-fit w-96 rounded-xl bg-white p-4 drop-shadow-2xl">
           <Button
             onClick={() => {
               setEditOpen(false);
+              window.location.reload(false);
             }}
-            sx={{size:"3xl", mb:3}}
+            sx={{ size: "3xl", mb: 3 }}
           >
             X
           </Button>
           <EditProfile data={queryUser} />
+        </div>
+      </Modal>
+      {/* update passwords */}
+      <Modal
+        sx={{ mb: 70, ml: "auto", mr: "auto" }}
+        open={editPass}
+        onClose={() => {
+          setEditPass(false);
+        }}
+      >
+        <div className="border-box absolute inset-1/2 h-fit w-96 bg-white p-4 rounded-xl drop-shadow-2xl">
+          <h1 className="text-xl font-bold text-center p-4">Update Password</h1>
+          <div className="flex flex-col gap-4">
+            <TextField
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              fullWidth
+              label="Password"
+            />
+            <TextField
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              fullWidth
+              label="Confirm Password"
+            />
+            {password === confirmPassword ? (
+              <></>
+            ) : (
+              <p className="text-red-600 font-italic">
+                Password does not match
+              </p>
+            )}
+            <Button variant="outlined" fullWidth onClick={confPassword}>
+              Update Password
+            </Button>
+          </div>
         </div>
       </Modal>
     </UserLayout>

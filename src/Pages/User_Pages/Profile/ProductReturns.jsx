@@ -10,26 +10,27 @@ import DataTable from "../../../components/DataTable";
 export default function ProductReturns() {
   const returnRef = collection(db, "productReturn");
 
-  const [user, setUser] = useState();
+  // const [user, setUser] = useState();
   const [returns, setReturns] = useState([]);
 
-  const getReturnedItems = async () => {
+  const getReturnedItems = async (user) => {
     const q = query(
-      returnRef, orderBy("time", "desc"),
-      where("user", "==", user?.email),
+      returnRef,
+      orderBy("time", "desc"),
+      where("user", "==", user?.email)
     );
     await getDocs(q).then((res) => {
       setReturns(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-      console.log(returns);
+      // console.log(returns);
     });
   };
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+      // setUser(currentUser);
+      getReturnedItems(currentUser);
     });
-    getReturnedItems();
-  }, [user]);
+  }, []);
   return (
     <UserLayout>
       <h1 className="p-2 px-8 text-2xl">Returned Products</h1>

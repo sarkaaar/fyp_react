@@ -10,8 +10,8 @@ import UserLayout from "../../../layouts/UserLayout";
 export default function Cart() {
   const [user, setUser] = useState();
   const [products, setProducts] = useState([]);
-  const [loader, setLoader] = useState(false);
-  const ordersRef = collection(db, "checkout");
+  // const [loader, setLoader] = useState(false);
+  // const ordersRef = collection(db, "checkout");
 
   const getOrders = async (user) => {
     const q = query(
@@ -21,12 +21,12 @@ export default function Cart() {
     await getDocs(q)
       .then((res) => {
         setProducts(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-        console.log(products);
+        // console.log(products);
       })
       .catch((e) => {
         console.log(e);
       });
-    setLoader(false);
+    // setLoader(false);
   };
 
   useEffect(() => {
@@ -71,8 +71,7 @@ export default function Cart() {
             key: "Products",
             name: "Products",
             render: (row) => (
-              < >
-              {/* <div className="flex flex-col"> */}
+              <>
                 {row.cart.map((prod, key) => (
                   <tr key={key}>
                     <td className="w-12 p-2"> {prod?.product?.name}</td>
@@ -81,7 +80,6 @@ export default function Cart() {
                   </tr>
                 ))}
               </>
-              // </div>
             ),
           },
 
