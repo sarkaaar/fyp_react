@@ -12,7 +12,7 @@ import {
 import { onAuthStateChanged } from "firebase/auth";
 import Modal from "@mui/material/Modal";
 import DoctorLayout from "../../layouts/DoctorLayout";
-import EditProfile from "../../components/EditProfile";
+import EditProfile from "./Components/EditProfile";
 import { Button } from "@mui/material";
 
 export default function DoctorProfile() {

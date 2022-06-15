@@ -17,7 +17,6 @@ import { auth } from "../../firebase-config";
 import UseMainLayout from "../../layouts/UserMainLayout";
 
 export default function Cart() {
-
   const navigate = useNavigate();
   const [user, setUser] = useState();
   const [total, setTotal] = useState(0);
@@ -95,7 +94,7 @@ export default function Cart() {
                     Cart
                   </h1>
                   <div className="lg:flex lg:justify-center">
-                    <div className="mt-8 bg-white p-2 lg:w-1/2 rounded-md transition duration-150 ease-in-out shadow hover:drop-shadow-xl">
+                    <div className="mt-8 rounded-md bg-white p-2 shadow transition duration-150 ease-in-out hover:drop-shadow-xl lg:w-1/2">
                       <div className="flow-root rounded-md">
                         <ul
                           role="list"
@@ -121,8 +120,7 @@ export default function Cart() {
                                     </p>
                                   </div>
                                   <p className="">
-                                    Rs.{" "}
-                                    {product?.product?.salePrice}
+                                    Rs. {product?.product?.salePrice}
                                     /piece
                                   </p>
                                   <p className="mt-1 text-sm text-gray-500">
@@ -133,22 +131,11 @@ export default function Cart() {
                                   <p className="text-gray-500">
                                     Qty {product?.quantity}
                                   </p>
-                                  {/* <div className="flex items-end justify-between w-36 h-8 rounded border border-solid border-gray-400">
-                                    <MinusIcon 
-                                      className="w-4 h-5 border border-solid border-gray-100"
-                                      onClick={decrementCounter}/>
-                                    <div className="h-6 w-10 px-4 border border-solid border-gray-100 text-base">
-                                        {qty}
-                                    </div>
-                                    <PlusIcon 
-                                      className="w-4 h-5 border border-solid border-gray-100"
-                                      onClick={incrementCounter}/>
-                                  </div> */}
 
                                   <div className="">
                                     <button
                                       type="button"
-                                      className="px-4 text-sm rounded-md border bg-indigo-100 border-transparent font-medium text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:ring-offset-1"
+                                      className="rounded-md border border-transparent bg-indigo-100 px-4 text-sm font-medium text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:ring-offset-1"
                                       onClick={() => {
                                         deleteProduct(product?.id);
                                       }}
@@ -168,12 +155,12 @@ export default function Cart() {
                     <div className="border-t border-gray-200 py-6 px-4 sm:px-6 lg:w-1/2">
                       <div className="flex justify-between text-base font-medium text-gray-900">
                         <p>Subtotal</p>
-                        <p>Rs.{" "}{total}</p>
+                        <p>Rs. {total}</p>
                       </div>
                       <p className="mt-0.5 text-sm text-gray-500">
                         Shipping and taxes calculated at checkout.
                       </p>
-                      <div className="p-56 mt-6">
+                      <div className="mt-6 p-56">
                         <Link
                           to="/checkout"
                           className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
@@ -190,7 +177,6 @@ export default function Cart() {
           ) : (
             <></>
           )}
-          <Footer />
         </div>
       </div>
     </UseMainLayout>

@@ -246,6 +246,8 @@ export default function Product() {
                 .then((res) => {
                   console.log("value updated");
                   setAddStatus(false);
+
+                  window.location.reload(false);
                 })
                 .catch((e) => {
                   console.log(e);

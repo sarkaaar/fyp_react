@@ -22,10 +22,10 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { db, storage } from "../firebase-config";
+import { db, storage } from "../../../firebase-config";
 
 export default function EditProfile({ data }) {
-  const usersCollection = collection(db, "users");
+  // const usersCollection = collection(db, "users");
 
   const [user, setUser] = useState();
   const [id, setID] = useState(data?.id);
@@ -49,7 +49,7 @@ export default function EditProfile({ data }) {
       name,
       phone,
     };
-    const profile = doc(db, "users", id);
+    const profile = doc(db, "doctors", id);
     await updateDoc(profile, newProfile);
 
     console.log("Profile Updated");
