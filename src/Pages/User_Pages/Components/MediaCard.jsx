@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 
 export default function MediaCard(obj) {
   return (
-    <div className="bg-white hover:drop-shadow-2xl  xl:h-72 xl:w-56 2xl:h-96 2xl:w-64">
+    <div className="bg-white hover:drop-shadow-2xl xl:h-72 xl:w-56 2xl:h-96 2xl:w-64">
       <Link to={`/product/${obj.obj.id}`}>
         <img
           src={
             obj.obj.image ? (
               obj.obj.image
             ) : (
-               <div className="flex h-full w-full items-center justify-center rounded border border-gray-200 object-cover object-center lg:w-1/2">
+              <div className="flex h-full w-full items-center justify-center rounded border border-gray-200 object-cover object-center lg:w-1/2">
                 <div className="h-40 w-40 animate-spin rounded-full border-t-4 border-b-4 border-blue-900" />
               </div>
             )
@@ -31,8 +31,6 @@ export default function MediaCard(obj) {
             Rs. {obj.obj.salePrice ? obj.obj.salePrice : "N/A"}
           </h2>
         </div>
-        
-
       </Link>
     </div>
   );
