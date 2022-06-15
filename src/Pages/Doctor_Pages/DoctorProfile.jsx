@@ -2,21 +2,20 @@ import React from "react";
 import { TextField } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import { useState, useEffect } from "react";
-import { auth, db } from "../../../firebase-config";
+import { auth, db } from "../../firebase-config";
 import {
   collection,
   getDocs,
-  updateDoc,
-  doc,
   query,
   where,
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import Modal from "@mui/material/Modal";
-import UserLayout from "../../../layouts/UserLayout";
-import EditProfile from "../../../components/EditProfile";
+import DoctorLayout from "../../layouts/DoctorLayout";
+import EditProfile from "../../components/EditProfile";
 import { Button } from "@mui/material";
-export default function Profile() {
+
+export default function DoctorProfile() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   // const [editOpen, setEditOpen] = useState(false);
 
@@ -27,7 +26,7 @@ export default function Profile() {
     setEditOpen(false);
   };
 
-  const usersRef = collection(db, "users");
+  const doctorsRef = collection(db, "doctors");
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
@@ -39,7 +38,7 @@ export default function Profile() {
 
   const getUserInfo = async () => {
     if (user) {
-      const q = query(usersRef , where("email", "==", user?.email));
+      const q = query(doctorsRef , where("email", "==", user?.email));
       await getDocs(q)
         .then((res) => {
           const data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
@@ -52,7 +51,7 @@ export default function Profile() {
     }
   };
   return (
-    <UserLayout>
+    <DoctorLayout>
       <div className="flex justify-center">
         <div className="flex w-full justify-center lg:w-4/5">
           <div className="h-full">
@@ -174,6 +173,6 @@ export default function Profile() {
           <EditProfile data={queryUser} />
         </div>
       </Modal>
-    </UserLayout>
+    </DoctorLayout>
   );
 }

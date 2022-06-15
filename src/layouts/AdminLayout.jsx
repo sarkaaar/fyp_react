@@ -161,7 +161,7 @@ export default function AdminLayout({ children }) {
                   <div className="space-y-1 px-2">
                     {navigation.map((item) => (
                       <NavLink
-                        key={item.name}
+                        key={item}
                         to={item.href}
                         className={({ isActive }) =>
                           c(
@@ -264,7 +264,7 @@ export default function AdminLayout({ children }) {
             <div className="space-y-1 px-2">
               {navigation.map((item) => (
                 <NavLink
-                  key={item.name}
+                  key={item}
                   to={item.href}
                   className={({ isActive }) =>
                     c(
@@ -286,19 +286,6 @@ export default function AdminLayout({ children }) {
             </div>
             <div className="mt-6 pt-6">
               <div className="space-y-1 px-2">
-                {/* {secondaryNavigation.map((item) => (
-                  <NavLink
-                    key={item.name}
-                    to={item.href}
-                    className="group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md text-gray-400 hover:text-white hover:bg-indigo-600"
-                  >
-                    <item.icon
-                      className="mr-4 h-6 w-6 text-gray-400"
-                      aria-hidden="true"
-                    />
-                    {item.name}
-                  </NavLink>
-                ))} */}
                 <NavLink
                   to="/admin/profile"
                   // onClick={logout}

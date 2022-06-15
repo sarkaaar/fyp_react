@@ -254,7 +254,7 @@ export default function UserMainLayout({ children, props }) {
                               to={
                                 userProfile?.role === "admin"
                                   ? "/admin/profile"
-                                  : "/profile"
+                                  : "/profile/favourites"
                               }
                               className={({ isActive }) =>
                                 c(

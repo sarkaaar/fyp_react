@@ -51,17 +51,40 @@ const navigation = [
 ];
 
 const secondaryNavigation = [
-  { name: "Profile", href: "/profile", icon: UserCircleIcon },
+  // { name: "Profile", href: "/profile", icon: UserCircleIcon },
   { name: "Home", href: "/", icon: HomeIcon },
   { name: "Logout", href: "/sign_in", icon: LogoutIcon },
 ];
 
 export default function AdminLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [docCount, setDocCount] = useState([]);
+  // const [user, setUser] = useState();
   const authState = useUserRole("user");
   const navigate = useNavigate();
 
+  const getDoctor = async (user) => {
+    //   1- Fetch for the record in Doctor's Table
+    const q = query(
+      collection(db, "doctors"),
+      where("email", "==", user.email)
+    );
+    await getDocs(q)
+      .then(async (res) => {
+        setDocCount(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      getDoctor(user);
+      // setUser(user);
+    });
+
     if (authState === "error") {
       navigate("/sign_in");
     }
@@ -175,6 +198,20 @@ export default function AdminLayout({ children }) {
                           {item.name}
                         </NavLink>
                       ))}
+                      {docCount?.length === 0 ? (
+                        <NavLink
+                          to="/profile"
+                          className="group flex items-center rounded-md px-2 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                        >
+                          <UserCircleIcon
+                            className="mr-4 h-6 w-6 text-gray-400"
+                            aria-hidden="true"
+                          />
+                          Profile
+                        </NavLink>
+                      ) : (
+                        <div />
+                      )}
                     </div>
                   </div>
                 </nav>
@@ -240,6 +277,20 @@ export default function AdminLayout({ children }) {
                     {item.name}
                   </NavLink>
                 ))}
+                {docCount?.length === 0 ? (
+                  <NavLink
+                    to="/profile"
+                    className="group flex items-center rounded-md px-2 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                  >
+                    <UserCircleIcon
+                      className="mr-4 h-6 w-6 text-gray-400"
+                      aria-hidden="true"
+                    />
+                    Profile
+                  </NavLink>
+                ) : (
+                  <div />
+                )}
               </div>
             </div>
           </nav>
