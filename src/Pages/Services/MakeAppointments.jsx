@@ -19,11 +19,11 @@ import {
   where,
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
-import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { db, auth } from "../../firebase-config";
 import UseMainLayout from "../../layouts/UserMainLayout";
+import CheckoutAppointment from "./CheckoutAppointment";
 
 export default function MakeAppointments() {
   const { id } = useParams();
@@ -57,6 +57,7 @@ export default function MakeAppointments() {
 
   const [booked, setBooked] = useState([]);
   const [cusBooked, setCusBooked] = useState([]);
+  // const [success, setSucess] = useState([]);
 
   const [todayDate, setTodayDate] = useState();
   const [error, setError] = useState("");
@@ -108,16 +109,16 @@ export default function MakeAppointments() {
   };
 
   const makeAppointment = async () => {
-    const apppointment = {
-      user: user?.email,
-      doctor,
-      date,
-      time,
-    };
-    await addDoc(appointmentsRef, apppointment).then(() => {
-      setOpen(true);
-    });
-    console.log("Appointment Made Sucessfully");
+    // const apppointment = {
+    //   user: user?.email,
+    //   doctor,
+    //   date,
+    //   time,
+    // };
+    // await addDoc(appointmentsRef, apppointment).then(() => {
+    //   setPaymentOpen(true);
+    // });
+    setPaymentOpen(true);
   };
 
   useEffect(() => {
@@ -140,6 +141,13 @@ export default function MakeAppointments() {
   const handleClose = () => {
     setOpen(false);
     navigate("/viewAppointments");
+  };
+
+  const [paymentOpen, setPaymentOpen] = useState(false);
+  const handlePaymentClose = () => {
+    setPaymentOpen(false);
+    setOpen(true);
+    // navigate("/viewAppointments");
   };
 
   return (
@@ -220,6 +228,8 @@ export default function MakeAppointments() {
         </div>
       )}
 
+      {/* Succesfull Modal */}
+
       <Modal
         open={open}
         onClose={handleClose}
@@ -227,7 +237,7 @@ export default function MakeAppointments() {
         aria-describedby="modal-modal-description"
       >
         <div
-          className="absolute top-1/2	 left-1/2 bg-white w-96 shadow-lg p-4 border-2 border-black "
+          className="absolute top-1/2	 left-1/2 bg-white w-96 shadow-lg p-4 mt-8 rounded-lg border-2 border-black "
           sx={{
             transform: "translate(-50%, -50%)",
           }}
@@ -236,6 +246,19 @@ export default function MakeAppointments() {
             Appointment is created Sucessfully
           </Typography>
           <Button onClick={handleClose}> Close</Button>
+        </div>
+      </Modal>
+
+      {/* Checkout Modal */}
+
+      <Modal
+        open={paymentOpen}
+        onClose={handlePaymentClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <div className="absolute bg-white  h-10/12 overflow-auto flex mx-96 align-middle shadow-lg  ">
+          <CheckoutAppointment obj={{user, doctor, date, time}} />
         </div>
       </Modal>
     </UseMainLayout>
