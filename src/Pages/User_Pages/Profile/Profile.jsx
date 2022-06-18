@@ -1,8 +1,9 @@
 import React from "react";
-import { TextField } from "@mui/material";
+import { TextField, Button } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import { useState, useEffect } from "react";
 import { auth, db } from "../../../firebase-config";
+import { onAuthStateChanged } from "firebase/auth";
 import {
   collection,
   getDocs,
@@ -11,18 +12,17 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { onAuthStateChanged } from "firebase/auth";
 import Modal from "@mui/material/Modal";
 import UserLayout from "../../../layouts/UserLayout";
 import EditProfile from "../../../components/EditProfile";
-import { Button } from "@mui/material";
-import { updatePassword } from "firebase/auth";
+import PasswordUpdate from "../../Auth/Component/PasswordUpdate";
+// import { updatePassword } from "firebase/auth";
 
 export default function Profile() {
   const [queryUser, setQueryUser] = useState([]);
   const [user, setUser] = useState();
-  const [password, setPassword] = useState();
-  const [confirmPassword, setConfirmPassword] = useState();
+  // const [password, setPassword] = useState();
+  // const [confirmPassword, setConfirmPassword] = useState();
   const [editOpen, setEditOpen] = useState(false);
   const [editPass, setEditPass] = useState(false);
 
@@ -31,19 +31,18 @@ export default function Profile() {
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      getUserInfo(currentUser);
     });
-
-    getUserInfo();
   }, [user]);
 
-  const getUserInfo = async () => {
+  const getUserInfo = async (user) => {
     if (user) {
       const q = query(usersRef, where("email", "==", user?.email));
       await getDocs(q)
         .then((res) => {
           const data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
           setQueryUser(data[0]);
-          console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+          // console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
         })
         .catch((err) => {
           console.log(err);
@@ -51,19 +50,18 @@ export default function Profile() {
     }
   };
 
-  const confPassword = async () => {
-    if (password === confirmPassword)
-      updatePassword(user, password)
-        .then((res) => {
-          console.log(res);
-          alert("Password update sucessfully");
-
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    else alert("Passwords do not match");
-  };
+  // const confPassword = async () => {
+  //   if (password === confirmPassword)
+  //     updatePassword(user, password)
+  //       .then((res) => {
+  //         console.log(res);
+  //         alert("Password update sucessfully");
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   else alert("Passwords do not match");
+  // };
 
   return (
     <UserLayout>
@@ -145,7 +143,7 @@ export default function Profile() {
                         </div>
                       </div>
                       {/* <EditProfile/> */}
-                      <div className="bg-gray-50 px-4 py-3 text-right flex gap-4 sm:px-6">
+                      <div className="flex gap-4 bg-gray-50 px-4 py-3 text-right sm:px-6">
                         <button
                           onClick={() => {
                             setEditOpen(true);
@@ -181,8 +179,6 @@ export default function Profile() {
         onClose={() => {
           setEditOpen(false);
         }}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
       >
         <div className="border-box absolute inset-1/2 h-fit w-96 rounded-xl bg-white p-4 drop-shadow-2xl">
           <Button
@@ -205,33 +201,7 @@ export default function Profile() {
           setEditPass(false);
         }}
       >
-        <div className="border-box absolute inset-1/2 h-fit w-96 bg-white p-4 rounded-xl drop-shadow-2xl">
-          <h1 className="text-xl font-bold text-center p-4">Update Password</h1>
-          <div className="flex flex-col gap-4">
-            <TextField
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              fullWidth
-              label="Password"
-            />
-            <TextField
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              fullWidth
-              label="Confirm Password"
-            />
-            {password === confirmPassword ? (
-              <></>
-            ) : (
-              <p className="text-red-600 font-italic">
-                Password does not match
-              </p>
-            )}
-            <Button variant="outlined" fullWidth onClick={confPassword}>
-              Update Password
-            </Button>
-          </div>
-        </div>
+        <PasswordUpdate />
       </Modal>
     </UserLayout>
   );
