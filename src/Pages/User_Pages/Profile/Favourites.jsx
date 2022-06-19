@@ -54,12 +54,10 @@ export default function Favourites() {
       {loader ? (
         products.length === 0 ? (
           <div className="   p-72 text-center font-bold">
-            {" "}
-            The Favourite is empty!{" "}
+            The Favourite is empty!
           </div>
         ) : (
           <>
-            {" "}
             <h1 className="m-4 text-2xl font-bold">Favourites </h1>
             <div className=" ml-2 grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ">
               {products.map((item) => (

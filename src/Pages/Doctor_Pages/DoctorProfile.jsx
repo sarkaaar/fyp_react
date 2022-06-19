@@ -3,6 +3,8 @@ import { TextField } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import { useState, useEffect } from "react";
 import { auth, db } from "../../firebase-config";
+import PasswordUpdate from "../../../Auth/Component/PasswordUpdate";
+
 import {
   collection,
   getDocs,
@@ -22,6 +24,7 @@ export default function DoctorProfile() {
   const [queryUser, setQueryUser] = useState([]);
   const [user, setUser] = useState();
   const [editOpen, setEditOpen] = useState(false);
+  const [editPass, setEditPass] = useState(false);
   const handleClose = () => {
     setEditOpen(false);
   };
@@ -172,6 +175,15 @@ export default function DoctorProfile() {
           </Button>
           <EditProfile data={queryUser} />
         </div>
+      </Modal>
+      <Modal
+        sx={{ mb: 70, ml: "auto", mr: "auto" }}
+        open={editPass}
+        onClose={() => {
+          setEditPass(false);
+        }}
+      >
+        <PasswordUpdate />
       </Modal>
     </DoctorLayout>
   );
