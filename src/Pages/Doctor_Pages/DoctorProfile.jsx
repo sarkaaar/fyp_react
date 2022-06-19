@@ -4,17 +4,12 @@ import PersonIcon from "@mui/icons-material/Person";
 import { useState, useEffect } from "react";
 import { auth, db } from "../../firebase-config";
 import PasswordUpdate from "../Auth/Component/PasswordUpdate";
-<<<<<<< HEAD
 import {
   collection,
   getDocs,
   query,
   where,
 } from "firebase/firestore";
-=======
-
-import { collection, getDocs, query, where } from "firebase/firestore";
->>>>>>> 565bde70072d26a4015d06b9ca1c67992274bc96
 import { onAuthStateChanged } from "firebase/auth";
 import Modal from "@mui/material/Modal";
 import DoctorLayout from "../../layouts/DoctorLayout";
