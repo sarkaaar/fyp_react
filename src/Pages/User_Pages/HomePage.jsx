@@ -6,7 +6,6 @@ import Footer from "./Components/Footer";
 import { db } from "../../firebase-config";
 import UseMainLayout from "../../layouts/UserMainLayout";
 import Loader from "../../components/Loader/Loader";
-
 import { motion } from "framer-motion";
 
 export default function HomePage() {
@@ -73,7 +72,7 @@ export default function HomePage() {
         //     <div className="h-20 w-20 animate-spin rounded-full border-t-4 border-b-4 border-blue-900" />
         //   </div>
         // </div>
-        <Loader />
+        <Loader />        
       ) : (
         <>
           {categories?.map((item) => (
@@ -93,10 +92,10 @@ export default function HomePage() {
                     drag="x"
                     whileDrag={"grabbing"}
                     dragConstraints={{ right: 0, left: -width }}
-                    className="lg:w-[100rem] overflow-x-scroll flex gap-4"
+                    className="flex gap-4 overflow-x-scroll lg:w-[100rem]"
                   >
                     {product?.map((product) => (
-                      <motion.div key={product} >
+                      <motion.div key={product}>
                         {item?.name === product?.category ? (
                           <MediaCard obj={product} />
                         ) : (
