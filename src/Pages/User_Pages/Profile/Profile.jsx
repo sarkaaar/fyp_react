@@ -65,7 +65,7 @@ export default function Profile() {
 
   return (
     <UserLayout>
-      <div className="flex justify-center">
+      <div className="flex pl-64">
         <div className="flex w-full justify-center lg:w-4/5">
           <div className="h-full">
             <main className="mx-auto max-w-7xl pb-10 lg:py-12 lg:px-8">
@@ -174,14 +174,13 @@ export default function Profile() {
 
       {/* update user info modal */}
       <Modal
-        sx={{ mb: 70, ml: "auto", mr: "auto" }}
         open={editOpen}
         onClose={() => {
           setEditOpen(false);
         }}
       >
-        <div className="border-box absolute inset-1/2 h-fit w-96 rounded-xl bg-white p-4 drop-shadow-2xl">
-          <Button
+      <div className="absolute top-1/2 left-1/2 w-[400px] -translate-y-1/2 -translate-x-1/2 rounded-lg bg-white p-4 shadow-lg">
+           <Button
             onClick={() => {
               setEditOpen(false);
               window.location.reload(false);
@@ -195,7 +194,6 @@ export default function Profile() {
       </Modal>
       {/* update passwords */}
       <Modal
-        sx={{ mb: 70, ml: "auto", mr: "auto" }}
         open={editPass}
         onClose={() => {
           setEditPass(false);
