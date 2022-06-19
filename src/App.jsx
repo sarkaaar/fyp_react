@@ -21,6 +21,7 @@ import Profile from "./Pages/User_Pages/Profile/Profile";
 import Orders from "./Pages/User_Pages/Profile/Orders";
 import ProductReturns from "./Pages/User_Pages/Profile/ProductReturns";
 import Favourites from "./Pages/User_Pages/Profile/Favourites";
+import UserAppointments from "./Pages/User_Pages/Profile/UserAppointments";
 import About from "./Pages/User_Pages/About";
 
 // Services Pages
@@ -107,6 +108,7 @@ function App() {
           <Route exact path="/profile" element={<Profile />} />
           <Route exact path="/profile/orders" element={<Orders />} />
           <Route exact path="/profile/favourites" element={<Favourites />} />
+          <Route exact path="/profile/appointments/all" element={<UserAppointments />} />
 
           <Route
             exact

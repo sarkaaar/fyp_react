@@ -175,7 +175,7 @@ export default function Dashboard() {
               {
                 key: "date",
                 name: "Date",
-                render: (row) => <div>{row.date.toDate().toDateString()}</div>,
+                render: (row) => <p>{row.date.toDate().toDateString()}</p>,
               },
               {
                 key: "status",

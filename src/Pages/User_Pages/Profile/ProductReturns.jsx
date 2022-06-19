@@ -3,14 +3,13 @@ import { useState, useEffect } from "react";
 import { collection, getDocs, query, where, orderBy } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { db, auth } from "../../../firebase-config";
-
+// import Loader from "../../../components/Loader/Loader";
 import UserLayout from "../../../layouts/UserLayout";
 import DataTable from "../../../components/DataTable";
 
 export default function ProductReturns() {
   const returnRef = collection(db, "productReturn");
 
-  // const [user, setUser] = useState();
   const [returns, setReturns] = useState([]);
 
   const getReturnedItems = async (user) => {
@@ -21,13 +20,11 @@ export default function ProductReturns() {
     );
     await getDocs(q).then((res) => {
       setReturns(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-      // console.log(returns);
     });
   };
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
-      // setUser(currentUser);
       getReturnedItems(currentUser);
     });
   }, []);
@@ -36,7 +33,6 @@ export default function ProductReturns() {
       <h1 className="p-2 px-8 text-2xl">Returned Products</h1>
 
       <DataTable
-        // query={collection(db, "productReturn")}
         data={returns}
         columns={[
           { key: "productID", name: "Product ID" },
