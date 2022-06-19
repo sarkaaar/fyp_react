@@ -11,17 +11,15 @@ import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { db, auth } from "../../firebase-config";
 import { collection, addDoc } from "firebase/firestore";
-import { ArrowSmLeftIcon } from "@heroicons/react/outline";
+import { ArrowSmLeftIcon, EyeIcon, EyeOffIcon } from "@heroicons/react/outline";
 import { useForm } from "react-hook-form";
 
 export default function SignIn() {
   const provider = new GoogleAuthProvider();
 
   const navigate = useNavigate();
-
-  const [email, setemail] = useState("");
-  const [password, setPassword] = useState("");
   const [user, setUser] = useState();
+  const [showPassword, setShowPassword] = useState(false);
 
   const [errorMessage, setErrorMessage] = useState("");
   const {
@@ -134,18 +132,37 @@ export default function SignIn() {
             {errors.email && (
               <div className="mb-4 text-red-600">{errors.email.message}</div>
             )}
-            <input
-              className="mb-2 mt-2 w-full rounded-md border border-solid border-slate-400"
-              type="password"
-              placeholder="Password *"
-              {...register("password", {
-                required: "Password is required",
-                minLength: {
-                  value: 8,
-                  message: "Password must be at least 8 characters",
-                },
-              })}
-            />
+            <div className="relative">
+              <input
+                className="mb-2 mt-2 w-full rounded-md border border-solid border-slate-400"
+                type={showPassword ? "text" : "password"}
+                placeholder="Password *"
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 8,
+                    message: "Password must be at least 8 characters",
+                  },
+                })}
+              />
+              <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                {showPassword ? (
+                  <EyeIcon
+                    className="h-4 w-4 border-none rounded-md cursor-pointer hover:scale-110"
+                    onClick={() => {
+                      setShowPassword(false);
+                    }}
+                  />
+                ) : (
+                  <EyeOffIcon
+                    className="h-4 w-4 border-none rounded-md cursor-pointer hover:scale-110"
+                    onClick={() => {
+                      setShowPassword(true);
+                    }}
+                  />
+                )}
+              </div>
+            </div>
             {errors.password && (
               <div className="mb-4 text-red-600">{errors.password.message}</div>
             )}
@@ -165,7 +182,7 @@ export default function SignIn() {
             New to Pet-Planet?{" "}
             <Link
               to="/sign_up"
-              className="text-indigo-600 hover:text-indigo-500 hover:underline"
+              className="font-medium text-indigo-600 hover:text-indigo-500 hover:underline"
             >
               Sign Up
             </Link>{" "}
@@ -174,15 +191,13 @@ export default function SignIn() {
             Forgot Password?{" "}
             <Link
               to="/forget-password"
-              className="text-indigo-600 hover:text-indigo-500 hover:underline"
+              className="font-medium text-indigo-600 hover:text-indigo-500 hover:underline"
             >
               Click Here
             </Link>
           </p>
         </div>
-        <div className="">
-          
-        </div>
+        <div className=""></div>
         <hr />
 
         {/* <form
