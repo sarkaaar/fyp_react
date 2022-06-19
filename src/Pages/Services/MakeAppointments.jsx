@@ -1,6 +1,5 @@
 import * as React from "react";
 import {
-  TextField,
   Button,
   FormControl,
   InputLabel,
@@ -11,7 +10,6 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   collection,
-  addDoc,
   getDoc,
   doc,
   getDocs,
@@ -57,7 +55,6 @@ export default function MakeAppointments() {
 
   const [booked, setBooked] = useState([]);
   const [cusBooked, setCusBooked] = useState([]);
-  // const [success, setSucess] = useState([]);
 
   const [todayDate, setTodayDate] = useState();
   const [error, setError] = useState("");

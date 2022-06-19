@@ -52,7 +52,8 @@ export default function DoctorProfile() {
                 <div>
                   <h2
                     id="payment-details-heading"
-                    className="text-lg font-medium leading-6 text-gray-900"
+                    className="text-lg font-medium leading-6 Update Profile
+                    text-gray-900"
                   >
                     Profile Details
                   </h2>
