@@ -1,48 +1,17 @@
 /* eslint-disable react/no-array-index-key */
-import { useEffect, useState } from "react";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import {
-  Button,
-  FormControl,
-  IconButton,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
-import { onAuthStateChanged } from "firebase/auth";
-
-import {
-  addDoc,
-  collection,
-  getDocs,
-  doc,
-  query,
-  where,
-  updateDoc,
-} from "firebase/firestore";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { db, storage } from "../../../firebase-config";
+import { useState } from "react";
+import { TextField, Modal } from "@mui/material";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../../../firebase-config";
 
 export default function EditProfile({ data }) {
-  // const usersCollection = collection(db, "users");
-
-  const [user, setUser] = useState();
-  const [id, setID] = useState(data?.id);
-  const [name, setName] = useState(data?.name);
-  const [email, setEmail] = useState(data?.email);
-  const [phone, setPhone] = useState(data?.phone);
-  const [password, setPassword] = useState(data?.password);
   const [open, setOpen] = useState(false);
-  // const [phone,setPhone]
-  const [profile, setProfile] = useState();
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const handleOpen = () => {
-    setOpen(true);
-  };
+  const id = data?.id;
+  const email = data?.email;
+
+  const [name, setName] = useState(data?.name);
+  const [phone, setPhone] = useState(data?.phone);
 
   const updateProfile = async (id) => {
     const newProfile = {
@@ -50,9 +19,9 @@ export default function EditProfile({ data }) {
       phone,
     };
     const profile = doc(db, "doctors", id);
-    await updateDoc(profile, newProfile);
-
-    console.log("Profile Updated");
+    await updateDoc(profile, newProfile).then(() => {
+      setOpen(true);
+    });
   };
 
   return (
@@ -69,8 +38,6 @@ export default function EditProfile({ data }) {
             See and update your profile information.
           </p>
         </div>
-
-      
       </div>
 
       <div className="mt-6 flex flex-col gap-4">
@@ -116,7 +83,6 @@ export default function EditProfile({ data }) {
         <button
           onClick={() => {
             updateProfile(id);
-            handleClose();
           }}
         >
           Edit Profile
@@ -129,6 +95,18 @@ export default function EditProfile({ data }) {
           <h1 className="text-blue-500">ammarzahid335@gmail.com</h1>
         </h2>
       </div>
+      <Modal
+        open={open}
+        onClose={() => {
+          window.location.reload(false);
+        }}
+      >
+        <div className="absolute top-1/2 left-1/2 w-[400px] -translate-y-1/2 -translate-x-1/2 rounded-lg bg-white p-4 shadow-lg">
+          <h1 className="p-4 text-center text-xl font-bold">
+            Edited Successfully
+          </h1>
+        </div>
+      </Modal>
     </div>
   );
 }
