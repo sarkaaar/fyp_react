@@ -5,6 +5,7 @@ import Banner from "./Components/Banner";
 import Footer from "./Components/Footer";
 import { db } from "../../firebase-config";
 import UseMainLayout from "../../layouts/UserMainLayout";
+import Loader from "../../components/Loader/Loader";
 
 import { motion } from "framer-motion";
 
@@ -67,11 +68,12 @@ export default function HomePage() {
       <Banner />
       <hr />
       {loader ? (
-        <div className="mt-12 w-full">
-          <div className="flex h-full items-center justify-center">
-            <div className="h-20 w-20 animate-spin rounded-full border-t-4 border-b-4 border-blue-900" />
-          </div>
-        </div>
+        // <div className="mt-12 w-full">
+        //   <div className="flex h-full items-center justify-center">
+        //     <div className="h-20 w-20 animate-spin rounded-full border-t-4 border-b-4 border-blue-900" />
+        //   </div>
+        // </div>
+        <Loader />
       ) : (
         <>
           {categories?.map((item) => (
@@ -110,6 +112,7 @@ export default function HomePage() {
         </>
       )}
       <Footer />
+      {/* <Loader /> */}
     </UseMainLayout>
   );
 }
