@@ -4,8 +4,17 @@ import PersonIcon from "@mui/icons-material/Person";
 import { useState, useEffect } from "react";
 import { auth, db } from "../../firebase-config";
 import PasswordUpdate from "../Auth/Component/PasswordUpdate";
+<<<<<<< HEAD
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
+=======
 
 import { collection, getDocs, query, where } from "firebase/firestore";
+>>>>>>> 565bde70072d26a4015d06b9ca1c67992274bc96
 import { onAuthStateChanged } from "firebase/auth";
 import Modal from "@mui/material/Modal";
 import DoctorLayout from "../../layouts/DoctorLayout";
@@ -128,7 +137,7 @@ export default function DoctorProfile() {
                         </div>
                       </div>
                       {/* <EditProfile/> */}
-                      <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
+                      <div className="bg-gray-50 flex gap-4 px-4 py-3 text-right sm:px-6">
                         <button
                           onClick={() => {
                             setEditOpen(true);
@@ -136,7 +145,16 @@ export default function DoctorProfile() {
                           type="submit"
                           className="inline-flex justify-center rounded-md border border-transparent bg-gray-800 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
                         >
-                          Edit Profile
+                          Update  Profile
+                        </button>
+                        <button
+                          onClick={() => {
+                            setEditPass(true);
+                          }}
+                          type="submit"
+                          className="inline-flex justify-center rounded-md border border-transparent bg-gray-800 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
+                        >
+                          Update  Password
                         </button>
                       </div>
                     </div>

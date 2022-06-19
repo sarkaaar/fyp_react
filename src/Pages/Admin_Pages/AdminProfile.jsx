@@ -8,11 +8,13 @@ import EditProfile from "../../components/EditProfile.jsx";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { auth, db } from "../../firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
+import PasswordUpdate from "../Auth/Component/PasswordUpdate";
 
 export default function AdminProfile() {
   const [queryUser, setQueryUser] = useState([]);
   const [user, setUser] = useState();
   const [editOpen, setEditOpen] = useState(false);
+  const [editPass, setEditPass] = useState(false);
   const usersRef = collection(db, "users");
 
   useEffect(() => {
@@ -118,7 +120,7 @@ export default function AdminProfile() {
                           </div>
                         </div>
                         {/* <EditProfile/> */}
-                        <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
+                        <div className="bg-gray-50 flex gap-4 px-4 py-3 text-right sm:px-6">
                           <button
                             onClick={() => {
                               setEditOpen(true);
@@ -126,8 +128,19 @@ export default function AdminProfile() {
                             type="submit"
                             className="inline-flex justify-center rounded-md border border-transparent bg-gray-800 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
                           >
-                            Edit Profile
+                            Update  Profile
                           </button>
+
+                          <button
+                            onClick={() => {
+                              setEditPass(true);
+                            }}
+                            type="submit"
+                            className="inline-flex justify-center rounded-md border border-transparent bg-gray-800 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
+                          >
+                            Update Password
+                          </button>
+
                         </div>
                       </div>
                       {/* </form> */}
@@ -150,6 +163,16 @@ export default function AdminProfile() {
             <EditProfile data={queryUser} />
           </div>
         </Modal>
+
+        <Modal
+        sx={{ mb: 70, ml: "auto", mr: "auto" }}
+        open={editPass}
+        onClose={() => {
+          setEditPass(false);
+        }}
+      >
+        <PasswordUpdate />
+      </Modal>
       </AdminLayout>
     </>
   );
