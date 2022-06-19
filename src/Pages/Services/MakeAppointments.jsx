@@ -108,19 +108,6 @@ export default function MakeAppointments() {
     setTodayDate(year + "-" + month + "-" + day);
   };
 
-  const makeAppointment = async () => {
-    // const apppointment = {
-    //   user: user?.email,
-    //   doctor,
-    //   date,
-    //   time,
-    // };
-    // await addDoc(appointmentsRef, apppointment).then(() => {
-    //   setPaymentOpen(true);
-    // });
-    setPaymentOpen(true);
-  };
-
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -216,7 +203,9 @@ export default function MakeAppointments() {
               fullWidth
               variant="outlined"
               className="shrink"
-              onClick={makeAppointment}
+              onClick={() => {
+                setPaymentOpen(true);
+              }}
             >
               Submit
             </Button>
@@ -258,7 +247,7 @@ export default function MakeAppointments() {
         aria-describedby="modal-modal-description"
       >
         <div className="absolute bg-white  h-10/12 overflow-auto flex mx-96 align-middle shadow-lg  ">
-          <CheckoutAppointment obj={{user, doctor, date, time}} />
+          <CheckoutAppointment obj={{ user, doctor, date, time }} />
         </div>
       </Modal>
     </UseMainLayout>

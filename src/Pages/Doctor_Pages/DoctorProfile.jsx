@@ -3,14 +3,9 @@ import { TextField } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import { useState, useEffect } from "react";
 import { auth, db } from "../../firebase-config";
-import PasswordUpdate from "../../../Auth/Component/PasswordUpdate";
+import PasswordUpdate from "../Auth/Component/PasswordUpdate";
 
-import {
-  collection,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import Modal from "@mui/material/Modal";
 import DoctorLayout from "../../layouts/DoctorLayout";
@@ -18,16 +13,16 @@ import EditProfile from "./Components/EditProfile";
 import { Button } from "@mui/material";
 
 export default function DoctorProfile() {
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  // const [selectedProduct, setSelectedProduct] = useState(null);
   // const [editOpen, setEditOpen] = useState(false);
 
   const [queryUser, setQueryUser] = useState([]);
   const [user, setUser] = useState();
   const [editOpen, setEditOpen] = useState(false);
   const [editPass, setEditPass] = useState(false);
-  const handleClose = () => {
-    setEditOpen(false);
-  };
+  // const handleClose = () => {
+  //   setEditOpen(false);
+  // };
 
   const doctorsRef = collection(db, "doctors");
 
@@ -41,7 +36,7 @@ export default function DoctorProfile() {
 
   const getUserInfo = async () => {
     if (user) {
-      const q = query(doctorsRef , where("email", "==", user?.email));
+      const q = query(doctorsRef, where("email", "==", user?.email));
       await getDocs(q)
         .then((res) => {
           const data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
@@ -159,7 +154,7 @@ export default function DoctorProfile() {
         open={editOpen}
         onClose={() => {
           setEditOpen(false);
-          setSelectedProduct(undefined);
+          // setSelectedProduct(undefined);
         }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -169,7 +164,7 @@ export default function DoctorProfile() {
             onClick={() => {
               setEditOpen(false);
             }}
-            sx={{size:"3xl", mb:3}}
+            sx={{ size: "3xl", mb: 3 }}
           >
             X
           </Button>

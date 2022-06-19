@@ -42,7 +42,11 @@ const navigation = [
     href: "/profile/orders",
     icon: CreditCardIcon,
   },
-
+  {
+    name: "Appointments",
+    href: "/profile/appointments/all",
+    icon: ClockIcon,
+  },
   {
     name: "Complain & Suggestions",
     href: "/profile/complaint",
@@ -72,7 +76,6 @@ export default function UserLayout({ children }) {
     await getDocs(q)
       .then(async (res) => {
         setDocCount(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-        // console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       })
       .catch((err) => {
         console.log(err);

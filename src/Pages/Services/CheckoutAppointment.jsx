@@ -35,7 +35,7 @@ export default function CheckoutAppointment(params) {
     };
     await addDoc(appointmentsRef, apppointment).then((res) => {
       console.log("done added appointent");
-      conole.log(res);
+      // conole.log(res);
     });
   };
 
@@ -145,7 +145,7 @@ export default function CheckoutAppointment(params) {
             <hr />
           </form>
         </div>
-        
+
         {/* Appointment Doctor Info */}
         <div className="justify-around p-4">
           <h1 className="mt-4 text-2xl font-bold lg:flex lg:justify-center">
