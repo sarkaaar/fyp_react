@@ -42,7 +42,7 @@ export default function AdminProfile() {
   return (
     <>
       <AdminLayout>
-        <div className="flex justify-center">
+        <div className="flex pl-64">
           <div className="flex w-full justify-center lg:w-4/5">
             <div className="h-full">
               <main className="mx-auto max-w-7xl pb-10 lg:py-12 lg:px-8">
@@ -152,20 +152,18 @@ export default function AdminProfile() {
           </div>
         </div>
         <Modal
-          sx={{ mb: 70, ml: "auto", mr: "auto" }}
           open={editOpen}
           onClose={() => {
             setEditOpen(false);
             setSelectedProduct(undefined);
           }}
         >
-          <div className="border-box absolute inset-1/2 h-fit w-96 bg-white p-4 drop-shadow-2xl">
+        <div className="absolute top-1/2 left-1/2 w-[400px] -translate-y-1/2 -translate-x-1/2 rounded-lg bg-white p-4 shadow-lg">
             <EditProfile data={queryUser} />
           </div>
         </Modal>
 
         <Modal
-        sx={{ mb: 70, ml: "auto", mr: "auto" }}
         open={editPass}
         onClose={() => {
           setEditPass(false);

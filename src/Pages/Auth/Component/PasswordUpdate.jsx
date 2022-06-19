@@ -2,23 +2,26 @@ import { useState, useEffect } from "react";
 import { auth } from "../../../firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
 import { updatePassword } from "firebase/auth";
-import { TextField ,Button } from "@mui/material";
+import { TextField, Button } from "@mui/material";
 
 export default function PasswordUpdate() {
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
   const [user, setUser] = useState();
+  const [error, setError] = useState("");
 
   const confPassword = async () => {
     if (password === confirmPassword)
-      updatePassword(user, password)
-        .then((res) => {
-          console.log(res);
-          alert("Password update sucessfully");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      if (password.length >= 8) {
+        updatePassword(user, password)
+          .then((res) => {
+            console.log(res);
+            alert("Password update sucessfully");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else setError("Password must be atleast 8 characters");
     else alert("Passwords do not match");
   };
 
@@ -28,7 +31,7 @@ export default function PasswordUpdate() {
     });
   }, [user]);
   return (
-    <div className="border-box absolute inset-1/2 h-fit w-96 rounded-xl bg-white p-4 drop-shadow-2xl">
+    <div className="absolute top-1/2 left-1/2 w-96 -translate-y-1/2 -translate-x-1/2 rounded-lg bg-white p-4 shadow-lg">
       <h1 className="p-4 text-center text-xl font-bold">Update Password</h1>
       <div className="flex flex-col gap-4">
         <TextField
@@ -43,6 +46,7 @@ export default function PasswordUpdate() {
           fullWidth
           label="Confirm Password"
         />
+        <p className="font-italic text-red-600">{error}</p>
         {password === confirmPassword ? (
           <></>
         ) : (
