@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Modal from "@mui/material/Modal";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import {
-  Button,
+  // Button,
   FormControl,
   InputLabel,
   MenuItem,
@@ -39,6 +39,7 @@ export default function AddEditProduct({ data }) {
   const [image, setImage] = useState();
   const [urls, setUrls] = useState(data?.urls);
   const [progress, setProgress] = useState();
+  const [loadURL, setLoadURL] = useState(false);
 
   const addProduct = async () => {
     const newProduct = {
@@ -50,12 +51,17 @@ export default function AddEditProduct({ data }) {
       description,
       image: urls || "No Image Found",
     };
-    await addDoc(productsCollection, newProduct);
+    if (name && costPrice && salePrice && stock && category && description)
+      await addDoc(productsCollection, newProduct).then((res) => {
+        setOpen(true);
+      });
+    else alert("Please fill all the fields");
   };
 
   const upload = () => {
     if (!image[0]) return;
     const arr = [];
+    setLoadURL(true);
     for (let i = 0; i < image.length; i += 1) {
       const storageRef = ref(storage, `products/${image[i].name}`);
       const uploadTask = uploadBytesResumable(storageRef, image[i]);
@@ -66,7 +72,7 @@ export default function AddEditProduct({ data }) {
           const prog = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 
           setProgress(prog);
-          setLoader(false);
+          // setLoader(false);
         },
         (error) => console.log(error),
         () => {
@@ -74,6 +80,7 @@ export default function AddEditProduct({ data }) {
             console.log(url);
             arr.push(url);
             setUrls(arr);
+            setLoadURL(false);
           });
         }
       );
@@ -91,11 +98,11 @@ export default function AddEditProduct({ data }) {
     getCategories();
   }, []);
 
-  const updateStock = () => {
-    const tempStock = stock;
+  // const updateStock = () => {
+  //   const tempStock = stock;
 
-    setStock();
-  };
+  //   setStock();
+  // };
 
   const updateProduct = async (id) => {
     const newProduct = {
@@ -195,24 +202,35 @@ export default function AddEditProduct({ data }) {
         }}
         multiple
       />
-      <button
-        className=" flex h-12 w-full items-center justify-center rounded-md border bg-indigo-600 py-3 px-8 text-base font-medium text-white "
-        type="submit"
-        onClick={upload}
-      >
-        Images Upload
-      </button>
-      <button
-        className=" flex h-12 w-full items-center justify-center rounded-md border bg-indigo-600 py-3 px-8 text-base font-medium text-white "
-        disabled
-      >
-        <div className="flex gap-4">
-          <div className="flex">
-            <Loader />
+      {!loadURL ? (
+        <button
+          className=" flex h-12 w-full items-center justify-center rounded-md border bg-indigo-600 py-3 px-8 text-base font-medium text-white "
+          type="submit"
+          onClick={upload}
+        >
+          Images Upload
+        </button>
+      ) : (
+        <button
+          className=" flex h-12 w-full items-center justify-center rounded-md border bg-indigo-600 py-3 px-8 text-base font-medium text-white "
+          disabled
+        >
+          <div className="flex gap-4">
+            <div className="flex">
+              <Loader />
+            </div>
           </div>
-          {/* <h1 className="text-white text-center">Uploading...</h1> */}
+        </button>
+      )}
+      {urls ? (
+        <div className="flex w-96 gap-2">
+          {urls.map((item) => {
+            return <img src={item} className="h-12 w-12" />;
+          })}
         </div>
-      </button>
+      ) : (
+        <></>
+      )}
 
       {data ? (
         <button
@@ -228,8 +246,9 @@ export default function AddEditProduct({ data }) {
         <button
           className=" mt-8 flex h-12 w-full items-center justify-center rounded-md border bg-indigo-600 py-3 px-8 text-base font-medium text-white "
           type="submit"
-          onClick={()=>{ addProduct(); 
-          setOpen(true);}}
+          onClick={() => {
+            addProduct();
+          }}
         >
           Add Product
         </button>
@@ -244,7 +263,7 @@ export default function AddEditProduct({ data }) {
       >
         <div className="absolute top-1/2 left-1/2 w-[400px] -translate-y-1/2 -translate-x-1/2 rounded-lg bg-white p-4 shadow-lg">
           <h1 className="p-4 text-center text-xl font-bold">
-            Password Change Successfully
+            Product Added Successfully
           </h1>
         </div>
       </Modal>

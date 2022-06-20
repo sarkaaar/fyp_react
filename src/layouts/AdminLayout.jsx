@@ -161,7 +161,7 @@ export default function AdminLayout({ children }) {
                   <div className="space-y-1 px-2">
                     {navigation.map((item) => (
                       <NavLink
-                        key={item}
+                        key={item.name}
                         to={item.href}
                         className={({ isActive }) =>
                           c(
@@ -264,7 +264,7 @@ export default function AdminLayout({ children }) {
             <div className="space-y-1 px-2">
               {navigation.map((item) => (
                 <NavLink
-                  key={item}
+                  key={item.name}
                   to={item.href}
                   className={({ isActive }) =>
                     c(
