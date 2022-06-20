@@ -4,25 +4,16 @@ import PersonIcon from "@mui/icons-material/Person";
 import { useState, useEffect } from "react";
 import { auth, db } from "../../../firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
-import {
-  collection,
-  getDocs,
-  // updateDoc,
-  // doc,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import Modal from "@mui/material/Modal";
 import UserLayout from "../../../layouts/UserLayout";
 import EditProfile from "../../../components/EditProfile";
 import PasswordUpdate from "../../Auth/Component/PasswordUpdate";
-// import { updatePassword } from "firebase/auth";
 
 export default function Profile() {
   const [queryUser, setQueryUser] = useState([]);
   const [user, setUser] = useState();
-  // const [password, setPassword] = useState();
-  // const [confirmPassword, setConfirmPassword] = useState();
+
   const [editOpen, setEditOpen] = useState(false);
   const [editPass, setEditPass] = useState(false);
 
@@ -42,26 +33,12 @@ export default function Profile() {
         .then((res) => {
           const data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
           setQueryUser(data[0]);
-          // console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
         })
         .catch((err) => {
           console.log(err);
         });
     }
   };
-
-  // const confPassword = async () => {
-  //   if (password === confirmPassword)
-  //     updatePassword(user, password)
-  //       .then((res) => {
-  //         console.log(res);
-  //         alert("Password update sucessfully");
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   else alert("Passwords do not match");
-  // };
 
   return (
     <UserLayout>
@@ -72,7 +49,6 @@ export default function Profile() {
               <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
                 <div className="space-y-6 sm:px-6 lg:col-span-9 lg:px-0">
                   <section aria-labelledby="payment-details-heading">
-                    {/* <form action="#" method="POST"> */}
                     <div className="shadow sm:overflow-hidden sm:rounded-md">
                       <div className="bg-white py-6 px-4 sm:p-6">
                         <div className="flex justify-between">
@@ -100,56 +76,47 @@ export default function Profile() {
                         </div>
 
                         <div className="mt-6 flex flex-col gap-4">
-                          <TextField
-                            InputLabelProps={{
-                              shrink: true,
-                            }}
-                            value={queryUser?.name}
-                            disabled
-                            label="Name"
-                            style={{ color: "red" }}
-                          />
-                          <div className="flex gap-4">
-                            <TextField
-                              InputLabelProps={{
-                                shrink: true,
-                              }}
-                              value={queryUser?.email}
-                              disabled
-                              fullWidth
-                              label="Email"
-                            />
-                            <TextField
-                              InputLabelProps={{
-                                shrink: true,
-                              }}
-                              value={queryUser?.phone}
-                              disabled
-                              fullWidth
-                              label="Phone Number"
-                            />
+                          <div className="flex rounded-lg border-2 border-black">
+                            <p className="w-24 border-r-2 border-gray-600 px-4 py-2">
+                              Name
+                            </p>
+                            <hr />
+                            <p className="px-4 py-2 text-gray-500">
+                              {queryUser?.name}
+                            </p>
                           </div>
-                          <TextField
-                            InputLabelProps={{
-                              shrink: true,
-                            }}
-                            value={queryUser?.password}
-                            disabled
-                            type="password"
-                            fullWidth
-                            label="Password"
-                            style={{ color: "red" }}
-                          />
+                          <div className="flex rounded-lg border-2 border-black">
+                            <p className="w-24 border-r-2 border-gray-600 px-4 py-2">
+                              Email
+                            </p>
+                            <p className="px-4 py-2 text-gray-500">
+                              {queryUser?.email}
+                            </p>
+                          </div>
+                          <div className="flex rounded-lg border-2 border-black">
+                            <p className="w-24 border-r-2 border-gray-600 px-4 py-2">
+                              Phone #
+                            </p>
+                            <p className="px-4 py-2 text-gray-500">
+                              {queryUser?.phone}
+                            </p>
+                          </div>
+                          <div className="flex rounded-lg border-2 border-black">
+                            <p className="w-24 border-r-2 border-gray-600 px-4 py-2">
+                              Password
+                            </p>
+                            <p className="px-4 py-2 text-gray-500">********</p>
+                          </div>
                         </div>
                       </div>
-                      {/* <EditProfile/> */}
-                      <div className="flex gap-4 bg-gray-50 px-4 py-3 text-right sm:px-6">
+
+                      <div className="mx-6 flex gap-4 pb-6">
                         <button
                           onClick={() => {
                             setEditOpen(true);
                           }}
                           type="submit"
-                          className="inline-flex justify-center rounded-md border border-transparent bg-gray-800 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
+                          className="inline-flex w-full justify-center rounded-md border border-transparent bg-gray-800 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
                         >
                           Update Profile
                         </button>
@@ -157,13 +124,12 @@ export default function Profile() {
                           onClick={() => {
                             setEditPass(true);
                           }}
-                          className="inline-flex justify-center rounded-md border border-transparent bg-gray-800 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
+                          className="inline-flex w-full justify-center rounded-md border border-transparent bg-gray-800 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
                         >
                           Update Password
                         </button>
                       </div>
                     </div>
-                    {/* </form> */}
                   </section>
                 </div>
               </div>
@@ -179,8 +145,8 @@ export default function Profile() {
           setEditOpen(false);
         }}
       >
-      <div className="absolute top-1/2 left-1/2 w-[400px] -translate-y-1/2 -translate-x-1/2 rounded-lg bg-white p-4 shadow-lg">
-           <Button
+        <div className="absolute top-1/2 left-1/2 w-[400px] -translate-y-1/2 -translate-x-1/2 rounded-lg bg-white p-4 shadow-lg">
+          <Button
             onClick={() => {
               setEditOpen(false);
               window.location.reload(false);
@@ -199,8 +165,20 @@ export default function Profile() {
           setEditPass(false);
         }}
       >
-        <PasswordUpdate />
+        <div className="absolute top-1/2 left-1/2 w-[400px] h-[400px] -translate-y-1/2 -translate-x-1/2 rounded-lg bg-white p-4 shadow-lg">
+          <Button
+            onClick={() => {
+              setEditPass(false);
+              window.location.reload(false);
+            }}
+            sx={{ size: "3xl", mb: 3 }}
+          >
+            X
+          </Button>
+          <PasswordUpdate />
+        </div>
       </Modal>
+      
     </UserLayout>
   );
 }

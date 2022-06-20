@@ -510,7 +510,9 @@ export default function Product() {
               </div>
             </>
           ) : (
+            <div className="h-screen">
             <Loader />
+            </div>
           )}
         </div>
       </section>

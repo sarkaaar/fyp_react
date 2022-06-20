@@ -77,47 +77,38 @@ export default function AdminProfile() {
                           </div>
 
                           <div className="mt-6 flex flex-col gap-4">
-                            <TextField
-                              InputLabelProps={{
-                                shrink: true,
-                              }}
-                              value={queryUser?.name}
-                              disabled
-                              label="Name"
-                              style={{ color: "red" }}
-                            />
-                            <div className="flex gap-4">
-                              <TextField
-                                InputLabelProps={{
-                                  shrink: true,
-                                }}
-                                value={queryUser?.email}
-                                disabled
-                                fullWidth
-                                label="Email"
-                              />
-                              <TextField
-                                InputLabelProps={{
-                                  shrink: true,
-                                }}
-                                value={queryUser?.phone}
-                                disabled
-                                fullWidth
-                                label="Phone Number"
-                              />
-                            </div>
-                            <TextField
-                              InputLabelProps={{
-                                shrink: true,
-                              }}
-                              value={queryUser?.password}
-                              disabled
-                              type="password"
-                              fullWidth
-                              label="Password"
-                              style={{ color: "red" }}
-                            />
+                          <div className="flex rounded-lg border-2 border-black">
+                            <p className="w-24 border-r-2 border-gray-600 px-4 py-2">
+                              Name
+                            </p>
+                            <hr />
+                            <p className="px-4 py-2 text-gray-500">
+                              {queryUser?.name}
+                            </p>
                           </div>
+                          <div className="flex rounded-lg border-2 border-black">
+                            <p className="w-24 border-r-2 border-gray-600 px-4 py-2">
+                              Email
+                            </p>
+                            <p className="px-4 py-2 text-gray-500">
+                              {queryUser?.email}
+                            </p>
+                          </div>
+                          <div className="flex rounded-lg border-2 border-black">
+                            <p className="w-24 border-r-2 border-gray-600 px-4 py-2">
+                              Phone #
+                            </p>
+                            <p className="px-4 py-2 text-gray-500">
+                              {queryUser?.phone}
+                            </p>
+                          </div>
+                          <div className="flex rounded-lg border-2 border-black">
+                            <p className="w-24 border-r-2 border-gray-600 px-4 py-2">
+                              Password
+                            </p>
+                            <p className="px-4 py-2 text-gray-500">********</p>
+                          </div>
+                        </div>
                         </div>
                         {/* <EditProfile/> */}
                         <div className="bg-gray-50 flex gap-4 px-4 py-3 text-right sm:px-6">
@@ -152,24 +143,43 @@ export default function AdminProfile() {
           </div>
         </div>
         <Modal
-          open={editOpen}
-          onClose={() => {
-            setEditOpen(false);
-            setSelectedProduct(undefined);
-          }}
-        >
+        open={editOpen}
+        onClose={() => {
+          setEditOpen(false);
+        }}
+      >
         <div className="absolute top-1/2 left-1/2 w-[400px] -translate-y-1/2 -translate-x-1/2 rounded-lg bg-white p-4 shadow-lg">
-            <EditProfile data={queryUser} />
-          </div>
-        </Modal>
-
-        <Modal
+          <Button
+            onClick={() => {
+              setEditOpen(false);
+              window.location.reload(false);
+            }}
+            sx={{ size: "3xl", mb: 3 }}
+          >
+            X
+          </Button>
+          <EditProfile data={queryUser} />
+        </div>
+      </Modal>
+      {/* update passwords */}
+      <Modal
         open={editPass}
         onClose={() => {
           setEditPass(false);
         }}
       >
-        <PasswordUpdate />
+        <div className="absolute top-1/2 left-1/2 w-[400px] h-[400px] -translate-y-1/2 -translate-x-1/2 rounded-lg bg-white p-4 shadow-lg">
+          <Button
+            onClick={() => {
+              setEditPass(false);
+              window.location.reload(false);
+            }}
+            sx={{ size: "3xl", mb: 3 }}
+          >
+            X
+          </Button>
+          <PasswordUpdate />
+        </div>
       </Modal>
       </AdminLayout>
     </>

@@ -1,58 +1,26 @@
 /* eslint-disable react/no-array-index-key */
-import { useEffect, useState } from "react";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import {
-  Button,
-  FormControl,
-  IconButton,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
-import { onAuthStateChanged } from "firebase/auth";
-
-import {
-  addDoc,
-  collection,
-  getDocs,
-  doc,
-  query,
-  where,
-  updateDoc,
-} from "firebase/firestore";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { db, storage } from "../firebase-config";
+import { useState } from "react";
+import { Button, TextField } from "@mui/material";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../firebase-config";
+import Modal from "@mui/material/Modal";
 
 export default function EditProfile({ data }) {
-  const usersCollection = collection(db, "users");
-
-  const [user, setUser] = useState();
-  const [id, setID] = useState(data?.id);
+  const id = data?.id;
   const [name, setName] = useState(data?.name);
-  const [email, setEmail] = useState(data?.email);
   const [phone, setPhone] = useState(data?.phone);
-  const [password, setPassword] = useState(data?.password);
+  const [email, setEmail] = useState(data?.email);
   const [open, setOpen] = useState(false);
-  // const [phone,setPhone]
-  const [profile, setProfile] = useState();
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const updateProfile = async (id) => {
+  const updateProfile = async () => {
     const newProfile = {
       name,
       phone,
     };
     const profile = doc(db, "users", id);
-    await updateDoc(profile, newProfile);
-
-    console.log("Profile Updated");
+    await updateDoc(profile, newProfile).then(() => {
+      setOpen(true);
+    });
   };
 
   return (
@@ -69,8 +37,6 @@ export default function EditProfile({ data }) {
             See and update your profile information.
           </p>
         </div>
-
-      
       </div>
 
       <div className="mt-6 flex flex-col gap-4">
@@ -102,21 +68,11 @@ export default function EditProfile({ data }) {
           fullWidth
           label="Email"
         />
-        <TextField
-          InputLabelProps={{
-            shrink: true,
-          }}
-          value={data?.password}
-          type="password"
-          disabled
-          fullWidth
-          label="Password"
-        />
 
         <button
+          class="inline-block rounded bg-blue-600 px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg"
           onClick={() => {
-            updateProfile(id);
-            handleClose();
+            updateProfile();
           }}
         >
           Edit Profile
@@ -129,6 +85,18 @@ export default function EditProfile({ data }) {
           <h1 className="text-blue-500">ammarzahid335@gmail.com</h1>
         </h2>
       </div>
+      <Modal
+        open={open}
+        onClose={() => {
+          window.location.reload(false);
+        }}
+      >
+        <div className="absolute top-1/2 left-1/2 w-[400px] -translate-y-1/2 -translate-x-1/2 rounded-lg bg-white p-4 shadow-lg">
+          <h1 className="p-4 text-center text-xl font-bold">
+            Edited Successfully
+          </h1>
+        </div>
+      </Modal>
     </div>
   );
 }
