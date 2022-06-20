@@ -66,8 +66,8 @@ export default function UserMainLayout({ children, props }) {
   };
 
   useEffect(() => {
-    console.log(searchResults);
-  }, [searchResults]);
+    console.log("dummy value changes " + props);
+  }, [props]);
 
   useEffect(() => {
     if (!products) return;
@@ -267,20 +267,24 @@ export default function UserMainLayout({ children, props }) {
                             >
                               Your Profile
                             </NavLink>
-                            {docCount?.length != 0 ? (<NavLink
-                              to="/doctor/dashboard"
-                              className={({ isActive }) =>
-                                c(
-                                  isActive
-                                    ? "bg-gray-900 text-white"
-                                    : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                                  "rounded-md bg-gray-800 px-3 py-2 text-sm font-medium text-white"
-                                )
-                              }
-                            >
-                              Doctor View
-                            </NavLink>):(<div></div>)}
-                            
+                            {docCount?.length != 0 ? (
+                              <NavLink
+                                to="/doctor/dashboard"
+                                className={({ isActive }) =>
+                                  c(
+                                    isActive
+                                      ? "bg-gray-900 text-white"
+                                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                                    "rounded-md bg-gray-800 px-3 py-2 text-sm font-medium text-white"
+                                  )
+                                }
+                              >
+                                Doctor View
+                              </NavLink>
+                            ) : (
+                              <div></div>
+                            )}
+
                             <NavLink
                               to="/sign_in"
                               onClick={() => {

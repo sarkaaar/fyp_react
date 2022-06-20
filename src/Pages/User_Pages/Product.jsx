@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
-import { Box, Button, Typography, Modal, Backdrop, Fade } from "@mui/material";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { Button, Modal, Fade } from "@mui/material";
 import { onAuthStateChanged } from "firebase/auth";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -34,12 +34,12 @@ export default function Product() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
+  const navigate = useNavigate();
   const { id } = useParams();
   const cartRef = collection(db, "cart");
   const reviewsRef = collection(db, "reviews");
   const favouritesRef = collection(db, "favourites");
-  
+
   const [prod, setProduct] = useState();
   const [qty, setQty] = useState(1);
   const [user, setUser] = useState({});
@@ -52,6 +52,8 @@ export default function Product() {
   const [totalRating, setTotalRating] = useState(0);
   const [moreCommentLoader, setMoreCommentLoader] = useState(false);
   const [isEmpty, setIsEmpty] = useState(false);
+
+  const [dummy, setDummy] = useState(0);
 
   // Modals
   const [comModal, setComModal] = useState(false);
@@ -186,12 +188,9 @@ export default function Product() {
 
   const removeFavourites = async (id) => {
     const refDoc = doc(db, "favourites", id);
-    // setLoader(true);
     await deleteDoc(refDoc)
       .then((res) => {
-        console.log("Favourites Removed Sucessfully");
         getFav(user);
-        // setLoader(false);
       })
       .catch((err) => {
         console.log(err);
@@ -219,7 +218,7 @@ export default function Product() {
           ...doc.data(),
           id: doc.id,
         }));
-        console.log("item already in cart");
+        // console.log("item already in cart");
 
         data.length != 0
           ? await updateDoc(doc(db, "cart", data[0].id), {
@@ -228,8 +227,9 @@ export default function Product() {
               .then((res) => {
                 console.log("value updated");
                 setAddStatus(false);
+                setDummy(dummy + 1);
 
-                window.location.reload(false);
+                // window.location.reload(false);
               })
               .catch((e) => {
                 console.log(e);
@@ -237,6 +237,7 @@ export default function Product() {
           : await addDoc(cartRef, newProduct)
               .then((res) => {
                 setAddStatus(false);
+                navigate(`/product/${id}`);
               })
               .catch((e) => {
                 console.log(e);
@@ -291,7 +292,7 @@ export default function Product() {
   };
 
   return (
-    <UseMainLayout>
+    <UseMainLayout dummy>
       <section className="body-font overflow-hidden bg-white text-gray-700">
         <div className="container mx-auto p-4">
           {prod ? (
