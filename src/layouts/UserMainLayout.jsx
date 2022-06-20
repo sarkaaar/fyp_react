@@ -20,6 +20,7 @@ import {
   MapIcon,
   LoginIcon,
 } from "@heroicons/react/outline";
+import SearchCard from "../components/SearchCard";
 
 export default function UserMainLayout({ children, props }) {
   const [docCount, setDocCount] = useState();
@@ -46,7 +47,7 @@ export default function UserMainLayout({ children, props }) {
     await getDocs(q)
       .then(async (res) => {
         setDocCount(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-        console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        // console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       })
       .catch((err) => {
         console.log(err.code);
@@ -508,15 +509,13 @@ export default function UserMainLayout({ children, props }) {
       </Disclosure>
       <main className="flex-1">
         {searchResults.length ? (
-          <ul>
+          <>
             {searchResults.map((prod) => (
-              <li key={prod.item.id}>
-                {prod.item.name} ({prod.item.salePrice})
-              </li>
+              <SearchCard key={prod.item.id} obj={prod} />
             ))}
-          </ul>
+          </>
         ) : (
-          <div className="">{children}</div>
+          <div>{children}</div>
         )}
       </main>
     </div>
