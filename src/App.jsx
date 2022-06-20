@@ -1,4 +1,8 @@
 import "./App.css";
+
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import PageNotFound from "./Pages/PageNotFound";
@@ -13,6 +17,7 @@ import HomePage from "./Pages/User_Pages/HomePage";
 import Checkout from "./Pages/User_Pages/Checkout";
 import Products from "./Pages/User_Pages/All_Products";
 import Cart from "./Pages/User_Pages/Cart";
+import CheckoutAppointment from "./Pages/Services/CheckoutAppointment";
 import Chatbot from "./Pages/User_Pages/Components/Chatbot";
 // User Profile Pages
 import ProductReturnForm from "./Pages/User_Pages/Profile/ProductReturnForm";
@@ -23,7 +28,7 @@ import ProductReturns from "./Pages/User_Pages/Profile/ProductReturns";
 import Favourites from "./Pages/User_Pages/Profile/Favourites";
 import UserAppointments from "./Pages/User_Pages/Profile/UserAppointments";
 import About from "./Pages/User_Pages/About";
-
+import ComplainSuggestions from "./Pages/User_Pages/Profile/ComplainSuggestions";
 // Services Pages
 import MakeAppointments from "./Pages/Services/MakeAppointments";
 import ViewAppointments from "./Pages/Services/ViewAppointments";
@@ -33,6 +38,8 @@ import Services from "./Pages/Services/Services";
 
 // Admin Pages
 import Dashboard from "./Pages/Admin_Pages/Dashboard";
+import Users from "./Pages/Admin_Pages/Users";
+import NoPermission from "./Pages/Admin_Pages/NoPermission";
 import NewDashBoard from "./Pages/Admin_Pages/NewDashBoard";
 import AddDoctor from "./Pages/Admin_Pages/AddDoctor";
 import Inventory from "./Pages/Admin_Pages/Inventory";
@@ -50,14 +57,17 @@ import NewDoctor from "./Pages/Doctor_Pages/NewDoctor";
 import Meeting from "./Pages/Doctor_Pages/Meeting";
 import DocViewAppointments from "./Pages/Doctor_Pages/DocViewAppointments";
 import Live from "./Pages/Doctor_Pages/Live/Live";
-import Users from "./Pages/Admin_Pages/Users";
-import CheckoutAppointment from "./Pages/Services/CheckoutAppointment";
-import NoPermission from "./Pages/Admin_Pages/NoPermission";
-import ComplainSuggestions from "./Pages/User_Pages/Profile/ComplainSuggestions";
-
 import DoctorProfile from "./Pages/Doctor_Pages/DoctorProfile";
 
+const stripePromise = loadStripe(
+  "pk_test_51LCcYcAtUsZyAFJtrJZRVNFMaPgqGTV9sVJJwKyWUU3npj161ZhFQ8U73VXjdzv86HlZo4W6uCfswJ7AvyJqRlb800sS3uCvid"
+);
+
 function App() {
+  const options = {
+    // passing the client secret obtained from the server
+    clientSecret: "{{CLIENT_SECRET}}",
+  };
   const [showScrollUp, setShowScrollUp] = useState(false);
 
   useEffect(() => {
@@ -76,6 +86,7 @@ function App() {
       behavior: "smooth", // for smoothly scrolling
     });
   };
+
   return (
     <>
       <Router>
@@ -84,20 +95,14 @@ function App() {
 
           {/* User Panel */}
           <Route exact path="/" element={<HomePage />} />
-          <Route
-            exact
-            path="/profile/complaint"
-            element={<ComplainSuggestions />}
-          />
+          <Route exact path="/profile/complaint" element={<ComplainSuggestions />} />
           <Route exact path="/sign_in" element={<SignIn />} />
           <Route exact path="/forget-password" element={<ForgetPassword />} />
           <Route exact path="/sign_up" element={<SignUp />} />
-          <Route exact path="/checkout" element={<Checkout />} />
-          <Route
-            exact
-            path="/appointment/checkout"
-            element={<CheckoutAppointment />}
-          />
+          {/* <Elements stripe={stripePromise} options={options}> */}
+            <Route exact path="/checkout" element={<Checkout />} />
+          {/* </Elements> */}
+          <Route exact path="/appointment/checkout" element={<CheckoutAppointment />} />
           <Route exact path="/products" element={<Products />} />
           <Route exact path="/product/:id" element={<Product />} />
           <Route exact path="/cart" element={<Cart />} />
@@ -109,25 +114,12 @@ function App() {
           <Route exact path="/profile/orders" element={<Orders />} />
           <Route exact path="/profile/favourites" element={<Favourites />} />
           <Route exact path="/profile/appointments/all" element={<UserAppointments />} />
-
-          <Route
-            exact
-            path="/profile/ProductReturns"
-            element={<ProductReturns />}
-          />
+          <Route exact path="/profile/ProductReturns" element={<ProductReturns />} />
           <Route exact path="/profile/favourites" element={<Favourites />} />
 
           {/* User Clinical */}
-          <Route
-            exact
-            path="/appointments/new/:id"
-            element={<MakeAppointments />}
-          />
-          <Route
-            exact
-            path="/viewAppointments"
-            element={<ViewAppointments />}
-          />
+          <Route exact path="/appointments/new/:id" element={<MakeAppointments />} />
+          <Route exact path="/viewAppointments" element={<ViewAppointments />} />
           <Route exact path="/viewDoctors" element={<ViewDoctorsUser />} />
           <Route exact path="/services" element={<Services />} />
 
@@ -141,31 +133,18 @@ function App() {
           <Route exact path="/admin/viewDoctor" element={<ViewDoctors />} />
           <Route exact path="/admin/reports" element={<Reports />} />
           <Route exact path="/admin/users/info" element={<Users />} />
-          <Route
-            exact
-            path="/admin/productReturn"
-            element={<ReturnedProducts />}
-          />
+          <Route exact path="/admin/productReturn" element={<ReturnedProducts />} />
           <Route exact path="/admin/categories" element={<Categories />} />
           <Route exact path="/admin/complaints" element={<Complaints />} />
 
           {/* Doctor Panel */}
           <Route exact path="/doctor/dashboard" element={<DoctorDashboard />} />
-
           <Route exact path="/doctor/meeting/:id" element={<Meeting />} />
-
-   
           <Route exact path="/live" element={<Live />} />
-          <Route
-            exact
-            path="/doctor/appointments/view"
-            element={<DocViewAppointments />}
-          />
+          <Route exact path="/doctor/appointments/view" element={<DocViewAppointments />}  />
           <Route exact path="/doctor/new" element={<NewDoctor />} />
           <Route exact path="/doctor/profile" element={<DoctorProfile />} />
-
           <Route exact path="/*" element={<PageNotFound />} />
-
         </Routes>
       </Router>
       {showScrollUp && (
@@ -191,6 +170,9 @@ function App() {
           </svg>
         </button>
       )}
+      {/* <Elements stripe={stripePromise} options={options}>
+        <Checkout />
+      </Elements> */}
     </>
   );
 }
