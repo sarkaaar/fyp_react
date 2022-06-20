@@ -77,10 +77,9 @@ export default function Inventory() {
           setEditOpen(false);
           setSelectedProduct(undefined);
         }}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        
       >
-        <div className="absolute inset-1/2 w-96 h-auto border-box bg-white drop-shadow-2xl p-4">
+        <div className="absolute top-1/2 left-1/2 p-4 shadow-lg rounded-lg bg-white w-[400px] -translate-y-1/2 -translate-x-1/2">
           <AddEditProduct data={selectedProduct} />
         </div>
       </Modal>

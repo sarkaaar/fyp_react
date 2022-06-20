@@ -16,11 +16,13 @@ import {
   doc,
   updateDoc,
 } from "firebase/firestore";
+// import Loader from "../../components/Loader/Loader";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "../../../firebase-config";
 
 export default function AddEditProduct({ data }) {
   const [cat, setCat] = useState([]);
+  const [loader, setLoader] = useState(false);
   const categoriesCollection = collection(db, "categories");
 
   const productsCollection = collection(db, "products");
@@ -83,6 +85,7 @@ export default function AddEditProduct({ data }) {
   // };
 
   const upload = () => {
+    
     if (!image[0]) return;
     const arr = [];
     for (let i = 0; i < image.length; i += 1) {
@@ -93,8 +96,9 @@ export default function AddEditProduct({ data }) {
         "state_changed",
         (snapshot) => {
           const prog = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-
+          
           setProgress(prog);
+          setLoader(false);
         },
         (error) => console.log(error),
         () => {
@@ -115,6 +119,7 @@ export default function AddEditProduct({ data }) {
   };
 
   useEffect(() => {
+    setLoader(true);
     getCategories();
   }, []);
 
@@ -141,7 +146,7 @@ export default function AddEditProduct({ data }) {
   };
 
   return (
-    <div className="border-box absolute inset-1/2 h-fit w-96 -translate-x-1/2 -translate-y-1/2 bg-white p-4 drop-shadow-2xl">
+    <div className="">
       <h1> Product</h1>
       <TextField
         margin="normal"
@@ -252,6 +257,7 @@ export default function AddEditProduct({ data }) {
         type="file"
         className="mb-6"
         onChange={(e) => {
+          setLoader(true);
           setImage(e.target.files);
         }}
         multiple
