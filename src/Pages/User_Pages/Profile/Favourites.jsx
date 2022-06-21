@@ -8,6 +8,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
+import Modal from "@mui/material/Modal";
 import { onAuthStateChanged } from "firebase/auth";
 import { db, auth } from "../../../firebase-config";
 import UserLayout from "../../../layouts/UserLayout";
@@ -18,6 +19,8 @@ import Loader from "../../../components/Loader/Loader";
 export default function Favourites() {
   const [loader, setLoader] = useState(false);
   const [products, setProducts] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [user, setUser] = useState();
 
   const favouritesRef = collection(db, "favourites");
 
@@ -34,14 +37,17 @@ export default function Favourites() {
   };
 
   const DeleteFavourites = async (id) => {
+    console.log(id);
     const favr = doc(db, "favourites", id);
-    await deleteDoc(favr);
-    getFavourites();
+    await deleteDoc(favr).then(()=>{setOpen(true)})
+    getFavourites(user);
+
   };
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       getFavourites(user);
+      setUser(user);
     });
     setLoader(true);
   }, []);
@@ -62,7 +68,14 @@ export default function Favourites() {
               <div className="flex flex-col">
                 <FavouritesCard obj={item?.product} key={item} />
                 <div className="mt-6 flex justify-center">
-                  <Button onClick={() => DeleteFavourites(item?.id)}>
+                  <Button
+                    onClick={() => {
+                      
+                     
+
+                      DeleteFavourites(item?.id);
+                    }}
+                  >
                     Remove
                   </Button>
                 </div>
@@ -71,6 +84,20 @@ export default function Favourites() {
           </div>
         </>
       )}
+
+      <Modal
+        open={open}
+        onClose={() => {
+          setOpen(false);
+          // window.location.reload(false);
+        }}
+      >
+        <div className="absolute top-1/2 left-1/2 w-[400px] -translate-y-1/2 -translate-x-1/2 rounded-lg bg-white p-4 shadow-lg">
+          <h1 className="p-4 text-center text-xl font-bold">
+            Product Remove Successfully
+          </h1>
+        </div>
+      </Modal>
     </UserLayout>
   );
 }
