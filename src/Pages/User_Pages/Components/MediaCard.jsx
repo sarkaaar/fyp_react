@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function MediaCard(obj) {
   return (
-    <div className="bg-white hover:drop-shadow-2xl xl:h-72 xl:w-56 2xl:h-96 2xl:w-64">
+    <div className="bg-white mx-2 hover:drop-shadow-2xl xl:h-72 xl:w-56 2xl:h-96 2xl:w-64">
       <Link to={`/product/${obj.obj.id}`}>
         <img
           src={
