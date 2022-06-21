@@ -310,9 +310,12 @@ export default function Checkout() {
               /> */}
               <div>
                 {/* <label for="datemin">Enter a date after 2000-01-01:</label> */}
+               <label>Card Expiry</label>
                 <input
                   className="border-box"
+                  label="Expiry"
                   type="date"
+                  variant="outlined"
                   placeholder="Expiry"
                   id="datemin"
                   name="datemin"

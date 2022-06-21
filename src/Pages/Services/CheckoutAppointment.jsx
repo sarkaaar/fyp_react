@@ -1,20 +1,29 @@
 import * as React from "react";
+
+import Typography from "@mui/material/Typography";
+import {useNavigate} from "react-router-dom";
 import { TextField, Button } from "@mui/material";
 import { useState, useEffect } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../../firebase-config";
+import Modal from "@mui/material/Modal";
 
 export default function CheckoutAppointment(params) {
-  const { user, doctor, date, time } = params.obj;
 
+  const navigate = useNavigate();
+  const { user, doctor, date, time } = params.obj;
+const [open,setOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [card, setCard] = useState("");
   const [NOC, setNOC] = useState("");
   const [expiry, setExpiry] = useState("");
   const [cvv, setCVV] = useState("");
   const [todayDate, setTodayDate] = useState();
-
+  const handleClose = () => {
+    setOpen(false);
+    navigate("/viewAppointments");
+  };
   const appointmentsRef = collection(db, "appointments");
 
   useEffect(() => {
@@ -108,6 +117,7 @@ export default function CheckoutAppointment(params) {
             />
             <div className="flex gap-4">
               <div>
+                <label>Card Expiry</label>
                 <input
                   className="border-box"
                   type="date"
@@ -137,9 +147,12 @@ export default function CheckoutAppointment(params) {
               fullWidth
               variant="outlined"
               style={{ height: "50px" }}
-              onClick={makeAppointment}
+              onClick={()=>{
+                makeAppointment();
+                setOpen(true);
+              }}
             >
-              Confirm Order
+              Confirm Appointmnet
             </Button>
 
             <hr />
@@ -174,6 +187,25 @@ export default function CheckoutAppointment(params) {
           </div>
         </div>
       </div>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <div
+          className="absolute top-1/2	 left-1/2 bg-white w-96 shadow-lg p-4 mt-8 rounded-lg border-2 border-black "
+          sx={{
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Appointment is created Sucessfully
+          </Typography>
+          <Button onClick={handleClose}> Close</Button>
+        </div>
+      </Modal>
+
     </div>
   );
 }

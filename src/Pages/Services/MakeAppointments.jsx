@@ -130,7 +130,7 @@ export default function MakeAppointments() {
   const [paymentOpen, setPaymentOpen] = useState(false);
   const handlePaymentClose = () => {
     setPaymentOpen(false);
-    setOpen(true);
+    // setOpen(true);
     // navigate("/viewAppointments");
   };
 
@@ -180,6 +180,7 @@ export default function MakeAppointments() {
                 label="Time Slot"
                 value={time}
                 onChange={(e) => {
+                  
                   setTime(e.target.value);
                 }}
               >
@@ -201,8 +202,10 @@ export default function MakeAppointments() {
               variant="outlined"
               className="shrink"
               onClick={() => {
+                if (time) {
                 setPaymentOpen(true);
-              }}
+              }else setError("Time Slot must be selected");
+            }}
             >
               Submit
             </Button>
@@ -240,8 +243,6 @@ export default function MakeAppointments() {
       <Modal
         open={paymentOpen}
         onClose={handlePaymentClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
       >
         <div className="absolute bg-white  h-10/12 overflow-auto flex mx-96 align-middle shadow-lg  ">
           <CheckoutAppointment obj={{ user, doctor, date, time }} />
