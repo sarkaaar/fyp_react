@@ -199,9 +199,12 @@ const [open,setOpen] = useState(false);
             transform: "translate(-50%, -50%)",
           }}
         >
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Appointment is created Sucessfully
-          </Typography>
+      <div className="absolute top-1/2 left-1/2 w-[400px] -translate-y-1/2 -translate-x-1/2 rounded-lg bg-white p-4 shadow-lg">
+          <h1 className="p-4 text-center text-xl font-bold">
+           Appointment is Created  Successfully
+          </h1>
+          
+        </div>
           <Button onClick={handleClose}> Close</Button>
         </div>
       </Modal>

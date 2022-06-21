@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Modal from "@material-ui/core/Modal";
 import {
   collection,
   getDocs,
@@ -27,12 +28,20 @@ function Lists({ setPage, joinCode, setJoinCode }) {
   const [appointments, setAppointments] = useState([]);
   const appointmentsRef = collection(db, "appointments");
   const [user, setUser] = useState();
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  // const handleClose = (value) => {
+  //   setOpen(false);
+  //   navigate("/viewAppointments");
+  // };
   const [loader, setLoader] = useState(false);
 
   const cancelAppoitment = async (id) => {
     const appointment = doc(db, "appointments", id);
-    await deleteDoc(appointment);
-    getAppointments();
+    await deleteDoc(appointment).then(() => {
+      setOpen(true);
+    });
+    getAppointments(user);
   };
 
   const getAppointments = async (user) => {
@@ -54,12 +63,12 @@ function Lists({ setPage, joinCode, setJoinCode }) {
       setUser(currentUser);
       getAppointments(currentUser);
     });
-  }, []);
+  }, [user]);
 
   return (
     <UseMainLayout>
       <div className="min-h-screen">
-        {user ? (
+        {loader ? <>{user ? (
           <>
             {loader ? (
               <div className="grid h-screen place-items-center">
@@ -96,7 +105,7 @@ function Lists({ setPage, joinCode, setJoinCode }) {
                 </h1>
                 {appointments.map((item, key) => (
                   <div className="m-auto mb-4 w-10/12 bg-slate-200 p-4 hover:drop-shadow-xl">
-                    <div className="flex flex-row flex-wrap md:flex-nowrap lg:flex-nowrap xl:flex-nowrap w-full justify-center">
+                    <div className="flex w-full flex-row flex-wrap justify-center md:flex-nowrap lg:flex-nowrap xl:flex-nowrap">
                       <div className="w-full">
                         <h1 className="text-2xl font-bold">
                           {" "}
@@ -119,7 +128,7 @@ function Lists({ setPage, joinCode, setJoinCode }) {
                           Time: {item?.time}
                         </h1>
                       </div>
-                      <div className="shrink flex justify-end">
+                      <div className="flex shrink justify-end">
                         <div className="flex justify-center md:flex-col lg:flex-col">
                           {item?.joinLink ? (
                             <button
@@ -127,7 +136,7 @@ function Lists({ setPage, joinCode, setJoinCode }) {
                                 setJoinCode(item?.joinLink);
                                 setPage("join");
                               }}
-                              className="mt-4 mx-2 w-28 rounded-none bg-neutral-400 text-white shadow-lg shadow-neutral-600/50 focus:shadow-none hover:drop-shadow-lg md:w-36 lg:w-44"
+                              className="mx-2 mt-4 w-28 rounded-none bg-neutral-400 text-white shadow-lg shadow-neutral-600/50 hover:drop-shadow-lg focus:shadow-none md:w-36 lg:w-44"
                             >
                               Join Meeting
                             </button>
@@ -138,7 +147,7 @@ function Lists({ setPage, joinCode, setJoinCode }) {
                             onClick={() => {
                               cancelAppoitment(item.id);
                             }}
-                            className="mt-4 mx-2 w-28 rounded-none border border-transparent bg-gradient-to-r from-red-700 to-rose-600 text-white shadow-lg shadow-red-600/50 focus:shadow-none hover:drop-shadow-lg md:w-36 lg:w-44"
+                            className="mx-2 mt-4 w-28 rounded-none border border-transparent bg-gradient-to-r from-red-700 to-rose-600 text-white shadow-lg shadow-red-600/50 hover:drop-shadow-lg focus:shadow-none md:w-36 lg:w-44"
                           >
                             Cancel
                           </button>
@@ -164,9 +173,25 @@ function Lists({ setPage, joinCode, setJoinCode }) {
               </div>
             </div>
           </>
-        )}
+        )}</> : <></>}
+        
       </div>
       <Footer />
+      <Modal onClose={() => setOpen(false)} open={open}>
+        <div
+          className="absolute top-1/2	 left-1/2 mt-8 w-96 rounded-lg border-2 border-black bg-white p-4 shadow-lg "
+          sx={{
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          <div className="absolute top-1/2 left-1/2 w-[400px] -translate-y-1/2 -translate-x-1/2 rounded-lg bg-white p-4 shadow-lg">
+            <h1 className="p-4 text-center text-xl font-bold">
+              Cancel Appointment Successfully
+            </h1>
+          </div>
+          {/* <Button onClick={handleClose}> Close</Button> */}
+        </div>
+      </Modal>
     </UseMainLayout>
   );
 }
@@ -186,6 +211,7 @@ function Videos({ mode, callId, setPage }) {
   const { id } = useParams();
   const [webcamActive, setWebcamActive] = useState(false);
   const [roomId, setRoomId] = useState(callId);
+  const [open, setOpen] = useState(false);
   console.log(callId);
 
   const localRef = useRef();
@@ -199,6 +225,7 @@ function Videos({ mode, callId, setPage }) {
       await getDocs(collection(roomRef, "answerCandidates")).then(
         (querySnapshot) => {
           querySnapshot.forEach((d) => {
+            setOpen(true);
             deleteDoc(d.ref);
           });
         }
@@ -206,13 +233,16 @@ function Videos({ mode, callId, setPage }) {
 
       await getDocs(collection(roomRef, "offerCandidates")).then(
         (querySnapshot) => {
+          setOpen(true);
           querySnapshot.forEach((d) => {
             deleteDoc(d.ref);
           });
         }
       );
 
-      await deleteDoc(roomRef);
+      await deleteDoc(roomRef).then(() => {
+        setOpen(true);
+      });
     }
 
     window.location.reload();
@@ -328,7 +358,10 @@ function Videos({ mode, callId, setPage }) {
                 type="button"
                 fullWidth
                 variant="contained"
-                onClick={() => setPage("home")}
+                onClick={() => {
+                  setOpen(true);
+                  setPage("home");
+                }}
               >
                 Cancel
               </Button>
@@ -344,6 +377,21 @@ function Videos({ mode, callId, setPage }) {
           </div>
         </div>
       )}
+      <Modal onClose={() => setOpen(false)} open={open}>
+        <div
+          className="absolute top-1/2	 left-1/2 mt-8 w-96 rounded-lg border-2 border-black bg-white p-4 shadow-lg "
+          sx={{
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          <div className="absolute top-1/2 left-1/2 w-[400px] -translate-y-1/2 -translate-x-1/2 rounded-lg bg-white p-4 shadow-lg">
+            <h1 className="p-4 text-center text-xl font-bold">
+              Cancel Appointment Successfully
+            </h1>
+          </div>
+          {/* <Button onClick={handleClose}> Close</Button> */}
+        </div>
+      </Modal>
     </div>
   );
 }

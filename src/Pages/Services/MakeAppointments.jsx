@@ -17,7 +17,6 @@ import {
   where,
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { db, auth } from "../../firebase-config";
 import UseMainLayout from "../../layouts/UserMainLayout";
@@ -130,7 +129,7 @@ export default function MakeAppointments() {
   const [paymentOpen, setPaymentOpen] = useState(false);
   const handlePaymentClose = () => {
     setPaymentOpen(false);
-    // setOpen(true);
+    
     // navigate("/viewAppointments");
   };
 
@@ -219,25 +218,7 @@ export default function MakeAppointments() {
 
       {/* Succesfull Modal */}
 
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <div
-          className="absolute top-1/2	 left-1/2 bg-white w-96 shadow-lg p-4 mt-8 rounded-lg border-2 border-black "
-          sx={{
-            transform: "translate(-50%, -50%)",
-          }}
-        >
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Appointment is created Sucessfully
-          </Typography>
-          <Button onClick={handleClose}> Close</Button>
-        </div>
-      </Modal>
-
+     
       {/* Checkout Modal */}
 
       <Modal
