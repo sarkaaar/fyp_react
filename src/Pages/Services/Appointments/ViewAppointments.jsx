@@ -14,26 +14,22 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
-import { db, auth } from "../../firebase-config";
-import Footer from "../User_Pages/Components/Footer";
-import UseMainLayout from "../../layouts/UserMainLayout";
+import { db, auth } from "../../../firebase-config";
+import Footer from "../../User_Pages/Components/Footer";
+import UseMainLayout from "../../../layouts/UserMainLayout";
 import { useRef, useState, useEffect } from "react";
 import CallIcon from "@mui/icons-material/Call";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { Button } from "@material-ui/core";
 import { useParams } from "react-router-dom";
+import Loader from "../../../components/Loader/Loader";
 
 function Lists({ setPage, joinCode, setJoinCode }) {
-  const [appointments, setAppointments] = useState([]);
   const appointmentsRef = collection(db, "appointments");
   const [user, setUser] = useState();
-  const navigate = useNavigate();
+  const [appointments, setAppointments] = useState([]);
   const [open, setOpen] = useState(false);
-  // const handleClose = (value) => {
-  //   setOpen(false);
-  //   navigate("/viewAppointments");
-  // };
   const [loader, setLoader] = useState(false);
 
   const cancelAppoitment = async (id) => {
@@ -45,16 +41,12 @@ function Lists({ setPage, joinCode, setJoinCode }) {
   };
 
   const getAppointments = async (user) => {
-    const q = await query(appointmentsRef, where("user", "==", user?.email));
+    const q = query(appointmentsRef, where("user", "==", user?.email));
     const queryResults = await getDocs(q);
-    console.log(
-      queryResults.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-    );
     setAppointments(
       queryResults.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
     );
     setLoader(false);
-    console.log(appointments);
   };
 
   useEffect(() => {
@@ -68,7 +60,7 @@ function Lists({ setPage, joinCode, setJoinCode }) {
   return (
     <UseMainLayout>
       <div className="min-h-screen">
-        {loader ? <>{user ? (
+        {user ? (
           <>
             {loader ? (
               <div className="grid h-screen place-items-center">
@@ -86,7 +78,7 @@ function Lists({ setPage, joinCode, setJoinCode }) {
                 </div>
                 <div className="flex items-center justify-center text-center font-bold ">
                   <h1 className="text-2xl">
-                    Currently You Dont have any Appointmets.{" "}
+                    Currently You Dont have any Appointmets.
                   </h1>
                 </div>
               </div>
@@ -94,7 +86,7 @@ function Lists({ setPage, joinCode, setJoinCode }) {
               <div>
                 <div className="flex justify-end">
                   <Link
-                    className="m-4 rounded-full bg-gradient-to-r from-indigo-500 to-sky-400 p-4 text-xl text-white shadow-lg shadow-blue-400/50 focus:shadow-none"
+                    className="m-4 rounded-full bg-gradient-to-r w-16 h-16 flex items-center justify-center from-indigo-500 to-sky-400 p-4 text-xl text-white shadow-lg shadow-blue-400/50 focus:shadow-none"
                     to="/viewDoctors"
                   >
                     +
@@ -103,12 +95,14 @@ function Lists({ setPage, joinCode, setJoinCode }) {
                 <h1 className="m-2 flex justify-center text-center text-2xl font-bold">
                   You have the Following Appointments
                 </h1>
-                {appointments.map((item, key) => (
-                  <div className="m-auto mb-4 w-10/12 bg-slate-200 p-4 hover:drop-shadow-xl">
+                {appointments.map((item) => (
+                  <div
+                    className="m-auto mb-4 w-10/12 bg-slate-200 p-4 hover:drop-shadow-xl"
+                    key={item.id}
+                  >
                     <div className="flex w-full flex-row flex-wrap justify-center md:flex-nowrap lg:flex-nowrap xl:flex-nowrap">
                       <div className="w-full">
                         <h1 className="text-2xl font-bold">
-                          {" "}
                           Dr. {item?.doctor?.name}
                         </h1>
                         <h1 className="text-xl text-gray-600 ">
@@ -136,7 +130,7 @@ function Lists({ setPage, joinCode, setJoinCode }) {
                                 setJoinCode(item?.joinLink);
                                 setPage("join");
                               }}
-                              className="mx-2 mt-4 w-28 rounded-none bg-neutral-400 text-white shadow-lg shadow-neutral-600/50 hover:drop-shadow-lg focus:shadow-none md:w-36 lg:w-44"
+                              className=" py-4 px-8 cursor-pointer mx-2 my-2 w-28 rounded-lg bg-neutral-400 text-white shadow-lg shadow-neutral-600/50 hover:drop-shadow-lg focus:shadow-none md:w-36 lg:w-44"
                             >
                               Join Meeting
                             </button>
@@ -147,10 +141,18 @@ function Lists({ setPage, joinCode, setJoinCode }) {
                             onClick={() => {
                               cancelAppoitment(item.id);
                             }}
-                            className="mx-2 mt-4 w-28 rounded-none border border-transparent bg-gradient-to-r from-red-700 to-rose-600 text-white shadow-lg shadow-red-600/50 hover:drop-shadow-lg focus:shadow-none md:w-36 lg:w-44"
+                            className=" py-4 px-8 cursor-pointer mx-2 my-2 w-28 rounded-lg bg-gradient-to-r from-red-700 to-rose-600 text-white shadow-lg shadow-red-600/50 hover:drop-shadow-lg focus:shadow-none md:w-36 lg:w-44"
                           >
                             Cancel
                           </button>
+                          {/* <button
+                            class="mx-2 mt-4 w-28 h-12 rounded-none border border-transparent bg-gradient-to-r from-red-700 to-rose-600 text-white shadow-lg shadow-red-600/50 hover:drop-shadow-lg focus:shadow-none md:w-36 lg:w-44"
+                            disabled
+                          >
+                            <span className="flex items-center h-8 w-28">
+                              <Loader />
+                            </span>
+                          </button> */}
                         </div>
                       </div>
                     </div>
@@ -173,8 +175,7 @@ function Lists({ setPage, joinCode, setJoinCode }) {
               </div>
             </div>
           </>
-        )}</> : <></>}
-        
+        )}
       </div>
       <Footer />
       <Modal onClose={() => setOpen(false)} open={open}>
@@ -189,7 +190,6 @@ function Lists({ setPage, joinCode, setJoinCode }) {
               Cancel Appointment Successfully
             </h1>
           </div>
-          {/* <Button onClick={handleClose}> Close</Button> */}
         </div>
       </Modal>
     </UseMainLayout>
@@ -322,20 +322,22 @@ function Videos({ mode, callId, setPage }) {
       <video ref={remoteRef} autoPlay playsInline className="remote" />
 
       <div className="buttonsContainer">
-        <Button
-          variant="contained"
+        <button
+          className="inline-block py-4 rounded-lg bg-indigo-600 text-white cursor-pointer"
+          // variant="contained"
           type="button"
           onClick={hangUp}
           disabled={!webcamActive}
-          className="hangup button"
+          // className="hangup button"
         >
           <CallIcon />
-        </Button>
+        </button>
         <div tabIndex={0} role="button" className="more button">
           <MoreVertIcon />
           <div className="popover">
-            <Button
-              variant="contained"
+            <button
+              className="inline-block py-4 rounded-lg bg-indigo-600 text-white cursor-pointer"
+              // variant="contained"
               type="button"
               onClick={() => {
                 navigator.clipboard.writeText(roomId);
@@ -344,7 +346,7 @@ function Videos({ mode, callId, setPage }) {
             >
               <ContentCopyIcon />
               Copy joining code
-            </Button>
+            </button>
           </div>
         </div>
       </div>
@@ -354,25 +356,28 @@ function Videos({ mode, callId, setPage }) {
           <div className="modal">
             <h3>Turn on your camera and microphone and start the call</h3>
             <div color="primary" className="mt-8 flex gap-4">
-              <Button
+              <button
                 type="button"
-                fullWidth
-                variant="contained"
+                className="inline-block py-4 w-full rounded-lg bg-indigo-600 text-white cursor-pointer"
+
+                // fullWidth
+                // variant="contained"
                 onClick={() => {
                   setOpen(true);
                   setPage("home");
                 }}
               >
                 Cancel
-              </Button>
-              <Button
+              </button>
+              <button
+                className="inline-block py-4 w-full rounded-lg bg-indigo-600 text-white cursor-pointer"
                 type="button"
-                variant="contained"
+                // variant="contained"
                 onClick={setupSources}
-                fullWidth
+                // fullWidth
               >
                 Start
-              </Button>
+              </button>
             </div>
           </div>
         </div>

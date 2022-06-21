@@ -16,7 +16,7 @@
     -moz-osx-font-smoothing: grayscale;
 } */
 
-button {
+/* button {
     display: inline-block;
     border: none;
     font: inherit;
@@ -25,15 +25,21 @@ button {
     background-color: var(--color-primary);
     color: white;
     cursor: pointer;
-}
+} */
 
-input {
+/* inline-block
+py-4
+rounded-lg
+bg-indigo-600
+text-white
+cursor-pointer */
+/* input {
     border: none;
     font-family: inherit;
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 50px;
-}
+} */
 
 video {
     display: block;
@@ -85,10 +91,10 @@ video {
     background-color: white;
 }
 
-.modal h3 {
+/* .modal h3 {
     margin: 0;
     font-weight: normal;
-}
+} */
 
 .modal .container {
     display: flex;
@@ -128,6 +134,8 @@ video {
     display: flex;
     z-index: 1;
 }
+
+/* absolute left-1/2 bottom-10 -translate-c-1/2 flex z-10 */
 
 .videos .buttonsContainer .button {
     border: 2px solid transparent;

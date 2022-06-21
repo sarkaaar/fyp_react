@@ -141,43 +141,7 @@ function Videos({ mode, callId, setPage }) {
           }
         });
       });
-    } 
-    
-    // else if (mode === "join") {
-    //   const callDoc = doc(db, "calls", callId);
-    //   const answerCandidates = collection(callDoc, "answerCandidates");
-    //   const offerCandidates = collection(callDoc, "offerCandidates");
-
-    //   pc.onicecandidate = (event) => {
-    //     event.candidate && addDoc(answerCandidates, event.candidate.toJSON());
-    //   };
-
-    //   const callData = (await getDoc(callDoc)).data();
-
-    //   const offerDescription = callData.offer;
-    //   await pc.setRemoteDescription(
-    //     new RTCSessionDescription(offerDescription)
-    //   );
-
-    //   const answerDescription = await pc.createAnswer();
-    //   await pc.setLocalDescription(answerDescription);
-
-    //   const answer = {
-    //     type: answerDescription.type,
-    //     sdp: answerDescription.sdp,
-    //   };
-
-    //   await updateDoc(callDoc, { answer });
-
-    //   onSnapshot(offerCandidates, (snapshot) => {
-    //     snapshot.docChanges().forEach((change) => {
-    //       if (change.type === "added") {
-    //         const data = change.doc.data();
-    //         pc.addIceCandidate(new RTCIceCandidate(data));
-    //       }
-    //     });
-    //   });
-    // }
+    }
 
     pc.onconnectionstatechange = () => {
       if (pc.connectionState === "disconnected") {
@@ -194,8 +158,11 @@ function Videos({ mode, callId, setPage }) {
       <video ref={localRef} autoPlay playsInline className="local" muted />
       <video ref={remoteRef} autoPlay playsInline className="remote" />
 
-      <div className="buttonsContainer">
-        <Button
+      <div
+        className="buttonsContainer"
+        // className="absolute left-1/2 bottom-10 -translate-c-1/2 flex z-10"
+      >
+        <button
           variant="contained"
           type="button"
           onClick={hangUp}
@@ -203,7 +170,7 @@ function Videos({ mode, callId, setPage }) {
           className="hangup button"
         >
           <CallIcon />
-        </Button>
+        </button>
         <div tabIndex={0} role="button" className="more button">
           <MoreVertIcon />
           <div className="popover">
@@ -255,17 +222,21 @@ function MainScreen({ setPage }) {
   const { id } = useParams();
   const [appointment, setAppointment] = useState();
 
-  useEffect(() => {
-    const getAppointment = async () => {
-      const x = await getDoc(doc(db, `appointments/${id}`));
-      console.log({
-        id: x.id,
-        ...x.data(),
-      });
+  const getAppointment = async () => {
+    await getDoc(doc(db, `appointments/${id}`)).then((x) => {
       setAppointment({ id: x.id, ...x.data() });
-      console.log({ id: x.id, ...x.data() });
-    };
+    });
+  };
 
+  const meetingEnded = async () => {
+    let doc_ = { ended: true };
+    const meeting = doc(db, "appointments", id);
+    await updateDoc(meeting, doc_).then(() => {
+      console.log("meeting ended");
+    });
+  };
+
+  useEffect(() => {
     getAppointment();
   }, []);
 
@@ -274,7 +245,6 @@ function MainScreen({ setPage }) {
       <div>
         <div className="w-10/12 border-2 border-slate-800 m-auto mb-4 bg-white hover:drop-shadow-2xl p-4 rounded-lg">
           <h1 className="text-3xl font-bold">
-            {" "}
             Dr.
             {appointment?.doctor?.name}
           </h1>
@@ -292,7 +262,7 @@ function MainScreen({ setPage }) {
             </div>
             <div className="w-1/2">
               <h1 className="text-xl font-bold text-red-600 flex justify-end">
-                Date :{" "}
+                Date :
                 {new Date(appointment?.date.seconds * 1000).toDateString()}
               </h1>
               <h1 className="text-xl font-bold text-red-600 flex justify-end">
@@ -305,12 +275,25 @@ function MainScreen({ setPage }) {
           </div>
           <div className="w-fit m-auto pt-4">
             <button
+              className="inline-block py-4 rounded-lg bg-indigo-600 text-white cursor-pointer"
               onClick={() => {
                 setPage("create");
               }}
             >
               Start a new meeting
             </button>
+            {appointment?.ended ? (
+              <h1>Appointment Completed Sucessfully</h1>
+            ) : (
+              <button
+                className="inline-block py-4 rounded-lg bg-indigo-600 text-white cursor-pointer"
+                onClick={() => {
+                  meetingEnded();
+                }}
+              >
+                Meeting Completed
+              </button>
+            )}
           </div>
         </div>
       </div>
