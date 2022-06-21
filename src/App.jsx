@@ -1,7 +1,7 @@
 import "./App.css";
 
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
+// import { Elements } from "@stripe/react-stripe-js";
+// import { loadStripe } from "@stripe/stripe-js";
 
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -59,9 +59,9 @@ import DocViewAppointments from "./Pages/Doctor_Pages/DocViewAppointments";
 import Live from "./Pages/Doctor_Pages/Live/Live";
 import DoctorProfile from "./Pages/Doctor_Pages/DoctorProfile";
 
-const stripePromise = loadStripe(
-  "pk_test_51LCcYcAtUsZyAFJtrJZRVNFMaPgqGTV9sVJJwKyWUU3npj161ZhFQ8U73VXjdzv86HlZo4W6uCfswJ7AvyJqRlb800sS3uCvid"
-);
+// const stripePromise = loadStripe(
+//   "pk_test_51LCcYcAtUsZyAFJtrJZRVNFMaPgqGTV9sVJJwKyWUU3npj161ZhFQ8U73VXjdzv86HlZo4W6uCfswJ7AvyJqRlb800sS3uCvid"
+// );
 
 function App() {
   const options = {
