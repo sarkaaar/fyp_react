@@ -53,17 +53,17 @@ export default function HomePage() {
       ) : (
         <>
           {categories?.map((item) => (
-            <div className="flex justify-center">
+            <div className="flex justify-center" key={item.id}>
               <div>
                 <h1 className="py-4 text-xl font-extrabold">{item?.name}</h1>
                 <div className="overflow-x-scroll lg:w-[100rem]">
-                  <div className="flex space-x-2 w-fit">
+                  <div className="flex w-fit">
                     {product?.map((product) => (
-                      <>
+                      <span key={product.id}>
                         {item?.name === product?.category && (
                           <MediaCard obj={product} key={product} />
                         )}
-                      </>
+                      </span>
                     ))}
                   </div>
                 </div>

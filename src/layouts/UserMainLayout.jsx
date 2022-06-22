@@ -22,7 +22,7 @@ import {
 } from "@heroicons/react/outline";
 import SearchCard from "../components/SearchCard";
 
-export default function UserMainLayout({ children, props }) {
+export default function UserMainLayout({ children, isCartUpdated }) {
   const [docCount, setDocCount] = useState();
   const [cartItems, setCartItems] = useState([]);
   const [products, setProducts] = useState([]);
@@ -35,6 +35,7 @@ export default function UserMainLayout({ children, props }) {
   const doctorsRef = collection(db, "doctors");
 
   const getCartItems = async (user) => {
+    if (!user.email) return;
     const q = await query(cartCollection, where("user", "==", user.email));
     await getDocs(q).then((res) => {
       setCartItems(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
@@ -47,7 +48,6 @@ export default function UserMainLayout({ children, props }) {
     await getDocs(q)
       .then(async (res) => {
         setDocCount(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-        // console.log(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       })
       .catch((err) => {
         console.log(err.code);
@@ -67,8 +67,8 @@ export default function UserMainLayout({ children, props }) {
   };
 
   useEffect(() => {
-    console.log("dummy value changes " + props);
-  }, [props]);
+    getCartItems(user);
+  }, [isCartUpdated]);
 
   useEffect(() => {
     if (!products) return;
@@ -82,16 +82,17 @@ export default function UserMainLayout({ children, props }) {
   useEffect(
     () =>
       onAuthStateChanged(auth, (user) => {
+
+        getCartItems(user);
+        getDBUser(user);
+        showDoctorHeader(user);
+        setUser(user);
         getProducts();
         if (!user) {
           setUser(null);
           return;
         }
         setUser(user);
-        console.log("user logged in", user);
-        getCartItems(user);
-        getDBUser(user);
-        showDoctorHeader(user);
       }),
     []
   );
@@ -117,7 +118,6 @@ export default function UserMainLayout({ children, props }) {
                   </div>
                   <div className="hidden lg:ml-6 lg:block">
                     <div className="flex space-x-4">
-                      {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
                       <NavLink
                         to="/"
                         className={({ isActive }) =>
@@ -326,8 +326,6 @@ export default function UserMainLayout({ children, props }) {
             </div>
             <Disclosure.Panel className="lg:hidden">
               <div className="space-y-1 px-2 pt-2 pb-3">
-                {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
-                {/* <Disclosure.Button className="block w-full rounded-md px-3 py-2 text-left text-base font-medium text-white"> */}
                 <NavLink
                   to="/"
                   className={({ isActive }) =>
@@ -345,10 +343,6 @@ export default function UserMainLayout({ children, props }) {
                   />
                   Home
                 </NavLink>
-                {/* </Disclosure.Button> */}
-                {/* <Disclosure.Button
-                  className="block w-full rounded-md px-3 py-2 text-left text-base font-medium text-white"
-                > */}
                 <NavLink
                   to="/services"
                   className={({ isActive }) =>
@@ -366,11 +360,6 @@ export default function UserMainLayout({ children, props }) {
                   />
                   Services
                 </NavLink>
-                {/* </Disclosure.Button> */}
-                {/* <Disclosure.Button
-                  href="/viewAppointments"
-                  className="block w-full rounded-md px-3 py-2 text-left text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                > */}
                 <NavLink
                   to="/viewAppointments"
                   className={({ isActive }) =>
@@ -388,11 +377,6 @@ export default function UserMainLayout({ children, props }) {
                   />
                   Appointments
                 </NavLink>
-                {/* </Disclosure.Button> */}
-                {/* <Disclosure.Button
-                  href="/maps"
-                  className="block w-full rounded-md px-3 py-2 text-left text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                > */}
                 <NavLink
                   to="/maps"
                   className={({ isActive }) =>
@@ -411,7 +395,6 @@ export default function UserMainLayout({ children, props }) {
                   Maps
                 </NavLink>
                 <hr />
-                {/* </Disclosure.Button> */}
                 {user ? (
                   <>
                     <NavLink
@@ -436,9 +419,6 @@ export default function UserMainLayout({ children, props }) {
                         <div className="ml-2 flex h-7 w-7 items-center justify-center rounded-full bg-indigo-600 text-sm text-white">
                           {cartItems.length}
                         </div>
-                        // <span className="rounded-full bg-indigo-600 h-6 w-6 text-center text-sm text-white">
-                        //   {cartItems.length}
-                        // </span>
                       )}
                     </NavLink>
                     <NavLink

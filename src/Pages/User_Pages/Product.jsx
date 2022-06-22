@@ -178,10 +178,7 @@ export default function Product() {
           console.log("Add To Favourites Sucessfully");
           getFav(user);
           setAddStatus(false);
-          // setLoader(false);
-          // setLoad(false);
         })
-
         .catch((err) => {
           console.log(err);
           setAddStatus(false);
@@ -223,18 +220,14 @@ export default function Product() {
           ...doc.data(),
           id: doc.id,
         }));
-        // console.log("item already in cart");
 
         data.length != 0
           ? await updateDoc(doc(db, "cart", data[0].id), {
               quantity: data[0].quantity + qty,
             })
               .then((res) => {
-                console.log("value updated");
                 setAddStatus(false);
                 setDummy(dummy + 1);
-
-                // window.location.reload(false);
               })
               .catch((e) => {
                 console.log(e);
@@ -242,7 +235,7 @@ export default function Product() {
           : await addDoc(cartRef, newProduct)
               .then((res) => {
                 setAddStatus(false);
-                navigate(`/product/${id}`);
+                setDummy(dummy + 1);
               })
               .catch((e) => {
                 console.log(e);
@@ -298,7 +291,7 @@ export default function Product() {
   };
 
   return (
-    <UseMainLayout dummy>
+    <UseMainLayout isCartUpdated={dummy} dummy>
       <section className="body-font overflow-hidden bg-white text-gray-700">
         <div className="container mx-auto p-4">
           {prod ? (

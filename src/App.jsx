@@ -31,7 +31,7 @@ import About from "./Pages/User_Pages/About";
 import ComplainSuggestions from "./Pages/User_Pages/Profile/ComplainSuggestions";
 // Services Pages
 import MakeAppointments from "./Pages/Services/MakeAppointments";
-import ViewAppointments from "./Pages/Services/ViewAppointments";
+import ViewAppointments from "./Pages/Services/Appointments/ViewAppointments";
 import ViewDoctorsUser from "./Pages/Services/ViewDoctors";
 import Maps from "./Pages/Services/Maps";
 import Services from "./Pages/Services/Services";
@@ -170,9 +170,7 @@ function App() {
           </svg>
         </button>
       )}
-      {/* <Elements stripe={stripePromise} options={options}>
-        <Checkout />
-      </Elements> */}
+     
     </>
   );
 }
