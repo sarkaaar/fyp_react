@@ -82,7 +82,6 @@ export default function UserMainLayout({ children, isCartUpdated }) {
   useEffect(
     () =>
       onAuthStateChanged(auth, (user) => {
-
         getCartItems(user);
         getDBUser(user);
         showDoctorHeader(user);
@@ -192,10 +191,10 @@ export default function UserMainLayout({ children, isCartUpdated }) {
                       Search
                     </label>
 
-                    <div className="relative pt-12">
+                    <div className="relative">
                       <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                         <SearchIcon
-                          className="mt-12 h-5  w-5 text-gray-400"
+                          className="h-5  w-5 text-gray-400"
                           aria-hidden="true"
                         />
                       </div>

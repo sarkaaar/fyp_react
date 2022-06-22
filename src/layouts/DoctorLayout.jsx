@@ -44,7 +44,7 @@ export default function AdminLayout({ children }) {
           >
             USER VIEW
           </NavLink>
-          <button type="button" onClick={logout} className="bg-gray-800">
+          <button type="button" onClick={logout} className="bg-gray-800 text-white">
             LOGOUT
           </button>
         </div>
