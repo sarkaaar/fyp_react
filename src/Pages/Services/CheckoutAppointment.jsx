@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import Typography from "@mui/material/Typography";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { TextField, Button } from "@mui/material";
 import { useState, useEffect } from "react";
 import { collection, addDoc } from "firebase/firestore";
@@ -10,10 +10,9 @@ import { auth, db } from "../../firebase-config";
 import Modal from "@mui/material/Modal";
 
 export default function CheckoutAppointment(params) {
-
   const navigate = useNavigate();
   const { user, doctor, date, time } = params.obj;
-const [open,setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [card, setCard] = useState("");
   const [NOC, setNOC] = useState("");
@@ -44,7 +43,6 @@ const [open,setOpen] = useState(false);
     };
     await addDoc(appointmentsRef, apppointment).then((res) => {
       console.log("done added appointent");
-      // conole.log(res);
     });
   };
 
@@ -147,7 +145,7 @@ const [open,setOpen] = useState(false);
               fullWidth
               variant="outlined"
               style={{ height: "50px" }}
-              onClick={()=>{
+              onClick={() => {
                 makeAppointment();
                 setOpen(true);
               }}
@@ -178,7 +176,7 @@ const [open,setOpen] = useState(false);
                 <p>Dr. </p> <p className="text-gray-700">{doctor.name}</p>
               </div>
 
-              <p className="text-gray-600 italic">{doctor.clinicAddress}</p>
+              <p className="italic text-gray-600">{doctor.clinicAddress}</p>
               <div className="flex justify-between text-base font-medium text-gray-900">
                 <p>Fee</p>
                 <p className="text-red-600">{doctor.fees}</p>
@@ -194,21 +192,19 @@ const [open,setOpen] = useState(false);
         aria-describedby="modal-modal-description"
       >
         <div
-          className="absolute top-1/2	 left-1/2 bg-white w-96 shadow-lg p-4 mt-8 rounded-lg border-2 border-black "
+          className="absolute top-1/2	 left-1/2 mt-8 w-96 rounded-lg border-2 border-black bg-white p-4 shadow-lg "
           sx={{
             transform: "translate(-50%, -50%)",
           }}
         >
-      <div className="absolute top-1/2 left-1/2 w-[400px] -translate-y-1/2 -translate-x-1/2 rounded-lg bg-white p-4 shadow-lg">
-          <h1 className="p-4 text-center text-xl font-bold">
-           Appointment is Created  Successfully
-          </h1>
-          
-        </div>
+          <div className="absolute top-1/2 left-1/2 w-[400px] -translate-y-1/2 -translate-x-1/2 rounded-lg bg-white p-4 shadow-lg">
+            <h1 className="p-4 text-center text-xl font-bold">
+              Appointment is Created Successfully
+            </h1>
+          </div>
           <Button onClick={handleClose}> Close</Button>
         </div>
       </Modal>
-
     </div>
   );
 }
