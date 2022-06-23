@@ -7,7 +7,13 @@ import { NavLink } from "react-router-dom";
 export default function Footer() {
   return (
     <div className="z-10 border-gray-800 pt-8">
+      {/* <NavLink   to="/about">
+       <button className="bg-red-600 text-4xl  text-white">
+          Become A Doctor
+        </button>
+      </NavLink> */}
       <div className="flex justify-around bg-gray-900 p-12">
+       
         <div>
           <NavLink
             to="/profile"

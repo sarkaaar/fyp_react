@@ -62,6 +62,7 @@ export default function AddDoctor() {
       // 2- if the user is found in table then with go for authentication
       if (data.length == 0)
         await addDoc(doctorsRef, newDoctor).then(async (res) => {
+          setOpen(true);
           console.log(res);
           console.log("Doctor Added Sucessfully");
         });
@@ -240,6 +241,18 @@ export default function AddDoctor() {
           </h1> */}
         </div>
       </Modal>
+      <Modal
+        sx={{ mb: 70, ml: "auto", mr: "auto" }}
+        open={open}
+        onClose={() => setOpen(false)}
+      >
+         <div className="absolute top-1/2 left-1/2 w-[400px] -translate-y-1/2 -translate-x-1/2 rounded-lg bg-white p-4 shadow-lg">
+          <h1 className="p-4 text-center text-xl font-bold">
+            Doctor Added Successfully
+          </h1>
+        </div>
+      </Modal>
+  
     </AdminLayout>
   );
 }
