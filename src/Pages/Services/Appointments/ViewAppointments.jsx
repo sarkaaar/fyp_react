@@ -4,7 +4,7 @@ import Modal from "@material-ui/core/Modal";
 import {
   collection,
   getDocs,
-  doc,
+  doc,  
   query,
   where,
   deleteDoc,

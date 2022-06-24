@@ -95,7 +95,7 @@ export default function Product() {
       user: user?.email,
     };
 
-    if (user) await addDoc(reviewsRef, newComment).then(setComModal(true));
+    if (user) {await addDoc(reviewsRef, newComment).then(setComModal(true));}
     else setNotLogModal(true);
     getComment();
   };

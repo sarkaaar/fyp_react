@@ -54,7 +54,7 @@ export default function NewDoctor() {
     <div>
       <div className="flex justify-center mt-36">
         <form className="flex flex-col gap-4 w-96 p-4 bg-white rounded-lg">
-          <h1 className="w-full flex justify-center">Continue as a new User</h1>
+          <h1 className="w-full flex justify-center">Continue as a new Doctor</h1>
           <TextField
             style={{ paddingBottom: "15px" }}
             fullWidth

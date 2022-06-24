@@ -26,6 +26,8 @@ export default function AddEditProduct({ data }) {
   const [cat, setCat] = useState([]);
   const [loader, setLoader] = useState(false);
   const [open, setOpen] = useState(false);
+  const [updateOpen, setUpdateOpen] = useState(false);
+
   const categoriesCollection = collection(db, "categories");
   const productsCollection = collection(db, "products");
 
@@ -116,7 +118,7 @@ export default function AddEditProduct({ data }) {
     };
     console.log(newProduct);
     const prod = doc(db, "products", id);
-    await updateDoc(prod, newProduct);
+    await updateDoc(prod, newProduct).then(()=>{setUpdateOpen(true);});
     console.log("Product Updated");
   };
 
@@ -264,6 +266,19 @@ export default function AddEditProduct({ data }) {
         <div className="absolute top-1/2 left-1/2 w-[400px] -translate-y-1/2 -translate-x-1/2 rounded-lg bg-white p-4 shadow-lg">
           <h1 className="p-4 text-center text-xl font-bold">
             Product Added Successfully
+          </h1>
+        </div>
+      </Modal>
+      <Modal
+        open={updateOpen}
+        onClose={() => {
+          setUpdateOpen(false);
+          window.location.reload(false);
+        }}
+      >
+        <div className="absolute top-1/2 left-1/2 w-[400px] -translate-y-1/2 -translate-x-1/2 rounded-lg bg-white p-4 shadow-lg">
+          <h1 className="p-4 text-center text-xl font-bold">
+            Product Updated Successfully
           </h1>
         </div>
       </Modal>

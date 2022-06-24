@@ -1,28 +1,31 @@
 import React, { useState } from "react";
 import Modal from "@mui/material/Modal";
 import { Button } from "@mui/material";
-import { collection,doc,deleteDoc } from "firebase/firestore";
+import { collection, doc, deleteDoc } from "firebase/firestore";
 import { db } from "../../firebase-config";
 import AdminLayout from "../../layouts/AdminLayout";
 import FirebaseDataTable from "../../components/FirebaseDataTable";
 import AddEditProduct from "../../components/admin/inventory/AddEditProduct";
 
-
-const DeleteProduct = async (id) => {
-  const prod = doc(db, "products", id);
-  await deleteDoc(prod);
-  console.log("Product deleted ", id);
-  // getAppointments();
-};
 export default function Inventory() {
   const [selectedProduct, setSelectedProduct] = useState();
   const [editOpen, setEditOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const DeleteProduct = async (id) => {
+    const prod = doc(db, "products", id);
+    await deleteDoc(prod).then(() => {
+      setOpen(true);
+      console.log("clicked");
+    });
+    console.log("Product deleted ", id);
+  };
 
   return (
     <>
       <AdminLayout>
         <div className="flex justify-between">
-          <h1 className="text-left font-bold text-2xl mb-4">Inventory</h1>
+          <h1 className="mb-4 text-left text-2xl font-bold">Inventory</h1>
           <Button
             onClick={() => {
               setEditOpen(true);
@@ -39,22 +42,22 @@ export default function Inventory() {
             { key: "costPrice", name: "Cost Price" },
             { key: "description", name: "Description" },
             { key: "stock", name: "Stock" },
-            // {
-            //   key: "variants",
-            //   name: "Variants",
-            //   render: (row) => (
-            //     <div className="flex flex-col">
-            //       {Object.entries(row.variants).map(([k, v]) => (
-            //         <div key={k} className="flex justify-between">
-            //           <div>{v[0]}</div>
-            //           <div className="text-right">{v[1]}</div>
-            //         </div>
-            //       ))}
-            //     </div>
-            //   ),
-            // },
+            {
+              key: "Delete",
+              name: "Delete",
+              render: (row) => (
+                <button
+                  className="text-red-600"
+                  onClick={() => {
+                    DeleteProduct(row.id);
+                  }}
+                >
+                  Delete
+                </button>
+              ),
+            },
           ]}
-          actions={[
+          actions={[  
             {
               label: "Edit",
               perform: (row) => {
@@ -62,24 +65,29 @@ export default function Inventory() {
                 setEditOpen(true);
               },
             },
-            {
-              label: "Delete",
-              danger: true,
-              perform: (row) => {DeleteProduct(row.id)},
-            },
           ]}
         />
       </AdminLayout>
-
+      <Modal
+        open={open}
+        onClose={() => {
+          setOpen(false);
+        }}
+      >
+        <div className="absolute top-1/2 left-1/2 w-[400px] -translate-y-1/2 -translate-x-1/2 rounded-lg bg-white p-4 shadow-lg">
+          <h1 className="p-4 text-center text-xl font-bold">
+            Product Deleted Successfully
+          </h1>
+        </div>
+      </Modal>
       <Modal
         open={editOpen}
         onClose={() => {
           setEditOpen(false);
           setSelectedProduct(undefined);
         }}
-        
       >
-        <div className="absolute top-1/2 left-1/2 p-4 shadow-lg rounded-lg bg-white w-[400px] -translate-y-1/2 -translate-x-1/2">
+        <div className="absolute top-1/2 left-1/2 w-[400px] -translate-y-1/2 -translate-x-1/2 rounded-lg bg-white p-4 shadow-lg">
           <AddEditProduct data={selectedProduct} />
         </div>
       </Modal>

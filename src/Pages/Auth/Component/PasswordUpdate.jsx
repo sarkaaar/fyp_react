@@ -23,6 +23,7 @@ export default function PasswordUpdate() {
       if (password.length >= 8) {
         updatePassword(user, password)
           .then((res) => {
+            
             console.log(res);
             // alert("Password update sucessfully");
             setOpen(true);
