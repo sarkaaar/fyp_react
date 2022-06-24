@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Modal from "@material-ui/core/Modal";
 import {
   collection,
@@ -22,8 +22,8 @@ import CallIcon from "@mui/icons-material/Call";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { Button } from "@material-ui/core";
-import { useParams } from "react-router-dom";
-import Loader from "../../../components/Loader/Loader";
+// import { useParams } from "react-router-dom";
+// import Loader from "../../../components/Loader/Loader";
 
 function Lists({ setPage, joinCode, setJoinCode }) {
   const appointmentsRef = collection(db, "appointments");
@@ -145,14 +145,6 @@ function Lists({ setPage, joinCode, setJoinCode }) {
                           >
                             Cancel
                           </button>
-                          {/* <button
-                            class="mx-2 mt-4 w-28 h-12 rounded-none border border-transparent bg-gradient-to-r from-red-700 to-rose-600 text-white shadow-lg shadow-red-600/50 hover:drop-shadow-lg focus:shadow-none md:w-36 lg:w-44"
-                            disabled
-                          >
-                            <span className="flex items-center h-8 w-28">
-                              <Loader />
-                            </span>
-                          </button> */}
                         </div>
                       </div>
                     </div>
@@ -178,20 +170,6 @@ function Lists({ setPage, joinCode, setJoinCode }) {
         )}
       </div>
       <Footer />
-      <Modal onClose={() => setOpen(false)} open={open}>
-        <div
-          className="absolute top-1/2	 left-1/2 mt-8 w-96 rounded-lg border-2 border-black bg-white p-4 shadow-lg "
-          sx={{
-            transform: "translate(-50%, -50%)",
-          }}
-        >
-          <div className="absolute top-1/2 left-1/2 w-[400px] -translate-y-1/2 -translate-x-1/2 rounded-lg bg-white p-4 shadow-lg">
-            <h1 className="p-4 text-center text-xl font-bold">
-              Cancel Appointment Successfully
-            </h1>
-          </div>
-        </div>
-      </Modal>
     </UseMainLayout>
   );
 }
@@ -208,11 +186,8 @@ const servers = {
 const pc = new RTCPeerConnection(servers);
 
 function Videos({ mode, callId, setPage }) {
-  const { id } = useParams();
   const [webcamActive, setWebcamActive] = useState(false);
   const [roomId, setRoomId] = useState(callId);
-  const [open, setOpen] = useState(false);
-  console.log(callId);
 
   const localRef = useRef();
   const remoteRef = useRef();
@@ -225,7 +200,6 @@ function Videos({ mode, callId, setPage }) {
       await getDocs(collection(roomRef, "answerCandidates")).then(
         (querySnapshot) => {
           querySnapshot.forEach((d) => {
-            setOpen(true);
             deleteDoc(d.ref);
           });
         }
@@ -233,16 +207,13 @@ function Videos({ mode, callId, setPage }) {
 
       await getDocs(collection(roomRef, "offerCandidates")).then(
         (querySnapshot) => {
-          setOpen(true);
           querySnapshot.forEach((d) => {
             deleteDoc(d.ref);
           });
         }
       );
 
-      await deleteDoc(roomRef).then(() => {
-        setOpen(true);
-      });
+      await deleteDoc(roomRef);
     }
 
     window.location.reload();
@@ -270,7 +241,47 @@ function Videos({ mode, callId, setPage }) {
 
     setWebcamActive(true);
 
-    if (mode === "join") {
+    if (mode === "create") {
+      const callDoc = doc(collection(db, "calls"));
+      const offerCandidates = collection(callDoc, "offerCandidates");
+      const answerCandidates = collection(callDoc, "answerCandidates");
+
+      setRoomId(callDoc.id);
+      console.log(callDoc.id);
+
+      pc.onicecandidate = (event) => {
+        if (event.candidate) {
+          addDoc(offerCandidates, event.candidate.toJSON());
+        }
+      };
+
+      const offerDescription = await pc.createOffer();
+      await pc.setLocalDescription(offerDescription);
+
+      const offer = {
+        sdp: offerDescription.sdp,
+        type: offerDescription.type,
+      };
+
+      await setDoc(callDoc, { offer });
+
+      onSnapshot(callDoc, (snapshot) => {
+        const data = snapshot.data();
+        if (!pc.currentRemoteDescription && data?.answer) {
+          const answerDescription = new RTCSessionDescription(data.answer);
+          pc.setRemoteDescription(answerDescription);
+        }
+      });
+
+      onSnapshot(answerCandidates, (snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+          if (change.type === "added") {
+            const candidate = new RTCIceCandidate(change.doc.data());
+            pc.addIceCandidate(candidate);
+          }
+        });
+      });
+    } else if (mode === "join") {
       const callDoc = doc(db, "calls", callId);
       const answerCandidates = collection(callDoc, "answerCandidates");
       const offerCandidates = collection(callDoc, "offerCandidates");
@@ -314,66 +325,50 @@ function Videos({ mode, callId, setPage }) {
   };
 
   return (
-    <div
-      className="videos"
-      // className="flex items-center whitespace-nowrap bg-whitetext-black"
-    >
-      <video ref={localRef} autoPlay playsInline className="local" muted />
-      <video ref={remoteRef} autoPlay playsInline className="remote" />
+    <div className="flex items-center whitespace-nowrap bg-whitetext-black">
+      <video
+        className="absolute bottom-[40px] right-[40px] w-[210px] rounded-lg z-10"
+        ref={localRef}
+        autoPlay
+        playsInline
+        muted
+      />
+      <video
+        className="absolute inset-0"
+        ref={remoteRef}
+        autoPlay
+        playsInline
+      />
 
-      <div className="buttonsContainer">
+      <div className="absolute left-1/2 bottom-10 -translate-x-1/2 flex z-10">
         <button
-          className="inline-block cursor-pointer rounded-lg bg-indigo-600 py-4 text-white"
-          // variant="contained"
           type="button"
           onClick={hangUp}
           disabled={!webcamActive}
-          // className="hangup button"
+          className="mr-12 bg-red-600 w-20 h-20 rounded-full text-white button"
         >
           <CallIcon />
         </button>
-        <div tabIndex={0} role="button" className="more button">
-          <MoreVertIcon />
-          <div className="popover">
-            <button
-              className="inline-block cursor-pointer rounded-lg bg-indigo-600 py-4 text-white"
-              // variant="contained"
-              type="button"
-              onClick={() => {
-                navigator.clipboard.writeText(roomId);
-                console.log(roomId);
-              }}
-            >
-              <ContentCopyIcon />
-              Copy joining code
-            </button>
-          </div>
-        </div>
       </div>
 
       {!webcamActive && (
-        <div className="modalContainer">
-          <div className="modal">
+        <div className="absolute inset-0 z-30 bg-transparent bg-gray-600">
+          <div className="absolute top-1/2	left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg p-10 bg-white">
             <h3>Turn on your camera and microphone and start the call</h3>
-            <div color="primary" className="mt-8 flex gap-4">
+            <div color="primary" className="flex gap-4 mt-8">
               <button
                 type="button"
-                className="inline-block w-full cursor-pointer rounded-lg bg-indigo-600 py-4 text-white"
-                // fullWidth
-                // variant="contained"
-                onClick={() => {
-                  setOpen(true);
-                  setPage("home");
-                }}
+                className="inline-block py-4 w-full rounded-lg bg-indigo-600 text-white cursor-pointer"
+                variant="contained"
+                onClick={() => setPage("home")}
               >
                 Cancel
               </button>
               <button
-                className="inline-block w-full cursor-pointer rounded-lg bg-indigo-600 py-4 text-white"
                 type="button"
-                // variant="contained"
+                className="inline-block py-4 w-full rounded-lg bg-indigo-600 text-white cursor-pointer"
                 onClick={setupSources}
-                // fullWidth
+                fullWidth
               >
                 Start
               </button>
@@ -381,21 +376,6 @@ function Videos({ mode, callId, setPage }) {
           </div>
         </div>
       )}
-      <Modal onClose={() => setOpen(false)} open={open}>
-        <div
-          className="absolute top-1/2	 left-1/2 mt-8 w-96 rounded-lg border-2 border-black bg-white p-4 shadow-lg "
-          sx={{
-            transform: "translate(-50%, -50%)",
-          }}
-        >
-          <div className="absolute top-1/2 left-1/2 w-[400px] -translate-y-1/2 -translate-x-1/2 rounded-lg bg-white p-4 shadow-lg">
-            <h1 className="p-4 text-center text-xl font-bold">
-              Cancel Appointment Successfully
-            </h1>
-          </div>
-          {/* <Button onClick={handleClose}> Close</Button> */}
-        </div>
-      </Modal>
     </div>
   );
 }
@@ -411,7 +391,6 @@ export default function ViewAppointments() {
           setPage={setCurrentPage}
           joinCode={joinCode}
           setJoinCode={setJoinCode}
-          // setPage={setCurrentPage}
         />
       ) : (
         <Videos mode={currentPage} callId={joinCode} setPage={setCurrentPage} />

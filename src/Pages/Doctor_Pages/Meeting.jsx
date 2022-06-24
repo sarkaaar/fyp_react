@@ -14,9 +14,9 @@ import {
   query,
 } from "firebase/firestore";
 import CallIcon from "@mui/icons-material/Call";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import { Button } from "@material-ui/core";
+// import MoreVertIcon from "@mui/icons-material/MoreVert";
+// import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+// import { Button } from "@material-ui/core";
 import "./Live/index.css";
 import { useParams } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
@@ -35,7 +35,6 @@ const servers = {
 const pc = new RTCPeerConnection(servers);
 
 function Videos({ mode, callId, setPage }) {
-  const { id } = useParams();
   const [webcamActive, setWebcamActive] = useState(false);
   const [roomId, setRoomId] = useState(callId);
 
@@ -91,15 +90,6 @@ function Videos({ mode, callId, setPage }) {
 
     setWebcamActive(true);
 
-    const uploadLink = async (callDoc) => {
-      const prod = doc(db, "appointments", id);
-      await updateDoc(prod, {
-        joinLink: callDoc,
-      }).then(async (res) => {
-        console.log("joining link upladed to the aappointments sucessfully");
-      });
-    };
-
     if (mode === "create") {
       const callDoc = doc(collection(db, "calls"));
       const offerCandidates = collection(callDoc, "offerCandidates");
@@ -107,7 +97,6 @@ function Videos({ mode, callId, setPage }) {
 
       setRoomId(callDoc.id);
       console.log(callDoc.id);
-      uploadLink(callDoc.id);
 
       pc.onicecandidate = (event) => {
         if (event.candidate) {
@@ -141,6 +130,40 @@ function Videos({ mode, callId, setPage }) {
           }
         });
       });
+    } else if (mode === "join") {
+      const callDoc = doc(db, "calls", callId);
+      const answerCandidates = collection(callDoc, "answerCandidates");
+      const offerCandidates = collection(callDoc, "offerCandidates");
+
+      pc.onicecandidate = (event) => {
+        event.candidate && addDoc(answerCandidates, event.candidate.toJSON());
+      };
+
+      const callData = (await getDoc(callDoc)).data();
+
+      const offerDescription = callData.offer;
+      await pc.setRemoteDescription(
+        new RTCSessionDescription(offerDescription)
+      );
+
+      const answerDescription = await pc.createAnswer();
+      await pc.setLocalDescription(answerDescription);
+
+      const answer = {
+        type: answerDescription.type,
+        sdp: answerDescription.sdp,
+      };
+
+      await updateDoc(callDoc, { answer });
+
+      onSnapshot(offerCandidates, (snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+          if (change.type === "added") {
+            const data = change.doc.data();
+            pc.addIceCandidate(new RTCIceCandidate(data));
+          }
+        });
+      });
     }
 
     pc.onconnectionstatechange = () => {
@@ -150,66 +173,123 @@ function Videos({ mode, callId, setPage }) {
     };
   };
 
-  return (
-    <div
-      className="videos"
-      // className="flex items-center whitespace-nowrap bg-whitetext-black"
-    >
-      <video ref={localRef} autoPlay playsInline className="local" muted />
-      <video ref={remoteRef} autoPlay playsInline className="remote" />
+  // return (
+  //   <div
+  //     className="videos"
+  //     // className="flex items-center whitespace-nowrap bg-whitetext-black"
+  //   >
+  //     <video ref={localRef} autoPlay playsInline className="local" muted />
+  //     <video ref={remoteRef} autoPlay playsInline className="remote" />
 
-      <div
-        className="buttonsContainer"
-        // className="absolute left-1/2 bottom-10 -translate-c-1/2 flex z-10"
-      >
+  //     <div className="buttonsContainer">
+  //       <Button
+  //         variant="contained"
+  //         type="button"
+  //         onClick={hangUp}
+  //         disabled={!webcamActive}
+  //         className="hangup button"
+  //       >
+  //         <CallIcon />
+  //       </Button>
+  //       <div tabIndex={0} role="button" className="more button">
+  //         <MoreVertIcon />
+  //         <div className="popover">
+  //           <Button
+  //             variant="contained"
+  //             type="button"
+  //             onClick={() => {
+  //               navigator.clipboard.writeText(roomId);
+  //               console.log(roomId);
+  //             }}
+  //           >
+  //             <ContentCopyIcon />
+  //             Copy joining code
+  //           </Button>
+  //         </div>
+  //       </div>
+  //     </div>
+
+  //     {!webcamActive && (
+  //       <div className="modalContainer">
+  //         <div className="modal">
+  //           <h3>Turn on your camera and microphone and start the call</h3>
+  //           <div
+  //             // className="container"
+  //             color="primary"
+  //             className="flex gap-4 mt-8"
+  //           >
+  //             <Button
+  //               type="button"
+  //               fullWidth
+  //               variant="contained"
+  //               onClick={() => setPage("home")}
+  //               // className="secondary"
+  //             >
+  //               Cancel
+  //             </Button>
+  //             <Button
+  //               type="button"
+  //               variant="contained"
+  //               onClick={setupSources}
+  //               fullWidth
+  //             >
+  //               Start
+  //             </Button>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     )}
+  //   </div>
+  // );
+
+  return (
+    <div className="flex items-center whitespace-nowrap bg-whitetext-black">
+      <video
+        className="absolute bottom-[40px] right-[40px] w-[210px] rounded-lg z-10"
+        ref={localRef}
+        autoPlay
+        playsInline
+        muted
+      />
+      <video
+        className="absolute inset-0"
+        ref={remoteRef}
+        autoPlay
+        playsInline
+      />
+
+      <div className="absolute left-1/2 bottom-10 -translate-x-1/2 flex z-10">
         <button
-          variant="contained"
           type="button"
           onClick={hangUp}
           disabled={!webcamActive}
-          className="hangup button"
+          className="mr-12 bg-red-600 w-20 h-20 rounded-full text-white button"
         >
           <CallIcon />
         </button>
-        <div tabIndex={0} role="button" className="more button">
-          <MoreVertIcon />
-          <div className="popover">
-            <Button
-              variant="contained"
-              type="button"
-              onClick={() => {
-                navigator.clipboard.writeText(roomId);
-                console.log(roomId);
-              }}
-            >
-              <ContentCopyIcon />
-              Copy joining code
-            </Button>
-          </div>
-        </div>
       </div>
 
       {!webcamActive && (
-        <div className="modalContainer">
-          <div className="modal">
+        <div className="absolute inset-0 z-30 bg-transparent bg-gray-600">
+          <div className="absolute top-1/2	left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg p-10 bg-white">
             <h3>Turn on your camera and microphone and start the call</h3>
             <div color="primary" className="flex gap-4 mt-8">
-              <Button
+              <button
                 type="button"
-                fullWidth
+                className="inline-block py-4 w-full rounded-lg bg-indigo-600 text-white cursor-pointer"
                 variant="contained"
                 onClick={() => setPage("home")}
               >
                 Cancel
-              </Button>
-              <Button
+              </button>
+              <button
                 type="button"
-                variant="contained"
+                className="inline-block py-4 w-full rounded-lg bg-indigo-600 text-white cursor-pointer"
                 onClick={setupSources}
                 fullWidth
               >
                 Start
-              </Button>
+              </button>
             </div>
           </div>
         </div>
@@ -273,9 +353,9 @@ function MainScreen({ setPage }) {
               </h1>
             </div>
           </div>
-          <div className="w-fit m-auto pt-4">
+          <div className="w-fit m-auto flex gap-4 pt-4">
             <button
-              className="inline-block py-4 rounded-lg bg-indigo-600 text-white cursor-pointer"
+              className="h-12 w-64 rounded-lg bg-indigo-600 text-white cursor-pointer"
               onClick={() => {
                 setPage("create");
               }}
@@ -286,7 +366,7 @@ function MainScreen({ setPage }) {
               <h1>Appointment Completed Sucessfully</h1>
             ) : (
               <button
-                className="inline-block py-4 rounded-lg bg-indigo-600 text-white cursor-pointer"
+                className="h-12 w-64 rounded-lg bg-indigo-400 text-white cursor-pointer"
                 onClick={() => {
                   meetingEnded();
                 }}

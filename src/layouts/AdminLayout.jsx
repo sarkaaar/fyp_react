@@ -370,7 +370,7 @@ export default function AdminLayout({ children }) {
           </div>
         </div>
         <main className="flex-1 pb-8">
-          <div className="mx-auto mt-8 max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto mt-8  px-4 sm:px-6 lg:px-8">
             {children}
           </div>
         </main>

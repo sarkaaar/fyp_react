@@ -80,7 +80,11 @@ export default function Product() {
     };
     getComment();
     getProduct();
-  }, [user]);
+  }, [user, id]);
+
+  useEffect(() => {
+    calRating();
+  }, [getComments]);
 
   const addComment = async (data) => {
     const newComment = {
@@ -157,10 +161,6 @@ export default function Product() {
     r = r / getComments?.length;
     setTotalRating(r);
   }
-
-  useEffect(() => {
-    calRating();
-  }, [getComments]);
 
   const addToFavourites = async () => {
     const newObj = {
@@ -371,7 +371,6 @@ export default function Product() {
                       )}
                       {load ? (
                         <button className=" ml-4 flex  h-12 w-1/12 items-center justify-center rounded-md border-0 bg-gray-200 p-0 text-gray-500">
-                          
                           <svg
                             role="status"
                             className="mr-2 h-8 w-8 animate-spin pl-1 fill-blue-600 text-gray-200 dark:text-gray-600"
