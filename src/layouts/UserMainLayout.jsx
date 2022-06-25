@@ -26,14 +26,16 @@ export default function UserMainLayout({ children, isCartUpdated }) {
   const [docCount, setDocCount] = useState();
   const [cartItems, setCartItems] = useState([]);
   const [products, setProducts] = useState([]);
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState();
   const [userProfile, setUserProfile] = useState();
   const [searchResults, setSearchResults] = useState([]);
-  const [searchProduct, setSearchProduct] = useState('');
+  const [searchProduct, setSearchProduct] = useState("");
   const fuseRef = useRef(null);
   const navigate = useNavigate();
   const cartCollection = collection(db, "cart");
   const doctorsRef = collection(db, "doctors");
+
+  const [loadLog, setLoadLog] = useState(true);
 
   const getCartItems = async (user) => {
     if (!user.email) return;
@@ -44,7 +46,6 @@ export default function UserMainLayout({ children, isCartUpdated }) {
   };
 
   const showDoctorHeader = async (user) => {
-    //   1- Fetch for the record in Doctor's Table
     const q = query(doctorsRef, where("email", "==", user.email));
     await getDocs(q)
       .then(async (res) => {
@@ -82,6 +83,7 @@ export default function UserMainLayout({ children, isCartUpdated }) {
   useEffect(
     () =>
       onAuthStateChanged(auth, (user) => {
+        setLoadLog(false);
         getCartItems(user);
         getDBUser(user);
         showDoctorHeader(user);
@@ -101,9 +103,9 @@ export default function UserMainLayout({ children, isCartUpdated }) {
   };
 
   const removeSearchProduct = () => {
-    setSearchProduct('');
+    setSearchProduct("");
     setSearchResults([]);
-  }
+  };
 
   return (
     <div className="min-h-full">
@@ -256,6 +258,7 @@ export default function UserMainLayout({ children, isCartUpdated }) {
                         </NavLink>
 
                         <Menu as="div" className="relative  ml-4 flex-shrink-0">
+                          {/* {user?(<></>):(<></>)} */}
                           <div className="inline-flex">
                             <NavLink
                               to={
@@ -274,7 +277,7 @@ export default function UserMainLayout({ children, isCartUpdated }) {
                             >
                               Your Profile
                             </NavLink>
-                            {docCount?.length != 0 ? (
+                            {docCount && docCount?.length != 0 ? (
                               <NavLink
                                 to="/doctor/dashboard"
                                 className={({ isActive }) =>
@@ -312,19 +315,25 @@ export default function UserMainLayout({ children, isCartUpdated }) {
                         </Menu>
                       </>
                     ) : (
-                      <NavLink
-                        to="/sign_in"
-                        className={({ isActive }) =>
-                          c(
-                            isActive
-                              ? "bg-gray-900 text-white"
-                              : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                            "rounded-md bg-gray-800 px-3 py-2 text-sm font-medium text-white"
-                          )
-                        }
-                      >
-                        Login
-                      </NavLink>
+                      <>
+                        {loadLog ? (
+                          <></>
+                        ) : (
+                          <NavLink
+                            to="/sign_in"
+                            className={({ isActive }) =>
+                              c(
+                                isActive
+                                  ? "bg-gray-900 text-white"
+                                  : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                                "rounded-md bg-gray-800 px-3 py-2 text-sm font-medium text-white"
+                              )
+                            }
+                          >
+                            Login
+                          </NavLink>
+                        )}
+                      </>
                     )}
                   </div>
                 </div>
@@ -497,7 +506,11 @@ export default function UserMainLayout({ children, isCartUpdated }) {
         {searchResults.length ? (
           <>
             {searchResults.map((prod) => (
-              <SearchCard key={prod.item.id} removeSearchProduct={removeSearchProduct} obj={prod} />
+              <SearchCard
+                key={prod.item.id}
+                removeSearchProduct={removeSearchProduct}
+                obj={prod}
+              />
             ))}
           </>
         ) : (
