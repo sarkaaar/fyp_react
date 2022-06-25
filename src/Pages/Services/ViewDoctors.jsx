@@ -28,9 +28,11 @@ export default function ViewDoctors() {
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
+      
       setUser(currentUser);
+      setNotLogModal(true);
     });
-
+    
     getDoctor();
   }, []);
 
@@ -55,6 +57,7 @@ export default function ViewDoctors() {
         open={notLogModal}
         onClose={() => {
           setNotLogModal(false);
+          navigate("/sign_in");
         }}
       >
         <div className="absolute top-1/2 left-1/2 w-[400px] -translate-y-1/2 -translate-x-1/2 rounded-lg bg-white p-4 shadow-lg ">
