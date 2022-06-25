@@ -14,7 +14,7 @@ import CallIcon from "@mui/icons-material/Call";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { Button } from "@material-ui/core";
-// import "./App.css";
+import "./App.css";
 import "./index.css";
 import { db } from "../../../firebase-config";
 
@@ -91,7 +91,7 @@ function Videos({ mode, callId, setPage }) {
       const answerCandidates = collection(callDoc, "answerCandidates");
 
       setRoomId(callDoc.id);
-      // console.log()
+      console.log(callDoc.id);
 
       pc.onicecandidate = (event) => {
         if (event.candidate) {

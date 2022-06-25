@@ -29,6 +29,7 @@ export default function UserMainLayout({ children, isCartUpdated }) {
   const [user, setUser] = useState({});
   const [userProfile, setUserProfile] = useState();
   const [searchResults, setSearchResults] = useState([]);
+  const [searchProduct, setSearchProduct] = useState('');
   const fuseRef = useRef(null);
   const navigate = useNavigate();
   const cartCollection = collection(db, "cart");
@@ -72,7 +73,6 @@ export default function UserMainLayout({ children, isCartUpdated }) {
 
   useEffect(() => {
     if (!products) return;
-
     fuseRef.current = new Fuse(products, {
       threshold: 0.3,
       keys: ["name", "description"],
@@ -99,6 +99,11 @@ export default function UserMainLayout({ children, isCartUpdated }) {
   const logout = async () => {
     await signOut(auth);
   };
+
+  const removeSearchProduct = () => {
+    setSearchProduct('');
+    setSearchResults([]);
+  }
 
   return (
     <div className="min-h-full">
@@ -205,7 +210,9 @@ export default function UserMainLayout({ children, isCartUpdated }) {
                         placeholder="Search"
                         type="search"
                         autoComplete="off"
+                        value={searchProduct}
                         onChange={(e) => {
+                          setSearchProduct(e.target.value);
                           if (!fuseRef.current) return;
                           setSearchResults(
                             fuseRef.current.search(e.target.value)
@@ -490,7 +497,7 @@ export default function UserMainLayout({ children, isCartUpdated }) {
         {searchResults.length ? (
           <>
             {searchResults.map((prod) => (
-              <SearchCard key={prod.item.id} obj={prod} />
+              <SearchCard key={prod.item.id} removeSearchProduct={removeSearchProduct} obj={prod} />
             ))}
           </>
         ) : (

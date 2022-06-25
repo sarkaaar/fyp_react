@@ -16,12 +16,13 @@ export default function DocViewAppointments() {
   const [monthYear, setMonthYear] = useState([]);
   const [user, setUser] = useState();
 
-  useEffect(
+  useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      setUuse(user);
-    }),
-    [user]
-  );
+      setUser(user);
+      getAppointments(user);
+    });
+    getMonthYear();
+  }, [user]);
 
   const getVerticalPosition = (time) => {
     const [startTime, endTime] = time.split("-");
@@ -39,6 +40,8 @@ export default function DocViewAppointments() {
     weekStart.setDate(weekStart.getDate() - weekStart.getDay());
     weekEnd.setDate(weekEnd.getDate() - weekEnd.getDay() + 7);
 
+    console.log(user.email);
+
     const q = query(
       appointmentsRef,
       where("doctor.email", "==", user?.email),
@@ -55,10 +58,9 @@ export default function DocViewAppointments() {
       });
   };
 
-  useEffect(() => {
-    getAppointments();
-    getMonthYear();
-  }, []);
+  // useEffect(() => {
+
+  // }, []);
 
   const weekDates = useMemo(() => {
     const d = new Date();
