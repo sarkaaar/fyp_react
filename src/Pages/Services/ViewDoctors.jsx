@@ -30,7 +30,7 @@ export default function ViewDoctors() {
     onAuthStateChanged(auth, (currentUser) => {
       
       setUser(currentUser);
-      setNotLogModal(true);
+     
     });
     
     getDoctor();
