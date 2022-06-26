@@ -82,7 +82,6 @@ export default function EditProfile({ data }) {
 
         <button
           class="inline-block rounded bg-blue-600 px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg"
-
           onClick={() => {
             updateProfile(id);
           }}
@@ -94,7 +93,12 @@ export default function EditProfile({ data }) {
           className="text-lg font-medium leading-6 text-red-600"
         >
           For more changes contact admin{" "}
-          <h1 className="text-blue-500">ammarzahid335@gmail.com</h1>
+          <button
+            onClick={() => (window.location = "mailto:ammarzahid335@gmail.com")}
+            className="text-blue-500"
+          >
+            ammarzahid335@gmail.com
+          </button>
         </h2>
       </div>
       <Modal
