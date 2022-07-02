@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import DoctorPic from "../../assets/images/doctor.png";
 
 export default function DoctorCard(person) {
+  const [user, setUser] = useState({});
+
+  const [notLogModal, setNotLogModal] = useState(false);
+  const navigate = useNavigate();
   useEffect(() => {
     return () => {
       // console.log(person.id);
@@ -10,7 +14,9 @@ export default function DoctorCard(person) {
   }, []);
 
   return (
+   
     <div className="m-4 w-full max-w-sm rounded-lg border border-gray-200 bg-white bg-gradient-to-r from-gray-100 via-white to-gray-100 shadow-md">
+       if (user) {
       <div className="flex flex-col items-center pb-10">
         <img
           className="mb-3 h-24 w-24 rounded-full pt-2 shadow-lg"
@@ -59,6 +65,49 @@ export default function DoctorCard(person) {
           </a>
         </div>
       </div>
+    } else setNotLogModal(true);
+      <Modal
+        open={notLogModal}
+        onClose={() => {
+          setNotLogModal(false);
+          navigate("/sign_in");
+        }}
+      >
+        <div className="absolute top-1/2 left-1/2 w-[400px] -translate-y-1/2 -translate-x-1/2 rounded-lg bg-white p-4 shadow-lg ">
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-yellow-100">
+            <svg
+              className="h-8 w-8 text-yellow-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+          </div>
+          <hr className="my-2 bg-black " />
+          <h1 className="mb-2 text-center text-lg font-bold">Warning!</h1>
+          <h1 className="mb-4 text-center text-lg font-bold">
+            You are not logged in. Please login to continue.
+          </h1>
+          <div className="flex items-center justify-center">
+            <Link
+              to="/sign_in"
+              className="flex h-12 w-1/3 items-center justify-center rounded-md bg-blue-600 text-white shadow-md shadow-slate-400 hover:bg-blue-700 hover:drop-shadow-lg focus:shadow-none"
+              onClick={() => {
+                setNotLogModal(false);
+              }}
+            >
+              Sign In
+            </Link>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }
