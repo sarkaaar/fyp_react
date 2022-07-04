@@ -95,8 +95,13 @@ export default function Product() {
       user: user?.email,
     };
 
-    if (user) {await addDoc(reviewsRef, newComment).then(setComModal(true));}
-    else setNotLogModal(true);
+    user
+      ? await addDoc(reviewsRef, newComment).then(() => {
+          setComModal(true);
+          // window.location.reload(false);
+        })
+      : setNotLogModal(true);
+
     getComment();
   };
 
@@ -373,7 +378,7 @@ export default function Product() {
                         <button className=" ml-4 flex  h-12 w-1/12 items-center justify-center rounded-md border-0 bg-gray-200 p-0 text-gray-500">
                           <svg
                             role="status"
-                            className="mr-2 h-8 w-8 animate-spin pl-1 fill-blue-600 text-gray-200 dark:text-gray-600"
+                            className="mr-2 h-8 w-8 animate-spin fill-blue-600 pl-1 text-gray-200 dark:text-gray-600"
                             viewBox="0 0 100 101"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
@@ -614,6 +619,9 @@ export default function Product() {
               className="h-12 w-1/3 bg-blue-600 shadow-md shadow-slate-400 hover:bg-blue-700 hover:drop-shadow-lg focus:shadow-none"
               onClick={() => {
                 setComModal(false);
+                // react.location.reload(false);
+                // getComment()
+                window.location.reload(false);
               }}
             >
               OK
