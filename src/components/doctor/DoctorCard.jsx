@@ -1,22 +1,23 @@
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import DoctorPic from "../../assets/images/doctor.png";
+import Modal from "@mui/material/Modal";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../firebase-config";
 
 export default function DoctorCard(person) {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState();
 
   const [notLogModal, setNotLogModal] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
-    return () => {
-      // console.log(person.id);
-    };
-  }, []);
+    onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+  }, [user]);
 
   return (
-   
     <div className="m-4 w-full max-w-sm rounded-lg border border-gray-200 bg-white bg-gradient-to-r from-gray-100 via-white to-gray-100 shadow-md">
-       if (user) {
       <div className="flex flex-col items-center pb-10">
         <img
           className="mb-3 h-24 w-24 rounded-full pt-2 shadow-lg"
@@ -39,6 +40,7 @@ export default function DoctorCard(person) {
           Fee: {person?.obj.fees}
           {" rupees"}
         </span>
+
         <div className="mt-4 flex space-x-3 lg:mt-6">
           <Link
             to={"/maps"}
@@ -57,15 +59,27 @@ export default function DoctorCard(person) {
           >
             View On Map
           </a> */}
-          <a
-            href={`/appointments/new/${person?.obj.id}`}
-            className="inline-flex items-center rounded-lg bg-gradient-to-r from-gray-400 to-gray-900 py-2 px-4 text-center text-sm font-medium text-white shadow-lg shadow-gray-900/50 transition duration-150 ease-in-out hover:scale-110 focus:shadow-none focus:outline-none"
-          >
-            Book Appointment
-          </a>
+
+          {user ? (
+            <Link
+              to={`/appointments/new/${person?.obj.id}`}
+              className="inline-flex items-center rounded-lg bg-gradient-to-r from-gray-400 to-gray-900 py-2 px-4 text-center text-sm font-medium text-white shadow-lg shadow-gray-900/50 transition duration-150 ease-in-out hover:scale-110 focus:shadow-none focus:outline-none"
+            >
+              Book Appointment
+            </Link>
+          ) : (
+            <button
+              className="inline-flex items-center rounded-lg bg-gradient-to-r from-gray-400 to-gray-900 py-2 px-4 text-center text-sm font-medium text-white shadow-lg shadow-gray-900/50 transition duration-150 ease-in-out hover:scale-110 focus:shadow-none focus:outline-none"
+              onClick={() => {
+                setNotLogModal(true);
+              }}
+            >
+              Book Appointment
+            </button>
+          )}
         </div>
       </div>
-    } else setNotLogModal(true);
+
       <Modal
         open={notLogModal}
         onClose={() => {
