@@ -62,7 +62,7 @@ const secondaryNavigation = [
 
 export default function UserLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [docCount, setDocCount] = useState([]);
+  const [docCount, setDocCount] = useState();
   // const [user, setUser] = useState();
   const authState = useUserRole("user");
   const navigate = useNavigate();
@@ -201,7 +201,7 @@ export default function UserLayout({ children }) {
                           {item.name}
                         </NavLink>
                       ))}
-                      {docCount?.length === 0 ? (
+                      {docCount && docCount?.length === 0 ? (
                         <NavLink
                           to="/profile"
                           className="group flex items-center rounded-md px-2 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"

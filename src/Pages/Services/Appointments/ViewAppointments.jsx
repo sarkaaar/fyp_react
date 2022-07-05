@@ -4,7 +4,7 @@ import Modal from "@material-ui/core/Modal";
 import {
   collection,
   getDocs,
-  doc,  
+  doc,
   query,
   where,
   deleteDoc,
@@ -170,6 +170,26 @@ function Lists({ setPage, joinCode, setJoinCode }) {
         )}
       </div>
       <Footer />
+
+
+      <Modal
+        open={open}
+
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <div className="absolute top-1/2 left-1/2 w-[500px] -translate-y-1/2 -translate-x-1/2 rounded-lg bg-white p-4 shadow-lg">
+          <h1 className="p-4 text-center text-xl font-bold">
+           Cancel appointment Successfully
+          </h1>
+          <div className="flex justify-center">
+            <Button variant="outlined" onClick={()=> setOpen(false)} >
+              Close
+            </Button>
+          </div>
+        </div>
+      </Modal> 
+
     </UseMainLayout>
   );
 }
@@ -325,9 +345,9 @@ function Videos({ mode, callId, setPage }) {
   };
 
   return (
-    <div className="flex items-center whitespace-nowrap bg-whitetext-black">
+    <div className="bg-whitetext-black flex items-center whitespace-nowrap">
       <video
-        className="absolute bottom-[40px] right-[40px] w-[210px] rounded-lg z-10"
+        className="absolute bottom-[40px] right-[40px] z-10 w-[210px] rounded-lg"
         ref={localRef}
         autoPlay
         playsInline
@@ -340,12 +360,12 @@ function Videos({ mode, callId, setPage }) {
         playsInline
       />
 
-      <div className="absolute left-1/2 bottom-10 -translate-x-1/2 flex z-10">
+      <div className="absolute left-1/2 bottom-10 z-10 flex -translate-x-1/2">
         <button
           type="button"
           onClick={hangUp}
           disabled={!webcamActive}
-          className="mr-12 bg-red-600 w-20 h-20 rounded-full text-white button"
+          className="button mr-12 h-20 w-20 rounded-full bg-red-600 text-white"
         >
           <CallIcon />
         </button>
@@ -353,12 +373,12 @@ function Videos({ mode, callId, setPage }) {
 
       {!webcamActive && (
         <div className="absolute inset-0 z-30 bg-transparent bg-gray-600">
-          <div className="absolute top-1/2	left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg p-10 bg-white">
+          <div className="absolute top-1/2	left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg bg-white p-10">
             <h3>Turn on your camera and microphone and start the call</h3>
-            <div color="primary" className="flex gap-4 mt-8">
+            <div color="primary" className="mt-8 flex gap-4">
               <button
                 type="button"
-                className="inline-block py-4 w-full rounded-lg bg-indigo-600 text-white cursor-pointer"
+                className="inline-block w-full cursor-pointer rounded-lg bg-indigo-600 py-4 text-white"
                 variant="contained"
                 onClick={() => setPage("home")}
               >
@@ -366,7 +386,7 @@ function Videos({ mode, callId, setPage }) {
               </button>
               <button
                 type="button"
-                className="inline-block py-4 w-full rounded-lg bg-indigo-600 text-white cursor-pointer"
+                className="inline-block w-full cursor-pointer rounded-lg bg-indigo-600 py-4 text-white"
                 onClick={setupSources}
                 fullWidth
               >

@@ -63,7 +63,7 @@ export default function CheckoutAppointment(params) {
   };
 
   return (
-    <div>
+    <div className="">
       <div className="flex gap-4 py-12 px-4 sm:px-6 lg:px-8">
         <div>
           <div>
@@ -191,19 +191,15 @@ export default function CheckoutAppointment(params) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <div
-          className="absolute top-1/2	 left-1/2 mt-8 w-96 rounded-lg border-2 border-black bg-white p-4 shadow-lg "
-          sx={{
-            transform: "translate(-50%, -50%)",
-          }}
-        >
-          <div className="absolute top-1/2 left-1/2 w-[400px] -translate-y-1/2 -translate-x-1/2 rounded-lg bg-white p-4 shadow-lg">
-            <h1 className="p-4 text-center text-xl font-bold">
-              Appointment is Created Successfully
-            </h1>
-          </div>
-          <Button onClick={handleClose}> Close</Button>
-        </div>
+        <div className="absolute top-1/2 left-1/2 w-[500px] -translate-y-1/2 -translate-x-1/2 rounded-lg bg-white p-4 shadow-lg">
+          <h1 className="p-4 text-center text-xl font-bold">
+            Appointment is Created Successfully
+          </h1>
+          <div className="flex justify-center">
+          <Button variant="outlined" onClick={handleClose}>
+            Close
+          </Button>
+        </div></div>
       </Modal>
     </div>
   );

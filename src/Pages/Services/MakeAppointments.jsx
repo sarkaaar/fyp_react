@@ -225,7 +225,7 @@ export default function MakeAppointments() {
         open={paymentOpen}
         onClose={handlePaymentClose}
       >
-        <div className="absolute bg-white  h-10/12 overflow-auto flex mx-96 align-middle shadow-lg  ">
+        <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 rounded-lg bg-white p-4 shadow-lg  ">
           <CheckoutAppointment obj={{ user, doctor, date, time }} />
         </div>
       </Modal>

@@ -86,7 +86,7 @@ export default function Product() {
     calRating();
   }, [getComments]);
 
-  const addComment = async (data) => {
+  const addComment = async (data, event) => {
     const newComment = {
       comment: data.reviews,
       prod_id: prod?.id,
@@ -95,12 +95,13 @@ export default function Product() {
       user: user?.email,
     };
 
-    if (user) {
-      await addDoc(reviewsRef, newComment).then(() => {
-        setComModal(true);
-        event.target.reset();
-      });
-    } else setNotLogModal(true);
+    user
+      ? await addDoc(reviewsRef, newComment).then(() => {
+          setComModal(true);
+          event.target.reset();
+        })
+      : setNotLogModal(true);
+
     getComment();
   };
 
@@ -377,7 +378,7 @@ export default function Product() {
                         <button className=" ml-4 flex  h-12 w-1/12 items-center justify-center rounded-md border-0 bg-gray-200 p-0 text-gray-500">
                           <svg
                             role="status"
-                            className="mr-2 h-8 w-8 animate-spin pl-1 fill-blue-600 text-gray-200 dark:text-gray-600"
+                            className="mr-2 h-8 w-8 animate-spin fill-blue-600 pl-1 text-gray-200 dark:text-gray-600"
                             viewBox="0 0 100 101"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
@@ -449,8 +450,9 @@ export default function Product() {
                   </div>
                   <form
                     className="flex flex-col"
-                    onSubmit={handleSubmit((data) => {
-                      addComment(data);
+                    onSubmit={handleSubmit((data, event) => {
+                      addComment(data, event);
+                      // event.target.reset();
                     })}
                     autoComplete="off"
                   >
@@ -585,7 +587,7 @@ export default function Product() {
           </div>
         </div>
       </Modal>
-      {/* added to cart succesfullt modal  */}
+      {/* comment successfull  */}
       <Modal
         open={comModal}
         onClose={() => {
