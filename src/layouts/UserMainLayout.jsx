@@ -84,8 +84,7 @@ export default function UserMainLayout({ children, isCartUpdated }) {
     () =>
       onAuthStateChanged(auth, (user) => {
         if (user)
-          if (user?.emailVerified) navigate("/");
-          else navigate("/verify");
+          if (!user?.emailVerified) navigate("/verify");
 
         console.log(user?.emailVerified);
         setLoadLog(false);

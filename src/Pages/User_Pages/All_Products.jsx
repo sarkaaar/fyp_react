@@ -17,7 +17,6 @@ import Footer from "./Components/Footer";
 import UseMainLayout from "../../layouts/UserMainLayout";
 
 export default function Products() {
-
   const [categories, setCategories] = useState();
   const [currentCategory, setCurrentCategory] = useState("");
   const [products, setProducts] = useState([]);
@@ -56,7 +55,10 @@ export default function Products() {
       orderBy("costPrice", "asc")
     );
     const documentSnapshots = await getDocs(first).then((doc) => {
-      const pageData = doc.docs.map((prods) => ({...prods.data(), id: prods.id}));
+      const pageData = doc.docs.map((prods) => ({
+        ...prods.data(),
+        id: prods.id,
+      }));
       const lastVisible = doc.docs[doc.docs.length - 1];
 
       setPaginateProducts(pageData);
@@ -77,7 +79,10 @@ export default function Products() {
       const isCollectionEmpty = doc.size === 0;
       if (!isCollectionEmpty) {
         setMoreProductLoader(false);
-        const pageData = doc.docs.map((prods) => ({...prods.data(), id: prods.id}));
+        const pageData = doc.docs.map((prods) => ({
+          ...prods.data(),
+          id: prods.id,
+        }));
         const lastVisible = doc.docs[doc.docs.length - 1];
 
         setPaginateProducts((paginateProducts) => [
@@ -96,11 +101,11 @@ export default function Products() {
   return (
     <UseMainLayout>
       <div>
-        <div className="pt-20">
-          <h1 className="flex bg-slate-100 pl-96 font-bold">
+        <div className="pt-20 flex flex-col justify-center">
+          <h1 className="sm:flex bg-slate-100 pl-20 font-bold">
             Categories <ArrowForwardIcon /> {currentCategory}
           </h1>
-          <div className=" flex bg-slate-100">
+          <div className="bg-slate-100 sm:flex">
             <div className="w-96 p-16 text-black ">
               <div className="flex w-56 flex-col items-start rounded-md bg-white shadow-lg ring-1 ">
                 <h1 className="block w-full px-4 py-2 text-left text-lg font-bold text-gray-700">
@@ -114,51 +119,12 @@ export default function Products() {
                       setCurrentCategory(item.name);
                     }}
                   >
-                    {" "}
                     <span className="w-full text-left">{item?.name}</span>
                   </Button>
                 ))}
               </div>
-              {/* Price component */}
-              {/* <div className=" mt-2 w-56 rounded-md shadow-lg bg-white ring-1">
-              <p className="text-gray-700 block font-bold px-4 py-2 text-lg">
-                Price
-              </p>
-              <div className="text-gray-700  px-4 py-2 text-sm flex">
-                <input
-                  placeholder="Min"
-                  style={{ width: '60px', height: '30px' }}
-                />
-                <p className="text-lg text-center pl-4 pr-4 ">-</p>
-                <input
-                  placeholder="Max"
-                  value={value}
-                  style={{ width: '60px', height: '30px' }}
-                />
-              </div>
-              <div className="text-gray-700 block px-4 py-2 text-sm">
-                <label htmlFor="customRange2" className="form-label">
-                  Select Range
-                </label>
-                <div className="flex">
-                  <p>0</p>
-
-                  <input
-                    type="range"
-                    value={value}
-                    onChange={(e) => {
-                      setValue(e.target.value);
-                    }}
-                  />
-
-                  <p>100</p>
-                </div>
-              </div>
-            </div> */}
             </div>
-
             <hr />
-
             {loader ? (
               <div className="w-full">
                 <div className="flex h-full items-center justify-center">
@@ -192,7 +158,7 @@ export default function Products() {
                     </div>
                   ))}
                 </div>
-                <div className="h-full w-96" />
+                {/* <div className="h-full w-96" /> */}
               </div>
             )}
           </div>

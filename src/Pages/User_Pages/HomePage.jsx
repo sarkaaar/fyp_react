@@ -49,14 +49,14 @@ export default function HomePage() {
       <Banner />
       <hr />
       {loader ? (
-        <Loader />
+        <Loader className="min-h-screen" />
       ) : (
         <>
           {categories?.map((item) => (
             <div className="flex justify-center" key={item.id}>
               <div>
                 <h1 className="py-4 text-xl font-extrabold">{item?.name}</h1>
-                <div className="overflow-x-scroll lg:w-[100rem]">
+                <div className="overflow-x-scroll lg:w-2xl 2xl:w-[1400px] xl:w-[1100px] lg:w-[900px] md:w-[700px] sm:w-[600px] ">
                   <div className="flex w-fit">
                     {product?.map((product) => (
                       <span key={product.id}>
