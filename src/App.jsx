@@ -40,7 +40,7 @@ import Services from "./Pages/Services/Services";
 import Dashboard from "./Pages/Admin_Pages/Dashboard";
 import Users from "./Pages/Admin_Pages/Users";
 import NoPermission from "./Pages/Admin_Pages/NoPermission";
-import NewDashBoard from "./Pages/Admin_Pages/NewDashBoard";
+// import NewDashBoard from "./Pages/Admin_Pages/NewDashBoard";
 import AddDoctor from "./Pages/Admin_Pages/AddDoctor";
 import Inventory from "./Pages/Admin_Pages/Inventory";
 import AdminOrders from "./Pages/Admin_Pages/AdminOrders";
@@ -48,7 +48,7 @@ import ViewDoctors from "./Pages/Admin_Pages/ViewDoctors";
 import Categories from "./Pages/Admin_Pages/Categories";
 import AdminProfile from "./Pages/Admin_Pages/AdminProfile";
 import ReturnedProducts from "./Pages/Admin_Pages/ReturnedProducts";
-import Reports from "./Pages/Admin_Pages/Reports";
+// import Reports from "./Pages/Admin_Pages/Reports";
 import Complaints from "./Pages/Admin_Pages/Complaints";
 
 // Doctors Pages
@@ -126,13 +126,13 @@ function App() {
 
           {/* Admin Panel */}
           <Route exact path="/admin/dashboard" element={<Dashboard />} />
-          <Route exact path="/admin/newdashboard" element={<NewDashBoard />} />
+          {/* <Route exact path="/admin/newdashboard" element={<NewDashBoard />} /> */}
           <Route exact path="/admin/profile" element={<AdminProfile />} />
           <Route exact path="/admin/addDoctor" element={<AddDoctor />} />
           <Route exact path="/admin/inventory" element={<Inventory />} />
           <Route exact path="/admin/orders" element={<AdminOrders />} />
           <Route exact path="/admin/viewDoctor" element={<ViewDoctors />} />
-          <Route exact path="/admin/reports" element={<Reports />} />
+          {/* <Route exact path="/admin/reports" element={<Reports />} /> */}
           <Route exact path="/admin/users/info" element={<Users />} />
           <Route exact path="/admin/productReturn" element={<ReturnedProducts />} />
           <Route exact path="/admin/categories" element={<Categories />} />

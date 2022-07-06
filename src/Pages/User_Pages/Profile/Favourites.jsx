@@ -39,9 +39,10 @@ export default function Favourites() {
   const DeleteFavourites = async (id) => {
     console.log(id);
     const favr = doc(db, "favourites", id);
-    await deleteDoc(favr).then(()=>{setOpen(true)})
+    await deleteDoc(favr).then(() => {
+      setOpen(true);
+    });
     getFavourites(user);
-
   };
 
   useEffect(() => {
@@ -70,9 +71,6 @@ export default function Favourites() {
                 <div className="mt-6 flex justify-center">
                   <Button
                     onClick={() => {
-                      
-                     
-
                       DeleteFavourites(item?.id);
                     }}
                   >
@@ -89,7 +87,6 @@ export default function Favourites() {
         open={open}
         onClose={() => {
           setOpen(false);
-          // window.location.reload(false);
         }}
       >
         <div className="absolute top-1/2 left-1/2 w-[400px] -translate-y-1/2 -translate-x-1/2 rounded-lg bg-white p-4 shadow-lg">

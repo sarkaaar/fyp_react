@@ -47,7 +47,6 @@ export default function Product() {
   const [getComments, setGetComments] = useState([]);
   const [lastComment, setLastComment] = useState(0);
   const [favourite, setFavourite] = useState("");
-  // const [loader, setLoader] = useState(false);
   const [addStatus, setAddStatus] = useState(false);
   const [totalRating, setTotalRating] = useState(0);
   const [moreCommentLoader, setMoreCommentLoader] = useState(false);
@@ -69,17 +68,20 @@ export default function Product() {
     if (qty >= 1) setQty(qty - 1);
   };
 
+  const getProduct = async () => {
+    const x = await getDoc(doc(db, `products/${id}`));
+    setProduct({ id: x.id, ...x.data() });
+    console.log({ id: x.id, ...x.data() });
+  };
+
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       getFav(currentUser);
     });
-    const getProduct = async () => {
-      const x = await getDoc(doc(db, `products/${id}`));
-      setProduct({ id: x.id, ...x.data() });
-    };
-    getComment();
+
     getProduct();
+    getComment();
   }, [user, id]);
 
   useEffect(() => {
@@ -95,12 +97,12 @@ export default function Product() {
       user: user?.email,
     };
 
-    user
-      ? await addDoc(reviewsRef, newComment).then(() => {
-          setComModal(true);
-          event.target.reset();
-        })
-      : setNotLogModal(true);
+    if (user)
+      await addDoc(reviewsRef, newComment).then(() => {
+        setComModal(true);
+        event.target.reset();
+      });
+    else setNotLogModal(true);
 
     getComment();
   };
@@ -318,20 +320,20 @@ export default function Product() {
                     <p className="leading-relaxed">{prod?.description}</p>
                     <div className="mt-6 mb-5 flex items-center justify-center border-b-2 border-gray-200 pb-5">
                       {/* Quantity Picker */}
-                      <div className="border-box m-4 flex rounded bg-gradient-to-r from-violet-200 via-white to-violet-200">
+                      <div className="m-4 flex rounded border-indigo-600 border-2">
                         <button
-                          className="bg-transparent active:bg-purple-200"
+                          className=" hover:bg-indigo-100 active:bg-indigo-300 p-4"
                           onClick={decrementCounter}
                         >
                           <RemoveIcon className="text-black" />
                         </button>
                         <div className="w-20">
-                          <span className="inline-block px-6 pt-3 align-middle text-xl">
+                          <h1 className="border-indigo-600 border-l-2 border-r-2 p-4 px-6 justify justify-center align-middle text-xl">
                             {qty}
-                          </span>
+                          </h1>
                         </div>
                         <button
-                          className="bg-transparent active:bg-purple-200"
+                          className="hover:bg-indigo-100 active:bg-indigo-300 p-4"
                           onClick={incrementCounter}
                         >
                           <AddIcon className="text-black" />
@@ -354,7 +356,7 @@ export default function Product() {
                       {addStatus ? (
                         <button
                           type="button"
-                          className=" flex h-12 w-11/12 items-center justify-center rounded-md border border-transparent bg-gradient-to-r from-indigo-700 to-sky-500 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                          className="flex h-12 w-11/12 items-center justify-center rounded-md border border-transparent bg-indigo-700 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                           disabled
                         >
                           <div className="flex gap-4">
@@ -365,14 +367,28 @@ export default function Product() {
                           </div>
                         </button>
                       ) : (
-                        <button
-                          onClick={() => {
-                            addToCart();
-                          }}
-                          className=" flex h-12 w-11/12 items-center justify-center rounded-md border border-transparent bg-gradient-to-r from-indigo-700 to-sky-500 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                        >
-                          Add to Cart
-                        </button>
+                        <>
+                          {prod?.stock <= 0 ? (
+                            <button
+                              // onClick={() => {
+                              //   addToCart();
+                              // }}
+                              disabled
+                              className=" flex h-12 w-11/12 items-center justify-center rounded-md  bg-red-600 py-3 px-8 text-base font-medium text-white "
+                            >
+                              ITEM OUT OF STOCK
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => {
+                                addToCart();
+                              }}
+                              className="flex h-12 w-11/12 items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                            >
+                              ADD TO CART
+                            </button>
+                          )}
+                        </>
                       )}
                       {load ? (
                         <button className=" ml-4 flex  h-12 w-1/12 items-center justify-center rounded-md border-0 bg-gray-200 p-0 text-gray-500">
@@ -478,7 +494,7 @@ export default function Product() {
                     <div className="mt-2 flex justify-end">
                       <button
                         type="submit"
-                        className="h-12 w-36 border border-solid border-blue-600 bg-blue-600 text-xs text-white shadow-lg shadow-slate-300 transition delay-100 duration-300 ease-in-out hover:bg-white hover:text-blue-700 hover:drop-shadow-lg focus:shadow-none active:scale-75"
+                        className="flex h-12 w-32 items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                       >
                         COMMENT
                       </button>
@@ -507,6 +523,7 @@ export default function Product() {
                         </div>
                       ))}
                     </>
+
                     {moreCommentLoader ? (
                       <div className="w-full">
                         <div className="flex h-full items-center justify-center">

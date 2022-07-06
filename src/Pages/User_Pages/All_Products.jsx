@@ -158,7 +158,6 @@ export default function Products() {
                     </div>
                   ))}
                 </div>
-                {/* <div className="h-full w-96" /> */}
               </div>
             )}
           </div>
