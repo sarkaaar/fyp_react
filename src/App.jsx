@@ -58,6 +58,7 @@ import Meeting from "./Pages/Doctor_Pages/Meeting";
 import DocViewAppointments from "./Pages/Doctor_Pages/DocViewAppointments";
 import Live from "./Pages/Doctor_Pages/Live/Live";
 import DoctorProfile from "./Pages/Doctor_Pages/DoctorProfile";
+import VerifyEmail from "./Pages/Auth/VerifyEmail";
 
 // const stripePromise = loadStripe(
 //   "pk_test_51LCcYcAtUsZyAFJtrJZRVNFMaPgqGTV9sVJJwKyWUU3npj161ZhFQ8U73VXjdzv86HlZo4W6uCfswJ7AvyJqRlb800sS3uCvid"
@@ -99,9 +100,7 @@ function App() {
           <Route exact path="/sign_in" element={<SignIn />} />
           <Route exact path="/forget-password" element={<ForgetPassword />} />
           <Route exact path="/sign_up" element={<SignUp />} />
-          {/* <Elements stripe={stripePromise} options={options}> */}
-            <Route exact path="/checkout" element={<Checkout />} />
-          {/* </Elements> */}
+          <Route exact path="/checkout" element={<Checkout />} />
           <Route exact path="/appointment/checkout" element={<CheckoutAppointment />} />
           <Route exact path="/products" element={<Products />} />
           <Route exact path="/product/:id" element={<Product />} />
@@ -116,6 +115,8 @@ function App() {
           <Route exact path="/profile/appointments/all" element={<UserAppointments />} />
           <Route exact path="/profile/ProductReturns" element={<ProductReturns />} />
           <Route exact path="/profile/favourites" element={<Favourites />} />
+          
+          <Route exact path="/verify" element={<VerifyEmail />} />
 
           {/* User Clinical */}
           <Route exact path="/appointments/new/:id" element={<MakeAppointments />} />

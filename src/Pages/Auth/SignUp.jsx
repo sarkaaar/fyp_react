@@ -3,7 +3,6 @@ import GoogleIcon from "@mui/icons-material/Google";
 import { useState, useEffect } from "react";
 import {
   onAuthStateChanged,
-  signOut,
   createUserWithEmailAndPassword,
   getAuth,
   signInWithPopup,
@@ -15,7 +14,6 @@ import { collection, addDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase-config";
 import { ArrowSmLeftIcon, EyeOffIcon, EyeIcon } from "@heroicons/react/outline";
 import { useForm } from "react-hook-form";
-// import Header from "./Components/Header";
 
 export default function SignUp() {
   const [user, setUser] = useState();
@@ -148,7 +146,7 @@ export default function SignUp() {
               )}
 
               <input
-                className="mb-2 w-full rounded-md border border-solid border-slate-400"
+                className="mb-2 w-full p-2 rounded-md border border-solid border-slate-400"
                 placeholder="Phone Number *"
                 {...register("phoneNumber", {
                   required: "Phone Number is required",
@@ -263,113 +261,6 @@ export default function SignUp() {
           </div>
           <hr />
 
-          {/* <form
-            className="mt-8 space-y-6"
-            onSubmit={(e) => {
-              e.preventDefault();
-            }}
-          >
-            <div className="-space-y-px rounded-md shadow-sm">
-              <TextField
-                style={{ paddingBottom: "15px" }}
-                fullWidth
-                required
-                label="Name"
-                type="text"
-                value={name}
-                helperText="Only characters allowed"
-                onChange={(e) => {
-                  setName(e.target.value.replace(/\d+/g, ""));
-                }}
-              />
-              <TextField
-                style={{ paddingBottom: "15px" }}
-                fullWidth
-                required
-                label="Email Address"
-                type="email"
-                value={email}
-                inputProps={{
-                  pattern: "^[w-.]+@([w-]+.)+[w-]{2,4}$",
-                  title:
-                    "Please enter a valid email address. Example: abc@gmail.com",
-                }}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-              />
-              <TextField
-                style={{ paddingBottom: "15px" }}
-                fullWidth
-                required
-                label="Phone Number"
-                type="text"
-                value={phone}
-                helperText="Type 11 digit numbers Only "
-                inputProps={{
-                  pattern: "\\d{11}",
-                  title: "Please enter correct phone number",
-                }}
-                onChange={(e) => {
-                  setPhone(e.target.value);
-                }}
-              />
-              <TextField
-                style={{ paddingBottom: "15px" }}
-                fullWidth
-                required
-                type="password"
-                label="Password"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-              />
-              <TextField
-                style={{ paddingBottom: "15px" }}
-                fullWidth
-                required
-                label="Confirm Password"
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => {
-                  setConfirmPassword(e.target.value);
-                }}
-              />
-              <div className="m-2">
-                {confirmPassword === password ? (
-                  <h1> </h1>
-                ) : (
-                  <h1 className="font-semibold text-red-700">
-                    Password doesn't Match
-                  </h1>
-                )}
-              </div>
-            </div>
-            {errorMessage !== "" ? (
-              <h1 className="mb-2 font-bold text-red-600">{errorMessage}</h1>
-            ) : (
-              <></>
-            )}
-            <div>
-              <button
-                onClick={signUp}
-                className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-              >
-                Sign Up
-              </button>
-            </div>
-            <div className="flex space-x-2">
-              <p>Already Have an Account </p>
-              <a
-                href="/sign_in"
-                className="font-medium text-indigo-600 hover:text-indigo-500"
-              >
-                Sign In
-              </a>
-            </div>
-            <hr />
-          </form> */}
           <div className="">
             <h2 className="m-auto w-6">Or</h2>
             <button

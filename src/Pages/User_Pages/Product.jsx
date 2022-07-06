@@ -484,9 +484,7 @@ export default function Product() {
                       </button>
                     </div>
                   </form>
-
                   <hr className="m-2 border-b-2 border-gray-300" />
-
                   <div className="mt-8">
                     <>
                       <h2 className="text-xl font-extrabold">

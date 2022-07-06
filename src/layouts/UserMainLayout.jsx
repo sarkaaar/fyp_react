@@ -38,7 +38,7 @@ export default function UserMainLayout({ children, isCartUpdated }) {
   const [loadLog, setLoadLog] = useState(true);
 
   const getCartItems = async (user) => {
-    if (!user.email) return;
+    if (!user?.email) return;
     const q = await query(cartCollection, where("user", "==", user.email));
     await getDocs(q).then((res) => {
       setCartItems(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
@@ -83,6 +83,11 @@ export default function UserMainLayout({ children, isCartUpdated }) {
   useEffect(
     () =>
       onAuthStateChanged(auth, (user) => {
+        if (user)
+          if (user?.emailVerified) navigate("/");
+          else navigate("/verify");
+
+        console.log(user?.emailVerified);
         setLoadLog(false);
         getCartItems(user);
         getDBUser(user);

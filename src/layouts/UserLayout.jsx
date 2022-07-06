@@ -55,7 +55,6 @@ const navigation = [
 ];
 
 const secondaryNavigation = [
-  // { name: "Profile", href: "/profile", icon: UserCircleIcon },
   { name: "Home", href: "/", icon: HomeIcon },
   { name: "Logout", href: "/sign_in", icon: LogoutIcon },
 ];
@@ -63,7 +62,7 @@ const secondaryNavigation = [
 export default function UserLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [docCount, setDocCount] = useState();
-  // const [user, setUser] = useState();
+
   const authState = useUserRole("user");
   const navigate = useNavigate();
 
@@ -85,7 +84,7 @@ export default function UserLayout({ children }) {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       getDoctor(user);
-      // setUser(user);
+    
     });
 
     if (authState === "error") {
