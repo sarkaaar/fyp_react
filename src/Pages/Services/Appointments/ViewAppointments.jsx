@@ -19,11 +19,7 @@ import Footer from "../../User_Pages/Components/Footer";
 import UseMainLayout from "../../../layouts/UserMainLayout";
 import { useRef, useState, useEffect } from "react";
 import CallIcon from "@mui/icons-material/Call";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { Button } from "@material-ui/core";
-// import { useParams } from "react-router-dom";
-// import Loader from "../../../components/Loader/Loader";
 
 function Lists({ setPage, joinCode, setJoinCode }) {
   const appointmentsRef = collection(db, "appointments");
@@ -267,47 +263,48 @@ function Videos({ mode, callId, setPage }) {
 
     setWebcamActive(true);
 
-    if (mode === "create") {
-      const callDoc = doc(collection(db, "calls"));
-      const offerCandidates = collection(callDoc, "offerCandidates");
-      const answerCandidates = collection(callDoc, "answerCandidates");
+    // if (mode === "create") {
+    //   const callDoc = doc(collection(db, "calls"));
+    //   const offerCandidates = collection(callDoc, "offerCandidates");
+    //   const answerCandidates = collection(callDoc, "answerCandidates");
 
-      setRoomId(callDoc.id);
-      console.log(callDoc.id);
+    //   setRoomId(callDoc.id);
+    //   console.log(callDoc.id);
 
-      pc.onicecandidate = (event) => {
-        if (event.candidate) {
-          addDoc(offerCandidates, event.candidate.toJSON());
-        }
-      };
+    //   pc.onicecandidate = (event) => {
+    //     if (event.candidate) {
+    //       addDoc(offerCandidates, event.candidate.toJSON());
+    //     }
+    //   };
 
-      const offerDescription = await pc.createOffer();
-      await pc.setLocalDescription(offerDescription);
+    //   const offerDescription = await pc.createOffer();
+    //   await pc.setLocalDescription(offerDescription);
 
-      const offer = {
-        sdp: offerDescription.sdp,
-        type: offerDescription.type,
-      };
+    //   const offer = {
+    //     sdp: offerDescription.sdp,
+    //     type: offerDescription.type,
+    //   };
 
-      await setDoc(callDoc, { offer });
+    //   await setDoc(callDoc, { offer });
 
-      onSnapshot(callDoc, (snapshot) => {
-        const data = snapshot.data();
-        if (!pc.currentRemoteDescription && data?.answer) {
-          const answerDescription = new RTCSessionDescription(data.answer);
-          pc.setRemoteDescription(answerDescription);
-        }
-      });
+    //   onSnapshot(callDoc, (snapshot) => {
+    //     const data = snapshot.data();
+    //     if (!pc.currentRemoteDescription && data?.answer) {
+    //       const answerDescription = new RTCSessionDescription(data.answer);
+    //       pc.setRemoteDescription(answerDescription);
+    //     }
+    //   });
 
-      onSnapshot(answerCandidates, (snapshot) => {
-        snapshot.docChanges().forEach((change) => {
-          if (change.type === "added") {
-            const candidate = new RTCIceCandidate(change.doc.data());
-            pc.addIceCandidate(candidate);
-          }
-        });
-      });
-    } else if (mode === "join") {
+    //   onSnapshot(answerCandidates, (snapshot) => {
+    //     snapshot.docChanges().forEach((change) => {
+    //       if (change.type === "added") {
+    //         const candidate = new RTCIceCandidate(change.doc.data());
+    //         pc.addIceCandidate(candidate);
+    //       }
+    //     });
+    //   });
+    // } else 
+    if (mode === "join") {
       const callDoc = doc(db, "calls", callId);
       const answerCandidates = collection(callDoc, "answerCandidates");
       const offerCandidates = collection(callDoc, "offerCandidates");
@@ -317,7 +314,7 @@ function Videos({ mode, callId, setPage }) {
       };
 
       const callData = (await getDoc(callDoc)).data();
-
+      console.log(callData, callDoc)
       const offerDescription = callData.offer;
       await pc.setRemoteDescription(
         new RTCSessionDescription(offerDescription)
@@ -360,7 +357,7 @@ function Videos({ mode, callId, setPage }) {
         muted
       />
       <video
-        className="absolute inset-0"
+        className="absolute inset-0 w-screen h-screen object-cover"
         ref={remoteRef}
         autoPlay
         playsInline
@@ -394,7 +391,6 @@ function Videos({ mode, callId, setPage }) {
                 type="button"
                 className="inline-block w-full cursor-pointer rounded-lg bg-indigo-600 py-4 text-white"
                 onClick={setupSources}
-                fullWidth
               >
                 Start
               </button>
