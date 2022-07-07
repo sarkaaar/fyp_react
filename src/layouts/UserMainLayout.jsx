@@ -83,8 +83,7 @@ export default function UserMainLayout({ children, isCartUpdated }) {
   useEffect(
     () =>
       onAuthStateChanged(auth, (user) => {
-        if (user)
-          if (!user?.emailVerified) navigate("/verify");
+        if (user) if (!user?.emailVerified) navigate("/verify");
 
         console.log(user?.emailVerified);
         setLoadLog(false);
@@ -139,7 +138,7 @@ export default function UserMainLayout({ children, isCartUpdated }) {
                           )
                         }
                       >
-                        Home{" "}
+                        Home
                       </NavLink>
                       <NavLink
                         to="/services"
@@ -511,7 +510,7 @@ export default function UserMainLayout({ children, isCartUpdated }) {
           <>
             {searchResults.map((prod) => (
               <SearchCard
-                key={prod.item.id}
+                key={prod}
                 removeSearchProduct={removeSearchProduct}
                 obj={prod}
               />

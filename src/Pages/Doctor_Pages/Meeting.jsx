@@ -23,6 +23,8 @@ import { onAuthStateChanged } from "firebase/auth";
 import { db, auth } from "../../firebase-config";
 import { useNavigate } from "react-router-dom";
 
+
+
 const servers = {
   iceServers: [
     {
@@ -38,8 +40,17 @@ function Videos({ mode, callId, setPage }) {
   const [webcamActive, setWebcamActive] = useState(false);
   const [roomId, setRoomId] = useState(callId);
 
+  const { id } = useParams();
+
   const localRef = useRef();
   const remoteRef = useRef();
+
+  const meetingLink = async (link) => {
+    const ref = doc(db, "appointments", id);
+    await updateDoc(ref, {
+      joinLink: link,
+    });
+  };
 
   const hangUp = async () => {
     pc.close();
@@ -97,7 +108,7 @@ function Videos({ mode, callId, setPage }) {
 
       setRoomId(callDoc.id);
       console.log(callDoc.id);
-
+      meetingLink(callDoc.id);
       pc.onicecandidate = (event) => {
         if (event.candidate) {
           addDoc(offerCandidates, event.candidate.toJSON());

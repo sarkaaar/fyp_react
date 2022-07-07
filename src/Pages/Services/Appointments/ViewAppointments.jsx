@@ -46,6 +46,9 @@ function Lists({ setPage, joinCode, setJoinCode }) {
     setAppointments(
       queryResults.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
     );
+    console.log(
+      queryResults.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+    );
     setLoader(false);
   };
 
@@ -96,59 +99,65 @@ function Lists({ setPage, joinCode, setJoinCode }) {
                   You have the Following Appointments
                 </h1>
                 {appointments.map((item) => (
-                  <div
-                    className="m-auto mb-4 w-10/12 bg-slate-200 p-4 hover:drop-shadow-xl"
-                    key={item.id}
-                  >
-                    <div className="flex w-full flex-row flex-wrap justify-center md:flex-nowrap lg:flex-nowrap xl:flex-nowrap">
-                      <div className="w-full">
-                        <h1 className="text-2xl font-bold">
-                          Dr. {item?.doctor?.name}
-                        </h1>
-                        <h1 className="text-xl text-gray-600 ">
-                          Clinic Name : {item?.doctor?.clinicName}
-                        </h1>
-                        <h1 className="text-xl text-gray-600 ">
-                          Address : {item?.doctor?.clinicAddress}
-                        </h1>
-                        <h1 className="text-xl text-gray-600 ">
-                          Phone # {item?.doctor?.clinicPhone}
-                        </h1>
-                        <h1 className="text-xl text-red-600">
-                          Date:
-                          {new Date(item?.date.seconds * 1000).toDateString()}
-                        </h1>
-                        <h1 className="text-xl text-red-600">
-                          Time: {item?.time}
-                        </h1>
-                      </div>
-                      <div className="flex shrink justify-end">
-                        <div className="flex justify-center md:flex-col lg:flex-col">
-                          {item?.joinLink ? (
-                            <button
-                              onClick={() => {
-                                setJoinCode(item?.joinLink);
-                                setPage("join");
-                              }}
-                              className=" mx-2 my-2 w-28 cursor-pointer rounded-lg bg-neutral-400 py-4 px-8 text-white shadow-lg shadow-neutral-600/50 hover:drop-shadow-lg focus:shadow-none md:w-36 lg:w-44"
-                            >
-                              Join Meeting
-                            </button>
-                          ) : (
-                            <></>
-                          )}
-                          <button
-                            onClick={() => {
-                              cancelAppoitment(item.id);
-                            }}
-                            className=" mx-2 my-2 w-28 cursor-pointer rounded-lg bg-gradient-to-r from-red-700 to-rose-600 py-4 px-8 text-white shadow-lg shadow-red-600/50 hover:drop-shadow-lg focus:shadow-none md:w-36 lg:w-44"
-                          >
-                            Cancel
-                          </button>
+                  <>
+                    {!item.ended ? (
+                      <div
+                        className="m-auto mb-4 w-10/12 bg-slate-200 p-4 hover:drop-shadow-xl"
+                        key={item.id}
+                      >
+                        <div className="flex w-full flex-row flex-wrap justify-center md:flex-nowrap lg:flex-nowrap xl:flex-nowrap">
+                          <div className="w-full">
+                            <h1 className="text-2xl font-bold">
+                              Dr. {item?.doctor?.name}
+                            </h1>
+                            <h1 className="text-xl text-gray-600 ">
+                              Clinic Name : {item?.doctor?.clinicName}
+                            </h1>
+                            <h1 className="text-xl text-gray-600 ">
+                              Address : {item?.doctor?.clinicAddress}
+                            </h1>
+                            <h1 className="text-xl text-gray-600 ">
+                              Phone # {item?.doctor?.clinicPhone}
+                            </h1>
+                            <h1 className="text-xl text-red-600">
+                              Date:
+                              {new Date(
+                                item?.date.seconds * 1000
+                              ).toDateString()}
+                            </h1>
+                            <h1 className="text-xl text-red-600">
+                              Time: {item?.time}
+                            </h1>
+                          </div>
+                          <div className="flex shrink justify-end">
+                            <div className="flex justify-center md:flex-col lg:flex-col">
+                              {item?.joinLink && (
+                                <button
+                                  onClick={() => {
+                                    setJoinCode(item?.joinLink);
+                                    setPage("join");
+                                  }}
+                                  className=" mx-2 my-2 w-28 cursor-pointer rounded-lg bg-neutral-400 py-4 px-8 text-white shadow-lg shadow-neutral-600/50 hover:drop-shadow-lg focus:shadow-none md:w-36 lg:w-44"
+                                >
+                                  Join Meeting
+                                </button>
+                              )}
+                              <button
+                                onClick={() => {
+                                  cancelAppoitment(item.id);
+                                }}
+                                className=" mx-2 my-2 w-28 cursor-pointer rounded-lg bg-gradient-to-r from-red-700 to-rose-600 py-4 px-8 text-white shadow-lg shadow-red-600/50 hover:drop-shadow-lg focus:shadow-none md:w-36 lg:w-44"
+                              >
+                                Cancel
+                              </button>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
+                    ) : (
+                      <></>
+                    )}
+                  </>
                 ))}
               </div>
             )}
@@ -171,25 +180,22 @@ function Lists({ setPage, joinCode, setJoinCode }) {
       </div>
       <Footer />
 
-
       <Modal
         open={open}
-
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <div className="absolute top-1/2 left-1/2 w-[500px] -translate-y-1/2 -translate-x-1/2 rounded-lg bg-white p-4 shadow-lg">
           <h1 className="p-4 text-center text-xl font-bold">
-           Cancel appointment Successfully
+            Cancel appointment Successfully
           </h1>
           <div className="flex justify-center">
-            <Button variant="outlined" onClick={()=> setOpen(false)} >
+            <Button variant="outlined" onClick={() => setOpen(false)}>
               Close
             </Button>
           </div>
         </div>
-      </Modal> 
-
+      </Modal>
     </UseMainLayout>
   );
 }
