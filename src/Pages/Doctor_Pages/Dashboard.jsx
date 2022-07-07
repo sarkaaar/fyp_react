@@ -12,6 +12,7 @@ import { Button } from "@mui/material";
 import { onAuthStateChanged } from "firebase/auth";
 import { db, auth } from "../../firebase-config";
 import FirebaseDataTable from "../../components/FirebaseDataTable";
+import DataTable from "../../components/DataTable";
 import DoctorLayout from "../../layouts/DoctorLayout";
 import { useNavigate } from "react-router-dom";
 
@@ -28,6 +29,7 @@ export default function Dashboard() {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         getUser(user);
+        getAppointments();
         return;
       }
     }),
@@ -47,14 +49,7 @@ export default function Dashboard() {
   };
 
   const getAppointments = async () => {
-    const q = query(
-      appointmentsRef,
-      where(
-        // ("doctor.email", "==", "ammarzahid335@gmail.com"),
-        where("doctor.email", "==", user?.email),
-        ("date", "==", date)
-      )
-    );
+    const q = query(appointmentsRef, where("doctor.email", "==", user?.email));
     await getDocs(q)
       .then((res) => {
         setAppointments(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
@@ -108,19 +103,19 @@ export default function Dashboard() {
   return (
     <DoctorLayout>
       <div>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-lg leading-6 font-medium text-gray-900">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <h2 className="text-lg font-medium leading-6 text-gray-900">
             Overview
           </h2>
           <div className="mt-2 grid grid-cols-1 gap-5 lg:grid-cols-2">
             {/* Card */}
             {/* cars 1 */}
-            <div className="bg-white overflow-hidden shadow rounded-lg">
+            <div className="overflow-hidden rounded-lg bg-white shadow">
               <div className="p-5">
                 <div className="flex items-center">
                   <div className="ml-5 w-0 flex-1">
                     <dl>
-                      <dt className="text-sm font-medium text-gray-500 truncate">
+                      <dt className="truncate text-sm font-medium text-gray-500">
                         "All Appointments"
                       </dt>
                       <dd>
@@ -135,12 +130,12 @@ export default function Dashboard() {
             </div>
 
             {/* Card 2 */}
-            <div className="bg-white overflow-hidden shadow rounded-lg">
+            <div className="overflow-hidden rounded-lg bg-white shadow">
               <div className="p-5">
                 <div className="flex items-center">
                   <div className="ml-5 w-0 flex-1">
                     <dl>
-                      <dt className="text-sm font-medium text-gray-500 truncate">
+                      <dt className="truncate text-sm font-medium text-gray-500">
                         "Todays appointments"
                       </dt>
                       <dd>
@@ -157,15 +152,15 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <h2 className="max-w-6xl mx-auto mt-8 px-4 text-lg leading-6 font-medium text-gray-900 sm:px-6 lg:px-8">
+        <h2 className="mx-auto mt-8 max-w-6xl px-4 text-lg font-medium leading-6 text-gray-900 sm:px-6 lg:px-8">
           Recent activity
         </h2>
       </div>
 
       <div className="flex justify-center">
         <div className="max-w-6xl ">
-          <FirebaseDataTable
-            query={collection(db, "appointments")}
+          <DataTable
+            data={appointments}
             columns={[
               { key: "user", name: "User" },
               {
